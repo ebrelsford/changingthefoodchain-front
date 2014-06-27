@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "main": "index.js",
   "dependencies": {
+    "ember": "^1.0.0-pre.2",
     "tinymce": "^4.0.28"
   },
   "devDependencies": {
     "browserify": "^4.1.10",
+    "browserify-shim": "^3.6.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^2.1.0",
     "grunt-cli": "^0.1.13",
@@ -18,5 +20,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Eric Brelsford"
+  "author": "Eric Brelsford",
+  "browser": {
+    "ember": "./bower_components/ember/ember.js"
+  },
+  "browserify": {
+    "transform": ["browserify-shim"]
+  },
+  "browserify-shim": {
+    "./bower_components/ember/ember.js": "Ember"
+  }
 }

@@ -12,23 +12,32 @@
         <script src="bower_components/modernizr/modernizr.js"></script>
     </head>
     <body>
-        <header>
-            <div id="logo">FCWA Map</div>
-            <div id="search">search</div>
-            <nav id="nav">nav</nav>
-            <div id="languages">languages</div>
-        </header>
+        <script type="text/x-handlebars">
+            <header>
+                <div id="logo">{{#link-to 'index'}}FCWA Map{{/link-to}}</div>
+                <div id="search">search</div>
+                <nav id="nav">nav</nav>
+                <div id="languages">languages</div>
+            </header>
 
-        <div id="map"></div>
+            <div id="map"></div>
 
-        <div id="filters">
-            Filters / legend
-        </div>
+            <div id="filters">
+                Filters / legend
+            </div>
 
-        <div id="popup"></div>
+            <div id="popup">
+                {{outlet popup}}
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="organization">
+            <div>{{name}}</div>
+            {{address}}, {{city}}
+        </script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="bower_components/handlebars/handlebars.runtime.min.js"></script>
+        <script src="bower_components/handlebars/handlebars.min.js"></script>
 
         <script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script src="handlebars_templates/handlebars_templates.js"></script>

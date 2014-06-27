@@ -1,4 +1,5 @@
-var map;
+var map,
+    initialized = false;
 
 function initializeMap(id) {
     map = L.map(id, {
@@ -28,9 +29,11 @@ function initializeMap(id) {
         }).addTo(map);
     });
 
+    initialized = true;
     return map;
 }
 
 module.exports = {
-    init: initializeMap
+    init: initializeMap,
+    isInitialized: function () { return initialized; }
 };

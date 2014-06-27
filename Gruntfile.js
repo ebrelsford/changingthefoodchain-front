@@ -38,7 +38,8 @@ module.exports = function(grunt) {
             browserify: {
                 files: [
                     "js/main.js",
-                    "js/map.js"
+                    "js/map.js",
+                    "js/router.js"
                 ],
                 tasks: ["browserify"]
             },

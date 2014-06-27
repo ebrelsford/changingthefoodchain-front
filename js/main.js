@@ -1,15 +1,8 @@
-var map = require('./map');
+var Ember = require('ember');
+var router = require('./router');
 
-$(document).ready(function () {
-    map.init('map')
-        .on('featureclick', function (data) {
-            var template = JST['handlebars_templates/feature.hbs'],
-                content = template(data),
-                $target = $('#popup');
-            $target.empty().html(content).show();
-            $('#popup-close').click(function () {
-                $('#popup').hide();
-                return false;
-            });
-        });
+window.App = Ember.Application.create({
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true
 });
+router.init(App);
