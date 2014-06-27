@@ -1,7 +1,10 @@
 <header>
     <div id="logo">{{#link-to 'index'}}FCWA Map{{/link-to}}</div>
     <div id="search">search</div>
-    <nav id="nav">nav</nav>
+    <nav id="nav">
+        {{#link-to 'about'}}about{{/link-to}}
+        {{#link-to 'contact'}}contact{{/link-to}}
+    </nav>
     <div id="languages">languages</div>
 </header>
 
@@ -13,4 +16,8 @@
 
 <div id="popup">
     {{outlet popup}}
+</div>
+
+<div id="page">
+    {{outlet page}}
 </div>
