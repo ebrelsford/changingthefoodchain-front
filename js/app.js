@@ -47,6 +47,13 @@ module.exports = {
             }
         });
 
+        application.OrganizationView = Ember.View.extend({
+            didRenderElement : function() {
+                this._super();
+                $('#popup').show();
+            }
+        });
+
         application.OrganizationRoute = Ember.Route.extend({
             model: function (params) {
                 var sql = 'SELECT * FROM food_worker_orgs WHERE cartodb_id = ' + params.organization_id;
@@ -54,10 +61,6 @@ module.exports = {
                     .then(function (data) {
                         return data.rows[0];  
                     });
-            },
-
-            activate: function () {
-                $('#popup').show();
             },
 
             deactivate: function () {
