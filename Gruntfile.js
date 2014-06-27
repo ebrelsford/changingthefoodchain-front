@@ -26,10 +26,13 @@ module.exports = function(grunt) {
             }
         },
 
-        handlebars: {
+        emberTemplates: {
             compile: {
                 files: {
-                    "handlebars_templates/handlebars_templates.js" : "handlebars_templates/*.hbs"
+                    "templates/templates.js" : "templates/*.hbs"
+                },
+                options: {
+                    templateBasePath: /templates\//
                 }
             }
         },
@@ -49,9 +52,9 @@ module.exports = function(grunt) {
                 tasks: ["less", "cssmin"]
             },
 
-            handlebars: {
-                files: ["handlebars_templates/*.hbs"],
-                tasks: ['handlebars']
+            emberTemplates: {
+                files: ["templates/*.hbs"],
+                tasks: ['emberTemplates']
             }
 
         }
@@ -59,7 +62,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-ember-templates');
 };

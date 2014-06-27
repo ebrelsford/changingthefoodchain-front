@@ -9,13 +9,16 @@
   "devDependencies": {
     "browserify": "^4.1.10",
     "browserify-shim": "^3.6.0",
+    "ember-template-compiler": "^1.6.0-beta.5",
     "grunt": "^0.4.5",
     "grunt-browserify": "^2.1.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-cssmin": "^0.10.0",
     "grunt-contrib-handlebars": "^0.8.0",
     "grunt-contrib-less": "^0.11.2",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ember-templates": "^0.4.21",
+    "handlebars": "^1.3.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +28,9 @@
     "ember": "./bower_components/ember/ember.js"
   },
   "browserify": {
-    "transform": ["browserify-shim"]
+    "transform": [
+      "browserify-shim"
+    ]
   },
   "browserify-shim": {
     "./bower_components/ember/ember.js": "Ember"

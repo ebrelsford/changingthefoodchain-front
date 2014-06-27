@@ -1,5 +1,6 @@
 var Ember = require('ember');
 var map = require('./map');
+require('../templates/templates');
 
 function initializeMap() {
     if (map.isInitialized()) return;
