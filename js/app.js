@@ -23,7 +23,12 @@ Ember.View.reopen({
 });
 
 module.exports = {
-    init: function (application) {
+    init: function () {
+        var application = Ember.Application.create({
+            LOG_TRANSITIONS: true,
+            LOG_TRANSITIONS_INTERNAL: true
+        });
+
         application.Router.reopen({
             //location: 'history'
         });
@@ -42,12 +47,6 @@ module.exports = {
             }
         });
 
-        application.IndexRoute = Ember.Route.extend({
-            activate: function () {
-                initializeMap();
-            }
-        });
-
         application.OrganizationRoute = Ember.Route.extend({
             model: function (params) {
                 var sql = 'SELECT * FROM food_worker_orgs WHERE cartodb_id = ' + params.organization_id;
@@ -58,7 +57,6 @@ module.exports = {
             },
 
             activate: function () {
-                initializeMap();
                 $('#popup').show();
             },
 
@@ -71,5 +69,7 @@ module.exports = {
             }
 
         });
+
+        return application;
     }
 };
