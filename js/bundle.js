@@ -44461,7 +44461,7 @@ function program5(depth0,data) {
   data.buffer.push("<header>\n    <div id=\"logo\">");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n    <div id=\"search\">search</div>\n    <nav id=\"nav\">\n        ");
+  data.buffer.push("</div>\n    <div id=\"search\">\n        <input type=\"search\" placeholder=\"Search by name, city, state\" />\n    </div>\n    <nav id=\"nav\">\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
