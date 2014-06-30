@@ -1,0 +1,44 @@
+#map {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    .make-row();
+    background: rgba(255, 255, 255, 0.7);
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: @interface-z-index;
+
+    #logo {
+        .make-md-column(2);
+    }
+    #search {
+        .make-md-column(3);
+        input {
+            width: 100%;
+        }
+    }
+    #nav {
+        .make-md-column(2);
+    }
+    #languages {
+        .make-md-column(1);
+    }
+}
+
+#filters {
+    background: rgba(255, 255, 255, 0.7);
+    height: 400px;
+    position: absolute;
+    top: 75px;
+    width: 150px;
+    z-index: @interface-z-index;
+}
