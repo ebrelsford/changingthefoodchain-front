@@ -37,7 +37,11 @@ function program5(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact", options) : helperMissing.call(depth0, "link-to", "contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </nav>\n    <div id=\"languages\">languages</div>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\">\n    Filters / legend\n</div>\n\n<div id=\"popup\">\n    ");
+  data.buffer.push("\n    </nav>\n    <div id=\"languages\">\n        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "en", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(">english</a>\n        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "es", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(">español</a>\n    </div>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\">\n    Filters / legend\n</div>\n\n<div id=\"popup\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
   data.buffer.push("\n</div>\n\n<div id=\"page\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));

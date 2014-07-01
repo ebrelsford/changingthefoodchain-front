@@ -7,7 +7,10 @@
         {{#link-to 'about'}}about{{/link-to}}
         {{#link-to 'contact'}}contact{{/link-to}}
     </nav>
-    <div id="languages">languages</div>
+    <div id="languages">
+        <a href="#" {{action 'setLocale' 'en'}}>english</a>
+        <a href="#" {{action 'setLocale' 'es'}}>español</a>
+    </div>
 </header>
 
 <div id="map"></div>

@@ -1,6 +1,7 @@
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
+var i18n = require('./i18n');
 require('ember-i18n');
 require('../templates/templates');
 
@@ -32,6 +33,7 @@ module.exports = {
             LOG_TRANSITIONS: true,
             LOG_TRANSITIONS_INTERNAL: true
         });
+        application.deferReadiness();
 
         application.Router.reopen({
             //location: 'history'
@@ -78,10 +80,14 @@ module.exports = {
             searchText: '',
 
             actions: {
-                search: function (e) {
+                search: function () {
                     geocode(this.searchText, map.getBounds(), null, function (result) {
                         map.fire('locationfound', { latlng: result.latlng });
                     });
+                },
+
+                setLocale: function (locale) {
+                    i18n.setLocale(locale);
                 },
 
                 openOrganization: function (id) {

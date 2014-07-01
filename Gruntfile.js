@@ -31,6 +31,11 @@ module.exports = function(grunt) {
                 files: {
                     'translations/en.js': 'translations/en/*.js'
                 }
+            },
+            spanish: {
+                files: {
+                    'translations/es.js': 'translations/es/*.js'
+                }
             }
         },
 
