@@ -44276,13 +44276,16 @@ Ember.State = generateRemovedClass("Ember.State");
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
 var Ember = require('ember');
-var map = require('./map');
+var geocode = require('./geocode').geocode;
+var mapmodule = require('./map');
 require('../templates/templates');
 
+var map;
+
 function initializeMap() {
-    if (map.isInitialized()) return;
+    if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
-    map.init('map')
+    map = mapmodule.init('map')
         .on('featureclick', function (data) {
             var indexController = App.__container__.lookup('controller:index');
             indexController.transitionToRoute('organization', data.cartodb_id);
@@ -44347,8 +44350,16 @@ module.exports = {
             }
         });
 
-        application.IndexController = Ember.Controller.extend({
+        application.ApplicationController = Ember.Controller.extend({
+            searchText: '',
+
             actions: {
+                search: function (e) {
+                    geocode(this.searchText, map.getBounds(), null, function (result) {
+                        map.fire('locationfound', { latlng: result.latlng });
+                    });
+                },
+
                 openOrganization: function (id) {
                     this.transitionToRoute('organization', id);
                 }
@@ -44390,10 +44401,69 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":5,"./map":4,"ember":1}],3:[function(require,module,exports){
+},{"../templates/templates":6,"./geocode":3,"./map":5,"ember":1}],3:[function(require,module,exports){
+var geocoder = new google.maps.Geocoder();
+
+function to_google_bounds(bounds) {
+    // bounds: left, bottom, right, top
+    return new google.maps.LatLngBounds(
+        new google.maps.LatLng(bounds[1], bounds[0]),
+        new google.maps.LatLng(bounds[3], bounds[2])
+    );
+}
+
+function get_component(result, desired_type) {
+    var matches = $.grep(result.address_components, function (component, i) {
+        return ($.inArray(desired_type, component.types) >= 0);
+    });
+    if (matches.length >= 0 && matches[0] !== null) {
+        return matches[0].short_name;
+    }
+    return null;
+}
+
+function get_street(result) {
+    var street_number = get_component(result, 'street_number');
+    var route = get_component(result, 'route');
+    if (street_number === null || route === null) {
+        return null;
+    }
+    return street_number + ' ' + route;
+}
+
+function get_longitude(result) {
+    return result.geometry.location.lng();
+}
+
+function get_latitude(result) {
+    return result.geometry.location.lat();
+}
+
+module.exports = {
+
+    geocode: function (address, bounds, state, f) {
+        geocoder.geocode({
+            'address': address,
+            'bounds': to_google_bounds(bounds)
+        }, function (results, status) {
+            for (var i = 0; i < results.length; i++) {
+                var result_state = get_component(results[i], 'administrative_area_level_1');
+                if (!state || result_state === state) {
+                    results[i].latlng = [get_latitude(results[i]),
+                                         get_longitude(results[i])];
+                    return f(results[i], status);
+                }
+            }
+            return f(null, status);
+        });
+    }
+
+};
+
+},{}],4:[function(require,module,exports){
 window.App = require('./app').init();
 
-},{"./app":2}],4:[function(require,module,exports){
+},{"./app":2}],5:[function(require,module,exports){
 var map,
     initialized = false;
 
@@ -44425,6 +44495,10 @@ function initializeMap(id) {
         }).addTo(map);
     });
 
+    map.on('locationfound', function (e) {
+        map.setView(e.latlng, 16);
+    });
+
     initialized = true;
     return map;
 }
@@ -44434,7 +44508,7 @@ module.exports = {
     isInitialized: function () { return initialized; }
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -44461,7 +44535,14 @@ function program5(depth0,data) {
   data.buffer.push("<header>\n    <div id=\"logo\">");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n    <div id=\"search\">\n        <input type=\"search\" placeholder=\"Search by name, city, state\" />\n    </div>\n    <nav id=\"nav\">\n        ");
+  data.buffer.push("</div>\n    <div id=\"search\">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("search"),
+    'action': ("search"),
+    'value': ("searchText"),
+    'placeholder': ("Search by name, city, state")
+  },hashTypes:{'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n    </div>\n    <nav id=\"nav\">\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
@@ -44510,4 +44591,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[3])
+},{}]},{},[4])

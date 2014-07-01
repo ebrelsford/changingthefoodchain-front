@@ -1,7 +1,7 @@
 <header>
     <div id="logo">{{#link-to 'index'}}FCWA Map{{/link-to}}</div>
     <div id="search">
-        <input type="search" placeholder="Search by name, city, state" />
+        {{input type="search" action="search" value=searchText placeholder="Search by name, city, state"}}
     </div>
     <nav id="nav">
         {{#link-to 'about'}}about{{/link-to}}

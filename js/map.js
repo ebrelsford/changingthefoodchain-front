@@ -29,6 +29,10 @@ function initializeMap(id) {
         }).addTo(map);
     });
 
+    map.on('locationfound', function (e) {
+        map.setView(e.latlng, 16);
+    });
+
     initialized = true;
     return map;
 }

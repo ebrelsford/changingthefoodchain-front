@@ -1,11 +1,14 @@
 var Ember = require('ember');
-var map = require('./map');
+var geocode = require('./geocode').geocode;
+var mapmodule = require('./map');
 require('../templates/templates');
 
+var map;
+
 function initializeMap() {
-    if (map.isInitialized()) return;
+    if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
-    map.init('map')
+    map = mapmodule.init('map')
         .on('featureclick', function (data) {
             var indexController = App.__container__.lookup('controller:index');
             indexController.transitionToRoute('organization', data.cartodb_id);
@@ -70,8 +73,16 @@ module.exports = {
             }
         });
 
-        application.IndexController = Ember.Controller.extend({
+        application.ApplicationController = Ember.Controller.extend({
+            searchText: '',
+
             actions: {
+                search: function (e) {
+                    geocode(this.searchText, map.getBounds(), null, function (result) {
+                        map.fire('locationfound', { latlng: result.latlng });
+                    });
+                },
+
                 openOrganization: function (id) {
                     this.transitionToRoute('organization', id);
                 }
