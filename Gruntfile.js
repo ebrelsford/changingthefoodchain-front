@@ -26,6 +26,14 @@ module.exports = function(grunt) {
             }
         },
 
+        ember_i18n_precompile: {
+            english: {
+                files: {
+                    'translations/en.js': 'translations/en/*.js'
+                }
+            }
+        },
+
         emberTemplates: {
             compile: {
                 files: {
@@ -48,6 +56,11 @@ module.exports = function(grunt) {
                 tasks: ["less", "cssmin"]
             },
 
+            ember_i18n_precompile: {
+                files: ["translations/*/*.js"],
+                tasks: ['ember_i18n_precompile']
+            },
+
             emberTemplates: {
                 files: ["templates/*.hbs"],
                 tasks: ['emberTemplates']
@@ -60,5 +73,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-ember-i18n-precompile');
     grunt.loadNpmTasks('grunt-ember-templates');
 };

@@ -1,6 +1,7 @@
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
+require('ember-i18n');
 require('../templates/templates');
 
 var map;
