@@ -756,7 +756,7 @@ header #languages {
 @media (min-width: 992px) {
   header #languages {
     float: left;
-    width: 8.33333333%;
+    width: 25%;
   }
 }
 #filters {
