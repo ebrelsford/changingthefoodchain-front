@@ -12,18 +12,17 @@ function initializeMap(id) {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    var streets = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{mapId}/{z}/{x}/{y}.png', {
+    var streets = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
         mapId: 'fcwa.ii987b9p',
         maxZoom: 18
     }).addTo(map);
 
-    var sql = 'SELECT * FROM food_worker_orgs';
-    $.getJSON('http://fcwa.cartodb.com/api/v2/sql?format=GeoJSON&q=' + sql, function (data) {
+    $.getJSON(CONFIG.API_BASE + 'organizations/', function (data) {
         L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 layer.on('click', function () {
-                    map.fire('featureclick', feature.properties);
+                    map.fire('featureclick', feature);
                 });
             }
         }).addTo(map);

@@ -3,6 +3,7 @@ var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
 require('ember-i18n');
+require('bootstrap_modal');
 require('../templates/templates');
 
 var map;
@@ -11,9 +12,9 @@ function initializeMap() {
     if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
     map = mapmodule.init('map')
-        .on('featureclick', function (data) {
+        .on('featureclick', function (feature) {
             var indexController = App.__container__.lookup('controller:index');
-            indexController.transitionToRoute('organization', data.cartodb_id);
+            indexController.transitionToRoute('organization', feature.id);
         });
 }
 
@@ -42,6 +43,8 @@ module.exports = {
         application.Router.map(function() {
             this.resource('organization', {
                 path: '/organization/:organization_id'
+            }, function () {
+                this.route('add_media', { path: '/add-media' });
             });
             this.route('about');
             this.route('contact');
@@ -110,11 +113,7 @@ module.exports = {
 
         application.OrganizationRoute = Ember.Route.extend({
             model: function (params) {
-                var sql = 'SELECT * FROM food_worker_orgs WHERE cartodb_id = ' + params.organization_id;
-                return $.getJSON('http://fcwa.cartodb.com/api/v2/sql?q=' + sql)
-                    .then(function (data) {
-                        return data.rows[0];  
-                    });
+                return $.getJSON(CONFIG.API_BASE + 'organizations/' + params.organization_id);
             },
 
             deactivate: function () {
@@ -125,6 +124,31 @@ module.exports = {
                 this.render('organization', { outlet: 'popup' });
             }
 
+        });
+
+        application.OrganizationAddMediaRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.disconnectOutlet('modal');
+                    history.back();
+                }
+            },
+
+            renderTemplate: function () {
+                this.render({
+                    into: 'application',
+                    outlet: 'modal'
+                })
+            },
+
+            templateName: 'organization/add_media.hbs'
+        });
+
+        application.OrganizationAddMediaView = Ember.View.extend({
+            didRenderElement : function() {
+                this._super();
+                $('#addOrganizationMediaModal').modal();
+            }
         });
 
         return application;

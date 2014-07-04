@@ -7,6 +7,15 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            development: {
+                files: [{
+                    src: 'config/development.js',
+                    dest: 'config/config.js'
+                }]
+            }
+        },
+
         cssmin: {
             minify: {
                 src: 'css/style.css',
@@ -42,7 +51,7 @@ module.exports = function(grunt) {
         emberTemplates: {
             compile: {
                 files: {
-                    "templates/templates.js" : "templates/*.hbs"
+                    "templates/templates.js" : "templates/**/*.hbs"
                 },
                 options: {
                     templateBasePath: /templates\//
@@ -56,6 +65,11 @@ module.exports = function(grunt) {
                 tasks: ["browserify"]
             },
 
+            copy: {
+                files: ['config/development.js'],
+                tasks: ['copy:development']
+            },
+
             less: {
                 files: ["css/*.less", "css/*/*.less"],
                 tasks: ["less", "cssmin"]
@@ -67,7 +81,7 @@ module.exports = function(grunt) {
             },
 
             emberTemplates: {
-                files: ["templates/*.hbs"],
+                files: ["templates/**/*.hbs"],
                 tasks: ['emberTemplates']
             }
 
@@ -75,6 +89,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
