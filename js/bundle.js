@@ -44537,9 +44537,6 @@ require('../templates/templates');
 
 var map;
 
-// XXX this needs to be configured
-var API_BASE = 'http://127.0.0.1:8000/';
-
 function initializeMap() {
     if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
@@ -44645,7 +44642,7 @@ module.exports = {
 
         application.OrganizationRoute = Ember.Route.extend({
             model: function (params) {
-                return $.getJSON(API_BASE + 'organizations/' + params.organization_id);
+                return $.getJSON(CONFIG.API_BASE + 'organizations/' + params.organization_id);
             },
 
             deactivate: function () {
@@ -44661,9 +44658,14 @@ module.exports = {
         application.OrganizationAddMediaRoute = Ember.Route.extend({
             actions: {
                 close: function () {
+                    this.controller.onExit();
                     this.disconnectOutlet('modal');
                     history.back();
                 }
+            },
+
+            model: function () {
+                return this.modelFor('organization');
             },
 
             renderTemplate: function () {
@@ -44673,7 +44675,54 @@ module.exports = {
                 })
             },
 
+            setupController: function (controller, model) {
+                controller.set('model', model);
+            },
+
             templateName: 'organization/add_media.hbs'
+        });
+
+        application.OrganizationAddMediaController = Ember.Controller.extend({
+            error: false,
+            success: false,
+            videoUrl: '',
+
+            onExit: function () {
+                this.set('success', false);
+                this.set('error', false);
+                this.set('videoUrl', '');
+            },
+
+            onError: function () {
+                this.set('error', true);
+                this.set('success', false);
+            },
+
+            onSuccess: function () {
+                this.set('success', true);
+                this.set('error', false);
+                this.set('videoUrl', '');
+            },
+
+            actions: {
+                submitVideo: function () {
+                    var params = {
+                        organization: this.get('model').id,
+                        url: this.videoUrl
+                    };
+                    //
+                    // TODO maybe this is better with ember-data?
+                    $.ajax({
+                        context: this,
+                        data: params,
+                        type: 'POST',
+                        url: CONFIG.API_BASE + 'content/videos/'
+                    })
+                        .done(this.onSuccess)
+                        .fail(this.onError);
+                    return false;
+                }
+            }
         });
 
         application.OrganizationAddMediaView = Ember.View.extend({
@@ -45431,12 +45480,37 @@ function program1(depth0,data) {
 Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Something went wrong. Please try again.\n                        </div>\n                    ");
+  }
 
-  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabelyModalLabel\">Modal title</h4>\n            </div>\n            <div class=\"modal-body\">\n                body\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            Successfully added video.\n                        </div>\n                    ");
+  }
+
+  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabel\">Add media</h4>\n            </div>\n            <form>\n                <div class=\"modal-body\">\n                    ");
+  stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    <!-- TODO tabs -->\n                    <div class=\"form-group\">\n                        <label>Vimeo or YouTube link</label>\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("url"),
+    'value': ("videoUrl")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Close</button>\n                <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n            </div>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push(">Close</button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submitVideo", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Submit</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });

@@ -129,9 +129,14 @@ module.exports = {
         application.OrganizationAddMediaRoute = Ember.Route.extend({
             actions: {
                 close: function () {
+                    this.controller.onExit();
                     this.disconnectOutlet('modal');
                     history.back();
                 }
+            },
+
+            model: function () {
+                return this.modelFor('organization');
             },
 
             renderTemplate: function () {
@@ -141,7 +146,54 @@ module.exports = {
                 })
             },
 
+            setupController: function (controller, model) {
+                controller.set('model', model);
+            },
+
             templateName: 'organization/add_media.hbs'
+        });
+
+        application.OrganizationAddMediaController = Ember.Controller.extend({
+            error: false,
+            success: false,
+            videoUrl: '',
+
+            onExit: function () {
+                this.set('success', false);
+                this.set('error', false);
+                this.set('videoUrl', '');
+            },
+
+            onError: function () {
+                this.set('error', true);
+                this.set('success', false);
+            },
+
+            onSuccess: function () {
+                this.set('success', true);
+                this.set('error', false);
+                this.set('videoUrl', '');
+            },
+
+            actions: {
+                submitVideo: function () {
+                    var params = {
+                        organization: this.get('model').id,
+                        url: this.videoUrl
+                    };
+
+                    // TODO maybe this is better with ember-data?
+                    $.ajax({
+                        context: this,
+                        data: params,
+                        type: 'POST',
+                        url: CONFIG.API_BASE + 'content/videos/'
+                    })
+                        .done(this.onSuccess)
+                        .fail(this.onError);
+                    return false;
+                }
+            }
         });
 
         application.OrganizationAddMediaView = Ember.View.extend({
