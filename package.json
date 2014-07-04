@@ -29,6 +29,7 @@
   },
   "author": "Eric Brelsford",
   "browser": {
+    "bootstrap_tab": "./bower_components/bootstrap/js/tab.js",
     "bootstrap_modal": "./bower_components/bootstrap/js/modal.js",
     "ember": "./bower_components/ember/ember.js"
   },
@@ -38,6 +39,7 @@
     ]
   },
   "browserify-shim": {
+    "./bower_components/bootstrap/js/tab.js": "bootstrap_tab",
     "./bower_components/bootstrap/js/modal.js": "bootstrap_modal",
     "./bower_components/ember/ember.js": "Ember"
   }

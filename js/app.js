@@ -3,6 +3,7 @@ var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
 require('ember-i18n');
+require('bootstrap_tab');
 require('bootstrap_modal');
 require('../templates/templates');
 
@@ -156,6 +157,7 @@ module.exports = {
         application.OrganizationAddMediaController = Ember.Controller.extend({
             error: false,
             success: false,
+            tab: 'video',
             videoUrl: '',
 
             onExit: function () {
@@ -175,22 +177,52 @@ module.exports = {
                 this.set('videoUrl', '');
             },
 
-            actions: {
-                submitVideo: function () {
-                    var params = {
-                        organization: this.get('model').id,
-                        url: this.videoUrl
-                    };
+            submitPhoto: function () {
+                var data = new FormData();
+                data.append('organization', this.get('model').id);
+                data.append('photo', $(':file[name=photo]')[0].files[0]);
 
-                    // TODO maybe this is better with ember-data?
-                    $.ajax({
-                        context: this,
-                        data: params,
-                        type: 'POST',
-                        url: CONFIG.API_BASE + 'content/videos/'
-                    })
-                        .done(this.onSuccess)
-                        .fail(this.onError);
+                $.ajax({
+                    context: this,
+                    data: data,
+                    type: 'POST',
+                    url: CONFIG.API_BASE + 'content/photos/',
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                })
+                    .done(this.onSuccess)
+                    .fail(this.onError);
+            },
+
+            submitVideo: function () {
+                var params = {
+                    organization: this.get('model').id,
+                    url: this.videoUrl
+                };
+                $.ajax({
+                    context: this,
+                    data: params,
+                    type: 'POST',
+                    url: CONFIG.API_BASE + 'content/videos/'
+                })
+                    .done(this.onSuccess)
+                    .fail(this.onError);
+            },
+
+            actions: {
+                changeTab: function (tab) {
+                    $(this).tab('show');
+                    this.set('tab', tab);
+                },
+
+                submit: function () {
+                    if (this.tab === 'photo') {
+                        this.submitPhoto();
+                    }
+                    else if (this.tab === 'video') {
+                        this.submitVideo();
+                    }
                     return false;
                 }
             }

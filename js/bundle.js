@@ -253,6 +253,140 @@
 },{}],2:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
+/* ========================================================================
+ * Bootstrap: tab.js v3.1.1
+ * http://getbootstrap.com/javascript/#tabs
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // TAB CLASS DEFINITION
+  // ====================
+
+  var Tab = function (element) {
+    this.element = $(element)
+  }
+
+  Tab.prototype.show = function () {
+    var $this    = this.element
+    var $ul      = $this.closest('ul:not(.dropdown-menu)')
+    var selector = $this.data('target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
+    }
+
+    if ($this.parent('li').hasClass('active')) return
+
+    var previous = $ul.find('.active:last a')[0]
+    var e        = $.Event('show.bs.tab', {
+      relatedTarget: previous
+    })
+
+    $this.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    var $target = $(selector)
+
+    this.activate($this.parent('li'), $ul)
+    this.activate($target, $target.parent(), function () {
+      $this.trigger({
+        type: 'shown.bs.tab',
+        relatedTarget: previous
+      })
+    })
+  }
+
+  Tab.prototype.activate = function (element, container, callback) {
+    var $active    = container.find('> .active')
+    var transition = callback
+      && $.support.transition
+      && $active.hasClass('fade')
+
+    function next() {
+      $active
+        .removeClass('active')
+        .find('> .dropdown-menu > .active')
+        .removeClass('active')
+
+      element.addClass('active')
+
+      if (transition) {
+        element[0].offsetWidth // reflow for transition
+        element.addClass('in')
+      } else {
+        element.removeClass('fade')
+      }
+
+      if (element.parent('.dropdown-menu')) {
+        element.closest('li.dropdown').addClass('active')
+      }
+
+      callback && callback()
+    }
+
+    transition ?
+      $active
+        .one($.support.transition.end, next)
+        .emulateTransitionEnd(150) :
+      next()
+
+    $active.removeClass('in')
+  }
+
+
+  // TAB PLUGIN DEFINITION
+  // =====================
+
+  var old = $.fn.tab
+
+  $.fn.tab = function ( option ) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('bs.tab')
+
+      if (!data) $this.data('bs.tab', (data = new Tab(this)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.tab.Constructor = Tab
+
+
+  // TAB NO CONFLICT
+  // ===============
+
+  $.fn.tab.noConflict = function () {
+    $.fn.tab = old
+    return this
+  }
+
+
+  // TAB DATA-API
+  // ============
+
+  $(document).on('click.bs.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+
+}(jQuery);
+
+; browserify_shim__define__module__export__(typeof bootstrap_tab != "undefined" ? bootstrap_tab : window.bootstrap_tab);
+
+}).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],3:[function(require,module,exports){
+(function (global){
+;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * @overview  Ember - JavaScript Application Framework
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors
@@ -44526,12 +44660,13 @@ Ember.State = generateRemovedClass("Ember.State");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
 require('ember-i18n');
+require('bootstrap_tab');
 require('bootstrap_modal');
 require('../templates/templates');
 
@@ -44685,6 +44820,7 @@ module.exports = {
         application.OrganizationAddMediaController = Ember.Controller.extend({
             error: false,
             success: false,
+            tab: 'video',
             videoUrl: '',
 
             onExit: function () {
@@ -44704,22 +44840,52 @@ module.exports = {
                 this.set('videoUrl', '');
             },
 
+            submitPhoto: function () {
+                var data = new FormData();
+                data.append('organization', this.get('model').id);
+                data.append('photo', $(':file[name=photo]')[0].files[0]);
+
+                $.ajax({
+                    context: this,
+                    data: data,
+                    type: 'POST',
+                    url: CONFIG.API_BASE + 'content/photos/',
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                })
+                    .done(this.onSuccess)
+                    .fail(this.onError);
+            },
+
+            submitVideo: function () {
+                var params = {
+                    organization: this.get('model').id,
+                    url: this.videoUrl
+                };
+                $.ajax({
+                    context: this,
+                    data: params,
+                    type: 'POST',
+                    url: CONFIG.API_BASE + 'content/videos/'
+                })
+                    .done(this.onSuccess)
+                    .fail(this.onError);
+            },
+
             actions: {
-                submitVideo: function () {
-                    var params = {
-                        organization: this.get('model').id,
-                        url: this.videoUrl
-                    };
-                    //
-                    // TODO maybe this is better with ember-data?
-                    $.ajax({
-                        context: this,
-                        data: params,
-                        type: 'POST',
-                        url: CONFIG.API_BASE + 'content/videos/'
-                    })
-                        .done(this.onSuccess)
-                        .fail(this.onError);
+                changeTab: function (tab) {
+                    $(this).tab('show');
+                    this.set('tab', tab);
+                },
+
+                submit: function () {
+                    if (this.tab === 'photo') {
+                        this.submitPhoto();
+                    }
+                    else if (this.tab === 'video') {
+                        this.submitVideo();
+                    }
                     return false;
                 }
             }
@@ -44736,7 +44902,7 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":10,"./geocode":4,"./i18n":5,"./map":7,"bootstrap_modal":1,"ember":2,"ember-i18n":8}],4:[function(require,module,exports){
+},{"../templates/templates":11,"./geocode":5,"./i18n":6,"./map":8,"bootstrap_modal":1,"bootstrap_tab":2,"ember":3,"ember-i18n":9}],5:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -44795,7 +44961,7 @@ module.exports = {
 
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var qs = require('qs');
 
 var DEFAULT_LOCALE = 'en';
@@ -44821,13 +44987,13 @@ module.exports = {
     }
 };
 
-},{"qs":9}],6:[function(require,module,exports){
+},{"qs":10}],7:[function(require,module,exports){
 window.App = require('./app').init();
 require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./app":3,"./i18n":5}],7:[function(require,module,exports){
+},{"./app":4,"./i18n":6}],8:[function(require,module,exports){
 var map,
     initialized = false;
 
@@ -44871,7 +45037,7 @@ module.exports = {
     isInitialized: function () { return initialized; }
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -45026,7 +45192,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -45394,7 +45560,7 @@ function decode(str) {
   }
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -45480,7 +45646,7 @@ function program1(depth0,data) {
 Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -45500,16 +45666,26 @@ function program3(depth0,data) {
   data.buffer.push("\n                    ");
   stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                    <!-- TODO tabs -->\n                    <div class=\"form-group\">\n                        <label>Vimeo or YouTube link</label>\n                        ");
+  data.buffer.push("\n\n                    <ul class=\"nav nav-tabs\" role=\"tablist\">\n                        <li class=\"active\"><a href=\"#video\" role=\"tab\" data-toggle=\"tab\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeTab", "video", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(">Video</a></li>\n                        <li><a href=\"#photo\" role=\"tab\" data-toggle=\"tab\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeTab", "photo", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(">Photo</a></li>\n                    </ul>\n\n                    <div class=\"tab-content\">\n                        <div class=\"tab-pane active\" id=\"video\">\n                            <div class=\"form-group\">\n                                <label>Vimeo or YouTube link</label>\n                                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),
     'value': ("videoUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
+  data.buffer.push("\n                            </div>\n                        </div>\n                        <div class=\"tab-pane\" id=\"photo\">\n                            <div class=\"form-group\">\n                                <label>Add a photo</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'name': ("photo"),
+    'class': ("form-control"),
+    'type': ("file")
+  },hashTypes:{'name': "STRING",'class': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'class': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">Close</button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submitVideo", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">Submit</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
@@ -45529,4 +45705,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[6])
+},{}]},{},[7])
