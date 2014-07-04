@@ -52,6 +52,12 @@ module.exports = {
         });
 
         application.PageRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
             renderTemplate: function () {
                 this.render('page', { outlet: 'page' });
             },
@@ -64,13 +70,7 @@ module.exports = {
         application.PageView = Ember.View.extend({
             didRenderElement: function () {
                 this._super();
-                $('#page').show()
-                    .find('.close').click(function () {
-                        // TODO likely not the most elegant way to do this, but
-                        // works for now
-                        var indexController = App.__container__.lookup('controller:index');
-                        indexController.transitionToRoute('index');
-                    });
+                $('#page').show();
             }
         });
 
@@ -103,16 +103,17 @@ module.exports = {
         application.OrganizationView = Ember.View.extend({
             didRenderElement : function() {
                 this._super();
-                $('#popup').show()
-                    .find('.close').click(function () {
-                        // TODO See above
-                        var indexController = App.__container__.lookup('controller:index');
-                        indexController.transitionToRoute('index');
-                    });
+                $('#popup').show();
             }
         });
 
         application.OrganizationRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
             model: function (params) {
                 return $.getJSON(CONFIG.API_BASE + 'organizations/' + params.organization_id);
             },

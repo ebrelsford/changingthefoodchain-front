@@ -44715,6 +44715,12 @@ module.exports = {
         });
 
         application.PageRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
             renderTemplate: function () {
                 this.render('page', { outlet: 'page' });
             },
@@ -44727,13 +44733,7 @@ module.exports = {
         application.PageView = Ember.View.extend({
             didRenderElement: function () {
                 this._super();
-                $('#page').show()
-                    .find('.close').click(function () {
-                        // TODO likely not the most elegant way to do this, but
-                        // works for now
-                        var indexController = App.__container__.lookup('controller:index');
-                        indexController.transitionToRoute('index');
-                    });
+                $('#page').show();
             }
         });
 
@@ -44766,16 +44766,17 @@ module.exports = {
         application.OrganizationView = Ember.View.extend({
             didRenderElement : function() {
                 this._super();
-                $('#popup').show()
-                    .find('.close').click(function () {
-                        // TODO See above
-                        var indexController = App.__container__.lookup('controller:index');
-                        indexController.transitionToRoute('index');
-                    });
+                $('#popup').show();
             }
         });
 
         application.OrganizationRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
             model: function (params) {
                 return $.getJSON(CONFIG.API_BASE + 'organizations/' + params.organization_id);
             },
@@ -45618,7 +45619,7 @@ function program5(depth0,data) {
 Ember.TEMPLATES["organization"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -45626,7 +45627,9 @@ function program1(depth0,data) {
   data.buffer.push("Add media");
   }
 
-  data.buffer.push("<div class=\"close\">&times;</div>\n<div>");
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n<div>");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n<div>");
@@ -45697,7 +45700,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"close\">&times;</div>\n");
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "content", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
