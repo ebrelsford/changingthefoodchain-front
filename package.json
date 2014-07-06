@@ -31,7 +31,9 @@
   "browser": {
     "bootstrap_tab": "./bower_components/bootstrap/js/tab.js",
     "bootstrap_modal": "./bower_components/bootstrap/js/modal.js",
-    "ember": "./bower_components/ember/ember.js"
+    "ember": "./bower_components/ember/ember.js",
+    "ember-data": "./bower_components/ember-data/ember-data.js",
+    "ember-data-django": "./bower_components/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.js"
   },
   "browserify": {
     "transform": [
@@ -41,6 +43,7 @@
   "browserify-shim": {
     "./bower_components/bootstrap/js/tab.js": "bootstrap_tab",
     "./bower_components/bootstrap/js/modal.js": "bootstrap_modal",
-    "./bower_components/ember/ember.js": "Ember"
+    "./bower_components/ember/ember.js": "Ember",
+    "./bower_components/ember-data/ember-data.js": "DS"
   }
 }

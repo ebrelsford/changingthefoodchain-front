@@ -1,4 +1,6 @@
 var Ember = require('ember');
+var DS = require('ember-data');
+require('ember-data-django');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
@@ -49,6 +51,22 @@ module.exports = {
             });
             this.route('about');
             this.route('contact');
+        });
+
+        application.Store = DS.Store.extend({
+            adapter: DS.DjangoRESTAdapter.extend({
+                host: CONFIG.API_BASE
+            })
+        });
+
+        // TODO hasMany for content
+        application.Organization = DS.Model.extend({
+            address: DS.attr(),
+            city: DS.attr(),
+            country: DS.attr(),
+            name: DS.attr('string'),
+            postal_code: DS.attr('string'),
+            state_province: DS.attr('string')
         });
 
         application.PageRoute = Ember.Route.extend({
@@ -115,7 +133,7 @@ module.exports = {
             },
 
             model: function (params) {
-                return $.getJSON(CONFIG.API_BASE + 'organizations/' + params.organization_id);
+                return this.store.find('organization', params.organization_id);
             },
 
             deactivate: function () {
