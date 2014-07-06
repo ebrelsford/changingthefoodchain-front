@@ -49,20 +49,28 @@ module.exports = {
             this.route('contact');
         });
 
-        application.Store = DS.Store.extend({
-            adapter: DS.DjangoRESTAdapter.extend({
-                host: CONFIG.API_BASE
-            })
+        application.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
+            host: CONFIG.API_BASE
+        })
+
+        application.PhotoAdapter = application.ApplicationAdapter.extend({
+            namespace: 'content'
         });
 
-        // TODO hasMany for content
         application.Organization = DS.Model.extend({
             address: DS.attr(),
             city: DS.attr(),
             country: DS.attr(),
             name: DS.attr('string'),
             postal_code: DS.attr('string'),
-            state_province: DS.attr('string')
+            state_province: DS.attr('string'),
+            photos: DS.hasMany('photo')
+        });
+
+        application.Photo = DS.Model.extend({
+            photo: DS.attr(),
+            organization: DS.belongsTo('organization'),
+            url: DS.attr()
         });
 
         application.PageRoute = Ember.Route.extend({
@@ -129,6 +137,9 @@ module.exports = {
             },
 
             model: function (params) {
+                this.store.findAll('photo').then(function (photos) {
+                    console.log('found photos', photos);
+                });
                 return this.store.find('organization', params.organization_id);
             },
 

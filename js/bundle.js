@@ -57092,20 +57092,28 @@ module.exports = {
             this.route('contact');
         });
 
-        application.Store = DS.Store.extend({
-            adapter: DS.DjangoRESTAdapter.extend({
-                host: CONFIG.API_BASE
-            })
+        application.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
+            host: CONFIG.API_BASE
+        })
+
+        application.PhotoAdapter = application.ApplicationAdapter.extend({
+            namespace: 'content'
         });
 
-        // TODO hasMany for content
         application.Organization = DS.Model.extend({
             address: DS.attr(),
             city: DS.attr(),
             country: DS.attr(),
             name: DS.attr('string'),
             postal_code: DS.attr('string'),
-            state_province: DS.attr('string')
+            state_province: DS.attr('string'),
+            photos: DS.hasMany('photo')
+        });
+
+        application.Photo = DS.Model.extend({
+            photo: DS.attr(),
+            organization: DS.belongsTo('organization'),
+            url: DS.attr()
         });
 
         application.PageRoute = Ember.Route.extend({
@@ -57172,6 +57180,9 @@ module.exports = {
             },
 
             model: function (params) {
+                this.store.findAll('photo').then(function (photos) {
+                    console.log('found photos', photos);
+                });
                 return this.store.find('organization', params.organization_id);
             },
 
@@ -58022,6 +58033,16 @@ function program1(depth0,data) {
   data.buffer.push("Add media");
   }
 
+function program3(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n    <img src=\"");
+  stack1 = helpers._triageMustache.call(depth0, "url", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\" />\n");
+  return buffer;
+  }
+
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n<div>");
@@ -58035,6 +58056,9 @@ function program1(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n\n");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n");
+  stack1 = helpers.each.call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
