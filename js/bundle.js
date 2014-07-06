@@ -57082,10 +57082,6 @@ module.exports = {
         });
         application.deferReadiness();
 
-        application.Router.reopen({
-            //location: 'history'
-        });
-
         application.Router.map(function() {
             this.resource('organization', {
                 path: '/organization/:organization_id'
