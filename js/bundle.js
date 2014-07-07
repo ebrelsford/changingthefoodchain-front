@@ -57253,8 +57253,8 @@ function initializeMap() {
     if ($('#map').length === 0) return;
     map = mapmodule.init('map')
         .on('featureclick', function (feature) {
-            var indexController = App.__container__.lookup('controller:index');
-            indexController.transitionToRoute('organization', feature.id);
+            var controller = App.__container__.lookup('controller:application');
+            controller.transitionToRoute('organization', feature.id);
         });
 }
 
