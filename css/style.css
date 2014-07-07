@@ -2748,7 +2748,7 @@ img {
   height: auto;
   max-width: 100%;
 }
-.ember-view {
+body > .ember-view {
   height: 100%;
   width: 100%;
 }
@@ -2882,4 +2882,7 @@ header #languages {
 .carousel {
   height: 200px;
   width: 100%;
+}
+.carousel-control {
+  padding-top: 85px;
 }
