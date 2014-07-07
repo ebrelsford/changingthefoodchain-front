@@ -53,10 +53,6 @@ module.exports = {
             host: CONFIG.API_BASE
         })
 
-        application.PhotoAdapter = application.ApplicationAdapter.extend({
-            namespace: 'content'
-        });
-
         application.Organization = DS.Model.extend({
             address: DS.attr(),
             city: DS.attr(),
@@ -68,6 +64,10 @@ module.exports = {
         });
 
         application.Photo = DS.Model.extend({
+            fullUrl: function () {
+                return CONFIG.API_BASE + this.get('url');
+            }.property('url'),
+
             photo: DS.attr(),
             organization: DS.belongsTo('organization'),
             url: DS.attr()
@@ -137,9 +137,6 @@ module.exports = {
             },
 
             model: function (params) {
-                this.store.findAll('photo').then(function (photos) {
-                    console.log('found photos', photos);
-                });
                 return this.store.find('organization', params.organization_id);
             },
 

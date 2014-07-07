@@ -57096,10 +57096,6 @@ module.exports = {
             host: CONFIG.API_BASE
         })
 
-        application.PhotoAdapter = application.ApplicationAdapter.extend({
-            namespace: 'content'
-        });
-
         application.Organization = DS.Model.extend({
             address: DS.attr(),
             city: DS.attr(),
@@ -57111,6 +57107,10 @@ module.exports = {
         });
 
         application.Photo = DS.Model.extend({
+            fullUrl: function () {
+                return CONFIG.API_BASE + this.get('url');
+            }.property('url'),
+
             photo: DS.attr(),
             organization: DS.belongsTo('organization'),
             url: DS.attr()
@@ -57180,9 +57180,6 @@ module.exports = {
             },
 
             model: function (params) {
-                this.store.findAll('photo').then(function (photos) {
-                    console.log('found photos', photos);
-                });
                 return this.store.find('organization', params.organization_id);
             },
 
@@ -58035,11 +58032,12 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  var buffer = '', stack1;
-  data.buffer.push("\n    <img src=\"");
-  stack1 = helpers._triageMustache.call(depth0, "url", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\" />\n");
+  var buffer = '';
+  data.buffer.push("\n    <img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("fullUrl")
+  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" />\n");
   return buffer;
   }
 
