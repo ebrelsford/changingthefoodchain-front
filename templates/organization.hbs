@@ -4,4 +4,6 @@
 
 {{#link-to 'organization.add_media'}}Add media{{/link-to}}
 
+{{#if photos}}
 {{view App.CarouselView content=photos}}
+{{/if}}
