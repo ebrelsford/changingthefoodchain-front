@@ -4,6 +4,7 @@ require('ember-data-django');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
+var _ = require('underscore');
 require('ember-i18n');
 require('bootstrap_carousel');
 require('bootstrap_modal');
@@ -114,6 +115,20 @@ module.exports = {
         });
 
         application.ApplicationController = Ember.Controller.extend({
+            organizationTypes: [
+                {
+                    label: 'workers center'
+                },
+                {
+                    label: 'legal aid'
+                },
+                {
+                    label: 'union'
+                },
+                {
+                    label: 'advocacy group'
+                }
+            ],
             searchText: '',
 
             actions: {
@@ -267,6 +282,28 @@ module.exports = {
                 this._super();
                 $('#addOrganizationMediaModal').modal();
             }
+        });
+
+        application.OrganizationTypeView = Ember.CollectionView.extend({
+            tagName: 'ul',
+            classNames: ['filters-type-list'],
+            itemViewClass: Ember.View.extend({
+                classNames: ['filters-type-list-item'],
+                classNameBindings: ['content.isActive:active'],
+                click: function () {
+                    Ember.set(this.content, 'isActive', 
+                              !Ember.get(this.content, 'isActive'));
+                    var organizationTypes = this.container.lookup('controller:application').get('organizationTypes');
+                    var active = _.filter(organizationTypes, function (type) {
+                        return type.isActive;  
+                    });
+                    var activeLabels = _.map(active, function (type) {
+                        return type.label;
+                    });
+                    mapmodule.updateFilters(activeLabels);
+                },
+                templateName: 'organization-type-item'
+            })
         });
 
         //

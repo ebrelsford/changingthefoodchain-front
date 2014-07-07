@@ -2752,6 +2752,9 @@ body > .ember-view {
   height: 100%;
   width: 100%;
 }
+.filters-type .filters-type-list-item.active {
+  font-weight: bold;
+}
 #map {
   overflow: hidden;
   height: 100%;

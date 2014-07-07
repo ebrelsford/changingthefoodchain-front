@@ -1,4 +1,7 @@
+var _ = require('underscore');
+
 var map,
+    organizationLayer,
     initialized = false;
 
 function initializeMap(id) {
@@ -19,13 +22,25 @@ function initializeMap(id) {
     }).addTo(map);
 
     $.getJSON(CONFIG.API_BASE + '/organizations/', function (data) {
-        L.geoJson(data, {
+        organizationLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 layer.on('click', function () {
                     map.fire('featureclick', feature);
                 });
             }
-        }).addTo(map);
+        })
+        organizationLayer.on('filterschange', function (filters) {
+            this.eachLayer(function (l) {
+                if (filters.types.length === 0 ||
+                    _.intersection(l.feature.properties.types, filters.types).length > 0) {
+                    map.addLayer(l);
+                }
+                else {
+                    map.removeLayer(l);
+                }
+            });
+        });
+        organizationLayer.addTo(map);
     });
 
     map.on('locationfound', function (e) {
@@ -38,5 +53,8 @@ function initializeMap(id) {
 
 module.exports = {
     init: initializeMap,
-    isInitialized: function () { return initialized; }
+    isInitialized: function () { return initialized; },
+    updateFilters: function (organizationTypes) {
+        organizationLayer.fire('filterschange', { types: organizationTypes });
+    }
 };

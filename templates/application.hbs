@@ -16,7 +16,10 @@
 <div id="map"></div>
 
 <div id="filters">
-    Filters / legend
+    <section class="filters-type">
+        <h3>organization type</h3>
+        {{view App.OrganizationTypeView content=organizationTypes}}
+    </section>
 </div>
 
 <div id="popup">
