@@ -1,6 +1,28 @@
 <div class="close" {{action 'close'}}>&times;</div>
-<div>{{name}}</div>
-<div>{{address}}, {{city}}</div>
+<h2>{{name}}</h2>
+<div>{{address_line1}}, {{city}}, {{state_province}} {{postal_code}}</div>
+
+{{#if sectors}}
+    <section class="organization-sectors">
+        <h3>sectors:</h3>
+        <ul>
+            {{#each sectors}}
+            <li>{{name}}</li>
+            {{/each}}
+        </ul>
+    </section>
+{{/if}}
+
+{{#if types}}
+    <section class="organization-types">
+        <h3>types:</h3>
+        <ul>
+            {{#each types}}
+            <li>{{name}}</li>
+            {{/each}}
+        </ul>
+    </section>
+{{/if}}
 
 {{#link-to 'organization.add_media'}}Add media{{/link-to}}
 

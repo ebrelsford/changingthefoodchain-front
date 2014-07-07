@@ -55,13 +55,23 @@ module.exports = {
         })
 
         application.Organization = DS.Model.extend({
-            address: DS.attr(),
+            address_line1: DS.attr(),
             city: DS.attr(),
             country: DS.attr(),
             name: DS.attr('string'),
             postal_code: DS.attr('string'),
             state_province: DS.attr('string'),
-            photos: DS.hasMany('photo')
+            photos: DS.hasMany('photo'),
+            sectors: DS.hasMany('sector'),
+            types: DS.hasMany('type')
+        });
+
+        application.Sector = DS.Model.extend({
+            name: DS.attr('string')
+        });
+
+        application.Type = DS.Model.extend({
+            name: DS.attr('string')
         });
 
         application.Photo = DS.Model.extend({
