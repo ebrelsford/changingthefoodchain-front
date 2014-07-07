@@ -4,6 +4,4 @@
 
 {{#link-to 'organization.add_media'}}Add media{{/link-to}}
 
-{{#each photos}}
-    <img {{bind-attr src=fullUrl}} />
-{{/each}}
+{{view App.CarouselView content=photos}}
