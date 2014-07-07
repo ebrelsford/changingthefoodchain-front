@@ -57365,12 +57365,46 @@ module.exports = {
                     label: 'advocacy group'
                 }
             ],
+            sectors: [
+                {
+                    label: 'agriculture'
+                },
+                {
+                    label: 'food processing'
+                },
+                {
+                    label: 'food service'
+                },
+                {
+                    label: 'distribution'
+                },
+                {
+                    label: 'retail'
+                }
+            ],
             searchText: '',
 
             actions: {
                 search: function () {
                     geocode(this.searchText, map.getBounds(), null, function (result) {
                         map.fire('locationfound', { latlng: result.latlng });
+                    });
+                },
+
+                filtersChanged: function () {
+                    var types = _.chain(this.get('organizationTypes'))
+                        .filter(function (type) { return type.isActive; })
+                        .map(function (type) { return type.label; })
+                        .value();
+
+                    var sectors = _.chain(this.get('sectors'))
+                        .filter(function (sector) { return sector.isActive; })
+                        .map(function (sector) { return sector.label; })
+                        .value();
+
+                    mapmodule.updateFilters({
+                        sectors: sectors,
+                        types: types
                     });
                 },
 
@@ -57527,18 +57561,24 @@ module.exports = {
                 classNames: ['filters-type-list-item'],
                 classNameBindings: ['content.isActive:active'],
                 click: function () {
-                    Ember.set(this.content, 'isActive', 
-                              !Ember.get(this.content, 'isActive'));
-                    var organizationTypes = this.container.lookup('controller:application').get('organizationTypes');
-                    var active = _.filter(organizationTypes, function (type) {
-                        return type.isActive;  
-                    });
-                    var activeLabels = _.map(active, function (type) {
-                        return type.label;
-                    });
-                    mapmodule.updateFilters(activeLabels);
+                    Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
+                    this.container.lookup('controller:application').send('filtersChanged');
                 },
                 templateName: 'organization-type-item'
+            })
+        });
+
+        application.SectorView = Ember.CollectionView.extend({
+            tagName: 'ul',
+            classNames: ['filters-sector-list'],
+            itemViewClass: Ember.View.extend({
+                classNames: ['filters-sector-list-item'],
+                classNameBindings: ['content.isActive:active'],
+                click: function () {
+                    Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
+                    this.container.lookup('controller:application').send('filtersChanged');
+                },
+                templateName: 'sector-item'
             })
         });
 
@@ -57726,9 +57766,16 @@ function initializeMap(id) {
             }
         })
         organizationLayer.on('filterschange', function (filters) {
+            var sectors = filters.sectors,
+                types = filters.types;
+                
             this.eachLayer(function (l) {
-                if (filters.types.length === 0 ||
-                    _.intersection(l.feature.properties.types, filters.types).length > 0) {
+                var properties = l.feature.properties,
+                    typesMatch = _.intersection(properties.types, types).length > 0,
+                    sectorsMatch = _.intersection(properties.sectors, sectors).length > 0;
+                if ((sectors.length === 0 && types.length === 0) ||
+                    ((types.length === 0 || typesMatch) && 
+                     (sectors.length === 0 || sectorsMatch))) {
                     map.addLayer(l);
                 }
                 else {
@@ -57750,8 +57797,8 @@ function initializeMap(id) {
 module.exports = {
     init: initializeMap,
     isInitialized: function () { return initialized; },
-    updateFilters: function (organizationTypes) {
-        organizationLayer.fire('filterschange', { types: organizationTypes });
+    updateFilters: function (filters) {
+        organizationLayer.fire('filterschange', filters);
     }
 };
 
@@ -59671,6 +59718,10 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("organizationTypes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n    </section>\n    <section class=\"filters-sector\">\n        <h3>industry type</h3>\n        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
+    'content': ("sectors")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n    </section>\n</div>\n\n<div id=\"popup\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
   data.buffer.push("\n</div>\n\n<div id=\"page\">\n    ");
@@ -59877,6 +59928,19 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "content", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["sector-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1;
+
+
+  stack1 = helpers._triageMustache.call(depth0, "view.content.label", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
   

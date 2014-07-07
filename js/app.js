@@ -129,12 +129,46 @@ module.exports = {
                     label: 'advocacy group'
                 }
             ],
+            sectors: [
+                {
+                    label: 'agriculture'
+                },
+                {
+                    label: 'food processing'
+                },
+                {
+                    label: 'food service'
+                },
+                {
+                    label: 'distribution'
+                },
+                {
+                    label: 'retail'
+                }
+            ],
             searchText: '',
 
             actions: {
                 search: function () {
                     geocode(this.searchText, map.getBounds(), null, function (result) {
                         map.fire('locationfound', { latlng: result.latlng });
+                    });
+                },
+
+                filtersChanged: function () {
+                    var types = _.chain(this.get('organizationTypes'))
+                        .filter(function (type) { return type.isActive; })
+                        .map(function (type) { return type.label; })
+                        .value();
+
+                    var sectors = _.chain(this.get('sectors'))
+                        .filter(function (sector) { return sector.isActive; })
+                        .map(function (sector) { return sector.label; })
+                        .value();
+
+                    mapmodule.updateFilters({
+                        sectors: sectors,
+                        types: types
                     });
                 },
 
@@ -291,18 +325,24 @@ module.exports = {
                 classNames: ['filters-type-list-item'],
                 classNameBindings: ['content.isActive:active'],
                 click: function () {
-                    Ember.set(this.content, 'isActive', 
-                              !Ember.get(this.content, 'isActive'));
-                    var organizationTypes = this.container.lookup('controller:application').get('organizationTypes');
-                    var active = _.filter(organizationTypes, function (type) {
-                        return type.isActive;  
-                    });
-                    var activeLabels = _.map(active, function (type) {
-                        return type.label;
-                    });
-                    mapmodule.updateFilters(activeLabels);
+                    Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
+                    this.container.lookup('controller:application').send('filtersChanged');
                 },
                 templateName: 'organization-type-item'
+            })
+        });
+
+        application.SectorView = Ember.CollectionView.extend({
+            tagName: 'ul',
+            classNames: ['filters-sector-list'],
+            itemViewClass: Ember.View.extend({
+                classNames: ['filters-sector-list-item'],
+                classNameBindings: ['content.isActive:active'],
+                click: function () {
+                    Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
+                    this.container.lookup('controller:application').send('filtersChanged');
+                },
+                templateName: 'sector-item'
             })
         });
 

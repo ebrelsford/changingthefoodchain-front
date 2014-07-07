@@ -30,9 +30,16 @@ function initializeMap(id) {
             }
         })
         organizationLayer.on('filterschange', function (filters) {
+            var sectors = filters.sectors,
+                types = filters.types;
+                
             this.eachLayer(function (l) {
-                if (filters.types.length === 0 ||
-                    _.intersection(l.feature.properties.types, filters.types).length > 0) {
+                var properties = l.feature.properties,
+                    typesMatch = _.intersection(properties.types, types).length > 0,
+                    sectorsMatch = _.intersection(properties.sectors, sectors).length > 0;
+                if ((sectors.length === 0 && types.length === 0) ||
+                    ((types.length === 0 || typesMatch) && 
+                     (sectors.length === 0 || sectorsMatch))) {
                     map.addLayer(l);
                 }
                 else {
@@ -54,7 +61,7 @@ function initializeMap(id) {
 module.exports = {
     init: initializeMap,
     isInitialized: function () { return initialized; },
-    updateFilters: function (organizationTypes) {
-        organizationLayer.fire('filterschange', { types: organizationTypes });
+    updateFilters: function (filters) {
+        organizationLayer.fire('filterschange', filters);
     }
 };
