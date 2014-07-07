@@ -26,11 +26,12 @@ function program5(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n    <div id=\"search\">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
     'type': ("search"),
     'action': ("search"),
     'value': ("searchText"),
     'placeholder': ("Search by name, city, state")
-  },hashTypes:{'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  },hashTypes:{'class': "STRING",'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    </div>\n    <nav id=\"nav\">\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
