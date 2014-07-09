@@ -110,7 +110,13 @@ module.exports = {
 
         application.AboutRoute = application.PageRoute.extend({
             model: function () {
-                return $.get('pages/about.html');
+                return $.get(CONFIG.API_BASE + '/pages/about/');
+            }
+        });
+
+        application.ContactRoute = application.PageRoute.extend({
+            model: function () {
+                return $.get(CONFIG.API_BASE + '/pages/contact/');
             }
         });
 
