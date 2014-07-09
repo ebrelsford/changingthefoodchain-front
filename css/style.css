@@ -2892,3 +2892,23 @@ header #languages {
 .carousel-control {
   padding-top: 85px;
 }
+#share-button {
+  background: rgba(255, 255, 255, 0.7);
+  bottom: 25px;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 50px;
+  z-index: 2000;
+}
+#shareModal .embed-map {
+  background: gray;
+  height: 250px;
+  width: 100%;
+}
+#shareModal .modal-body {
+  padding-top: 0;
+}
+#shareModal .modal-header {
+  border: 0;
+}

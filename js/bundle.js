@@ -57285,6 +57285,7 @@ module.exports = {
             });
             this.route('about');
             this.route('contact');
+            this.route('share');
         });
 
         application.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
@@ -57420,6 +57421,10 @@ module.exports = {
 
                 openOrganization: function (id) {
                     this.transitionToRoute('organization', id);
+                },
+
+                openShare: function () {
+                    this.transitionToRoute('share');
                 }
             }
         });
@@ -57556,7 +57561,52 @@ module.exports = {
         application.OrganizationAddMediaView = Ember.View.extend({
             didRenderElement : function() {
                 this._super();
-                $('#addOrganizationMediaModal').modal();
+                $('#addOrganizationMediaModal').modal()
+                    .on('hide.bs.modal', function () {
+                        App.__container__.lookup('route:organization.add_media').send('close');
+                    });
+            }
+        });
+
+        application.ShareController = Ember.Controller.extend({
+            embedCode: '<iframe src=""></iframe>',
+            embedSizeSelect: 'small',
+            embedSizes: ['small', 'large'],
+            shareUrl: ''
+        });
+
+        application.ShareRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.disconnectOutlet('modal');
+                    history.back();
+                }
+            },
+
+            getShareUrl: function () {
+                return window.location.protocol + '//' + window.location.host;
+            },
+
+            renderTemplate: function () {
+                this.render({
+                    into: 'application',
+                    outlet: 'modal'
+                })
+            },
+
+            setupController: function (controller, model) {
+                controller.set('model', model);
+                controller.set('shareUrl', this.getShareUrl());
+            }
+        });
+
+        application.ShareView = Ember.View.extend({
+            didRenderElement : function() {
+                this._super();
+                $('#shareModal').modal()
+                    .on('hide.bs.modal', function () {
+                        App.__container__.lookup('route:share').send('close');
+                    });
             }
         });
 
@@ -59729,7 +59779,9 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </section>\n</div>\n\n<div id=\"popup\">\n    ");
+  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"share-button\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">share</a>\n\n<div id=\"popup\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
   data.buffer.push("\n</div>\n\n<div id=\"page\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));
@@ -59949,6 +60001,35 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   stack1 = helpers._triageMustache.call(depth0, "view.content.label", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["share"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"modal fade\" id=\"shareModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"shareModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n            </div>\n            <div class=\"modal-body\">\n                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                    <li class=\"active\"><a href=\"#share\" role=\"tab\" data-toggle=\"tab\">Share</a></li>\n                    <li><a href=\"#embed\" role=\"tab\" data-toggle=\"tab\">Embed</a></li>\n                </ul>\n\n                <div class=\"tab-content\">\n                    <div class=\"tab-pane active\" id=\"share\">\n                        <div class=\"form-group\">\n                            <a href=\"#\" class=\"btn btn-default\">share on facebook</a>\n                            <a href=\"#\" class=\"btn btn-default\">share on twitter</a>\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("url"),
+    'value': ("shareUrl")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        <div class=\"form-group\">\n                            ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+    'class': ("form-control"),
+    'content': ("embedSizes"),
+    'value': ("embedSizeSelect")
+  },hashTypes:{'class': "STRING",'content': "ID",'value': "ID"},hashContexts:{'class': depth0,'content': depth0,'value': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("text"),
+    'value': ("embedCode")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            <div class=\"embed-map\"></div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });

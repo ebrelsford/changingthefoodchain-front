@@ -49,6 +49,7 @@ module.exports = {
             });
             this.route('about');
             this.route('contact');
+            this.route('share');
         });
 
         application.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
@@ -184,6 +185,10 @@ module.exports = {
 
                 openOrganization: function (id) {
                     this.transitionToRoute('organization', id);
+                },
+
+                openShare: function () {
+                    this.transitionToRoute('share');
                 }
             }
         });
@@ -320,7 +325,52 @@ module.exports = {
         application.OrganizationAddMediaView = Ember.View.extend({
             didRenderElement : function() {
                 this._super();
-                $('#addOrganizationMediaModal').modal();
+                $('#addOrganizationMediaModal').modal()
+                    .on('hide.bs.modal', function () {
+                        App.__container__.lookup('route:organization.add_media').send('close');
+                    });
+            }
+        });
+
+        application.ShareController = Ember.Controller.extend({
+            embedCode: '<iframe src=""></iframe>',
+            embedSizeSelect: 'small',
+            embedSizes: ['small', 'large'],
+            shareUrl: ''
+        });
+
+        application.ShareRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.disconnectOutlet('modal');
+                    history.back();
+                }
+            },
+
+            getShareUrl: function () {
+                return window.location.protocol + '//' + window.location.host;
+            },
+
+            renderTemplate: function () {
+                this.render({
+                    into: 'application',
+                    outlet: 'modal'
+                })
+            },
+
+            setupController: function (controller, model) {
+                controller.set('model', model);
+                controller.set('shareUrl', this.getShareUrl());
+            }
+        });
+
+        application.ShareView = Ember.View.extend({
+            didRenderElement : function() {
+                this._super();
+                $('#shareModal').modal()
+                    .on('hide.bs.modal', function () {
+                        App.__container__.lookup('route:share').send('close');
+                    });
             }
         });
 

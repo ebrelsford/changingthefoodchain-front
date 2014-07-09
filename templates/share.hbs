@@ -1,0 +1,32 @@
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#share" role="tab" data-toggle="tab">Share</a></li>
+                    <li><a href="#embed" role="tab" data-toggle="tab">Embed</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="share">
+                        <div class="form-group">
+                            <a href="#" class="btn btn-default">share on facebook</a>
+                            <a href="#" class="btn btn-default">share on twitter</a>
+                            {{input class="form-control" type="url" value=shareUrl}}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="embed">
+                        <div class="form-group">
+                            {{view Ember.Select class="form-control" content=embedSizes value=embedSizeSelect}}
+                            {{input class="form-control" type="text" value=embedCode}}
+                            <div class="embed-map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
