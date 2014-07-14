@@ -42,9 +42,10 @@ module.exports = {
         application.deferReadiness();
 
         application.Router.map(function() {
-            this.route('add-organization', { path: '/organization/add' });
+            this.route('add-organization', { path: '/organizations/add' });
+            this.route('list-organizations', { path: '/organizations' });
             this.resource('organization', {
-                path: '/organization/:organization_id'
+                path: '/organizations/:organization_id'
             }, function () {
                 this.route('add_media', { path: '/add-media' });
             });
@@ -85,6 +86,33 @@ module.exports = {
             photo: DS.attr(),
             organization: DS.belongsTo('organization'),
             url: DS.attr()
+        });
+
+        application.ListOrganizationsRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
+            model: function () {
+                return $.getJSON(CONFIG.API_BASE + '/organizations/');
+            },
+
+            renderTemplate: function () {
+                this.render('list-organizations', { outlet: 'page' });
+            },
+
+            deactivate: function () {
+                $('#page').hide();
+            }
+        });
+
+        application.ListOrganizationsView = Ember.View.extend({
+            didRenderElement: function () {
+                this._super();
+                $('#page').show();
+            }
         });
 
         application.PageRoute = Ember.Route.extend({
@@ -190,6 +218,10 @@ module.exports = {
 
                 openAddOrganization: function () {
                     this.transitionToRoute('add-organization');
+                },
+
+                openOrganizationList: function () {
+                    this.transitionToRoute('list-organizations');
                 },
 
                 openShare: function () {
@@ -503,7 +535,7 @@ module.exports = {
                     context: this,
                     data: data,
                     type: 'POST',
-                    url: CONFIG.API_BASE + 'content/photos/',
+                    url: CONFIG.API_BASE + '/content/photos/',
                     cache: false,
                     contentType: false,
                     processData: false
@@ -521,7 +553,7 @@ module.exports = {
                     context: this,
                     data: params,
                     type: 'POST',
-                    url: CONFIG.API_BASE + 'content/videos/'
+                    url: CONFIG.API_BASE + '/content/videos/'
                 })
                     .done(this.onSuccess)
                     .fail(this.onError);

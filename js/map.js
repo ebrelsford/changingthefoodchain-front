@@ -21,7 +21,7 @@ function initializeMap(id) {
         maxZoom: 18
     }).addTo(map);
 
-    $.getJSON(CONFIG.API_BASE + '/organizations/', function (data) {
+    $.getJSON(CONFIG.API_BASE + '/organizations/geojson/', function (data) {
         organizationLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 layer.on('click', function () {

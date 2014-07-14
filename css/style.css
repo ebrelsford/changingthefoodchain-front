@@ -2972,6 +2972,18 @@ header #languages {
     width: 25%;
   }
 }
+header #list-button {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  header #list-button {
+    float: left;
+    width: 8.33333333%;
+  }
+}
 #filters {
   background: rgba(255, 255, 255, 0.7);
   height: 400px;

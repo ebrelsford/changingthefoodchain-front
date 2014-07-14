@@ -57278,9 +57278,10 @@ module.exports = {
         application.deferReadiness();
 
         application.Router.map(function() {
-            this.route('add-organization', { path: '/organization/add' });
+            this.route('add-organization', { path: '/organizations/add' });
+            this.route('list-organizations', { path: '/organizations' });
             this.resource('organization', {
-                path: '/organization/:organization_id'
+                path: '/organizations/:organization_id'
             }, function () {
                 this.route('add_media', { path: '/add-media' });
             });
@@ -57321,6 +57322,33 @@ module.exports = {
             photo: DS.attr(),
             organization: DS.belongsTo('organization'),
             url: DS.attr()
+        });
+
+        application.ListOrganizationsRoute = Ember.Route.extend({
+            actions: {
+                close: function () {
+                    this.transitionTo('index');
+                }
+            },
+
+            model: function () {
+                return $.getJSON(CONFIG.API_BASE + '/organizations/');
+            },
+
+            renderTemplate: function () {
+                this.render('list-organizations', { outlet: 'page' });
+            },
+
+            deactivate: function () {
+                $('#page').hide();
+            }
+        });
+
+        application.ListOrganizationsView = Ember.View.extend({
+            didRenderElement: function () {
+                this._super();
+                $('#page').show();
+            }
         });
 
         application.PageRoute = Ember.Route.extend({
@@ -57426,6 +57454,10 @@ module.exports = {
 
                 openAddOrganization: function () {
                     this.transitionToRoute('add-organization');
+                },
+
+                openOrganizationList: function () {
+                    this.transitionToRoute('list-organizations');
                 },
 
                 openShare: function () {
@@ -57739,7 +57771,7 @@ module.exports = {
                     context: this,
                     data: data,
                     type: 'POST',
-                    url: CONFIG.API_BASE + 'content/photos/',
+                    url: CONFIG.API_BASE + '/content/photos/',
                     cache: false,
                     contentType: false,
                     processData: false
@@ -57757,7 +57789,7 @@ module.exports = {
                     context: this,
                     data: params,
                     type: 'POST',
-                    url: CONFIG.API_BASE + 'content/videos/'
+                    url: CONFIG.API_BASE + '/content/videos/'
                 })
                     .done(this.onSuccess)
                     .fail(this.onError);
@@ -58044,7 +58076,7 @@ function initializeMap(id) {
         maxZoom: 18
     }).addTo(map);
 
-    $.getJSON(CONFIG.API_BASE + '/organizations/', function (data) {
+    $.getJSON(CONFIG.API_BASE + '/organizations/geojson/', function (data) {
         organizationLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 layer.on('click', function () {
@@ -60002,7 +60034,9 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "en", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
   data.buffer.push(">english</a>\n        <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "es", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(">español</a>\n    </div>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\">\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
+  data.buffer.push(">español</a>\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\">\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("organizationTypes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -60058,6 +60092,31 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'target': ("view")
   },hashTypes:{'target': "STRING"},hashContexts:{'target': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(">›</a>   \n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["list-organizations"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n    <li>");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</li>\n    ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n<ul>\n    ");
+  stack1 = helpers.each.call(depth0, "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</ul>\n");
   return buffer;
   
 });
