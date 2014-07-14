@@ -57278,6 +57278,7 @@ module.exports = {
         application.deferReadiness();
 
         application.Router.map(function() {
+            this.route('add-organization', { path: '/organization/add' });
             this.resource('organization', {
                 path: '/organization/:organization_id'
             }, function () {
@@ -57423,6 +57424,10 @@ module.exports = {
                     this.transitionToRoute('organization', id);
                 },
 
+                openAddOrganization: function () {
+                    this.transitionToRoute('add-organization');
+                },
+
                 openShare: function () {
                     this.transitionToRoute('share');
                 }
@@ -57457,6 +57462,226 @@ module.exports = {
 
         });
 
+        application.AddOrganizationController = Ember.Controller.extend({
+            potentialSectors: ['agriculture', 'service'],
+            potentialTypes: ['advocacy', 'union', 'workers center'],
+
+            address: '',
+            address2: '',
+            city: '',
+            name: '',
+            state: '',
+            zip: '',
+            email: '',
+            phone: '',
+            sectors: [],
+            types: [],
+            centroid: null,
+
+            geocodedAddress: '',
+            geocodedCity: '',
+            geocodedState: '',
+            geocodedZip: '',
+
+            fullAddress: function () {
+                return [
+                    this.get('address'),
+                    this.get('city'),
+                    this.get('state'),
+                    this.get('zip')
+                ].join(', ');
+            }.property('address', 'city', 'state', 'zip'),
+
+            typeCheckbox: Ember.Checkbox.extend({
+                change: function () {
+                    var types = this.get('controller').types;
+                    if (this.checked) {
+                        types.push(this.name);
+                    }
+                    else {
+                        types.removeObject(this.name);
+                    }
+                }
+            }),
+
+            sectorCheckbox: Ember.Checkbox.extend({
+                change: function () {
+                    var sectors = this.get('controller').sectors;
+                    if (this.checked) {
+                        sectors.push(this.name);
+                    }
+                    else {
+                        sectors.removeObject(this.name);
+                    }
+                }
+            }),
+
+            actions: {
+                updateCentroid: function () {
+                    geocode(this.get('fullAddress'), null, null, function (result) {
+                        if (result) {
+                            var controller = App.__container__.lookup('controller:add-organization');
+                            controller.set('centroid', result.latlng);
+                            controller.set('geocodedAddress', result.address);
+                            controller.set('geocodedCity', result.city);
+                            controller.set('geocodedState', result.state);
+                            controller.set('geocodedZip', result.zip);
+                            controller.send('updateMap');
+                        }
+                    });
+                },
+
+                updateMap: function () {
+                    this.get('map').fire('locationfound', {
+                        latlng: this.get('centroid')
+                    });
+                }
+            }
+        });
+
+        application.AddOrganizationRoute = Ember.Route.extend({
+            clearValidation: function () {
+                this.controller.set('centroidError', false);
+                this.controller.set('error', false);
+                this.controller.set('nameError', false);
+                this.controller.set('sectorsError', false);
+                this.controller.set('typesError', false);
+            },
+
+            clearForm: function () {
+                this.controller.set('name', null);
+                this.controller.set('address_line1', null);
+                this.controller.set('address_line2', null);
+                this.controller.set('city', null);
+                this.controller.set('state_province', null);
+                this.controller.set('postal_code', null);
+                this.controller.set('email', null);
+                this.controller.set('phone', null);
+                this.controller.set('centroid', null);
+            },
+
+            validate: function () {
+                this.clearValidation();
+                if (!this.controller.get('name')) {
+                    this.controller.set('nameError', true);
+                    return false;
+                }
+                if (!this.controller.get('centroid')) {
+                    this.controller.set('centroidError', true);
+                    return false;
+                }
+                if (this.controller.get('types').length === 0) {
+                    this.controller.set('typesError', true);
+                    return false;
+                }
+                if (this.controller.get('sectors').length === 0) {
+                    this.controller.set('sectorsError', true);
+                    return false;
+                }
+                return true;
+            },
+
+            actions: {
+                close: function () {
+                    this.disconnectOutlet('modal');
+                    history.back();
+                },
+
+                submit: function () {
+                    if (!this.validate()) return;
+
+                    var controller = this.controller,
+                        centroid = controller.get('centroid'),
+                        data = new FormData();
+
+                    data.append('name', controller.get('name'));
+                    data.append('address_line1', controller.get('address'));
+                    data.append('address_line2', controller.get('address2'));
+                    data.append('city', controller.get('city'));
+                    data.append('state_province', controller.get('state'));
+                    data.append('postal_code', controller.get('zip'));
+                    data.append('email', controller.get('email'));
+                    data.append('phone', controller.get('phone'));
+                    data.append('centroid', 'SRID=4326;POINT(' + centroid[1] + ' ' + centroid[0] + ')');
+
+                    $.each(controller.get('sectors'), function (i, sector) {
+                        if (sector) {
+                            data.append('sectors', sector);
+                        }
+                    });
+                    $.each(controller.get('types'), function (i, type) {
+                        if (type) {
+                            data.append('types', type);
+                        }
+                    });
+
+                    controller.set('submitting', true);
+                    $.ajax({
+                        context: this,
+                        type: 'POST',
+                        url: CONFIG.API_BASE + '/organizations/',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    })
+                        .done(function () {
+                            this.controller.set('success', true);
+                            this.clearForm();
+                        })
+                        .fail(function () {
+                            this.controller.set('error', true);
+                        })
+                        .always(function () {
+                            this.controller.set('submitting', false);
+                        });;
+                }
+            },
+
+            renderTemplate: function () {
+                this.render({
+                    into: 'application',
+                    outlet: 'modal'
+                })
+            }
+        });
+
+        application.AddOrganizationView = Ember.View.extend({
+            didRenderElement : function() {
+                this._super();
+                $('#addOrganizationModal').modal()
+                    .on('hide.bs.modal', function () {
+                        App.__container__.lookup('route:add-organization').send('close');
+                    });
+
+                var marker = null;
+                var addOrganizationMap = L.map('add-organization-map', {
+                    center: [39.095963, -97.470703],
+                    maxZoom: 19,
+                    zoom: 3,
+                    zoomControl: false
+                })
+
+                addOrganizationMap.on('locationfound', function (e) {
+                    if (marker) {
+                        addOrganizationMap.removeLayer(marker);
+                    }
+                    marker = L.marker(e.latlng).addTo(addOrganizationMap);
+                    addOrganizationMap.setView(e.latlng, 16);
+                });
+
+                var streets = L.tileLayer(CONFIG.TILE_URL, {
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+                    mapId: CONFIG.MAP_ID,
+                    maxZoom: 18
+                }).addTo(addOrganizationMap);
+
+                this.controller.set('map', addOrganizationMap);
+            },
+
+            templateName: 'organization/add'
+        });
+
         application.OrganizationAddMediaRoute = Ember.Route.extend({
             actions: {
                 close: function () {
@@ -57479,9 +57704,7 @@ module.exports = {
 
             setupController: function (controller, model) {
                 controller.set('model', model);
-            },
-
-            templateName: 'organization/add_media.hbs'
+            }
         });
 
         application.OrganizationAddMediaController = Ember.Controller.extend({
@@ -57738,6 +57961,9 @@ function get_latitude(result) {
 module.exports = {
 
     geocode: function (address, bounds, state, f) {
+        if (!bounds) {
+            bounds = [-180, 90, 180, 90];
+        }
         geocoder.geocode({
             'address': address,
             'bounds': to_google_bounds(bounds)
@@ -57747,6 +57973,11 @@ module.exports = {
                 if (!state || result_state === state) {
                     results[i].latlng = [get_latitude(results[i]),
                                          get_longitude(results[i])];
+
+                    results[i].address = get_street(results[i]);
+                    results[i].city = get_component(results[i], 'sublocality_level_1');
+                    results[i].state = result_state;
+                    results[i].zip = get_component(results[i], 'postal_code');
                     return f(results[i], status);
                 }
             }
@@ -57807,9 +58038,9 @@ function initializeMap(id) {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    var streets = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var streets = L.tileLayer(CONFIG.TILE_URL, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-        mapId: 'fcwa.ii987b9p',
+        mapId: CONFIG.MAP_ID,
         maxZoom: 18
     }).addTo(map);
 
@@ -59779,7 +60010,9 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"share-button\" ");
+  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"add-organization-button\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">add organization</a>\n<a id=\"share-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">share</a>\n\n<div id=\"popup\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
@@ -59923,6 +60156,176 @@ function program8(depth0,data) {
   stack1 = helpers['if'].call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Please enter a valid address that shows up on the map.\n                        </div>\n                    ");
+  }
+
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Please enter a name for your organization.\n                        </div>\n                    ");
+  }
+
+function program5(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Please choose a sector.\n                        </div>\n                    ");
+  }
+
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Please choose a type.\n                        </div>\n                    ");
+  }
+
+function program9(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Something went wrong. Please try again.\n                        </div>\n                    ");
+  }
+
+function program11(depth0,data) {
+  
+  
+  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            Successfully added organization.\n                        </div>\n                    ");
+  }
+
+function program13(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                                <div>\n                                    <label>\n                                        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "typeCheckbox", {hash:{
+    'name': ("type")
+  },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                                        ");
+  stack1 = helpers._triageMustache.call(depth0, "type", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                                    </label>\n                                </div>\n                                ");
+  return buffer;
+  }
+
+function program15(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                                <div>\n                                    <label>\n                                        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "sectorCheckbox", {hash:{
+    'name': ("sector")
+  },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                                        ");
+  stack1 = helpers._triageMustache.call(depth0, "sector", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                                    </label>\n                                </div>\n                                ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationModalLabel\">Add My Organization</h4>\n            </div>\n            <div class=\"modal-body\">\n                <form>\n                    ");
+  stack1 = helpers['if'].call(depth0, "centroidError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "nameError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "sectorsError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "typesError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n                    <div class=\"add-organization-location-row\">\n                        <div class=\"add-organization-location-form\">\n                            <div class=\"form-group\">\n                                <label for=\"organization-name\">organization name</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("organization-name"),
+    'value': ("name")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n\n                            <div class=\"form-group\">\n                                <label for=\"address\">address</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("address"),
+    'value': ("address"),
+    'focus-out': ("updateCentroid")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n\n                            <div class=\"form-group\">\n                                <label for=\"address2\">address line 2</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("address2"),
+    'value': ("address2")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n\n                            <div class=\"add-organization-location-form-city-state\">\n                                <div class=\"form-group field-city\">\n                                    <label for=\"city\">city</label>\n                                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("city"),
+    'value': ("city"),
+    'focus-out': ("updateCentroid")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                                </div>\n\n                                <div class=\"form-group field-state\">\n                                    <label for=\"state\">state</label>\n                                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("state"),
+    'value': ("state"),
+    'focus-out': ("updateCentroid")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                                </div>\n\n                                <div class=\"form-group field-zip\">\n                                    <label for=\"zip\">zip</label>\n                                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("zip"),
+    'value': ("zip"),
+    'focus-out': ("updateCentroid")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"add-organization-location-output\">\n                            <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                            <div class=\"add-organization-location-output-address\">\n                                ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("<br />\n                                ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedState", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"add-organization-contact\">\n                        <div class=\"row\">\n                            <div class=\"form-group field-email\">\n                                <label for=\"email\">email</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("email"),
+    'type': ("email"),
+    'value': ("email")
+  },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n                            <div class=\"form-group field-phone\">\n                                <label for=\"phone\">phone</label>\n                                ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("phone"),
+    'type': ("phone"),
+    'value': ("phone")
+  },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"add-organization-type\">\n                        <div class=\"row\">\n                            <div class=\"form-group field-types\">\n                                <h3>organization types</h3>\n                                ");
+  stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                            </div>\n                            <div class=\"form-group field-sectors\">\n                                <h3>sectors</h3>\n                                ");
+  stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n                        <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'disabled': ("submitting")
+  },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Submit</button>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });

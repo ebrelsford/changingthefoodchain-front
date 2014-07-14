@@ -110,6 +110,10 @@ hr {
 .navbar-collapse:after,
 .nav:before,
 .nav:after,
+.add-organization-location-row:before,
+.add-organization-location-row:after,
+.add-organization-location-form-city-state:before,
+.add-organization-location-form-city-state:after,
 header:before,
 header:after {
   content: " ";
@@ -125,6 +129,8 @@ header:after {
 .navbar-header:after,
 .navbar-collapse:after,
 .nav:after,
+.add-organization-location-row:after,
+.add-organization-location-form-city-state:after,
 header:after {
   clear: both;
 }
@@ -2751,6 +2757,144 @@ img {
 body > .ember-view {
   height: 100%;
   width: 100%;
+}
+#add-organization-button {
+  background: rgba(255, 255, 255, 0.7);
+  bottom: 25px;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 95px;
+  z-index: 2000;
+}
+#addOrganizationModal .modal-dialog {
+  width: 800px;
+}
+.add-organization-location-row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.add-organization-location-form {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-location-form {
+    float: left;
+    width: 58.33333333%;
+  }
+}
+.add-organization-location-form-city-state {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.add-organization-location-form-city-state .field-city {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-location-form-city-state .field-city {
+    float: left;
+    width: 50%;
+  }
+}
+.add-organization-location-form-city-state .field-state {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-location-form-city-state .field-state {
+    float: left;
+    width: 25%;
+  }
+}
+.add-organization-location-form-city-state .field-zip {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-location-form-city-state .field-zip {
+    float: left;
+    width: 25%;
+  }
+}
+.add-organization-location-output {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-location-output {
+    float: left;
+    width: 41.66666667%;
+  }
+}
+.add-organization-location-output-map {
+  height: 250px;
+  width: 100%;
+}
+.add-organization-contact .field-email {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-contact .field-email {
+    float: left;
+    width: 50%;
+  }
+}
+.add-organization-contact .field-phone {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-contact .field-phone {
+    float: left;
+    width: 50%;
+  }
+}
+.add-organization-type input[type=checkbox] {
+  border: 0;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+.add-organization-type .field-sectors {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-type .field-sectors {
+    float: left;
+    width: 50%;
+  }
+}
+.add-organization-type .field-types {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .add-organization-type .field-types {
+    float: left;
+    width: 50%;
+  }
 }
 .filters-sector .filters-sector-list-item.active {
   font-weight: bold;

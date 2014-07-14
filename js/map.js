@@ -15,9 +15,9 @@ function initializeMap(id) {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    var streets = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var streets = L.tileLayer(CONFIG.TILE_URL, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-        mapId: 'fcwa.ii987b9p',
+        mapId: CONFIG.MAP_ID,
         maxZoom: 18
     }).addTo(map);
 

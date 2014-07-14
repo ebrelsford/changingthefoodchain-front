@@ -38,6 +38,9 @@ function get_latitude(result) {
 module.exports = {
 
     geocode: function (address, bounds, state, f) {
+        if (!bounds) {
+            bounds = [-180, 90, 180, 90];
+        }
         geocoder.geocode({
             'address': address,
             'bounds': to_google_bounds(bounds)
@@ -47,6 +50,11 @@ module.exports = {
                 if (!state || result_state === state) {
                     results[i].latlng = [get_latitude(results[i]),
                                          get_longitude(results[i])];
+
+                    results[i].address = get_street(results[i]);
+                    results[i].city = get_component(results[i], 'sublocality_level_1');
+                    results[i].state = result_state;
+                    results[i].zip = get_component(results[i], 'postal_code');
                     return f(results[i], status);
                 }
             }

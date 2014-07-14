@@ -1,0 +1,80 @@
+#add-organization-button {
+    background: rgba(255, 255, 255, 0.7);
+    bottom: 25px;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 95px;
+    z-index: @interface-z-index;
+}
+
+#addOrganizationModal {
+    .modal-dialog {
+        width: 800px;
+    }
+}
+
+.add-organization {
+    &-location {
+        &-row {
+            .make-row();
+        }
+        &-form {
+            .make-sm-column(7);
+
+            &-city-state {
+                .make-row();
+
+                .field {
+                    &-city {
+                        .make-sm-column(6);
+                    }
+                    &-state {
+                        .make-sm-column(3);
+                    }
+                    &-zip {
+                        .make-sm-column(3);
+                    }
+                }
+            }
+        }
+
+        &-output {
+            .make-sm-column(5);
+
+            &-map {
+                height: 250px;
+                width: 100%;
+            }
+        }
+    }
+
+    &-contact {
+        .field {
+            &-email {
+                .make-sm-column(6);
+            }
+            &-phone {
+                .make-sm-column(6);
+            }
+        }
+    }
+
+    &-type {
+        input[type=checkbox] {
+            border: 0;
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+        }
+
+        .field {
+            &-sectors {
+                .make-sm-column(6);
+            }
+            &-types {
+                .make-sm-column(6);
+            }
+        }
+    }
+}
