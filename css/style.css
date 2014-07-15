@@ -3134,7 +3134,6 @@ header #list-button {
   z-index: 2000;
 }
 #shareModal .embed-map {
-  background: gray;
   height: 250px;
   width: 100%;
 }

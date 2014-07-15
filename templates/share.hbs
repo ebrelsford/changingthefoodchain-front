@@ -19,11 +19,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="embed">
-                        <div class="form-group">
-                            {{view Ember.Select class="form-control" content=embedSizes value=embedSizeSelect}}
-                            {{input class="form-control" type="text" value=embedCode}}
-                            <div class="embed-map"></div>
-                        </div>
+                        {{view view.embedView}}
                     </div>
                 </div>
             </div>

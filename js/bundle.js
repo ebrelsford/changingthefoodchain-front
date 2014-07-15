@@ -57832,9 +57832,6 @@ module.exports = {
         });
 
         application.ShareController = Ember.Controller.extend({
-            embedCode: '<iframe src=""></iframe>',
-            embedSizeSelect: 'small',
-            embedSizes: ['small', 'large'],
             shareUrl: ''
         });
 
@@ -57863,14 +57860,59 @@ module.exports = {
             }
         });
 
+        application.EmbedController = Ember.Controller.extend({
+            center: [39.095963, -97.470703],
+            zoom: 3,
+            code: function () {
+                var prefix = window.location.protocol + '://' + window.location.host,
+                    src = prefix + '/embed.html?' + $.param({
+                        center: this.get('center').join(','),
+                        size: this.get('size'),
+                        zoom: this.get('zoom')
+                    });
+                return '<iframe src="' + src + '"></iframe>';
+            }.property('center', 'size', 'zoom'),
+            size: 'small',
+            sizes: ['small', 'large']
+        });
+
+        application.EmbedView = Ember.View.extend({
+            controller: application.EmbedController.create(),
+
+            didRenderElement: function () {
+                var embedMap = L.map('embed-map', {
+                    center: this.controller.get('center'),
+                    maxZoom: 19,
+                    zoom: this.controller.get('zoom'),
+                    zoomControl: false
+                })
+
+                embedMap.on('moveend zoomend', function () {
+                    var center = embedMap.getCenter();
+                    this.controller.set('center', [center.lat, center.lng]);
+                    this.controller.set('zoom', embedMap.getZoom());
+                }, this);
+
+                var streets = L.tileLayer(CONFIG.TILE_URL, {
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+                    mapId: CONFIG.MAP_ID,
+                    maxZoom: 18
+                }).addTo(embedMap);
+            },
+
+            templateName: 'embed'
+        });
+
         application.ShareView = Ember.View.extend({
-            didRenderElement : function() {
+            didRenderElement: function() {
                 this._super();
                 $('#shareModal').modal()
                     .on('hide.bs.modal', function () {
                         App.__container__.lookup('route:share').send('close');
                     });
-            }
+            },
+
+            embedView: application.EmbedView.create()
         });
 
         application.OrganizationTypeView = Ember.CollectionView.extend({
@@ -60104,6 +60146,29 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
+Ember.TEMPLATES["embed"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+
+
+  data.buffer.push("<div class=\"form-group\">\n    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+    'class': ("form-control"),
+    'content': ("sizes"),
+    'value': ("size")
+  },hashTypes:{'class': "STRING",'content': "ID",'value': "ID"},hashContexts:{'class': depth0,'content': depth0,'value': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("text"),
+    'value': ("code")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n    <div id=\"embed-map\" class=\"embed-map\"></div>\n</div>\n");
+  return buffer;
+  
+});
+
 Ember.TEMPLATES["list-organizations"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -60510,19 +60575,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'type': ("url"),
     'value': ("shareUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        <div class=\"form-group\">\n                            ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
-    'class': ("form-control"),
-    'content': ("embedSizes"),
-    'value': ("embedSizeSelect")
-  },hashTypes:{'class': "STRING",'content': "ID",'value': "ID"},hashContexts:{'class': depth0,'content': depth0,'value': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                            ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'class': ("form-control"),
-    'type': ("text"),
-    'value': ("embedCode")
-  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                            <div class=\"embed-map\"></div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.embedView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });
