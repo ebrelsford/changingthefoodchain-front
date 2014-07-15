@@ -57831,90 +57831,6 @@ module.exports = {
             }
         });
 
-        application.ShareController = Ember.Controller.extend({
-            shareUrl: ''
-        });
-
-        application.ShareRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.disconnectOutlet('modal');
-                    history.back();
-                }
-            },
-
-            getShareUrl: function () {
-                return window.location.protocol + '//' + window.location.host;
-            },
-
-            renderTemplate: function () {
-                this.render({
-                    into: 'application',
-                    outlet: 'modal'
-                })
-            },
-
-            setupController: function (controller, model) {
-                controller.set('model', model);
-                controller.set('shareUrl', this.getShareUrl());
-            }
-        });
-
-        application.EmbedController = Ember.Controller.extend({
-            center: [39.095963, -97.470703],
-            zoom: 3,
-            code: function () {
-                var prefix = window.location.protocol + '://' + window.location.host,
-                    src = prefix + '/embed.html?' + $.param({
-                        center: this.get('center').join(','),
-                        size: this.get('size'),
-                        zoom: this.get('zoom')
-                    });
-                return '<iframe src="' + src + '"></iframe>';
-            }.property('center', 'size', 'zoom'),
-            size: 'small',
-            sizes: ['small', 'large']
-        });
-
-        application.EmbedView = Ember.View.extend({
-            controller: application.EmbedController.create(),
-
-            didRenderElement: function () {
-                var embedMap = L.map('embed-map', {
-                    center: this.controller.get('center'),
-                    maxZoom: 19,
-                    zoom: this.controller.get('zoom'),
-                    zoomControl: false
-                })
-
-                embedMap.on('moveend zoomend', function () {
-                    var center = embedMap.getCenter();
-                    this.controller.set('center', [center.lat, center.lng]);
-                    this.controller.set('zoom', embedMap.getZoom());
-                }, this);
-
-                var streets = L.tileLayer(CONFIG.TILE_URL, {
-                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-                    mapId: CONFIG.MAP_ID,
-                    maxZoom: 18
-                }).addTo(embedMap);
-            },
-
-            templateName: 'embed'
-        });
-
-        application.ShareView = Ember.View.extend({
-            didRenderElement: function() {
-                this._super();
-                $('#shareModal').modal()
-                    .on('hide.bs.modal', function () {
-                        App.__container__.lookup('route:share').send('close');
-                    });
-            },
-
-            embedView: application.EmbedView.create()
-        });
-
         application.OrganizationTypeView = Ember.CollectionView.extend({
             tagName: 'ul',
             classNames: ['filters-type-list'],
@@ -58002,7 +57918,7 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":15,"./geocode":8,"./i18n":9,"./map":11,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":12,"underscore":14}],8:[function(require,module,exports){
+},{"../templates/templates":16,"./geocode":8,"./i18n":9,"./map":11,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":13,"underscore":15}],8:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -58095,14 +58011,15 @@ module.exports = {
     }
 };
 
-},{"qs":13}],10:[function(require,module,exports){
+},{"qs":14}],10:[function(require,module,exports){
 window.App = require('./app').init();
+require('./share');
 
 require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./app":7,"./i18n":9}],11:[function(require,module,exports){
+},{"./app":7,"./i18n":9,"./share":12}],11:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -58171,7 +58088,95 @@ module.exports = {
     }
 };
 
-},{"underscore":14}],12:[function(require,module,exports){
+},{"underscore":15}],12:[function(require,module,exports){
+var Ember = require('ember');
+
+
+App.ShareController = Ember.Controller.extend({
+    shareUrl: ''
+});
+
+App.ShareRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.disconnectOutlet('modal');
+            history.back();
+        }
+    },
+
+    getShareUrl: function () {
+        return window.location.protocol + '//' + window.location.host;
+    },
+
+    renderTemplate: function () {
+        this.render({
+            into: 'application',
+            outlet: 'modal'
+        })
+    },
+
+    setupController: function (controller, model) {
+        controller.set('model', model);
+        controller.set('shareUrl', this.getShareUrl());
+    }
+});
+
+App.EmbedController = Ember.Controller.extend({
+    center: [39.095963, -97.470703],
+    zoom: 3,
+    code: function () {
+        var prefix = window.location.protocol + '://' + window.location.host,
+            src = prefix + '/embed.html?' + $.param({
+                center: this.get('center').join(','),
+                size: this.get('size'),
+                zoom: this.get('zoom')
+            });
+        return '<iframe src="' + src + '"></iframe>';
+    }.property('center', 'size', 'zoom'),
+    size: 'small',
+    sizes: ['small', 'large']
+});
+
+App.EmbedView = Ember.View.extend({
+    controller: App.EmbedController.create(),
+
+    didRenderElement: function () {
+        var embedMap = L.map('embed-map', {
+            center: this.controller.get('center'),
+            maxZoom: 19,
+            zoom: this.controller.get('zoom'),
+            zoomControl: false
+        });
+
+        embedMap.on('moveend zoomend', function () {
+            var center = embedMap.getCenter();
+            this.controller.set('center', [center.lat, center.lng]);
+            this.controller.set('zoom', embedMap.getZoom());
+        }, this);
+
+        var streets = L.tileLayer(CONFIG.TILE_URL, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+            mapId: CONFIG.MAP_ID,
+            maxZoom: 18
+        }).addTo(embedMap);
+    },
+
+    templateName: 'embed'
+});
+
+App.ShareView = Ember.View.extend({
+    didRenderElement: function() {
+        this._super();
+        $('#shareModal').modal()
+            .on('hide.bs.modal', function () {
+                App.__container__.lookup('route:share').send('close');
+            });
+    },
+
+    embedView: App.EmbedView.create()
+});
+
+},{"ember":6}],13:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -58326,7 +58331,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -58694,7 +58699,7 @@ function decode(str) {
   }
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -60039,7 +60044,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
