@@ -114,6 +114,8 @@ hr {
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:before,
 .add-organization-location-form-city-state:after,
+.organizations-list-item:before,
+.organizations-list-item:after,
 header:before,
 header:after {
   content: " ";
@@ -131,6 +133,7 @@ header:after {
 .nav:after,
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:after,
+.organizations-list-item:after,
 header:after {
   clear: both;
 }
@@ -2896,6 +2899,79 @@ body > .ember-view {
     width: 50%;
   }
 }
+.organizations-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.organizations-list-item {
+  margin-left: -15px;
+  margin-right: -15px;
+  cursor: pointer;
+}
+.organizations-list-item-name {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .organizations-list-item-name {
+    float: left;
+    width: 41.66666667%;
+  }
+}
+.organizations-list-item-city {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .organizations-list-item-city {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+.organizations-list-item-state {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .organizations-list-item-state {
+    float: left;
+    width: 8.33333333%;
+  }
+}
+.organizations-list-item-types {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .organizations-list-item-types {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+.organizations-list-item-sectors {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .organizations-list-item-sectors {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+.organizations-list-item:hover {
+  background: #aaa;
+}
 .filters-sector .filters-sector-list-item.active {
   font-weight: bold;
 }
@@ -3005,7 +3081,7 @@ header #list-button {
   top: 75px;
   width: 250px;
   z-index: 2000;
-  width: 550px;
+  width: 850px;
 }
 #page > section {
   margin-top: 20px;

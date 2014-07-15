@@ -1,0 +1,30 @@
+.organizations-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &-item {
+        .make-row();
+        cursor: pointer;
+
+        &-name {
+            .make-sm-column(5);
+        }
+        &-city {
+            .make-sm-column(2);
+        }
+        &-state {
+            .make-sm-column(1);
+        }
+        &-types {
+            .make-sm-column(2);
+        }
+        &-sectors {
+            .make-sm-column(2);
+        }
+
+        &:hover {
+            background: #aaa;
+        }
+    }
+}

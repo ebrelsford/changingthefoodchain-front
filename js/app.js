@@ -108,6 +108,14 @@ module.exports = {
             }
         });
 
+        application.ListOrganizationsController = Ember.Controller.extend({
+            actions: {
+                openOrganization: function (id) {
+                    this.transitionToRoute('organization', id);
+                }
+            }
+        });
+
         application.ListOrganizationsView = Ember.View.extend({
             didRenderElement: function () {
                 this._super();
