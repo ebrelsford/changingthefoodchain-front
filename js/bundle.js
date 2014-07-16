@@ -60335,6 +60335,7 @@ function initializeMap() {
 
     // Get initial map view from hash's search string
     var hash = window.location.hash,
+        s,
         center,
         zoom;
 
@@ -60349,7 +60350,7 @@ function initializeMap() {
                 lat: parseFloat(params.lat)
             };
         }
-        if (params.zoom) {
+        if (params.z) {
             zoom = parseInt(params.z);
         }
     }
@@ -60918,7 +60919,10 @@ var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
-    shareUrl: ''
+    shareUrl: function () {
+        return window.location.protocol + '//' + window.location.host + '/#/' +
+            window.location.hash.slice(window.location.hash.indexOf('?'));
+    }.property()
 });
 
 App.ShareRoute = Ember.Route.extend({
@@ -60929,20 +60933,11 @@ App.ShareRoute = Ember.Route.extend({
         }
     },
 
-    getShareUrl: function () {
-        return window.location.protocol + '//' + window.location.host;
-    },
-
     renderTemplate: function () {
         this.render({
             into: 'application',
             outlet: 'modal'
         })
-    },
-
-    setupController: function (controller, model) {
-        controller.set('model', model);
-        controller.set('shareUrl', this.getShareUrl());
     }
 });
 

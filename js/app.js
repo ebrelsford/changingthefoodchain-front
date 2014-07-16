@@ -18,6 +18,7 @@ function initializeMap() {
 
     // Get initial map view from hash's search string
     var hash = window.location.hash,
+        s,
         center,
         zoom;
 
@@ -32,7 +33,7 @@ function initializeMap() {
                 lat: parseFloat(params.lat)
             };
         }
-        if (params.zoom) {
+        if (params.z) {
             zoom = parseInt(params.z);
         }
     }
