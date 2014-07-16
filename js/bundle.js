@@ -57944,31 +57944,47 @@ var map,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5;
 
-function initializeMap(id, center, zoom) {
-    map = L.map(id, {
+function createMap(id, center, zoom) {
+    return L.map(id, {
         center: center || defaultCenter,
         maxZoom: 19,
         zoom: zoom || defaultZoom,
         zoomControl: false
     });
-    var $map = $('#' + id);
+}
 
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-    var streets = L.tileLayer(CONFIG.TILE_URL, {
+function addStreets(map) {
+    return L.tileLayer(CONFIG.TILE_URL, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
         mapId: CONFIG.MAP_ID,
         maxZoom: 18
     }).addTo(map);
+}
 
+function addOrganizations(map, callback) {
     $.getJSON(CONFIG.API_BASE + '/organizations/geojson/', function (data) {
-        organizationLayer = L.geoJson(data, {
+        var organizationLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 layer.on('click', function () {
                     map.fire('featureclick', feature);
                 });
             }
         })
+        organizationLayer.addTo(map);
+        if (callback !== undefined) {
+            callback(organizationLayer);
+        }
+    });
+}
+
+function initializeMap(id, center, zoom) {
+    map = createMap(id, center, zoom);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    addStreets(map);
+    addOrganizations(map, function (layer) {
+        organizationLayer = layer;
         organizationLayer.on('filterschange', function (filters) {
             var sectors = filters.sectors,
                 types = filters.types;
@@ -57987,7 +58003,6 @@ function initializeMap(id, center, zoom) {
                 }
             });
         });
-        organizationLayer.addTo(map);
     });
 
     map.on('locationfound', function (e) {
@@ -58000,6 +58015,9 @@ function initializeMap(id, center, zoom) {
 
 module.exports = {
     init: initializeMap,
+    createMap: createMap,
+    addStreets: addStreets,
+    addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
@@ -58114,6 +58132,7 @@ App.ContactRoute = App.PageRoute.extend({
 
 },{}],19:[function(require,module,exports){
 var Ember = require('ember');
+var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
@@ -58173,24 +58192,16 @@ App.EmbedView = Ember.View.extend({
     controller: App.EmbedController.create(),
 
     didRenderElement: function () {
-        var embedMap = L.map('embed-map', {
-            center: this.controller.get('center'),
-            maxZoom: 19,
-            zoom: this.controller.get('zoom'),
-            zoomControl: false
-        });
+        var embedMap = map.createMap('embed-map', this.controller.get('center'),
+                                     this.controller.get('zoom'));
+        map.addStreets(embedMap);
+        map.addOrganizations(embedMap);
 
         embedMap.on('moveend zoomend', function () {
             var center = embedMap.getCenter();
             this.controller.set('center', [center.lat, center.lng]);
             this.controller.set('zoom', embedMap.getZoom());
         }, this);
-
-        var streets = L.tileLayer(CONFIG.TILE_URL, {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-            mapId: CONFIG.MAP_ID,
-            maxZoom: 18
-        }).addTo(embedMap);
 
         $('#embed-tab').on('shown.bs.tab', null, { map: embedMap }, function (event) {
             event.data.map.invalidateSize(false);
@@ -58212,7 +58223,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView.create()
 });
 
-},{"ember":6}],20:[function(require,module,exports){
+},{"./map":15,"ember":6}],20:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 

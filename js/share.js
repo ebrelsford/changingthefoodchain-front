@@ -1,4 +1,5 @@
 var Ember = require('ember');
+var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
@@ -58,24 +59,16 @@ App.EmbedView = Ember.View.extend({
     controller: App.EmbedController.create(),
 
     didRenderElement: function () {
-        var embedMap = L.map('embed-map', {
-            center: this.controller.get('center'),
-            maxZoom: 19,
-            zoom: this.controller.get('zoom'),
-            zoomControl: false
-        });
+        var embedMap = map.createMap('embed-map', this.controller.get('center'),
+                                     this.controller.get('zoom'));
+        map.addStreets(embedMap);
+        map.addOrganizations(embedMap);
 
         embedMap.on('moveend zoomend', function () {
             var center = embedMap.getCenter();
             this.controller.set('center', [center.lat, center.lng]);
             this.controller.set('zoom', embedMap.getZoom());
         }, this);
-
-        var streets = L.tileLayer(CONFIG.TILE_URL, {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-            mapId: CONFIG.MAP_ID,
-            maxZoom: 18
-        }).addTo(embedMap);
 
         $('#embed-tab').on('shown.bs.tab', null, { map: embedMap }, function (event) {
             event.data.map.invalidateSize(false);
