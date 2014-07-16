@@ -68,6 +68,10 @@ App.EmbedView = Ember.View.extend({
             mapId: CONFIG.MAP_ID,
             maxZoom: 18
         }).addTo(embedMap);
+
+        $('#embed-tab').on('shown.bs.tab', null, { map: embedMap }, function (event) {
+            event.data.map.invalidateSize(false);
+        });
     },
 
     templateName: 'embed'
