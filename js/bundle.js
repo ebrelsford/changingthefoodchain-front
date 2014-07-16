@@ -57859,66 +57859,67 @@ module.exports = {
             })
         });
 
-        //
-        // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
-        //
-        application.CarouselView = Ember.View.extend({    
-            templateName: 'carousel',
-            classNames: ['carousel', 'slide'],
-
-            init: function() { 
-                this._super.apply(this, arguments);
-                // Disable the data api from boostrap
-                $(document).off('.data-api');      
-
-                // At least one item must have the active class, so we set the 
-                // first here, and the class will be added by class binding
-                var obj = this.get('content.firstObject');
-                Ember.set(obj, 'isActive', true);
-            },
-
-            previousSlide: function() {
-                this.$().carousel('prev');
-            },
-
-            nextSlide: function() {
-                this.$().carousel('next');
-            },
-
-            didInsertElement: function() {
-                this.$().carousel();
-            },
-
-            indicatorsView: Ember.CollectionView.extend({
-                tagName: 'ol',
-                classNames: ['carousel-indicators'],        
-                contentBinding: 'parentView.content',
-                itemViewClass: Ember.View.extend({
-                    click: function() {
-                        var $elem = this.get("parentView.parentView").$();
-                        $elem.carousel(this.get("contentIndex"));
-                    },
-                    template: '',
-                    classNameBindings: ['content.isActive:active']            
-                })
-            }),
-
-            itemsView: Ember.CollectionView.extend({        
-                classNames: ['carousel-inner'],
-                contentBinding: 'parentView.content',
-                itemViewClass: Ember.View.extend({
-                    classNames: ['item'],
-                    classNameBindings: ['content.isActive:active'],
-                    templateName: 'carousel-item'
-                })
-            })
-        });
-
         return application;
     }
 };
 
-},{"../templates/templates":16,"./geocode":8,"./i18n":9,"./map":11,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":13,"underscore":15}],8:[function(require,module,exports){
+},{"../templates/templates":17,"./geocode":9,"./i18n":10,"./map":12,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":14,"underscore":16}],8:[function(require,module,exports){
+//
+// CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
+//
+App.CarouselView = Ember.View.extend({    
+    templateName: 'carousel',
+    classNames: ['carousel', 'slide'],
+
+    init: function() { 
+        this._super.apply(this, arguments);
+        // Disable the data api from boostrap
+        $(document).off('.data-api');      
+
+        // At least one item must have the active class, so we set the 
+        // first here, and the class will be added by class binding
+        var obj = this.get('content.firstObject');
+        Ember.set(obj, 'isActive', true);
+    },
+
+    previousSlide: function() {
+        this.$().carousel('prev');
+    },
+
+    nextSlide: function() {
+        this.$().carousel('next');
+    },
+
+    didInsertElement: function() {
+        this.$().carousel();
+    },
+
+    indicatorsView: Ember.CollectionView.extend({
+        tagName: 'ol',
+        classNames: ['carousel-indicators'],        
+        contentBinding: 'parentView.content',
+        itemViewClass: Ember.View.extend({
+            click: function() {
+                var $elem = this.get("parentView.parentView").$();
+                $elem.carousel(this.get("contentIndex"));
+            },
+            template: '',
+            classNameBindings: ['content.isActive:active']            
+        })
+    }),
+
+    itemsView: Ember.CollectionView.extend({        
+        classNames: ['carousel-inner'],
+        contentBinding: 'parentView.content',
+        itemViewClass: Ember.View.extend({
+            classNames: ['item'],
+            classNameBindings: ['content.isActive:active'],
+            templateName: 'carousel-item'
+        })
+    })
+});
+
+},{}],9:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -57985,7 +57986,7 @@ module.exports = {
 
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var qs = require('qs');
 
 var DEFAULT_LOCALE = 'en';
@@ -58011,15 +58012,16 @@ module.exports = {
     }
 };
 
-},{"qs":14}],10:[function(require,module,exports){
+},{"qs":15}],11:[function(require,module,exports){
 window.App = require('./app').init();
+require('./carousel');
 require('./share');
 
 require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./app":7,"./i18n":9,"./share":12}],11:[function(require,module,exports){
+},{"./app":7,"./carousel":8,"./i18n":10,"./share":13}],12:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -58088,7 +58090,7 @@ module.exports = {
     }
 };
 
-},{"underscore":15}],12:[function(require,module,exports){
+},{"underscore":16}],13:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -58176,7 +58178,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView.create()
 });
 
-},{"ember":6}],13:[function(require,module,exports){
+},{"ember":6}],14:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -58331,7 +58333,7 @@ App.ShareView = Ember.View.extend({
 
 }).call(undefined, this);
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -58699,7 +58701,7 @@ function decode(str) {
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -60044,7 +60046,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -60586,4 +60588,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[10])
+},{}]},{},[11])
