@@ -57513,41 +57513,6 @@ module.exports = {
             this.route('share');
         });
 
-        application.ListOrganizationsRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.transitionTo('index');
-                }
-            },
-
-            model: function () {
-                return $.getJSON(CONFIG.API_BASE + '/organizations/');
-            },
-
-            renderTemplate: function () {
-                this.render('list-organizations', { outlet: 'page' });
-            },
-
-            deactivate: function () {
-                $('#page').hide();
-            }
-        });
-
-        application.ListOrganizationsController = Ember.Controller.extend({
-            actions: {
-                openOrganization: function (id) {
-                    this.transitionToRoute('organization', id);
-                }
-            }
-        });
-
-        application.ListOrganizationsView = Ember.View.extend({
-            didRenderElement: function () {
-                this._super();
-                $('#page').show();
-            }
-        });
-
         application.ApplicationController = Ember.Controller.extend({
             organizationTypes: [
                 {
@@ -57626,34 +57591,6 @@ module.exports = {
                     this.transitionToRoute('share');
                 }
             }
-        });
-
-        application.OrganizationView = Ember.View.extend({
-            didRenderElement : function() {
-                this._super();
-                $('#popup').show();
-            }
-        });
-
-        application.OrganizationRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.transitionTo('index');
-                }
-            },
-
-            model: function (params) {
-                return this.store.find('organization', params.organization_id);
-            },
-
-            deactivate: function () {
-                $('#popup').hide();
-            },
-
-            renderTemplate: function () {
-                this.render('organization', { outlet: 'popup' });
-            }
-
         });
 
         application.OrganizationAddMediaRoute = Ember.Route.extend({
@@ -57797,7 +57734,7 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":20,"./geocode":10,"./i18n":11,"./map":13,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":17,"underscore":19}],9:[function(require,module,exports){
+},{"../templates/templates":22,"./geocode":10,"./i18n":11,"./map":14,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":19,"underscore":21}],9:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -57946,11 +57883,52 @@ module.exports = {
     }
 };
 
-},{"qs":18}],12:[function(require,module,exports){
+},{"qs":20}],12:[function(require,module,exports){
+var Ember = require('ember');
+
+
+App.ListOrganizationsRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        }
+    },
+
+    model: function () {
+        return $.getJSON(CONFIG.API_BASE + '/organizations/');
+    },
+
+    renderTemplate: function () {
+        this.render('list-organizations', { outlet: 'page' });
+    },
+
+    deactivate: function () {
+        $('#page').hide();
+    }
+});
+
+App.ListOrganizationsController = Ember.Controller.extend({
+    actions: {
+        openOrganization: function (id) {
+            this.transitionToRoute('organization', id);
+        }
+    }
+});
+
+App.ListOrganizationsView = Ember.View.extend({
+    didRenderElement: function () {
+        this._super();
+        $('#page').show();
+    }
+});
+
+},{"ember":6}],13:[function(require,module,exports){
 window.App = require('./app').init();
 require('./add_organization');
 require('./carousel');
+require('./list_organizations');
 require('./models');
+require('./organization');
 require('./page');
 require('./share');
 
@@ -57958,7 +57936,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_organization":7,"./app":8,"./carousel":9,"./i18n":11,"./models":14,"./page":15,"./share":16}],13:[function(require,module,exports){
+},{"./add_organization":7,"./app":8,"./carousel":9,"./i18n":11,"./list_organizations":12,"./models":15,"./organization":16,"./page":17,"./share":18}],14:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -58027,7 +58005,7 @@ module.exports = {
     }
 };
 
-},{"underscore":19}],14:[function(require,module,exports){
+},{"underscore":21}],15:[function(require,module,exports){
 var DS = require('ember-data');
 require('ember-data-django');
 
@@ -58066,7 +58044,38 @@ App.Photo = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"ember-data":5,"ember-data-django":4}],15:[function(require,module,exports){
+},{"ember-data":5,"ember-data-django":4}],16:[function(require,module,exports){
+var Ember = require('ember');
+
+
+App.OrganizationView = Ember.View.extend({
+    didRenderElement : function() {
+        this._super();
+        $('#popup').show();
+    }
+});
+
+App.OrganizationRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        }
+    },
+
+    model: function (params) {
+        return this.store.find('organization', params.organization_id);
+    },
+
+    deactivate: function () {
+        $('#popup').hide();
+    },
+
+    renderTemplate: function () {
+        this.render('organization', { outlet: 'popup' });
+    }
+});
+
+},{"ember":6}],17:[function(require,module,exports){
 App.PageRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -58102,7 +58111,7 @@ App.ContactRoute = App.PageRoute.extend({
     }
 });
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -58190,7 +58199,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView.create()
 });
 
-},{"ember":6}],17:[function(require,module,exports){
+},{"ember":6}],19:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -58345,7 +58354,7 @@ App.ShareView = Ember.View.extend({
 
 }).call(undefined, this);
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -58713,7 +58722,7 @@ function decode(str) {
   }
 }
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -60058,7 +60067,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -60600,4 +60609,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[12])
+},{}]},{},[13])
