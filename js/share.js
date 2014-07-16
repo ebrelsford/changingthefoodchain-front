@@ -81,5 +81,5 @@ App.ShareView = Ember.View.extend({
             });
     },
 
-    embedView: App.EmbedView.create()
+    embedView: App.EmbedView
 });

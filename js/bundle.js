@@ -60997,7 +60997,7 @@ App.ShareView = Ember.View.extend({
             });
     },
 
-    embedView: App.EmbedView.create()
+    embedView: App.EmbedView
 });
 
 },{"./map":15,"ember":6}],20:[function(require,module,exports){
