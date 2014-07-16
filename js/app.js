@@ -2,6 +2,7 @@ var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
+var qs = require('qs');
 var _ = require('underscore');
 require('ember-i18n');
 require('bootstrap_carousel');
@@ -14,10 +15,42 @@ var map;
 function initializeMap() {
     if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
-    map = mapmodule.init('map')
+
+    // Get initial map view from hash's search string
+    var hash = window.location.hash,
+        center,
+        zoom;
+
+    if (hash && hash.length > 0 && hash.indexOf('?') > 0) {
+        s = hash.slice(hash.indexOf('?'));
+    }
+    if (s && s.length > 0) {
+        var params = qs.parse(s.slice(1));
+        if (params.lat && params.lng) {
+            center = {
+                lng: parseFloat(params.lng),
+                lat: parseFloat(params.lat)
+            };
+        }
+        if (params.zoom) {
+            zoom = parseInt(params.z);
+        }
+    }
+
+    map = mapmodule.init('map', center, zoom)
         .on('featureclick', function (feature) {
             var controller = App.__container__.lookup('controller:application');
             controller.transitionToRoute('organization', feature.id);
+        })
+        .on('moveend zoomend', function () {
+            var controller = App.__container__.lookup('controller:application'),
+                center = map.getCenter(),
+                lat = Math.round(center.lat * 100) / 100.0,
+                lng = Math.round(center.lng * 100) / 100.0,
+                z = map.getZoom();
+            controller.set('lat', lat);
+            controller.set('lng', lng);
+            controller.set('z', z);
         });
 }
 
@@ -83,6 +116,12 @@ App.ApplicationController = Ember.Controller.extend({
         }
     ],
     searchText: '',
+
+    lat: null,
+    lng: null,
+    z: null,
+
+    queryParams: ['lat', 'lng', 'z'],
 
     actions: {
         search: function () {

@@ -32,7 +32,7 @@ App.ShareRoute = Ember.Route.extend({
 });
 
 App.EmbedController = Ember.Controller.extend({
-    center: [39.095963, -97.470703],
+    center: [39.09, -97.47],
     zoom: 3,
     code: function () {
         var size = this.get('size'),
