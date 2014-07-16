@@ -1,6 +1,4 @@
 var Ember = require('ember');
-var DS = require('ember-data');
-require('ember-data-django');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
@@ -52,40 +50,6 @@ module.exports = {
             this.route('about');
             this.route('contact');
             this.route('share');
-        });
-
-        application.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
-            host: CONFIG.API_BASE
-        })
-
-        application.Organization = DS.Model.extend({
-            address_line1: DS.attr(),
-            city: DS.attr(),
-            country: DS.attr(),
-            name: DS.attr('string'),
-            postal_code: DS.attr('string'),
-            state_province: DS.attr('string'),
-            photos: DS.hasMany('photo'),
-            sectors: DS.hasMany('sector'),
-            types: DS.hasMany('type')
-        });
-
-        application.Sector = DS.Model.extend({
-            name: DS.attr('string')
-        });
-
-        application.Type = DS.Model.extend({
-            name: DS.attr('string')
-        });
-
-        application.Photo = DS.Model.extend({
-            fullUrl: function () {
-                return CONFIG.API_BASE + this.get('url');
-            }.property('url'),
-
-            photo: DS.attr(),
-            organization: DS.belongsTo('organization'),
-            url: DS.attr()
         });
 
         application.ListOrganizationsRoute = Ember.Route.extend({
