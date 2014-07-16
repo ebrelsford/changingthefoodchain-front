@@ -57580,41 +57580,6 @@ module.exports = {
             }
         });
 
-        application.PageRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.transitionTo('index');
-                }
-            },
-
-            renderTemplate: function () {
-                this.render('page', { outlet: 'page' });
-            },
-
-            deactivate: function () {
-                $('#page').hide();
-            }
-        });
-
-        application.PageView = Ember.View.extend({
-            didRenderElement: function () {
-                this._super();
-                $('#page').show();
-            }
-        });
-
-        application.AboutRoute = application.PageRoute.extend({
-            model: function () {
-                return $.get(CONFIG.API_BASE + '/pages/about/');
-            }
-        });
-
-        application.ContactRoute = application.PageRoute.extend({
-            model: function () {
-                return $.get(CONFIG.API_BASE + '/pages/contact/');
-            }
-        });
-
         application.ApplicationController = Ember.Controller.extend({
             organizationTypes: [
                 {
@@ -57864,7 +57829,7 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":18,"./geocode":10,"./i18n":11,"./map":13,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":15,"underscore":17}],9:[function(require,module,exports){
+},{"../templates/templates":19,"./geocode":10,"./i18n":11,"./map":13,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-data":5,"ember-data-django":4,"ember-i18n":16,"underscore":18}],9:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -58013,17 +57978,18 @@ module.exports = {
     }
 };
 
-},{"qs":16}],12:[function(require,module,exports){
+},{"qs":17}],12:[function(require,module,exports){
 window.App = require('./app').init();
 require('./add_organization');
 require('./carousel');
+require('./page');
 require('./share');
 
 require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_organization":7,"./app":8,"./carousel":9,"./i18n":11,"./share":14}],13:[function(require,module,exports){
+},{"./add_organization":7,"./app":8,"./carousel":9,"./i18n":11,"./page":14,"./share":15}],13:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -58092,7 +58058,43 @@ module.exports = {
     }
 };
 
-},{"underscore":17}],14:[function(require,module,exports){
+},{"underscore":18}],14:[function(require,module,exports){
+App.PageRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        }
+    },
+
+    renderTemplate: function () {
+        this.render('page', { outlet: 'page' });
+    },
+
+    deactivate: function () {
+        $('#page').hide();
+    }
+});
+
+App.PageView = Ember.View.extend({
+    didRenderElement: function () {
+        this._super();
+        $('#page').show();
+    }
+});
+
+App.AboutRoute = App.PageRoute.extend({
+    model: function () {
+        return $.get(CONFIG.API_BASE + '/pages/about/');
+    }
+});
+
+App.ContactRoute = App.PageRoute.extend({
+    model: function () {
+        return $.get(CONFIG.API_BASE + '/pages/contact/');
+    }
+});
+
+},{}],15:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -58180,7 +58182,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView.create()
 });
 
-},{"ember":6}],15:[function(require,module,exports){
+},{"ember":6}],16:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -58335,7 +58337,7 @@ App.ShareView = Ember.View.extend({
 
 }).call(undefined, this);
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -58703,7 +58705,7 @@ function decode(str) {
   }
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -60048,7 +60050,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};

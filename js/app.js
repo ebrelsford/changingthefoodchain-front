@@ -123,41 +123,6 @@ module.exports = {
             }
         });
 
-        application.PageRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.transitionTo('index');
-                }
-            },
-
-            renderTemplate: function () {
-                this.render('page', { outlet: 'page' });
-            },
-
-            deactivate: function () {
-                $('#page').hide();
-            }
-        });
-
-        application.PageView = Ember.View.extend({
-            didRenderElement: function () {
-                this._super();
-                $('#page').show();
-            }
-        });
-
-        application.AboutRoute = application.PageRoute.extend({
-            model: function () {
-                return $.get(CONFIG.API_BASE + '/pages/about/');
-            }
-        });
-
-        application.ContactRoute = application.PageRoute.extend({
-            model: function () {
-                return $.get(CONFIG.API_BASE + '/pages/contact/');
-            }
-        });
-
         application.ApplicationController = Ember.Controller.extend({
             organizationTypes: [
                 {
