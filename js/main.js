@@ -1,6 +1,7 @@
 window.App = require('./app').init();
 require('./add_organization');
 require('./carousel');
+require('./models');
 require('./page');
 require('./share');
 
