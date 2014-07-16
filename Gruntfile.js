@@ -4,6 +4,10 @@ module.exports = function(grunt) {
             standalone: {
                 src: ['js/main.js'],
                 dest: 'js/bundle.js'
+            },
+            embed: {
+                src: 'js/embed.js',
+                dest: 'js/embedbundle.js'
             }
         },
 
@@ -61,7 +65,10 @@ module.exports = function(grunt) {
 
         watch: {
             browserify: {
-                files: ["js/*.js", 'templates/*.js', '!js/bundle.js'],
+                files: [
+                    "js/*.js", 'templates/*.js', '!js/bundle.js',
+                    '!js/embedbundle.js'
+                ],
                 tasks: ["browserify"]
             },
 

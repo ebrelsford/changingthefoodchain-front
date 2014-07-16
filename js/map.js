@@ -2,13 +2,15 @@ var _ = require('underscore');
 
 var map,
     organizationLayer,
-    initialized = false;
+    initialized = false,
+    defaultCenter = [39.095963, -97.470703],
+    defaultZoom = 5;
 
-function initializeMap(id) {
+function initializeMap(id, center, zoom) {
     map = L.map(id, {
-        center: [39.095963, -97.470703],
+        center: center || defaultCenter,
         maxZoom: 19,
-        zoom: 5,
+        zoom: zoom || defaultZoom,
         zoomControl: false
     });
     var $map = $('#' + id);

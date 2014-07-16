@@ -57940,13 +57940,15 @@ var _ = require('underscore');
 
 var map,
     organizationLayer,
-    initialized = false;
+    initialized = false,
+    defaultCenter = [39.095963, -97.470703],
+    defaultZoom = 5;
 
-function initializeMap(id) {
+function initializeMap(id, center, zoom) {
     map = L.map(id, {
-        center: [39.095963, -97.470703],
+        center: center || defaultCenter,
         maxZoom: 19,
-        zoom: 5,
+        zoom: zoom || defaultZoom,
         zoomControl: false
     });
     var $map = $('#' + id);
@@ -58147,16 +58149,24 @@ App.EmbedController = Ember.Controller.extend({
     center: [39.095963, -97.470703],
     zoom: 3,
     code: function () {
-        var prefix = window.location.protocol + '://' + window.location.host,
+        var size = this.get('size'),
+            prefix = window.location.protocol + '//' + window.location.host,
             src = prefix + '/embed.html?' + $.param({
                 center: this.get('center').join(','),
                 size: this.get('size'),
                 zoom: this.get('zoom')
-            });
-        return '<iframe src="' + src + '"></iframe>';
+            }),
+            width = 'width="' + this.get('dimensions')[size][0] + '" ',
+            height = 'height="' + this.get('dimensions')[size][1] + '" ',
+            style = 'style="border: 0;" ';
+        return '<iframe ' + style + width + height + 'src="' + src + '"></iframe>';
     }.property('center', 'size', 'zoom'),
     size: 'small',
-    sizes: ['small', 'large']
+    sizes: ['small', 'large'],
+    dimensions: {
+        small: [200, 300], 
+        large: [400, 600]
+    }
 });
 
 App.EmbedView = Ember.View.extend({
