@@ -1,4 +1,5 @@
 window.App = require('./app').init();
+require('./add_media');
 require('./add_organization');
 require('./carousel');
 require('./list_organizations');

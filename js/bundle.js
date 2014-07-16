@@ -57235,6 +57235,119 @@ Ember.State = generateRemovedClass("Ember.State");
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],7:[function(require,module,exports){
 var Ember = require('ember');
+
+
+App.OrganizationAddMediaRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.controller.onExit();
+            this.disconnectOutlet('modal');
+            history.back();
+        }
+    },
+
+    model: function () {
+        return this.modelFor('organization');
+    },
+
+    renderTemplate: function () {
+        this.render({
+            into: 'application',
+            outlet: 'modal'
+        })
+    },
+
+    setupController: function (controller, model) {
+        controller.set('model', model);
+    }
+});
+
+App.OrganizationAddMediaController = Ember.Controller.extend({
+    error: false,
+    success: false,
+    tab: 'video',
+    videoUrl: '',
+
+    onExit: function () {
+        this.set('success', false);
+        this.set('error', false);
+        this.set('videoUrl', '');
+    },
+
+    onError: function () {
+        this.set('error', true);
+        this.set('success', false);
+    },
+
+    onSuccess: function () {
+        this.set('success', true);
+        this.set('error', false);
+        this.set('videoUrl', '');
+    },
+
+    submitPhoto: function () {
+        var data = new FormData();
+        data.append('organization', this.get('model').id);
+        data.append('photo', $(':file[name=photo]')[0].files[0]);
+
+        $.ajax({
+            context: this,
+            data: data,
+            type: 'POST',
+            url: CONFIG.API_BASE + '/content/photos/',
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+            .done(this.onSuccess)
+            .fail(this.onError);
+    },
+
+    submitVideo: function () {
+        var params = {
+            organization: this.get('model').id,
+            url: this.videoUrl
+        };
+        $.ajax({
+            context: this,
+            data: params,
+            type: 'POST',
+            url: CONFIG.API_BASE + '/content/videos/'
+        })
+            .done(this.onSuccess)
+            .fail(this.onError);
+    },
+
+    actions: {
+        changeTab: function (tab) {
+            $(this).tab('show');
+            this.set('tab', tab);
+        },
+
+        submit: function () {
+            if (this.tab === 'photo') {
+                this.submitPhoto();
+            }
+            else if (this.tab === 'video') {
+                this.submitVideo();
+            }
+            return false;
+        }
+    }
+});
+
+App.OrganizationAddMediaView = Ember.View.extend({
+    didRenderElement : function() {
+        this._super();
+        $('#addOrganizationMediaModal').modal()
+            .on('hide.bs.modal', function () {
+                App.__container__.lookup('route:organization.add_media').send('close');
+            });
+    }
+});
+
+},{"ember":6}],8:[function(require,module,exports){
+var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 
 
@@ -57458,7 +57571,7 @@ App.AddOrganizationView = Ember.View.extend({
     templateName: 'organization/add'
 });
 
-},{"./geocode":10,"ember":6}],8:[function(require,module,exports){
+},{"./geocode":11,"ember":6}],9:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -57593,115 +57706,6 @@ module.exports = {
             }
         });
 
-        application.OrganizationAddMediaRoute = Ember.Route.extend({
-            actions: {
-                close: function () {
-                    this.controller.onExit();
-                    this.disconnectOutlet('modal');
-                    history.back();
-                }
-            },
-
-            model: function () {
-                return this.modelFor('organization');
-            },
-
-            renderTemplate: function () {
-                this.render({
-                    into: 'application',
-                    outlet: 'modal'
-                })
-            },
-
-            setupController: function (controller, model) {
-                controller.set('model', model);
-            }
-        });
-
-        application.OrganizationAddMediaController = Ember.Controller.extend({
-            error: false,
-            success: false,
-            tab: 'video',
-            videoUrl: '',
-
-            onExit: function () {
-                this.set('success', false);
-                this.set('error', false);
-                this.set('videoUrl', '');
-            },
-
-            onError: function () {
-                this.set('error', true);
-                this.set('success', false);
-            },
-
-            onSuccess: function () {
-                this.set('success', true);
-                this.set('error', false);
-                this.set('videoUrl', '');
-            },
-
-            submitPhoto: function () {
-                var data = new FormData();
-                data.append('organization', this.get('model').id);
-                data.append('photo', $(':file[name=photo]')[0].files[0]);
-
-                $.ajax({
-                    context: this,
-                    data: data,
-                    type: 'POST',
-                    url: CONFIG.API_BASE + '/content/photos/',
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                })
-                    .done(this.onSuccess)
-                    .fail(this.onError);
-            },
-
-            submitVideo: function () {
-                var params = {
-                    organization: this.get('model').id,
-                    url: this.videoUrl
-                };
-                $.ajax({
-                    context: this,
-                    data: params,
-                    type: 'POST',
-                    url: CONFIG.API_BASE + '/content/videos/'
-                })
-                    .done(this.onSuccess)
-                    .fail(this.onError);
-            },
-
-            actions: {
-                changeTab: function (tab) {
-                    $(this).tab('show');
-                    this.set('tab', tab);
-                },
-
-                submit: function () {
-                    if (this.tab === 'photo') {
-                        this.submitPhoto();
-                    }
-                    else if (this.tab === 'video') {
-                        this.submitVideo();
-                    }
-                    return false;
-                }
-            }
-        });
-
-        application.OrganizationAddMediaView = Ember.View.extend({
-            didRenderElement : function() {
-                this._super();
-                $('#addOrganizationMediaModal').modal()
-                    .on('hide.bs.modal', function () {
-                        App.__container__.lookup('route:organization.add_media').send('close');
-                    });
-            }
-        });
-
         application.OrganizationTypeView = Ember.CollectionView.extend({
             tagName: 'ul',
             classNames: ['filters-type-list'],
@@ -57734,7 +57738,7 @@ module.exports = {
     }
 };
 
-},{"../templates/templates":22,"./geocode":10,"./i18n":11,"./map":14,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":19,"underscore":21}],9:[function(require,module,exports){
+},{"../templates/templates":23,"./geocode":11,"./i18n":12,"./map":15,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":20,"underscore":22}],10:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -57790,7 +57794,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -57857,7 +57861,7 @@ module.exports = {
 
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var qs = require('qs');
 
 var DEFAULT_LOCALE = 'en';
@@ -57883,7 +57887,7 @@ module.exports = {
     }
 };
 
-},{"qs":20}],12:[function(require,module,exports){
+},{"qs":21}],13:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -57922,8 +57926,9 @@ App.ListOrganizationsView = Ember.View.extend({
     }
 });
 
-},{"ember":6}],13:[function(require,module,exports){
+},{"ember":6}],14:[function(require,module,exports){
 window.App = require('./app').init();
+require('./add_media');
 require('./add_organization');
 require('./carousel');
 require('./list_organizations');
@@ -57936,7 +57941,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_organization":7,"./app":8,"./carousel":9,"./i18n":11,"./list_organizations":12,"./models":15,"./organization":16,"./page":17,"./share":18}],14:[function(require,module,exports){
+},{"./add_media":7,"./add_organization":8,"./app":9,"./carousel":10,"./i18n":12,"./list_organizations":13,"./models":16,"./organization":17,"./page":18,"./share":19}],15:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -58005,7 +58010,7 @@ module.exports = {
     }
 };
 
-},{"underscore":21}],15:[function(require,module,exports){
+},{"underscore":22}],16:[function(require,module,exports){
 var DS = require('ember-data');
 require('ember-data-django');
 
@@ -58044,7 +58049,7 @@ App.Photo = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"ember-data":5,"ember-data-django":4}],16:[function(require,module,exports){
+},{"ember-data":5,"ember-data-django":4}],17:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -58075,7 +58080,7 @@ App.OrganizationRoute = Ember.Route.extend({
     }
 });
 
-},{"ember":6}],17:[function(require,module,exports){
+},{"ember":6}],18:[function(require,module,exports){
 App.PageRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -58111,7 +58116,7 @@ App.ContactRoute = App.PageRoute.extend({
     }
 });
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -58199,7 +58204,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView.create()
 });
 
-},{"ember":6}],19:[function(require,module,exports){
+},{"ember":6}],20:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -58354,7 +58359,7 @@ App.ShareView = Ember.View.extend({
 
 }).call(undefined, this);
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -58722,7 +58727,7 @@ function decode(str) {
   }
 }
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -60067,7 +60072,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -60609,4 +60614,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[13])
+},{}]},{},[14])
