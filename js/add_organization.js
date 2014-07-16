@@ -1,3 +1,7 @@
+var Ember = require('ember');
+var geocode = require('./geocode').geocode;
+
+
 App.AddOrganizationController = Ember.Controller.extend({
     potentialSectors: ['agriculture', 'service'],
     potentialTypes: ['advocacy', 'union', 'workers center'],
