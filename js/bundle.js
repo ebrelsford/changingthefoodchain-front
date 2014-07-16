@@ -60919,10 +60919,7 @@ var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
-    shareUrl: function () {
-        return window.location.protocol + '//' + window.location.host + '/#/' +
-            window.location.hash.slice(window.location.hash.indexOf('?'));
-    }.property()
+    shareUrl: null
 });
 
 App.ShareRoute = Ember.Route.extend({
@@ -60938,6 +60935,15 @@ App.ShareRoute = Ember.Route.extend({
             into: 'application',
             outlet: 'modal'
         })
+    },
+
+    shareUrl: function () {
+        return window.location.protocol + '//' + window.location.host + '/#/' +
+            window.location.hash.slice(window.location.hash.indexOf('?'));
+    },
+
+    setupController: function (controller, model) {
+        controller.set('shareUrl', this.shareUrl());
     }
 });
 
