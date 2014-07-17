@@ -1,0 +1,25 @@
+{
+  "name": "ember-data-extensions",
+  "version": "1.0.0-beta.7",
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "handlebars": "~1.3.0",
+    "ember": "~1.5.0",
+    "ember-data": "~1.0.0-beta.7"
+  },
+  "devDependencies": {
+    "qunit": "~1.14.0",
+    "blanket": "~1.1.5"
+  },
+  "homepage": "https://github.com/pixelhandler/ember-data-extensions",
+  "_release": "1.0.0-beta.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.0-beta.7",
+    "commit": "8b616cdb2728b0c4d0127daadfe0c1c95bc2fb0a"
+  },
+  "_source": "git://github.com/pixelhandler/ember-data-extensions.git",
+  "_target": "~1.0.0-beta.7",
+  "_originalSource": "ember-data-extensions",
+  "_direct": true
+}

@@ -1,10 +1,12 @@
 var DS = require('ember-data');
-require('ember-data-django');
+require('ember-data-extensions-embedded-adapter');
 
 
-App.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
+App.ApplicationAdapter = DS.EmbeddedAdapter.extend({
     host: CONFIG.API_BASE
 })
+
+App.ApplicationSerializer = DS.EmbeddedSerializer.extend();
 
 App.Organization = DS.Model.extend({
     address_line1: DS.attr(),
@@ -16,6 +18,14 @@ App.Organization = DS.Model.extend({
     photos: DS.hasMany('photo'),
     sectors: DS.hasMany('sector'),
     types: DS.hasMany('type')
+});
+
+App.OrganizationSerializer = App.ApplicationSerializer.extend({
+    attrs: {
+        photos: { embedded: 'always' },
+        sectors: { embedded: 'always' },
+        types: { embedded: 'always' }
+    }
 });
 
 App.Sector = DS.Model.extend({

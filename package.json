@@ -35,7 +35,7 @@
     "bootstrap_modal": "./bower_components/bootstrap/js/modal.js",
     "ember": "./bower_components/ember/ember.js",
     "ember-data": "./bower_components/ember-data/ember-data.js",
-    "ember-data-django": "./bower_components/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.js"
+    "ember-data-extensions-embedded-adapter": "./bower_components/ember-data-extensions/dist/embedded-adapter.js"
   },
   "browserify": {
     "transform": [

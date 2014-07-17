@@ -1,0 +1,44 @@
+{
+  "name": "ember-data-extensions",
+  "summary": "Extensions for Ember Data",
+  "description": "Mixins for Adapters and Serializers",
+  "homepage": "http://github.com/emberjs/ember.js",
+  "author": [
+    "Bill Heaton"
+  ],
+  "version": "1.0.0-beta.7",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixelhandler/ember-data-extensions"
+  },
+  "engines": {
+    "node": "~0.10"
+  },
+  "scripts": {
+    "build": "make build",
+    "clean": "make clean",
+    "dist": "make dist",
+    "doc": "make doc",
+    "docfiles": "make docfiles",
+    "canary": "make canary",
+    "lint": "make lint",
+    "prod": "make prod",
+    "test": "make test",
+    "coverage": "make coverage",
+    "ci": "make ci"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "bower": ">= 1.2.8",
+    "testem": ">= 0.6.14",
+    "brunch": ">= 1.7.13",
+    "javascript-brunch": "~1.7.1",
+    "uglify-js-brunch": "~1.7.7",
+    "jshint": ">= 2.5.0",
+    "yuidocjs": ">= 0.3.49",
+    "blanket": "~1.1.5",
+    "grunt": "~0.4.4",
+    "grunt-cli": ">= 0.1.13",
+    "grunt-blanket-qunit": "~0.2.0"
+  }
+}

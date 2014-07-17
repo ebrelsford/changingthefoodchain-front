@@ -1,0 +1,27 @@
+{
+  "framework": "qunit",
+  "src_files": [
+    "bower_components/jquery/jquery.js",
+    "bower_components/handlebars/handlebars.js",
+    "bower_components/ember/ember.js",
+    "bower_components/ember-data/ember-data.js",
+
+    "tests/ember_configuration.js",
+
+    "packages/mixins/lib/underscored_adapter_mixin.js",
+    "packages/mixins/lib/underscored_serializer_mixin.js",
+    "packages/mixins/lib/embedded_mixin.js",
+    "packages/mixins/lib/embedded_in_model_mixin.js",
+    "packages/mixins/lib/model_with_embedded_mixin.js",
+
+    "packages/embedded-adapter/lib/embedded_adapter.js",
+    "packages/embedded-adapter/lib/embedded_serializer.js",
+    "packages/embedded-adapter/lib/model_with_embedded.js",
+    "packages/embedded-adapter/lib/embedded_in_model.js",
+
+    "packages/embedded-adapter/tests/*_test.js",
+    "packages/mixins/tests/*_test.js"
+  ],
+  "launch_in_dev": ["phantomjs", "chrome", "safari", "firefox"],
+  "launch_in_ci": ["phantomjs"]
+}

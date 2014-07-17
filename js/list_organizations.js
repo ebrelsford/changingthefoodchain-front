@@ -9,7 +9,7 @@ App.ListOrganizationsRoute = Ember.Route.extend({
     },
 
     model: function () {
-        return $.getJSON(CONFIG.API_BASE + '/organizations/');
+        return this.store.find('organization');
     },
 
     renderTemplate: function () {
