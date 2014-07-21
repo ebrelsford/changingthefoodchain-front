@@ -2730,9 +2730,9 @@ select[multiple].input-lg {
   overflow-y: auto;
   padding: 25px;
   position: absolute;
-  left: 175px;
-  top: 75px;
-  width: 250px;
+  left: 200px;
+  top: 100px;
+  width: 50%;
   z-index: 2000;
 }
 .overlay-content > section {
@@ -2987,6 +2987,7 @@ header {
   margin-left: -15px;
   margin-right: -15px;
   background: rgba(255, 255, 255, 0.7);
+  height: 100px;
   margin-left: 0;
   margin-right: 0;
   padding-bottom: 15px;
@@ -3036,14 +3037,14 @@ header #nav {
     width: 16.66666667%;
   }
 }
-header #languages {
+header #tagline {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 992px) {
-  header #languages {
+  header #tagline {
     float: left;
     width: 25%;
   }
@@ -3064,8 +3065,8 @@ header #list-button {
   background: rgba(255, 255, 255, 0.7);
   height: 400px;
   position: absolute;
-  top: 75px;
-  width: 150px;
+  top: 100px;
+  width: 200px;
   z-index: 2000;
 }
 #page {
@@ -3077,9 +3078,9 @@ header #list-button {
   overflow-y: auto;
   padding: 25px;
   position: absolute;
-  left: 175px;
-  top: 75px;
-  width: 250px;
+  left: 200px;
+  top: 100px;
+  width: 50%;
   z-index: 2000;
   width: 850px;
 }
@@ -3102,9 +3103,9 @@ header #list-button {
   overflow-y: auto;
   padding: 25px;
   position: absolute;
-  left: 175px;
-  top: 75px;
-  width: 250px;
+  left: 200px;
+  top: 100px;
+  width: 50%;
   z-index: 2000;
 }
 #popup > section {

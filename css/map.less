@@ -7,6 +7,7 @@
 header {
     .make-row();
     background: rgba(255, 255, 255, 0.7);
+    height: @header-height;
     margin-left: 0;
     margin-right: 0;
     padding-bottom: 15px;
@@ -29,7 +30,7 @@ header {
     #nav {
         .make-md-column(2);
     }
-    #languages {
+    #tagline {
         .make-md-column(3);
     }
     #list-button {
@@ -41,7 +42,7 @@ header {
     background: rgba(255, 255, 255, 0.7);
     height: 400px;
     position: absolute;
-    top: 75px;
-    width: 150px;
+    top: @header-height;
+    width: @filters-width;
     z-index: @interface-z-index;
 }
