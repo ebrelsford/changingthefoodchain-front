@@ -55,19 +55,36 @@ function initializeMap() {
         });
 }
 
+function makeFullHeight() {
+    $('.full-height').each(function () {
+        var parentHeight = $(this).parent().outerHeight(),
+            offsetTop = $(this).offset().top,
+            height = parentHeight - offsetTop;
+        $(this).outerHeight(height);
+    });
+}
+
 Ember.View.reopen({
-    didInsertElement : function() {
+    didInsertElement: function () {
         this._super();
         Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
     },
-    didRenderElement : function() {
+    didRenderElement: function () {
+        makeFullHeight();
         initializeMap();
     }
 });
 
 window.App = Ember.Application.create({
     LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true
+    LOG_TRANSITIONS_INTERNAL: true,
+
+    ready: function () {
+        // When the window is resized, fix heights of full-height elements
+        $(window).resize(function () {
+            Ember.run.debounce(this, makeFullHeight, 100);
+        });
+    }
 });
 App.deferReadiness();
 

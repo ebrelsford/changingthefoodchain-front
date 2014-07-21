@@ -21,7 +21,7 @@
 
 <div id="map"></div>
 
-<div id="filters">
+<div id="filters" class="full-height">
     <h2>filters</h2>
     <section class="filters-type">
         <h3>organization type</h3>
@@ -36,11 +36,11 @@
 <a id="add-organization-button" {{action 'openAddOrganization'}}>add organization</a>
 <a id="share-button" {{action 'openShare'}}>share</a>
 
-<div id="popup">
+<div id="popup" class="full-height">
     {{outlet popup}}
 </div>
 
-<div id="page">
+<div id="page" class="full-height">
     {{outlet page}}
 </div>
 

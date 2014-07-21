@@ -61088,19 +61088,36 @@ function initializeMap() {
         });
 }
 
+function makeFullHeight() {
+    $('.full-height').each(function () {
+        var parentHeight = $(this).parent().outerHeight(),
+            offsetTop = $(this).offset().top,
+            height = parentHeight - offsetTop;
+        $(this).outerHeight(height);
+    });
+}
+
 Ember.View.reopen({
-    didInsertElement : function() {
+    didInsertElement: function () {
         this._super();
         Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
     },
-    didRenderElement : function() {
+    didRenderElement: function () {
+        makeFullHeight();
         initializeMap();
     }
 });
 
 window.App = Ember.Application.create({
     LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true
+    LOG_TRANSITIONS_INTERNAL: true,
+
+    ready: function () {
+        // When the window is resized, fix heights of full-height elements
+        $(window).resize(function () {
+            Ember.run.debounce(this, makeFullHeight, 100);
+        });
+    }
 });
 App.deferReadiness();
 
@@ -63712,7 +63729,7 @@ function program5(depth0,data) {
   },hashTypes:{'class': "STRING",'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("organizationTypes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -63724,9 +63741,9 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">add organization</a>\n<a id=\"share-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">share</a>\n\n<div id=\"popup\">\n    ");
+  data.buffer.push(">share</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
-  data.buffer.push("\n</div>\n\n<div id=\"page\">\n    ");
+  data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));
   data.buffer.push("\n</div>\n\n");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "modal", options) : helperMissing.call(depth0, "outlet", "modal", options))));
