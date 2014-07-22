@@ -2,6 +2,16 @@
 <h2>{{name}}</h2>
 <div>{{address_line1}}, {{city}}, {{state_province}} {{postal_code}}</div>
 
+{{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+
+{{#if photos}}
+{{view App.CarouselView content=photos}}
+{{/if}}
+
+<div class="organization-mission-statement">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
+</div>
+
 {{#if sectors}}
     <section class="organization-sectors">
         <h3>sectors:</h3>
@@ -22,10 +32,4 @@
             {{/each}}
         </ul>
     </section>
-{{/if}}
-
-{{#link-to 'organization.add_media'}}Add media{{/link-to}}
-
-{{#if photos}}
-{{view App.CarouselView content=photos}}
 {{/if}}

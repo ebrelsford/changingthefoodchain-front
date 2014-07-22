@@ -16,12 +16,14 @@ App.CarouselView = Ember.View.extend({
         Ember.set(obj, 'isActive', true);
     },
 
-    previousSlide: function() {
-        this.$().carousel('prev');
-    },
+    actions: {
+        previousSlide: function() {
+            this.$().carousel('prev');
+        },
 
-    nextSlide: function() {
-        this.$().carousel('next');
+        nextSlide: function() {
+            this.$().carousel('next');
+        }
     },
 
     didInsertElement: function() {

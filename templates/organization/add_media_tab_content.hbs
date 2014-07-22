@@ -1,0 +1,5 @@
+{{#each view.content}}
+<div {{bind-attr id=tabId}} {{bind-attr class=":tab-pane isActive:active"}}>
+    {{view tabView content=view.content}}
+</div>
+{{/each}}

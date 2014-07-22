@@ -18,25 +18,8 @@
                         </div>
                     {{/if}}
 
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#video" role="tab" data-toggle="tab" {{action 'changeTab' 'video'}}>Video</a></li>
-                        <li><a href="#photo" role="tab" data-toggle="tab" {{action 'changeTab' 'photo'}}>Photo</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="video">
-                            <div class="form-group">
-                                <label>Vimeo or YouTube link</label>
-                                {{input class="form-control" type="url" value=videoUrl}}
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="photo">
-                            <div class="form-group">
-                                <label>Add a photo</label>
-                                {{input name="photo" class="form-control" type="file"}}
-                            </div>
-                        </div>
-                    </div>
+                    {{view view.tabButtonsView content=tabs}}
+                    {{view view.tabContentView content=tabs}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'close'}}>Close</button>

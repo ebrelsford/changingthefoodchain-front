@@ -1,4 +1,5 @@
 var Ember = require('ember');
+var _ = require('underscore');
 
 
 App.OrganizationAddMediaRoute = Ember.Route.extend({
@@ -29,7 +30,23 @@ App.OrganizationAddMediaRoute = Ember.Route.extend({
 App.OrganizationAddMediaController = Ember.Controller.extend({
     error: false,
     success: false,
-    tab: 'video',
+    tabs: [
+        { 
+            isActive: true,
+            name: 'Video',
+            tabId: '#video',
+            tabView: Ember.View.extend({
+                templateName: 'organization/add_media_video'
+            })
+        },
+        {
+            name: 'Photo',
+            tabId: '#photo',
+            tabView: Ember.View.extend({
+                templateName: 'organization/add_media_photo'
+            })
+        }
+    ],
     videoUrl: '',
 
     onExit: function () {
@@ -83,16 +100,11 @@ App.OrganizationAddMediaController = Ember.Controller.extend({
     },
 
     actions: {
-        changeTab: function (tab) {
-            $(this).tab('show');
-            this.set('tab', tab);
-        },
-
         submit: function () {
-            if (this.tab === 'photo') {
+            if (_.findWhere(this.tabs, { name: 'Photo' }).isActive) {
                 this.submitPhoto();
             }
-            else if (this.tab === 'video') {
+            else if (_.findWhere(this.tabs, { name: 'Video' }).isActive) {
                 this.submitVideo();
             }
             return false;
@@ -107,5 +119,34 @@ App.OrganizationAddMediaView = Ember.View.extend({
             .on('hide.bs.modal', function () {
                 App.__container__.lookup('route:organization.add_media').send('close');
             });
-    }
+    },
+
+    tabButtonsView: Ember.CollectionView.extend({
+        classNames: ['nav', 'nav-tabs'],
+        contentBinding: 'parentView.content',
+        tagName: 'ul',
+        itemViewClass: Ember.View.extend({
+            classNameBindings: ['content.isActive:active'],
+            click: function () {
+                // Track state
+                _.each(this._parentView.content, function (tab) {
+                    tab.isActive = false;
+                });
+                this.content.isActive = true;
+
+                // Re-render everything
+                this._parentView._parentView.forEachChildView(function (v) {
+                    v.rerender();
+                })
+                return false;
+            },
+            templateName: 'organization/add_media_tab_button'
+        })
+    }),
+
+    tabContentView: Ember.View.extend({
+        classNames: ['tab-content'],
+        contentBinding: 'parentView.content',
+        templateName: 'organization/add_media_tab_content'
+    })
 });

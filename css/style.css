@@ -2722,7 +2722,6 @@ select[multiple].input-lg {
   border-top-left-radius: 0;
 }
 .overlay-content {
-  background: rgba(255, 255, 255, 0.7);
   display: none;
   max-height: 100%;
   overflow-x: hidden;
@@ -2972,7 +2971,6 @@ body > .ember-view {
   background: #aaa;
 }
 #filters {
-  background: rgba(255, 255, 255, 0.7);
   height: 400px;
   overflow-y: auto;
   position: absolute;
@@ -2994,7 +2992,6 @@ body > .ember-view {
 header {
   margin-left: -15px;
   margin-right: -15px;
-  background: rgba(255, 255, 255, 0.7);
   height: 100px;
   margin-left: 0;
   margin-right: 0;
@@ -3070,7 +3067,6 @@ header #list-button {
   }
 }
 #page {
-  background: rgba(255, 255, 255, 0.7);
   display: none;
   max-height: 100%;
   overflow-x: hidden;
@@ -3094,7 +3090,6 @@ header #list-button {
   margin-top: -15px;
 }
 #popup {
-  background: rgba(255, 255, 255, 0.7);
   display: none;
   max-height: 100%;
   overflow-x: hidden;
@@ -3105,6 +3100,7 @@ header #list-button {
   top: 100px;
   width: 50%;
   z-index: 2000;
+  background-color: #B09C77;
 }
 #popup > section {
   margin-top: 20px;
@@ -3117,7 +3113,6 @@ header #list-button {
   margin-top: -15px;
 }
 .carousel {
-  height: 200px;
   width: 100%;
 }
 .carousel-control {

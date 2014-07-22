@@ -60694,6 +60694,7 @@ requireModule("ember");
 }).call(this,require("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"FWaASH":20}],7:[function(require,module,exports){
 var Ember = require('ember');
+var _ = require('underscore');
 
 
 App.OrganizationAddMediaRoute = Ember.Route.extend({
@@ -60724,7 +60725,23 @@ App.OrganizationAddMediaRoute = Ember.Route.extend({
 App.OrganizationAddMediaController = Ember.Controller.extend({
     error: false,
     success: false,
-    tab: 'video',
+    tabs: [
+        { 
+            isActive: true,
+            name: 'Video',
+            tabId: '#video',
+            tabView: Ember.View.extend({
+                templateName: 'organization/add_media_video'
+            })
+        },
+        {
+            name: 'Photo',
+            tabId: '#photo',
+            tabView: Ember.View.extend({
+                templateName: 'organization/add_media_photo'
+            })
+        }
+    ],
     videoUrl: '',
 
     onExit: function () {
@@ -60778,16 +60795,11 @@ App.OrganizationAddMediaController = Ember.Controller.extend({
     },
 
     actions: {
-        changeTab: function (tab) {
-            $(this).tab('show');
-            this.set('tab', tab);
-        },
-
         submit: function () {
-            if (this.tab === 'photo') {
+            if (_.findWhere(this.tabs, { name: 'Photo' }).isActive) {
                 this.submitPhoto();
             }
-            else if (this.tab === 'video') {
+            else if (_.findWhere(this.tabs, { name: 'Video' }).isActive) {
                 this.submitVideo();
             }
             return false;
@@ -60802,10 +60814,39 @@ App.OrganizationAddMediaView = Ember.View.extend({
             .on('hide.bs.modal', function () {
                 App.__container__.lookup('route:organization.add_media').send('close');
             });
-    }
+    },
+
+    tabButtonsView: Ember.CollectionView.extend({
+        classNames: ['nav', 'nav-tabs'],
+        contentBinding: 'parentView.content',
+        tagName: 'ul',
+        itemViewClass: Ember.View.extend({
+            classNameBindings: ['content.isActive:active'],
+            click: function () {
+                // Track state
+                _.each(this._parentView.content, function (tab) {
+                    tab.isActive = false;
+                });
+                this.content.isActive = true;
+
+                // Re-render everything
+                this._parentView._parentView.forEachChildView(function (v) {
+                    v.rerender();
+                })
+                return false;
+            },
+            templateName: 'organization/add_media_tab_button'
+        })
+    }),
+
+    tabContentView: Ember.View.extend({
+        classNames: ['tab-content'],
+        contentBinding: 'parentView.content',
+        templateName: 'organization/add_media_tab_content'
+    })
 });
 
-},{"ember":6}],8:[function(require,module,exports){
+},{"ember":6,"underscore":23}],8:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 
@@ -61267,12 +61308,14 @@ App.CarouselView = Ember.View.extend({
         Ember.set(obj, 'isActive', true);
     },
 
-    previousSlide: function() {
-        this.$().carousel('prev');
-    },
+    actions: {
+        previousSlide: function() {
+            this.$().carousel('prev');
+        },
 
-    nextSlide: function() {
-        this.$().carousel('next');
+        nextSlide: function() {
+            this.$().carousel('next');
+        }
     },
 
     didInsertElement: function() {
@@ -63755,13 +63798,13 @@ function program5(depth0,data) {
 Ember.TEMPLATES["carousel-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', escapeExpression=this.escapeExpression;
 
 
   data.buffer.push("<img ");
-  data.buffer.push(escapeExpression((helper = helpers.bindAttr || (depth0 && depth0.bindAttr),options={hash:{
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("view.content.fullUrl")
-  },hashTypes:{'src': "STRING"},hashContexts:{'src': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "bindAttr", options))));
+  },hashTypes:{'src': "STRING"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" alt=\"\"/>\n<div class=\"carousel-caption\"></div>\n");
   return buffer;
   
@@ -63876,18 +63919,35 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["organization"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
+  
+  data.buffer.push("Add media");
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CarouselView", {hash:{
+    'content': ("photos")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
   var buffer = '', stack1;
   data.buffer.push("\n    <section class=\"organization-sectors\">\n        <h3>sectors:</h3>\n        <ul>\n            ");
-  stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </ul>\n    </section>\n");
   return buffer;
   }
-function program2(depth0,data) {
+function program6(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <li>");
@@ -63897,30 +63957,13 @@ function program2(depth0,data) {
   return buffer;
   }
 
-function program4(depth0,data) {
+function program8(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n    <section class=\"organization-types\">\n        <h3>types:</h3>\n        <ul>\n            ");
-  stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </ul>\n    </section>\n");
-  return buffer;
-  }
-
-function program6(depth0,data) {
-  
-  
-  data.buffer.push("Add media");
-  }
-
-function program8(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\n");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CarouselView", {hash:{
-    'content': ("photos")
-  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n");
   return buffer;
   }
 
@@ -63942,16 +63985,18 @@ function program8(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "postal_code", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n\n");
-  stack1 = helpers['if'].call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'class': ("btn btn-primary")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n");
-  stack1 = helpers['if'].call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n<div class=\"organization-mission-statement\">\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n</div>\n\n");
+  stack1 = helpers['if'].call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n");
-  stack1 = helpers['if'].call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
@@ -64131,7 +64176,7 @@ function program15(depth0,data) {
 Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, self=this, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
@@ -64151,27 +64196,102 @@ function program3(depth0,data) {
   data.buffer.push("\n                    ");
   stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n                    <ul class=\"nav nav-tabs\" role=\"tablist\">\n                        <li class=\"active\"><a href=\"#video\" role=\"tab\" data-toggle=\"tab\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeTab", "video", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(">Video</a></li>\n                        <li><a href=\"#photo\" role=\"tab\" data-toggle=\"tab\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeTab", "photo", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(">Photo</a></li>\n                    </ul>\n\n                    <div class=\"tab-content\">\n                        <div class=\"tab-pane active\" id=\"video\">\n                            <div class=\"form-group\">\n                                <label>Vimeo or YouTube link</label>\n                                ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'class': ("form-control"),
-    'type': ("url"),
-    'value': ("videoUrl")
-  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                            </div>\n                        </div>\n                        <div class=\"tab-pane\" id=\"photo\">\n                            <div class=\"form-group\">\n                                <label>Add a photo</label>\n                                ");
+  data.buffer.push("\n\n                    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabButtonsView", {hash:{
+    'content': ("tabs")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabContentView", {hash:{
+    'content': ("tabs")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Close</button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Submit</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_photo"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"form-group\">\n    <label>Add a photo</label>\n    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'name': ("photo"),
     'class': ("form-control"),
     'type': ("file")
   },hashTypes:{'name': "STRING",'class': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'class': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Close</button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Submit</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push("\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_tab_button"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<a ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'href': ("view.content.tabId")
+  },hashTypes:{'href': "STRING"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" role=\"tab\" data-toggle=\"tab\">");
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_tab_content"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n<div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'id': ("tabId")
+  },hashTypes:{'id': "ID"},hashContexts:{'id': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":tab-pane isActive:active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "tabView", {hash:{
+    'content': ("view.content")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n</div>\n");
+  return buffer;
+  }
+
+  stack1 = helpers.each.call(depth0, "view.content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_video"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"form-group\">\n    <label>Vimeo or YouTube link</label>\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("url"),
+    'value': ("videoUrl")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n</div>\n");
   return buffer;
   
 });
