@@ -130,12 +130,12 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["list-organizations"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n    <li class=\"organizations-list-item\" ");
+  data.buffer.push("\n    <div class=\"organizations-list-item\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganization", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">\n        <div class=\"organizations-list-item-name\">");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
@@ -152,7 +152,7 @@ function program1(depth0,data) {
   data.buffer.push("\n        </div>\n        <div class=\"organizations-list-item-sectors\">\n            ");
   stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n    </li>\n    ");
+  data.buffer.push("\n        </div>\n    </div>\n");
   return buffer;
   }
 function program2(depth0,data) {
@@ -167,10 +167,14 @@ function program2(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<ul class=\"organizations-list\">\n    ");
-  stack1 = helpers.each.call(depth0, "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n");
+  stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
+    'contentBinding': ("controller.content"),
+    'height': (357),
+    'rowHeight': (25)
+  },hashTypes:{'contentBinding': "STRING",'height': "INTEGER",'rowHeight': "INTEGER"},hashContexts:{'contentBinding': depth0,'height': depth0,'rowHeight': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "Ember.ListView", options) : helperMissing.call(depth0, "collection", "Ember.ListView", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</ul>\n");
+  data.buffer.push("\n");
   return buffer;
   
 });

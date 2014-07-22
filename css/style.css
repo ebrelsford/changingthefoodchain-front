@@ -114,6 +114,8 @@ hr {
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:before,
 .add-organization-location-form-city-state:after,
+.organizations-list-headers:before,
+.organizations-list-headers:after,
 .organizations-list-item:before,
 .organizations-list-item:after,
 header:before,
@@ -133,6 +135,7 @@ header:after {
 .nav:after,
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:after,
+.organizations-list-headers:after,
 .organizations-list-item:after,
 header:after {
   clear: both;
@@ -2902,10 +2905,17 @@ body > .ember-view {
   margin: 0;
   padding: 0;
 }
+.organizations-list-headers {
+  margin-left: -15px;
+  margin-right: -15px;
+  font-weight: bold;
+}
 .organizations-list-item {
   margin-left: -15px;
   margin-right: -15px;
   cursor: pointer;
+  height: 25px;
+  max-height: 25px;
 }
 .organizations-list-item-name {
   position: relative;
@@ -2969,6 +2979,15 @@ body > .ember-view {
 }
 .organizations-list-item:hover {
   background: #aaa;
+}
+.ember-list-view {
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  position: relative;
+}
+.ember-list-item-view {
+  position: absolute;
+  width: 100%;
 }
 #filters {
   height: 400px;

@@ -1,0 +1,14 @@
+{
+  "name": "list-view",
+  "homepage": "https://github.com/emberjs/list-view",
+  "_release": "a56fcf9518",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a56fcf95186a188ced315b33547a3d4a8ae22e0b"
+  },
+  "_source": "https://github.com/emberjs/list-view.git",
+  "_target": "*",
+  "_originalSource": "git+https://github.com/emberjs/list-view.git",
+  "_direct": true
+}
