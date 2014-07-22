@@ -64,6 +64,15 @@ function makeFullHeight() {
     });
 }
 
+function makeFullWidth() {
+    $('.full-width').each(function () {
+        var parentWidth = $(this).parent().outerWidth(),
+            offsetLeft = $(this).offset().left,
+            width = parentWidth - offsetLeft;
+        $(this).outerWidth(width);
+    });
+}
+
 Ember.View.reopen({
     didInsertElement: function () {
         this._super();
@@ -71,6 +80,7 @@ Ember.View.reopen({
     },
     didRenderElement: function () {
         makeFullHeight();
+        makeFullWidth();
         initializeMap();
     }
 });
@@ -83,6 +93,7 @@ window.App = Ember.Application.create({
         // When the window is resized, fix heights of full-height elements
         $(window).resize(function () {
             Ember.run.debounce(this, makeFullHeight, 100);
+            Ember.run.debounce(this, makeFullWidth, 100);
         });
     }
 });
