@@ -23,3 +23,20 @@ body.list-organizations-view #filters {
         font-weight: bold;
     }
 }
+
+.help-button {
+    background-color: lighten(@foreground-color, 50%);
+    border-radius: 50%;
+    color: @foreground-color;
+    display: block;
+    height: 25px;
+    padding-top: 2px;
+    text-align: center;
+    width: 25px;
+
+    &:hover {
+        color: white;
+        background-color: @foreground-color;
+        text-decoration: none;
+    }
+}

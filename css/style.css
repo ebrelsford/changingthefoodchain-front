@@ -120,6 +120,8 @@ hr {
 .organizations-list-item:after,
 header:before,
 header:after,
+#help .help-organization-types:before,
+#help .help-organization-types:after,
 #popup .organization-header:before,
 #popup .organization-header:after,
 #popup .organization-row:before,
@@ -142,6 +144,7 @@ header:after,
 .organizations-list-headers:after,
 .organizations-list-item:after,
 header:after,
+#help .help-organization-types:after,
 #popup .organization-header:after,
 #popup .organization-row:after {
   clear: both;
@@ -3021,6 +3024,21 @@ body.list-organizations-view #filters {
 .filters-type .filters-type-list-item.active {
   font-weight: bold;
 }
+.help-button {
+  background-color: #c7c2f0;
+  border-radius: 50%;
+  color: #302390;
+  display: block;
+  height: 25px;
+  padding-top: 2px;
+  text-align: center;
+  width: 25px;
+}
+.help-button:hover {
+  color: white;
+  background-color: #302390;
+  text-decoration: none;
+}
 header {
   margin-left: -15px;
   margin-right: -15px;
@@ -3069,7 +3087,7 @@ header #search {
 }
 header #search input {
   background: transparent;
-  border: 2px solid #493f90;
+  border: 2px solid #302390;
   border-radius: 0;
   width: 100%;
 }
@@ -3086,7 +3104,7 @@ header #nav {
   }
 }
 header #nav a {
-  color: #493f90;
+  color: #302390;
   font-size: 18px;
   font-weight: bold;
   text-decoration: underline;
@@ -3121,8 +3139,69 @@ header #list-button {
 header #list-button:hover {
   color: #bc461b;
 }
-body.list-organizations-view header {
+body.list-organizations-view header,
+body.help-organization-types-view header {
   background-color: rgba(235, 223, 194, 0.9);
+}
+#help {
+  background-color: rgba(235, 223, 194, 0.9);
+  display: none;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 25px;
+  position: absolute;
+  left: 200px;
+  top: 100px;
+  width: 50%;
+  z-index: 2000;
+  left: 0;
+}
+#help > section {
+  margin-top: 20px;
+}
+#help .close {
+  cursor: pointer;
+  float: right;
+  font-size: 45px;
+  font-weight: normal;
+  margin-right: -10px;
+  margin-top: -15px;
+  opacity: 1;
+}
+#help h2 {
+  color: #302390;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+#help .help-organization-types {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#help .help-organization-types-item {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-right: 1px solid #302390;
+  padding: 10px;
+}
+@media (min-width: 992px) {
+  #help .help-organization-types-item {
+    float: left;
+    width: 25%;
+  }
+}
+#help .help-organization-types-item:last-child {
+  border-right: none;
+}
+#help .help-organization-types-item-name {
+  font-weight: bold;
+  text-align: center;
+}
+#help .help-organization-types-item-text {
+  text-align: center;
 }
 #map {
   overflow: hidden;
@@ -3174,14 +3253,14 @@ body.list-organizations-view header {
   margin-top: 5px;
 }
 .leaflet-popup-content-wrapper {
-  background-color: #493f90;
+  background-color: #302390;
   border-radius: 0;
   color: #f1e7cd;
   font-size: 16px;
   font-weight: bold;
 }
 .leaflet-popup-tip {
-  background-color: #493f90;
+  background-color: #302390;
 }
 #page {
   background-color: rgba(235, 223, 194, 0.9);

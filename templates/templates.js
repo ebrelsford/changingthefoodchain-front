@@ -53,7 +53,9 @@ function program7(depth0,data) {
   },hashTypes:{'class': "STRING",'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <a class=\"pull-right help-button\" href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openHelpOrganizationTypes", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">?</a>\n        <h3>organization type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("organizationTypes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -69,6 +71,8 @@ function program7(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
   data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height full-width\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));
+  data.buffer.push("\n</div>\n\n<div id=\"help\" class=\"full-height full-width\">\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "help", options) : helperMissing.call(depth0, "outlet", "help", options))));
   data.buffer.push("\n</div>\n\n");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "modal", options) : helperMissing.call(depth0, "outlet", "modal", options))));
   data.buffer.push("\n");
@@ -132,6 +136,19 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'value': ("code")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    <div id=\"embed-map\" class=\"embed-map\"></div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["help-organization-types"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n\n<h2>Organization Types</h2>\n<div class=\"help-organization-types\">\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">advocacy group</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Praesent nec purus ut est eleifend viverra nec non nisi. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Nam egestas diam odio, vitae ornare justo adipiscing ut. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">service organization</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Proin nec arcu in leo euismod porta a et tellus. Mauris tristique velit sit amet fringilla viverra. Maecenas nec interdum sem, vel mollis augue. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">workers center</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">union</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Proin nec arcu in leo euismod porta a et tellus. Maecenas nec interdum sem, vel mollis augue. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Nulla suscipit aliquet iaculis. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });

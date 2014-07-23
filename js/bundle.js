@@ -60692,7 +60692,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"FWaASH":21}],7:[function(require,module,exports){
+},{"FWaASH":22}],7:[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 
 
@@ -62375,7 +62375,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":6,"underscore":24}],9:[function(require,module,exports){
+},{"ember":6,"underscore":25}],9:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 
@@ -62712,6 +62712,7 @@ App.Router.map(function() {
         this.route('add_media', { path: '/add-media' });
     });
     this.route('about');
+    this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
     this.route('news');
     this.route('share');
@@ -62721,6 +62722,10 @@ App.ApplicationRoute = Ember.Route.extend({
     actions: {
         openAddOrganization: function () {
             this.transitionTo('add-organization');
+        },
+
+        openHelpOrganizationTypes: function () {
+            this.transitionTo('help-organization-types');
         },
 
         openOrganization: function (id) {
@@ -62835,7 +62840,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":25,"./geocode":12,"./i18n":13,"./map":16,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":22,"qs":23,"underscore":24}],11:[function(require,module,exports){
+},{"../templates/templates":26,"./geocode":12,"./i18n":14,"./map":17,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":23,"qs":24,"underscore":25}],11:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -62961,6 +62966,33 @@ module.exports = {
 };
 
 },{}],13:[function(require,module,exports){
+App.HelpOrganizationTypesRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        }
+    },
+
+    renderTemplate: function () {
+        this.render('help-organization-types', { outlet: 'help' });
+    }
+});
+
+App.HelpOrganizationTypesView = Ember.View.extend({
+    didRenderElement: function () {
+        $('#help').show();
+        this._super();
+        $('body').addClass('help-organization-types-view');
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('#help').hide();
+        $('body').removeClass('help-organization-types-view');
+    }
+});
+
+},{}],14:[function(require,module,exports){
 var qs = require('qs');
 
 var DEFAULT_LOCALE = 'en';
@@ -62986,7 +63018,7 @@ module.exports = {
     }
 };
 
-},{"qs":23}],14:[function(require,module,exports){
+},{"qs":24}],15:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 
@@ -63082,11 +63114,12 @@ App.ListOrganizationsView = Ember.View.extend({
 
 });
 
-},{"ember":6,"ember-list-view":7}],15:[function(require,module,exports){
+},{"ember":6,"ember-list-view":7}],16:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./add_organization');
 require('./carousel');
+require('./help');
 require('./list_organizations');
 require('./models');
 require('./organization');
@@ -63097,7 +63130,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":8,"./add_organization":9,"./app":10,"./carousel":11,"./i18n":13,"./list_organizations":14,"./models":17,"./organization":18,"./page":19,"./share":20}],16:[function(require,module,exports){
+},{"./add_media":8,"./add_organization":9,"./app":10,"./carousel":11,"./help":13,"./i18n":14,"./list_organizations":15,"./models":18,"./organization":19,"./page":20,"./share":21}],17:[function(require,module,exports){
 var _ = require('underscore');
 
 var map,
@@ -63216,7 +63249,7 @@ module.exports = {
     }
 };
 
-},{"underscore":24}],17:[function(require,module,exports){
+},{"underscore":25}],18:[function(require,module,exports){
 var DS = require('ember-data');
 require('ember-data-extensions-embedded-adapter');
 
@@ -63265,7 +63298,7 @@ App.Photo = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"ember-data":5,"ember-data-extensions-embedded-adapter":4}],18:[function(require,module,exports){
+},{"ember-data":5,"ember-data-extensions-embedded-adapter":4}],19:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -63300,7 +63333,7 @@ App.OrganizationRoute = Ember.Route.extend({
     }
 });
 
-},{"ember":6}],19:[function(require,module,exports){
+},{"ember":6}],20:[function(require,module,exports){
 App.PageRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -63342,7 +63375,7 @@ App.NewsRoute = App.PageRoute.extend({
     }
 });
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -63435,7 +63468,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":16,"ember":6}],21:[function(require,module,exports){
+},{"./map":17,"ember":6}],22:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -63500,7 +63533,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -63655,7 +63688,7 @@ process.chdir = function (dir) {
 
 }).call(undefined, this);
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -64023,7 +64056,7 @@ function decode(str) {
   }
 }
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -65368,7 +65401,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -65424,7 +65457,9 @@ function program7(depth0,data) {
   },hashTypes:{'class': "STRING",'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <h3>organization type</h3>\n        ");
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <a class=\"pull-right help-button\" href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openHelpOrganizationTypes", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">?</a>\n        <h3>organization type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("organizationTypes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -65440,6 +65475,8 @@ function program7(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
   data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height full-width\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));
+  data.buffer.push("\n</div>\n\n<div id=\"help\" class=\"full-height full-width\">\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "help", options) : helperMissing.call(depth0, "outlet", "help", options))));
   data.buffer.push("\n</div>\n\n");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "modal", options) : helperMissing.call(depth0, "outlet", "modal", options))));
   data.buffer.push("\n");
@@ -65503,6 +65540,19 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'value': ("code")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n    <div id=\"embed-map\" class=\"embed-map\"></div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["help-organization-types"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n\n<h2>Organization Types</h2>\n<div class=\"help-organization-types\">\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">advocacy group</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Praesent nec purus ut est eleifend viverra nec non nisi. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Nam egestas diam odio, vitae ornare justo adipiscing ut. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">service organization</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Proin nec arcu in leo euismod porta a et tellus. Mauris tristique velit sit amet fringilla viverra. Maecenas nec interdum sem, vel mollis augue. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">workers center</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">union</div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Proin nec arcu in leo euismod porta a et tellus. Maecenas nec interdum sem, vel mollis augue. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Nulla suscipit aliquet iaculis. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -66002,4 +66052,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[15])
+},{}]},{},[16])

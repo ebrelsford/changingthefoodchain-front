@@ -25,6 +25,7 @@
 <div id="filters" class="full-height">
     <h2>filters</h2>
     <section class="filters-type">
+        <a class="pull-right help-button" href="#" {{action 'openHelpOrganizationTypes'}}>?</a>
         <h3>organization type</h3>
         {{view App.OrganizationTypeView content=organizationTypes}}
     </section>
@@ -43,6 +44,10 @@
 
 <div id="page" class="full-height full-width">
     {{outlet page}}
+</div>
+
+<div id="help" class="full-height full-width">
+    {{outlet help}}
 </div>
 
 {{outlet modal}}

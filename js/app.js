@@ -109,6 +109,7 @@ App.Router.map(function() {
         this.route('add_media', { path: '/add-media' });
     });
     this.route('about');
+    this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
     this.route('news');
     this.route('share');
@@ -118,6 +119,10 @@ App.ApplicationRoute = Ember.Route.extend({
     actions: {
         openAddOrganization: function () {
             this.transitionTo('add-organization');
+        },
+
+        openHelpOrganizationTypes: function () {
+            this.transitionTo('help-organization-types');
         },
 
         openOrganization: function (id) {
