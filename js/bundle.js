@@ -65426,9 +65426,9 @@ function program7(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"add-organization-button\" ");
+  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"add-organization-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">add organization</a>\n<a id=\"share-button\" ");
+  data.buffer.push(">add org</a>\n<a id=\"share-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">share</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));

@@ -1,21 +1,69 @@
+@hover-popup-background-color: @foreground-color;
+@hover-popup-text-color: #F1E7CD;
+
 #map {
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-@popup-background-color: @foreground-color;
-@popup-text-color: #F1E7CD;
+.map-ui-button {
+    bottom: 25px;
+    color: @ui-button-color;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    text-transform: uppercase;
+    z-index: @interface-z-index;
+
+    &:hover {
+        color: @ui-button-color;
+    }
+}
+
+#add-organization-button {
+    right: 115px;
+}
+
+#share-button {
+    right: 50px;
+}
+
+.leaflet-bar {
+    border-radius: 0;
+    box-shadow: none;
+
+    a, a:hover {
+        background: transparent;
+        border: 2px solid @ui-button-color !important;
+        border-radius: 0;
+        color: @ui-button-color;
+        font-weight: normal;
+        height: 30px;
+        line-height: 25px;
+        width: 30px;
+
+        &:first-child {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        &:last-child {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-top: 5px;
+        }
+    }
+}
 
 .leaflet-popup {
     &-content-wrapper {
-        background-color: @popup-background-color;
+        background-color: @hover-popup-background-color;
         border-radius: 0;
-        color: @popup-text-color;
+        color: @hover-popup-text-color;
         font-size: 16px;
         font-weight: bold;
     }
     &-tip {
-        background-color: @popup-background-color;
+        background-color: @hover-popup-background-color;
     }
 }

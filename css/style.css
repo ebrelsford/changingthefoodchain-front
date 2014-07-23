@@ -2770,15 +2770,6 @@ body > .ember-view {
   height: 100%;
   width: 100%;
 }
-#add-organization-button {
-  background: rgba(255, 255, 255, 0.7);
-  bottom: 25px;
-  cursor: pointer;
-  display: block;
-  position: absolute;
-  right: 95px;
-  z-index: 2000;
-}
 #addOrganizationModal .modal-dialog {
   width: 800px;
 }
@@ -3110,6 +3101,50 @@ header #list-button {
   height: 100%;
   width: 100%;
 }
+.map-ui-button {
+  bottom: 25px;
+  color: #bc461b;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 2000;
+}
+.map-ui-button:hover {
+  color: #bc461b;
+}
+#add-organization-button {
+  right: 115px;
+}
+#share-button {
+  right: 50px;
+}
+.leaflet-bar {
+  border-radius: 0;
+  box-shadow: none;
+}
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background: transparent;
+  border: 2px solid #bc461b !important;
+  border-radius: 0;
+  color: #bc461b;
+  font-weight: normal;
+  height: 30px;
+  line-height: 25px;
+  width: 30px;
+}
+.leaflet-bar a:first-child,
+.leaflet-bar a:hover:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.leaflet-bar a:last-child,
+.leaflet-bar a:hover:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-top: 5px;
+}
 .leaflet-popup-content-wrapper {
   background-color: #493f90;
   border-radius: 0;
@@ -3156,7 +3191,7 @@ header #list-button {
   top: 100px;
   width: 50%;
   z-index: 2000;
-  background-color: #493f90;
+  background-color: rgba(235, 223, 194, 0.9);
   left: 0;
   overflow-y: hidden;
   top: 0;
@@ -3218,15 +3253,6 @@ header #list-button {
 }
 .carousel-control {
   padding-top: 85px;
-}
-#share-button {
-  background: rgba(255, 255, 255, 0.7);
-  bottom: 25px;
-  cursor: pointer;
-  display: block;
-  position: absolute;
-  right: 50px;
-  z-index: 2000;
 }
 #shareModal .embed-map {
   height: 250px;
