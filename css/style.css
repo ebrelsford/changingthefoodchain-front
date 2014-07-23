@@ -3089,12 +3089,17 @@ header #list-button {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  color: #bc461b;
+  text-transform: uppercase;
 }
 @media (min-width: 992px) {
   header #list-button {
     float: left;
     width: 8.33333333%;
   }
+}
+header #list-button:hover {
+  color: #bc461b;
 }
 #map {
   overflow: hidden;
