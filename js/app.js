@@ -55,33 +55,34 @@ function initializeMap() {
         });
 }
 
-function makeFullHeight() {
-    $('.full-height').each(function () {
-        var parentHeight = $(this).parent().outerHeight(),
-            offsetTop = $(this).offset().top,
-            height = parentHeight - offsetTop;
-        $(this).outerHeight(height);
-    });
-}
-
-function makeFullWidth() {
-    $('.full-width').each(function () {
-        var parentWidth = $(this).parent().outerWidth(),
-            offsetLeft = $(this).offset().left,
-            width = parentWidth - offsetLeft;
-        $(this).outerWidth(width);
-    });
-}
-
 Ember.View.reopen({
     didInsertElement: function () {
         this._super();
         Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
     },
+
     didRenderElement: function () {
-        makeFullHeight();
-        makeFullWidth();
+        this.makeFullHeight();
+        this.makeFullWidth();
         initializeMap();
+    },
+
+    makeFullHeight: function () {
+        $('.full-height').each(function () {
+            var parentHeight = $(this).parent().outerHeight(),
+                offsetTop = $(this).offset().top,
+                height = parentHeight - offsetTop;
+            $(this).outerHeight(height);
+        });
+    },
+
+    makeFullWidth: function () {
+        $('.full-width').each(function () {
+            var parentWidth = $(this).parent().outerWidth(),
+                offsetLeft = $(this).offset().left,
+                width = parentWidth - offsetLeft;
+            $(this).outerWidth(width);
+        });
     }
 });
 

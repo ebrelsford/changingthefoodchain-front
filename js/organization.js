@@ -5,6 +5,10 @@ App.OrganizationView = Ember.View.extend({
     didRenderElement : function() {
         this._super();
         $('#popup').show();
+
+        var popupHeight = $('#popup').height(),
+            headerHeight = $('.organization-header').height();
+        $('.organization-details').outerHeight(popupHeight - headerHeight);
     }
 });
 

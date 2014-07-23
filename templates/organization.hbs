@@ -1,35 +1,45 @@
-<div class="close" {{action 'close'}}>&times;</div>
-<h2>{{name}}</h2>
-<div>{{address_line1}}, {{city}}, {{state_province}} {{postal_code}}</div>
+<div class="organization-header">organization type icon</div>
 
-{{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+<div class="organization-row">
+    <div class="organization-filters">
+        filters that match organization
+    </div>
 
-{{#if photos}}
-{{view App.CarouselView content=photos}}
-{{/if}}
+    <div class="organization-details">
+        <div class="close" {{action 'close'}}>&times;</div>
+        <h2>{{name}}</h2>
+        <div>{{address_line1}}, {{city}}, {{state_province}} {{postal_code}}</div>
 
-<div class="organization-mission-statement">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
+        {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+
+        {{#if photos}}
+        {{view App.CarouselView content=photos}}
+        {{/if}}
+
+        <div class="organization-mission-statement">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
+        </div>
+
+        {{#if sectors}}
+            <section class="organization-sectors">
+                <h3>sectors:</h3>
+                <ul>
+                    {{#each sectors}}
+                    <li>{{name}}</li>
+                    {{/each}}
+                </ul>
+            </section>
+        {{/if}}
+
+        {{#if types}}
+            <section class="organization-types">
+                <h3>types:</h3>
+                <ul>
+                    {{#each types}}
+                    <li>{{name}}</li>
+                    {{/each}}
+                </ul>
+            </section>
+        {{/if}}
+    </div>
 </div>
-
-{{#if sectors}}
-    <section class="organization-sectors">
-        <h3>sectors:</h3>
-        <ul>
-            {{#each sectors}}
-            <li>{{name}}</li>
-            {{/each}}
-        </ul>
-    </section>
-{{/if}}
-
-{{#if types}}
-    <section class="organization-types">
-        <h3>types:</h3>
-        <ul>
-            {{#each types}}
-            <li>{{name}}</li>
-            {{/each}}
-        </ul>
-    </section>
-{{/if}}

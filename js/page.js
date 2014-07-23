@@ -16,8 +16,8 @@ App.PageRoute = Ember.Route.extend({
 
 App.PageView = Ember.View.extend({
     didRenderElement: function () {
-        this._super();
         $('#page').show();
+        this._super();
     }
 });
 

@@ -119,7 +119,11 @@ hr {
 .organizations-list-item:before,
 .organizations-list-item:after,
 header:before,
-header:after {
+header:after,
+#popup .organization-header:before,
+#popup .organization-header:after,
+#popup .organization-row:before,
+#popup .organization-row:after {
   content: " ";
   display: table;
 }
@@ -137,7 +141,9 @@ header:after {
 .add-organization-location-form-city-state:after,
 .organizations-list-headers:after,
 .organizations-list-item:after,
-header:after {
+header:after,
+#popup .organization-header:after,
+#popup .organization-row:after {
   clear: both;
 }
 .center-block {
@@ -2742,9 +2748,11 @@ select[multiple].input-lg {
 .overlay-content .close {
   cursor: pointer;
   float: right;
-  font-size: 14px;
+  font-size: 45px;
+  font-weight: normal;
   margin-right: -10px;
   margin-top: -15px;
+  opacity: 1;
 }
 body,
 html {
@@ -3104,9 +3112,11 @@ header #list-button {
 #page .close {
   cursor: pointer;
   float: right;
-  font-size: 14px;
+  font-size: 45px;
+  font-weight: normal;
   margin-right: -10px;
   margin-top: -15px;
+  opacity: 1;
 }
 #popup {
   display: none;
@@ -3119,7 +3129,11 @@ header #list-button {
   top: 100px;
   width: 50%;
   z-index: 2000;
-  background-color: #B09C77;
+  background-color: rgba(235, 223, 194, 0.9);
+  left: 0;
+  overflow-y: hidden;
+  top: 0;
+  width: 65%;
 }
 #popup > section {
   margin-top: 20px;
@@ -3127,9 +3141,50 @@ header #list-button {
 #popup .close {
   cursor: pointer;
   float: right;
-  font-size: 14px;
+  font-size: 45px;
+  font-weight: normal;
   margin-right: -10px;
   margin-top: -15px;
+  opacity: 1;
+}
+#popup .close {
+  margin-right: 0;
+  margin-top: 0;
+}
+#popup .organization-header {
+  margin-left: -15px;
+  margin-right: -15px;
+  height: 100px;
+  text-align: center;
+}
+#popup .organization-row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#popup .organization-filters {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  #popup .organization-filters {
+    float: left;
+    width: 25%;
+  }
+}
+#popup .organization-details {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow-y: auto;
+}
+@media (min-width: 992px) {
+  #popup .organization-details {
+    float: left;
+    width: 75%;
+  }
 }
 .carousel {
   width: 100%;
