@@ -58,11 +58,13 @@ App.ListOrganizationsView = Ember.View.extend({
     didInsertElement: function () {
         this._super();
         $('.ember-list-view').bind('scroll', { view: this }, this.handleScroll);
+        $('body').addClass('list-organizations-view');
     },
 
-    willRemoveElement: function () {
+    willDestroyElement: function () {
         this._super();
         $('.ember-list-view').unbind('scroll', this.handleScroll);
+        $('body').removeClass('list-organizations-view');
     },
 
     didRenderElement: function () {

@@ -7,6 +7,12 @@
     <div class="organizations-list-item-sectors">sectors</div>
 </div>
 
+<div class="organizations-list-add-organization">
+    <span>Don't see your organization in this list? Add it here.</span>
+    <a id="organizations-list-add-organization-button" class="pull-right" {{action 'openAddOrganization'}}>add my organization</a>
+    <div class="clearfix"></div>
+</div>
+
 {{#collection Ember.ListView contentBinding="controller.content" height=357 rowHeight=25}}
     <div class="organizations-list-item" {{action 'openOrganization' id}}>
         <div class="organizations-list-item-name">{{name}}</div>

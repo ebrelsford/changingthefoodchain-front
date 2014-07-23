@@ -2731,6 +2731,7 @@ select[multiple].input-lg {
   border-top-left-radius: 0;
 }
 .overlay-content {
+  background-color: rgba(235, 223, 194, 0.9);
   display: none;
   max-height: 100%;
   overflow-x: hidden;
@@ -2979,6 +2980,20 @@ body > .ember-view {
 .organizations-list-item:hover {
   background: #aaa;
 }
+.organizations-list-add-organization {
+  color: #bc461b;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.organizations-list-add-organization a {
+  border: 1px solid #bc461b;
+  color: #bc461b;
+  padding: 5px;
+  text-transform: uppercase;
+}
+.organizations-list-add-organization a:hover {
+  color: #bc461b;
+}
 .ember-list-view {
   overflow-x: hidden !important;
   overflow-y: auto;
@@ -2989,12 +3004,16 @@ body > .ember-view {
   width: 100%;
 }
 #filters {
+  background-color: transparent;
   height: 400px;
   overflow-y: auto;
   position: absolute;
   top: 100px;
   width: 200px;
   z-index: 2000;
+}
+body.list-organizations-view #filters {
+  background-color: rgba(235, 223, 194, 0.9);
 }
 .filters-sector .filters-sector-list-item.active {
   font-weight: bold;
@@ -3005,6 +3024,7 @@ body > .ember-view {
 header {
   margin-left: -15px;
   margin-right: -15px;
+  background-color: transparent;
   height: 100px;
   margin-left: 0;
   margin-right: 0;
@@ -3067,7 +3087,7 @@ header #nav {
 }
 header #nav a {
   color: #493f90;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   text-decoration: underline;
   text-transform: uppercase;
@@ -3100,6 +3120,9 @@ header #list-button {
 }
 header #list-button:hover {
   color: #bc461b;
+}
+body.list-organizations-view header {
+  background-color: rgba(235, 223, 194, 0.9);
 }
 #map {
   overflow: hidden;
@@ -3161,6 +3184,7 @@ header #list-button:hover {
   background-color: #493f90;
 }
 #page {
+  background-color: rgba(235, 223, 194, 0.9);
   display: none;
   max-height: 100%;
   overflow-x: hidden;

@@ -62658,6 +62658,24 @@ function initializeMap() {
         });
 }
 
+function makeFullHeight() {
+    $('.full-height').each(function () {
+        var parentHeight = $(this).parent().outerHeight(),
+            offsetTop = $(this).offset().top,
+            height = parentHeight - offsetTop;
+        $(this).outerHeight(height);
+    });
+}
+
+function makeFullWidth() {
+    $('.full-width').each(function () {
+        var parentWidth = $(this).parent().outerWidth(),
+            offsetLeft = $(this).offset().left,
+            width = parentWidth - offsetLeft;
+        $(this).outerWidth(width);
+    });
+}
+
 Ember.View.reopen({
     didInsertElement: function () {
         this._super();
@@ -62665,27 +62683,9 @@ Ember.View.reopen({
     },
 
     didRenderElement: function () {
-        this.makeFullHeight();
-        this.makeFullWidth();
+        makeFullHeight();
+        makeFullWidth();
         initializeMap();
-    },
-
-    makeFullHeight: function () {
-        $('.full-height').each(function () {
-            var parentHeight = $(this).parent().outerHeight(),
-                offsetTop = $(this).offset().top,
-                height = parentHeight - offsetTop;
-            $(this).outerHeight(height);
-        });
-    },
-
-    makeFullWidth: function () {
-        $('.full-width').each(function () {
-            var parentWidth = $(this).parent().outerWidth(),
-                offsetLeft = $(this).offset().left,
-                width = parentWidth - offsetLeft;
-            $(this).outerWidth(width);
-        });
     }
 });
 
@@ -62715,6 +62715,26 @@ App.Router.map(function() {
     this.route('contact');
     this.route('news');
     this.route('share');
+});
+
+App.ApplicationRoute = Ember.Route.extend({
+    actions: {
+        openAddOrganization: function () {
+            this.transitionTo('add-organization');
+        },
+
+        openOrganization: function (id) {
+            this.transitionTo('organization', id);
+        },
+
+        openOrganizationList: function () {
+            this.transitionTo('list-organizations');
+        },
+
+        openShare: function () {
+            this.transitionTo('share');
+        }
+    }
 });
 
 App.ApplicationController = Ember.Controller.extend({
@@ -62784,22 +62804,6 @@ App.ApplicationController = Ember.Controller.extend({
         setLocale: function (locale) {
             i18n.setLocale(locale);
         },
-
-        openOrganization: function (id) {
-            this.transitionToRoute('organization', id);
-        },
-
-        openAddOrganization: function () {
-            this.transitionToRoute('add-organization');
-        },
-
-        openOrganizationList: function () {
-            this.transitionToRoute('list-organizations');
-        },
-
-        openShare: function () {
-            this.transitionToRoute('share');
-        }
     }
 });
 
@@ -63043,11 +63047,13 @@ App.ListOrganizationsView = Ember.View.extend({
     didInsertElement: function () {
         this._super();
         $('.ember-list-view').bind('scroll', { view: this }, this.handleScroll);
+        $('body').addClass('list-organizations-view');
     },
 
-    willRemoveElement: function () {
+    willDestroyElement: function () {
         this._super();
         $('.ember-list-view').unbind('scroll', this.handleScroll);
+        $('body').removeClass('list-organizations-view');
     },
 
     didRenderElement: function () {
@@ -65541,7 +65547,9 @@ function program2(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n");
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>Don't see your organization in this list? Add it here.</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">add my organization</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
   stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
     'contentBinding': ("controller.content"),
     'height': (357),

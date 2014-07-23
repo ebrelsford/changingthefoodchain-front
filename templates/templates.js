@@ -176,7 +176,9 @@ function program2(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n");
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>Don't see your organization in this list? Add it here.</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">add my organization</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
   stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
     'contentBinding': ("controller.content"),
     'height': (357),

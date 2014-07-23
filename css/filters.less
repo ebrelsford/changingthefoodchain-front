@@ -1,10 +1,15 @@
 #filters {
+    background-color: transparent;
     height: 400px;
     overflow-y: auto;
     position: absolute;
     top: @header-height;
     width: @filters-width;
     z-index: @interface-z-index;
+}
+
+body.list-organizations-view #filters {
+    background-color: @overlay-background-color;
 }
 
 .filters-sector {

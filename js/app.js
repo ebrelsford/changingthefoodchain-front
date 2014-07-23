@@ -55,6 +55,24 @@ function initializeMap() {
         });
 }
 
+function makeFullHeight() {
+    $('.full-height').each(function () {
+        var parentHeight = $(this).parent().outerHeight(),
+            offsetTop = $(this).offset().top,
+            height = parentHeight - offsetTop;
+        $(this).outerHeight(height);
+    });
+}
+
+function makeFullWidth() {
+    $('.full-width').each(function () {
+        var parentWidth = $(this).parent().outerWidth(),
+            offsetLeft = $(this).offset().left,
+            width = parentWidth - offsetLeft;
+        $(this).outerWidth(width);
+    });
+}
+
 Ember.View.reopen({
     didInsertElement: function () {
         this._super();
@@ -62,27 +80,9 @@ Ember.View.reopen({
     },
 
     didRenderElement: function () {
-        this.makeFullHeight();
-        this.makeFullWidth();
+        makeFullHeight();
+        makeFullWidth();
         initializeMap();
-    },
-
-    makeFullHeight: function () {
-        $('.full-height').each(function () {
-            var parentHeight = $(this).parent().outerHeight(),
-                offsetTop = $(this).offset().top,
-                height = parentHeight - offsetTop;
-            $(this).outerHeight(height);
-        });
-    },
-
-    makeFullWidth: function () {
-        $('.full-width').each(function () {
-            var parentWidth = $(this).parent().outerWidth(),
-                offsetLeft = $(this).offset().left,
-                width = parentWidth - offsetLeft;
-            $(this).outerWidth(width);
-        });
     }
 });
 
@@ -112,6 +112,26 @@ App.Router.map(function() {
     this.route('contact');
     this.route('news');
     this.route('share');
+});
+
+App.ApplicationRoute = Ember.Route.extend({
+    actions: {
+        openAddOrganization: function () {
+            this.transitionTo('add-organization');
+        },
+
+        openOrganization: function (id) {
+            this.transitionTo('organization', id);
+        },
+
+        openOrganizationList: function () {
+            this.transitionTo('list-organizations');
+        },
+
+        openShare: function () {
+            this.transitionTo('share');
+        }
+    }
 });
 
 App.ApplicationController = Ember.Controller.extend({
@@ -181,22 +201,6 @@ App.ApplicationController = Ember.Controller.extend({
         setLocale: function (locale) {
             i18n.setLocale(locale);
         },
-
-        openOrganization: function (id) {
-            this.transitionToRoute('organization', id);
-        },
-
-        openAddOrganization: function () {
-            this.transitionToRoute('add-organization');
-        },
-
-        openOrganizationList: function () {
-            this.transitionToRoute('list-organizations');
-        },
-
-        openShare: function () {
-            this.transitionToRoute('share');
-        }
     }
 });
 

@@ -1,5 +1,6 @@
 header {
     .make-row();
+    background-color: transparent;
     height: @header-height;
     margin-left: 0;
     margin-right: 0;
@@ -36,7 +37,7 @@ header {
 
         a {
             color: @foreground-color;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             text-decoration: underline;
             text-transform: uppercase;
@@ -54,4 +55,8 @@ header {
             color: @ui-button-color;
         }
     }
+}
+
+body.list-organizations-view header {
+    background-color: @overlay-background-color;
 }
