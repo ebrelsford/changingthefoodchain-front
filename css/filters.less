@@ -6,6 +6,18 @@
     top: @header-height;
     width: @filters-width;
     z-index: @interface-z-index;
+
+    section {
+        border-top: 1px solid @foreground-color;
+    }
+
+    h2 {
+        text-transform: uppercase;
+    }
+
+    h3 {
+        text-transform: uppercase;
+    }
 }
 
 body.list-organizations-view #filters {
@@ -30,6 +42,7 @@ body.list-organizations-view #filters {
     color: @foreground-color;
     display: block;
     height: 25px;
+    margin-top: 10px;
     padding-top: 2px;
     text-align: center;
     width: 25px;

@@ -3015,6 +3015,15 @@ body > .ember-view {
   width: 200px;
   z-index: 2000;
 }
+#filters section {
+  border-top: 1px solid #302390;
+}
+#filters h2 {
+  text-transform: uppercase;
+}
+#filters h3 {
+  text-transform: uppercase;
+}
 body.list-organizations-view #filters {
   background-color: rgba(235, 223, 194, 0.9);
 }
@@ -3030,6 +3039,7 @@ body.list-organizations-view #filters {
   color: #302390;
   display: block;
   height: 25px;
+  margin-top: 10px;
   padding-top: 2px;
   text-align: center;
   width: 25px;
