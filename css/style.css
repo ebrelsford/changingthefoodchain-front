@@ -3110,6 +3110,16 @@ header #list-button {
   height: 100%;
   width: 100%;
 }
+.leaflet-popup-content-wrapper {
+  background-color: #493f90;
+  border-radius: 0;
+  color: #f1e7cd;
+  font-size: 16px;
+  font-weight: bold;
+}
+.leaflet-popup-tip {
+  background-color: #493f90;
+}
 #page {
   display: none;
   max-height: 100%;
@@ -3146,7 +3156,7 @@ header #list-button {
   top: 100px;
   width: 50%;
   z-index: 2000;
-  background-color: rgba(235, 223, 194, 0.9);
+  background-color: #493f90;
   left: 0;
   overflow-y: hidden;
   top: 0;

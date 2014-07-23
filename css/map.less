@@ -3,3 +3,19 @@
     height: 100%;
     width: 100%;
 }
+
+@popup-background-color: @foreground-color;
+@popup-text-color: #F1E7CD;
+
+.leaflet-popup {
+    &-content-wrapper {
+        background-color: @popup-background-color;
+        border-radius: 0;
+        color: @popup-text-color;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    &-tip {
+        background-color: @popup-background-color;
+    }
+}

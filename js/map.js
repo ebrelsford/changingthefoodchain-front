@@ -6,6 +6,21 @@ var map,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5;
 
+var organizationStyle = {
+    fillColor: '#E3BE26',
+    fillOpacity: 0.7,
+    radius: 5,
+    stroke: false
+};
+
+var organizationHoverStyle = {
+    color: '#F1E7CD',
+    fillColor: '#493F90',
+    fillOpacity: 0.7,
+    stroke: true,
+    radius: 15
+};
+
 function createMap(id, center, zoom) {
     return L.map(id, {
         center: center || defaultCenter,
@@ -30,6 +45,21 @@ function addOrganizations(map, callback) {
                 layer.on('click', function () {
                     map.fire('featureclick', feature);
                 });
+                layer.on('mouseover', function () {
+                    layer.bindPopup(feature.properties.name, {
+                        closeButton: false,
+                        offset: [0, -1]              
+                    }).openPopup();
+                    layer.setStyle(organizationHoverStyle);
+                });
+                layer.on('mouseout', function () {
+                    layer.closePopup();
+                    layer.setStyle(organizationStyle);
+                });
+            },
+
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, organizationStyle);
             }
         })
         organizationLayer.addTo(map);
