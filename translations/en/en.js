@@ -1,3 +1,3 @@
 Ember.I18n.translations = {
-    'title': 'FCWA Map'
+    'title': 'Changing the Food Chain'
 };

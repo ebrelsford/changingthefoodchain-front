@@ -7,7 +7,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "FCWA Map";
+  return "Changing the Food Chain";
   })
 };
 })();

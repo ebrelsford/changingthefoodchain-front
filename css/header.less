@@ -1,0 +1,53 @@
+@logo-color: #BC461B;
+
+header {
+    .make-row();
+    height: @header-height;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: @interface-z-index;
+
+    #logo {
+        .make-md-column(3);
+
+        a {
+            color: @logo-color;
+            font-size: 34px;
+            font-weight: bold;
+            line-height: 36px;
+            text-transform: uppercase;
+        }
+    }
+    #search {
+        .make-md-column(3);
+        input {
+            background: transparent;
+            border: 2px solid @foreground-color;
+            border-radius: 0;
+            width: 100%;
+        }
+    }
+    #nav {
+        .make-md-column(1);
+
+        a {
+            color: @foreground-color;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: underline;
+            text-transform: uppercase;
+        }
+    }
+    #tagline {
+        .make-md-column(3);
+    }
+    #list-button {
+        .make-md-column(1);
+    }
+}

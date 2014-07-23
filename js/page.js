@@ -32,3 +32,9 @@ App.ContactRoute = App.PageRoute.extend({
         return $.get(CONFIG.API_BASE + '/pages/contact/');
     }
 });
+
+App.NewsRoute = App.PageRoute.extend({
+    model: function () {
+        return $.get(CONFIG.API_BASE + '/pages/news/');
+    }
+});
