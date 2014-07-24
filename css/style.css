@@ -57,7 +57,7 @@ img {
   height: auto;
 }
 .img-rounded {
-  border-radius: 6px;
+  border-radius: 0;
 }
 .img-thumbnail {
   padding: 4px;
@@ -699,7 +699,7 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
-  border-radius: 6px;
+  border-radius: 0;
 }
 .btn-sm {
   padding: 5px 10px;
@@ -908,10 +908,10 @@ input[type="button"].btn-block {
 .close {
   float: right;
   font-size: 21px;
-  font-weight: bold;
+  font-weight: normal;
   line-height: 1;
   color: #000000;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: none;
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
@@ -1114,7 +1114,7 @@ select[multiple].input-sm {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
-  border-radius: 6px;
+  border-radius: 0;
 }
 select.input-lg {
   height: 46px;
@@ -1995,10 +1995,10 @@ select[multiple].input-lg {
 }
 .modal-content {
   position: relative;
-  background-color: #ffffff;
+  background-color: rgba(235, 223, 194, 0.9);
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  border-radius: 0;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   background-clip: padding-box;
@@ -2558,7 +2558,7 @@ select[multiple].input-lg {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: transparent;
 }
 .nav > li.disabled > a {
   color: #999999;
@@ -2573,7 +2573,7 @@ select[multiple].input-lg {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eeeeee;
+  background-color: transparent;
   border-color: #428bca;
 }
 .nav .nav-divider {
@@ -2599,14 +2599,14 @@ select[multiple].input-lg {
   border-radius: 0 0 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #dddddd;
+  border-color: tranparent tranparent #dddddd;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555555;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
+  color: #bc461b;
+  background-color: transparent;
+  border: 1px solid #bc461b;
   border-bottom-color: transparent;
   cursor: default;
 }
@@ -2776,6 +2776,31 @@ body > .ember-view {
 }
 .btn {
   border-width: 2px;
+}
+.close {
+  font-size: 50px;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.nav-tabs > li {
+  margin-right: 25px;
+}
+.nav-tabs > li:last-child {
+  margin-right: 0;
+}
+.nav-tabs > li > a {
+  color: gray;
+  padding-left: 0;
+  padding-right: 0;
+}
+.nav-tabs > li > a:hover {
+  border-bottom: 3px solid #bc461b;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border-width: 0;
+  border-bottom: 3px solid #bc461b;
 }
 #addOrganizationModal .modal-dialog {
   width: 800px;
@@ -3393,4 +3418,8 @@ body.help-organization-types-view header {
 }
 #shareModal .modal-header {
   border: 0;
+}
+#shareModal .share-actions {
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
