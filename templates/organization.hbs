@@ -8,13 +8,33 @@
     <div class="organization-details">
         <div class="close" {{action 'close'}}>&times;</div>
         <h2>{{name}}</h2>
-        <div>{{address_line1}}, {{city}}, {{state_province}} {{postal_code}}</div>
+        <div class="organization-details-contact">
+            <div>
+                {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
+            </div>
+            {{#if phone}}
+            <div class="organization-details-contact-phone">
+                {{phone}}
+            </div>
+            {{/if}}
+            {{#if email}}
+            <div class="organization-details-contact-email">
+                {{email}}
+            </div>
+            {{/if}}
+        </div>
 
-        {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+        <div class="organization-details-actions">
+            {{#link-to 'share' class="btn btn-primary"}}Share{{/link-to}}
+            <a href="#" class="btn btn-primary">Visit</a>
+            {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+        </div>
 
-        {{#if photos}}
-        {{view App.CarouselView content=photos}}
-        {{/if}}
+        <div class="organization-details-media">
+            {{#if photos}}
+            {{view App.CarouselView content=photos}}
+            {{/if}}
+        </div>
 
         <div class="organization-mission-statement">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.

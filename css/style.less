@@ -13,6 +13,11 @@
 @import "bower_components/bootstrap/less/variables.less";
 
 // Override Bootstrap variables
+@border-radius-base: 0;
+@btn-font-weight: bold;
+@btn-primary-color: @ui-button-color;
+@btn-primary-bg: transparent;
+@btn-primary-border: @ui-button-color;
 @zindex-modal: @interface-z-index + 50;
 
 @import "bower_components/bootstrap/less/scaffolding.less";
@@ -51,12 +56,14 @@ body > .ember-view {
     width: 100%;
 }
 
+@import "overrides/buttons.less";
 @import "add_organization.less";
 @import "list_organizations.less";
 @import "filters.less";
 @import "header.less";
 @import "help.less";
 @import "map.less";
+@import "organization.less";
 @import "page.less";
 @import "popup.less";
 @import "share.less";
