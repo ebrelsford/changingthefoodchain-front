@@ -47,7 +47,7 @@ App.OrganizationAddMediaController = Ember.Controller.extend({
             })
         }
     ],
-    videoUrl: '',
+    videoUrl: null,
 
     onExit: function () {
         this.set('success', false);
