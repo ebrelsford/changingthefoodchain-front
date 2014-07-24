@@ -60692,7 +60692,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"FWaASH":22}],7:[function(require,module,exports){
+},{"FWaASH":23}],7:[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 
 
@@ -62271,7 +62271,7 @@ App.OrganizationAddMediaController = Ember.Controller.extend({
             })
         }
     ],
-    videoUrl: '',
+    videoUrl: null,
 
     onExit: function () {
         this.set('success', false);
@@ -62375,7 +62375,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":6,"underscore":25}],9:[function(require,module,exports){
+},{"ember":6,"underscore":26}],9:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 
@@ -62840,7 +62840,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":26,"./geocode":12,"./i18n":14,"./map":17,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":23,"qs":24,"underscore":25}],11:[function(require,module,exports){
+},{"../templates/templates":27,"./geocode":12,"./i18n":14,"./map":17,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":24,"qs":25,"underscore":26}],11:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -63018,7 +63018,7 @@ module.exports = {
     }
 };
 
-},{"qs":24}],15:[function(require,module,exports){
+},{"qs":25}],15:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 
@@ -63249,8 +63249,9 @@ module.exports = {
     }
 };
 
-},{"underscore":25}],18:[function(require,module,exports){
+},{"underscore":26}],18:[function(require,module,exports){
 var DS = require('ember-data');
+var videos = require('./videos');
 require('ember-data-extensions-embedded-adapter');
 
 
@@ -63271,14 +63272,23 @@ App.Organization = DS.Model.extend({
     state_province: DS.attr('string'),
     photos: DS.hasMany('photo'),
     sectors: DS.hasMany('sector'),
-    types: DS.hasMany('type')
+    types: DS.hasMany('type'),
+    videos: DS.hasMany('video'),
+
+    media: function () {
+        var media = Ember.A();
+        media.addObjects(this.get('photos'));
+        media.addObjects(this.get('videos'));
+        return media;
+    }.property('photos')
 });
 
 App.OrganizationSerializer = App.ApplicationSerializer.extend({
     attrs: {
         photos: { embedded: 'always' },
         sectors: { embedded: 'always' },
-        types: { embedded: 'always' }
+        types: { embedded: 'always' },
+        videos: { embedded: 'always' }
     }
 });
 
@@ -63300,7 +63310,15 @@ App.Photo = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"ember-data":5,"ember-data-extensions-embedded-adapter":4}],19:[function(require,module,exports){
+App.Video = DS.Model.extend({
+    embedCode: function () {
+        return videos.embed(this.get('url'));
+    }.property('url'),
+    organization: DS.belongsTo('organization'),
+    url: DS.attr()
+});
+
+},{"./videos":22,"ember-data":5,"ember-data-extensions-embedded-adapter":4}],19:[function(require,module,exports){
 var Ember = require('ember');
 
 
@@ -63471,6 +63489,43 @@ App.ShareView = Ember.View.extend({
 });
 
 },{"./map":17,"ember":6}],22:[function(require,module,exports){
+var embed = {},
+    id = {};
+
+id.youtube = function (url) {
+    // eg, https://www.youtube.com/watch?v=AULJlwoI3TI
+    return url.match(/watch\?v=([^\/]+)/)[1];
+};
+
+embed.youtube = function (url) {
+    var embedUrl = '//www.youtube.com/embed/' + id.youtube(url);
+    return '<iframe width="560" height="315" src="' + embedUrl + '" frameborder="0" allowfullscreen></iframe>';
+};
+
+id.vimeo = function (url) {
+    // eg, https://vimeo.com/101419884
+    return url.match(/vimeo.com\/([^\/]+)/)[1];
+};
+
+embed.vimeo = function (url) {
+    var embedUrl = '//player.vimeo.com/video/' + id.vimeo(url);
+    return '<iframe src="' + embedUrl + '" width="500" height="209" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+};
+
+module.exports = {
+    embed: function (url) {
+        var type;
+        if (url.indexOf('youtube') >= 0) {
+            type = 'youtube'; 
+        }
+        else if (url.indexOf('vimeo') >= 0) {
+            type = 'vimeo';
+        }
+        return embed[type](url);
+    }
+};
+
+},{}],23:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -63535,7 +63590,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -63690,7 +63745,7 @@ process.chdir = function (dir) {
 
 }).call(undefined, this);
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -64058,7 +64113,7 @@ function decode(str) {
   }
 }
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -65403,7 +65458,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -65489,14 +65544,33 @@ function program7(depth0,data) {
 Ember.TEMPLATES["carousel-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
 
-
-  data.buffer.push("<img ");
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n<img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("view.content.fullUrl")
   },hashTypes:{'src': "STRING"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" alt=\"\"/>\n<div class=\"carousel-caption\"></div>\n");
+  data.buffer.push(" alt=\"\"/>\n");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.content.embedCode", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "view.content.fullUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n<div class=\"carousel-caption\"></div>\n");
   return buffer;
   
 });
@@ -65666,11 +65740,11 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n            ");
+  data.buffer.push("\n        <div class=\"organization-details-media\">\n            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CarouselView", {hash:{
-    'content': ("photos")
+    'content': ("media")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            ");
+  data.buffer.push("\n        </div>\n        ");
   return buffer;
   }
 
@@ -65736,10 +65810,10 @@ function program14(depth0,data) {
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n\n        <div class=\"organization-details-media\">\n            ");
-  stack1 = helpers['if'].call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("\n        </div>\n\n        ");
+  stack1 = helpers['if'].call(depth0, "media", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n\n        <div class=\"organization-mission-statement\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n        </div>\n\n        ");
+  data.buffer.push("\n\n        <div class=\"organization-mission-statement\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n        </div>\n\n        ");
   stack1 = helpers['if'].call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n        ");
@@ -66036,7 +66110,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),
-    'value': ("videoUrl")
+    'value': ("controller.videoUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n</div>\n");
   return buffer;

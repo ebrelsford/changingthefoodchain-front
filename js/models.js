@@ -1,4 +1,5 @@
 var DS = require('ember-data');
+var videos = require('./videos');
 require('ember-data-extensions-embedded-adapter');
 
 
@@ -19,14 +20,23 @@ App.Organization = DS.Model.extend({
     state_province: DS.attr('string'),
     photos: DS.hasMany('photo'),
     sectors: DS.hasMany('sector'),
-    types: DS.hasMany('type')
+    types: DS.hasMany('type'),
+    videos: DS.hasMany('video'),
+
+    media: function () {
+        var media = Ember.A();
+        media.addObjects(this.get('photos'));
+        media.addObjects(this.get('videos'));
+        return media;
+    }.property('photos')
 });
 
 App.OrganizationSerializer = App.ApplicationSerializer.extend({
     attrs: {
         photos: { embedded: 'always' },
         sectors: { embedded: 'always' },
-        types: { embedded: 'always' }
+        types: { embedded: 'always' },
+        videos: { embedded: 'always' }
     }
 });
 
@@ -44,6 +54,14 @@ App.Photo = DS.Model.extend({
     }.property('url'),
 
     photo: DS.attr(),
+    organization: DS.belongsTo('organization'),
+    url: DS.attr()
+});
+
+App.Video = DS.Model.extend({
+    embedCode: function () {
+        return videos.embed(this.get('url'));
+    }.property('url'),
     organization: DS.belongsTo('organization'),
     url: DS.attr()
 });

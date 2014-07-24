@@ -1,2 +1,6 @@
+{{#if view.content.fullUrl}}
 <img {{bind-attr src="view.content.fullUrl"}} alt=""/>
+{{else}}
+{{{view.content.embedCode}}}
+{{/if}}
 <div class="carousel-caption"></div>

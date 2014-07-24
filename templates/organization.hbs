@@ -30,11 +30,11 @@
             {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
         </div>
 
+        {{#if media}}
         <div class="organization-details-media">
-            {{#if photos}}
-            {{view App.CarouselView content=photos}}
-            {{/if}}
+            {{view App.CarouselView content=media}}
         </div>
+        {{/if}}
 
         <div class="organization-mission-statement">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.

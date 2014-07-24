@@ -83,14 +83,33 @@ function program7(depth0,data) {
 Ember.TEMPLATES["carousel-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
 
-
-  data.buffer.push("<img ");
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n<img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("view.content.fullUrl")
   },hashTypes:{'src': "STRING"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" alt=\"\"/>\n<div class=\"carousel-caption\"></div>\n");
+  data.buffer.push(" alt=\"\"/>\n");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.content.embedCode", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "view.content.fullUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n<div class=\"carousel-caption\"></div>\n");
   return buffer;
   
 });
@@ -260,11 +279,11 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n            ");
+  data.buffer.push("\n        <div class=\"organization-details-media\">\n            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CarouselView", {hash:{
-    'content': ("photos")
+    'content': ("media")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            ");
+  data.buffer.push("\n        </div>\n        ");
   return buffer;
   }
 
@@ -330,10 +349,10 @@ function program14(depth0,data) {
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n\n        <div class=\"organization-details-media\">\n            ");
-  stack1 = helpers['if'].call(depth0, "photos", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("\n        </div>\n\n        ");
+  stack1 = helpers['if'].call(depth0, "media", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n\n        <div class=\"organization-mission-statement\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n        </div>\n\n        ");
+  data.buffer.push("\n\n        <div class=\"organization-mission-statement\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n        </div>\n\n        ");
   stack1 = helpers['if'].call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n        ");
@@ -630,7 +649,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),
-    'value': ("videoUrl")
+    'value': ("controller.videoUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n</div>\n");
   return buffer;
