@@ -63579,7 +63579,7 @@ App.OrganizationAddMediaRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     },
 
     setupController: function (controller, model) {
@@ -63697,7 +63697,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
                 // Re-render everything
                 this._parentView._parentView.forEachChildView(function (v) {
                     v.rerender();
-                })
+                });
                 return false;
             },
             templateName: 'organization/add_media_tab_button'
@@ -63888,7 +63888,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
                 })
                 .always(function () {
                     this.controller.set('submitting', false);
-                });;
+                });
         }
     },
 
@@ -63896,7 +63896,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     }
 });
 
@@ -63914,7 +63914,7 @@ App.AddOrganizationView = Ember.View.extend({
             maxZoom: 19,
             zoom: 3,
             zoomControl: false
-        })
+        });
 
         addOrganizationMap.on('locationfound', function (e) {
             if (marker) {
@@ -64557,7 +64557,7 @@ function addOrganizations(map, callback) {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, organizationStyle);
             }
-        })
+        });
         organizationLayer.addTo(map);
         if (callback !== undefined) {
             callback(organizationLayer);
@@ -64659,7 +64659,7 @@ require('ember-data-extensions-embedded-adapter');
 
 App.ApplicationAdapter = DS.EmbeddedAdapter.extend({
     host: CONFIG.API_BASE
-})
+});
 
 App.ApplicationSerializer = DS.EmbeddedSerializer.extend();
 
@@ -64876,7 +64876,7 @@ App.ShareRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     }
 });
 

@@ -174,7 +174,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
                 })
                 .always(function () {
                     this.controller.set('submitting', false);
-                });;
+                });
         }
     },
 
@@ -182,7 +182,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     }
 });
 
@@ -200,7 +200,7 @@ App.AddOrganizationView = Ember.View.extend({
             maxZoom: 19,
             zoom: 3,
             zoomControl: false
-        })
+        });
 
         addOrganizationMap.on('locationfound', function (e) {
             if (marker) {

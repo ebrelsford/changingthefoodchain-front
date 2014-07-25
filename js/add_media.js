@@ -19,7 +19,7 @@ App.OrganizationAddMediaRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     },
 
     setupController: function (controller, model) {
@@ -137,7 +137,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
                 // Re-render everything
                 this._parentView._parentView.forEachChildView(function (v) {
                     v.rerender();
-                })
+                });
                 return false;
             },
             templateName: 'organization/add_media_tab_button'

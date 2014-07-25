@@ -222,7 +222,7 @@ function addOrganizations(map, callback) {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, organizationStyle);
             }
-        })
+        });
         organizationLayer.addTo(map);
         if (callback !== undefined) {
             callback(organizationLayer);

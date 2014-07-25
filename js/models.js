@@ -5,7 +5,7 @@ require('ember-data-extensions-embedded-adapter');
 
 App.ApplicationAdapter = DS.EmbeddedAdapter.extend({
     host: CONFIG.API_BASE
-})
+});
 
 App.ApplicationSerializer = DS.EmbeddedSerializer.extend();
 

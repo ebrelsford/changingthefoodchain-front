@@ -41,6 +41,14 @@ module.exports = function(grunt) {
             }
         },
 
+        jshint: {
+            all: {
+                files: {
+                    src: ["js/*.js", "!js/bundle.js", "!js/embedbundle.js"]
+                }
+            }
+        },
+
         less: {
             development: {
                 options: {
@@ -83,6 +91,11 @@ module.exports = function(grunt) {
                 tasks: ['copy:development']
             },
 
+            jshint: {
+                files: ["js/*.js", "!bundle.js", "!embedbundle.js"],
+                tasks: ["jshint"]
+            },
+
             less: {
                 files: ["css/*.less", "css/*/*.less"],
                 tasks: ["less", "cssmin"]
@@ -104,6 +117,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-ember-i18n-precompile');

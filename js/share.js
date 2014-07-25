@@ -18,7 +18,7 @@ App.ShareRoute = Ember.Route.extend({
         this.render({
             into: 'application',
             outlet: 'modal'
-        })
+        });
     }
 });
 
