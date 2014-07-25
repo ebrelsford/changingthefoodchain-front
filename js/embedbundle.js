@@ -158,6 +158,8 @@ require('leaflet-active-area');
 
 var map,
     organizationLayer,
+    organizationLayerListeners = [],
+    selectedOrganization,
     initialized = false,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5;
@@ -176,6 +178,8 @@ var organizationHoverStyle = {
     stroke: true,
     radius: 15
 };
+
+var organizationSelectStyle = organizationHoverStyle;
 
 function createMap(id, center, zoom) {
     return L.map(id, {
@@ -210,6 +214,7 @@ function addOrganizations(map, callback) {
                 });
                 layer.on('mouseout', function () {
                     layer.closePopup();
+                    if (selectedOrganization && layer === selectedOrganization) return;
                     layer.setStyle(organizationStyle);
                 });
             },
@@ -222,6 +227,10 @@ function addOrganizations(map, callback) {
         if (callback !== undefined) {
             callback(organizationLayer);
         }
+        _.each(organizationLayerListeners, function (callback) {
+            callback(organizationLayer);
+        });
+        organizationLayerListeners = [];
     });
 }
 
@@ -262,16 +271,46 @@ function initializeMap(id, center, zoom) {
     return map;
 }
 
+function getOrganization(id) {
+    var matchedLayer = null;
+    organizationLayer.eachLayer(function (layer) {
+        if (layer.feature.id === id) {
+            matchedLayer = layer;
+        }
+    });
+    return matchedLayer;
+}
+
+function deselectOrganization () {
+    if (!selectedOrganization) return;
+    selectedOrganization.setStyle(organizationStyle);
+    selectedOrganization = null;
+}
+
 module.exports = {
     init: initializeMap,
     createMap: createMap,
     addStreets: addStreets,
     addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
-    setView: function (center, zoom) {
-        if (!map) return;
-        map.setView(center, zoom);
+
+    addOrganizationLayerListener: function (callback) {
+        organizationLayerListeners.push(callback);
     },
+
+    deselectOrganization: deselectOrganization,
+
+    selectOrganization: function (id) {
+        if (!map || !organizationLayer) return;
+        deselectOrganization();
+        map.closePopup();
+        var organization = getOrganization(parseInt(id));
+        if (!organization) return;
+        map.setView(organization.getLatLng(), 15);
+        organization.setStyle(organizationSelectStyle);
+        selectedOrganization = organization;
+    },
+
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
     }

@@ -63275,6 +63275,8 @@ require('leaflet-active-area');
 
 var map,
     organizationLayer,
+    organizationLayerListeners = [],
+    selectedOrganization,
     initialized = false,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5;
@@ -63293,6 +63295,8 @@ var organizationHoverStyle = {
     stroke: true,
     radius: 15
 };
+
+var organizationSelectStyle = organizationHoverStyle;
 
 function createMap(id, center, zoom) {
     return L.map(id, {
@@ -63327,6 +63331,7 @@ function addOrganizations(map, callback) {
                 });
                 layer.on('mouseout', function () {
                     layer.closePopup();
+                    if (selectedOrganization && layer === selectedOrganization) return;
                     layer.setStyle(organizationStyle);
                 });
             },
@@ -63339,6 +63344,10 @@ function addOrganizations(map, callback) {
         if (callback !== undefined) {
             callback(organizationLayer);
         }
+        _.each(organizationLayerListeners, function (callback) {
+            callback(organizationLayer);
+        });
+        organizationLayerListeners = [];
     });
 }
 
@@ -63379,16 +63388,46 @@ function initializeMap(id, center, zoom) {
     return map;
 }
 
+function getOrganization(id) {
+    var matchedLayer = null;
+    organizationLayer.eachLayer(function (layer) {
+        if (layer.feature.id === id) {
+            matchedLayer = layer;
+        }
+    });
+    return matchedLayer;
+}
+
+function deselectOrganization () {
+    if (!selectedOrganization) return;
+    selectedOrganization.setStyle(organizationStyle);
+    selectedOrganization = null;
+}
+
 module.exports = {
     init: initializeMap,
     createMap: createMap,
     addStreets: addStreets,
     addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
-    setView: function (center, zoom) {
-        if (!map) return;
-        map.setView(center, zoom);
+
+    addOrganizationLayerListener: function (callback) {
+        organizationLayerListeners.push(callback);
     },
+
+    deselectOrganization: deselectOrganization,
+
+    selectOrganization: function (id) {
+        if (!map || !organizationLayer) return;
+        deselectOrganization();
+        map.closePopup();
+        var organization = getOrganization(parseInt(id));
+        if (!organization) return;
+        map.setView(organization.getLatLng(), 15);
+        organization.setStyle(organizationSelectStyle);
+        selectedOrganization = organization;
+    },
+
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
     }
@@ -63504,9 +63543,17 @@ App.OrganizationView = Ember.View.extend({
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
 
-        // The first time the view is rendered, the model will have changed
-        // before the map was ready to zoom, so do it now
-        this.controller.send('centerOnOrganization');
+        // If this is the first view we're seeing, the model will have changed
+        // before the map is ready to zoom, so add a listener
+        (function (controller) {
+            map.addOrganizationLayerListener(function () {
+                controller.send('selectOrganization');
+            });
+        })(this.controller);
+
+        // If we're moving to the view from another where the map is ready
+        // select here
+        this.controller.send('selectOrganization');
     },
 
     willDestroyElement: function () {
@@ -63517,14 +63564,13 @@ App.OrganizationView = Ember.View.extend({
 
 App.OrganizationController = Ember.Controller.extend({
     actions: {
-        centerOnOrganization: function () {
-            var coordinates = this.model.get('centroid.coordinates');
-            map.setView([coordinates[1], coordinates[0]], 15);
+        selectOrganization: function () {
+            map.selectOrganization(this.model.get('id'));
         }
     },
 
     updateCenter: function () {
-        this.send('centerOnOrganization');
+        this.send('selectOrganization');
     }.observes('model')
 });
 
@@ -63532,6 +63578,7 @@ App.OrganizationRoute = Ember.Route.extend({
     actions: {
         close: function () {
             this.transitionTo('index');
+            map.deselectOrganization();
         }
     },
 

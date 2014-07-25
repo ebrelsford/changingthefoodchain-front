@@ -16,9 +16,17 @@ App.OrganizationView = Ember.View.extend({
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
 
-        // The first time the view is rendered, the model will have changed
-        // before the map was ready to zoom, so do it now
-        this.controller.send('centerOnOrganization');
+        // If this is the first view we're seeing, the model will have changed
+        // before the map is ready to zoom, so add a listener
+        (function (controller) {
+            map.addOrganizationLayerListener(function () {
+                controller.send('selectOrganization');
+            });
+        })(this.controller);
+
+        // If we're moving to the view from another where the map is ready
+        // select here
+        this.controller.send('selectOrganization');
     },
 
     willDestroyElement: function () {
@@ -29,14 +37,13 @@ App.OrganizationView = Ember.View.extend({
 
 App.OrganizationController = Ember.Controller.extend({
     actions: {
-        centerOnOrganization: function () {
-            var coordinates = this.model.get('centroid.coordinates');
-            map.setView([coordinates[1], coordinates[0]], 15);
+        selectOrganization: function () {
+            map.selectOrganization(this.model.get('id'));
         }
     },
 
     updateCenter: function () {
-        this.send('centerOnOrganization');
+        this.send('selectOrganization');
     }.observes('model')
 });
 
@@ -44,6 +51,7 @@ App.OrganizationRoute = Ember.Route.extend({
     actions: {
         close: function () {
             this.transitionTo('index');
+            map.deselectOrganization();
         }
     },
 
