@@ -1,0 +1,36 @@
+#search {
+    .make-md-column(3);
+
+    input {
+        background: transparent;
+        border: 2px solid @foreground-color;
+        border-radius: 0;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .twitter-typeahead {
+        width: 100%;
+
+        .tt {
+            &-suggestions {
+                margin-top: 10px;
+            }
+            &-suggestion {
+                background-color: fadeout(@foreground-color, 25%);
+                color: white;
+                margin-bottom: 2px;
+
+                &:hover {
+                    background-color: @foreground-color;
+                }
+                
+                p {
+                    margin: 0;
+                    padding: 15px;
+                }
+            }
+
+        }
+    }
+}

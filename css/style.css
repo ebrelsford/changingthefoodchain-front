@@ -3111,24 +3111,6 @@ header #logo a {
   line-height: 36px;
   text-transform: uppercase;
 }
-header #search {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 992px) {
-  header #search {
-    float: left;
-    width: 25%;
-  }
-}
-header #search input {
-  background: transparent;
-  border: 2px solid #302390;
-  border-radius: 0;
-  width: 100%;
-}
 header #nav {
   position: relative;
   min-height: 1px;
@@ -3418,6 +3400,43 @@ body.organization-view .map-active-area {
 }
 .carousel-control {
   padding-top: 85px;
+}
+#search {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  #search {
+    float: left;
+    width: 25%;
+  }
+}
+#search input {
+  background: transparent;
+  border: 2px solid #302390;
+  border-radius: 0;
+  padding: 10px;
+  width: 100%;
+}
+#search .twitter-typeahead {
+  width: 100%;
+}
+#search .twitter-typeahead .tt-suggestions {
+  margin-top: 10px;
+}
+#search .twitter-typeahead .tt-suggestion {
+  background-color: rgba(48, 35, 144, 0.75);
+  color: white;
+  margin-bottom: 2px;
+}
+#search .twitter-typeahead .tt-suggestion:hover {
+  background-color: #302390;
+}
+#search .twitter-typeahead .tt-suggestion p {
+  margin: 0;
+  padding: 15px;
 }
 #shareModal .embed-map {
   height: 250px;
