@@ -63385,7 +63385,10 @@ module.exports = {
     addStreets: addStreets,
     addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
-    setActiveArea: setActiveArea,
+    setView: function (center, zoom) {
+        if (!map) return;
+        map.setView(center, zoom);
+    },
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
     }
@@ -63406,6 +63409,7 @@ App.ApplicationSerializer = DS.EmbeddedSerializer.extend();
 App.Organization = DS.Model.extend({
     address_line1: DS.attr(),
     city: DS.attr(),
+    centroid: DS.attr('centroid'),
     country: DS.attr(),
     email: DS.attr('string'),
     name: DS.attr('string'),
@@ -63433,6 +63437,27 @@ App.OrganizationSerializer = App.ApplicationSerializer.extend({
         videos: { embedded: 'always' }
     }
 });
+
+DS.CentroidTransform = DS.Transform.extend({
+    deserialize: function(serialized) {
+        return (Ember.typeOf(serialized) == "object") ? serialized : {};
+    },
+
+    serialize: function(deserialized) {
+        var type = Ember.typeOf(deserialized);
+        if (type == 'object') {
+            return deserialized;
+        } 
+        else if (type == 'string') {
+            return JSON.parse(deserialized);
+        }
+        else {
+            return {};
+        }
+    }
+});
+
+App.register("transform:centroid", DS.CentroidTransform);
 
 App.Sector = DS.Model.extend({
     name: DS.attr('string')
@@ -63478,12 +63503,29 @@ App.OrganizationView = Ember.View.extend({
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
+
+        // The first time the view is rendered, the model will have changed
+        // before the map was ready to zoom, so do it now
+        this.controller.send('centerOnOrganization');
     },
 
     willDestroyElement: function () {
         this._super();
         $('body').removeClass('organization-view');
     }
+});
+
+App.OrganizationController = Ember.Controller.extend({
+    actions: {
+        centerOnOrganization: function () {
+            var coordinates = this.model.get('centroid.coordinates');
+            map.setView([coordinates[1], coordinates[0]], 15);
+        }
+    },
+
+    updateCenter: function () {
+        this.send('centerOnOrganization');
+    }.observes('model')
 });
 
 App.OrganizationRoute = Ember.Route.extend({
@@ -65853,7 +65895,7 @@ function program1(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <div class=\"organization-details-contact-phone\">\n                ");
-  stack1 = helpers._triageMustache.call(depth0, "phone", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.phone", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            ");
   return buffer;
@@ -65863,7 +65905,7 @@ function program3(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <div class=\"organization-details-contact-email\">\n                ");
-  stack1 = helpers._triageMustache.call(depth0, "email", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.email", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            ");
   return buffer;
@@ -65886,7 +65928,7 @@ function program9(depth0,data) {
   var buffer = '';
   data.buffer.push("\n        <div class=\"organization-details-media\">\n            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CarouselView", {hash:{
-    'content': ("media")
+    'content': ("model.media")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n        </div>\n        ");
   return buffer;
@@ -65896,7 +65938,7 @@ function program11(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <section class=\"organization-sectors\">\n                <h3>sectors:</h3>\n                <ul>\n                    ");
-  stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "model.sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                </ul>\n            </section>\n        ");
   return buffer;
@@ -65915,7 +65957,7 @@ function program14(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <section class=\"organization-types\">\n                <h3>types:</h3>\n                <ul>\n                    ");
-  stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "model.types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                </ul>\n            </section>\n        ");
   return buffer;
@@ -65924,25 +65966,25 @@ function program14(depth0,data) {
   data.buffer.push("<div class=\"organization-header\">organization type icon</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\">\n        filters that match organization\n    </div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n        <h2>");
-  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h2>\n        <div class=\"organization-details-contact\">\n            <div>\n                ");
-  stack1 = helpers._triageMustache.call(depth0, "address_line1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.address_line1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(", ");
-  stack1 = helpers._triageMustache.call(depth0, "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(", ");
-  stack1 = helpers._triageMustache.call(depth0, "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(" ");
-  stack1 = helpers._triageMustache.call(depth0, "postal_code", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "model.postal_code", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            ");
-  stack1 = helpers['if'].call(depth0, "phone", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "model.phone", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            ");
-  stack1 = helpers['if'].call(depth0, "email", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "model.email", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n\n        <div class=\"organization-details-actions\">\n            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
@@ -65955,13 +65997,13 @@ function program14(depth0,data) {
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n\n        ");
-  stack1 = helpers['if'].call(depth0, "media", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "model.media", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n        <div class=\"organization-mission-statement\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.\n        </div>\n\n        ");
-  stack1 = helpers['if'].call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "model.sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n        ");
-  stack1 = helpers['if'].call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "model.types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n</div>\n");
   return buffer;

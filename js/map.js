@@ -113,6 +113,10 @@ module.exports = {
     addStreets: addStreets,
     addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
+    setView: function (center, zoom) {
+        if (!map) return;
+        map.setView(center, zoom);
+    },
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
     }

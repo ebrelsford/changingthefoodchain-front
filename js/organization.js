@@ -15,12 +15,29 @@ App.OrganizationView = Ember.View.extend({
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
+
+        // The first time the view is rendered, the model will have changed
+        // before the map was ready to zoom, so do it now
+        this.controller.send('centerOnOrganization');
     },
 
     willDestroyElement: function () {
         this._super();
         $('body').removeClass('organization-view');
     }
+});
+
+App.OrganizationController = Ember.Controller.extend({
+    actions: {
+        centerOnOrganization: function () {
+            var coordinates = this.model.get('centroid.coordinates');
+            map.setView([coordinates[1], coordinates[0]], 15);
+        }
+    },
+
+    updateCenter: function () {
+        this.send('centerOnOrganization');
+    }.observes('model')
 });
 
 App.OrganizationRoute = Ember.Route.extend({

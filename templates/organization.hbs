@@ -7,19 +7,19 @@
 
     <div class="organization-details">
         <div class="close" {{action 'close'}}>&times;</div>
-        <h2>{{name}}</h2>
+        <h2>{{model.name}}</h2>
         <div class="organization-details-contact">
             <div>
-                {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
+                {{model.address_line1}}, {{model.city}}, {{model.state_province}} {{model.postal_code}}
             </div>
-            {{#if phone}}
+            {{#if model.phone}}
             <div class="organization-details-contact-phone">
-                {{phone}}
+                {{model.phone}}
             </div>
             {{/if}}
-            {{#if email}}
+            {{#if model.email}}
             <div class="organization-details-contact-email">
-                {{email}}
+                {{model.email}}
             </div>
             {{/if}}
         </div>
@@ -30,9 +30,9 @@
             {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
         </div>
 
-        {{#if media}}
+        {{#if model.media}}
         <div class="organization-details-media">
-            {{view App.CarouselView content=media}}
+            {{view App.CarouselView content=model.media}}
         </div>
         {{/if}}
 
@@ -40,22 +40,22 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
         </div>
 
-        {{#if sectors}}
+        {{#if model.sectors}}
             <section class="organization-sectors">
                 <h3>sectors:</h3>
                 <ul>
-                    {{#each sectors}}
+                    {{#each model.sectors}}
                     <li>{{name}}</li>
                     {{/each}}
                 </ul>
             </section>
         {{/if}}
 
-        {{#if types}}
+        {{#if model.types}}
             <section class="organization-types">
                 <h3>types:</h3>
                 <ul>
-                    {{#each types}}
+                    {{#each model.types}}
                     <li>{{name}}</li>
                     {{/each}}
                 </ul>

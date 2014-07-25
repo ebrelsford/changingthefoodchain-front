@@ -12,6 +12,7 @@ App.ApplicationSerializer = DS.EmbeddedSerializer.extend();
 App.Organization = DS.Model.extend({
     address_line1: DS.attr(),
     city: DS.attr(),
+    centroid: DS.attr('centroid'),
     country: DS.attr(),
     email: DS.attr('string'),
     name: DS.attr('string'),
@@ -39,6 +40,27 @@ App.OrganizationSerializer = App.ApplicationSerializer.extend({
         videos: { embedded: 'always' }
     }
 });
+
+DS.CentroidTransform = DS.Transform.extend({
+    deserialize: function(serialized) {
+        return (Ember.typeOf(serialized) == "object") ? serialized : {};
+    },
+
+    serialize: function(deserialized) {
+        var type = Ember.typeOf(deserialized);
+        if (type == 'object') {
+            return deserialized;
+        } 
+        else if (type == 'string') {
+            return JSON.parse(deserialized);
+        }
+        else {
+            return {};
+        }
+    }
+});
+
+App.register("transform:centroid", DS.CentroidTransform);
 
 App.Sector = DS.Model.extend({
     name: DS.attr('string')
