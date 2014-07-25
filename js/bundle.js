@@ -60692,7 +60692,139 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"FWaASH":23}],7:[function(require,module,exports){
+},{"FWaASH":24}],7:[function(require,module,exports){
+if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
+    // Defining previously that object allows you to use that plugin even if you have overridden L.map
+    leafletActiveAreaPreviousMethods = {
+        getCenter: L.Map.prototype.getCenter,
+        setView: L.Map.prototype.setView,
+        setZoomAround: L.Map.prototype.setZoomAround,
+        getBoundsZoom: L.Map.prototype.getBoundsZoom
+    };
+}
+
+
+L.Map.include({
+    getViewport: function() {
+        return this._viewport;
+    },
+
+    getViewportBounds: function() {
+        var vp = this._viewport,
+            topleft = L.point(vp.offsetLeft, vp.offsetTop),
+            vpsize = L.point(vp.clientWidth, vp.clientHeight);
+
+        if (vpsize.x === 0 || vpsize.y === 0) {
+            if (window.console) {
+                console.error('The viewport has no size. Check your CSS.');
+            }
+        }
+
+        return L.bounds(topleft, topleft.add(vpsize));
+    },
+
+    getViewportLatLngBounds: function() {
+        var bounds = this.getViewportBounds();
+        return L.latLngBounds(this.containerPointToLatLng(bounds.min), this.containerPointToLatLng(bounds.max));
+    },
+
+    getOffset: function() {
+        var mCenter = this.getSize().divideBy(2),
+            vCenter = this.getViewportBounds().getCenter();
+
+        return mCenter.subtract(vCenter);
+    },
+
+    getCenter: function () {
+        var center = leafletActiveAreaPreviousMethods.getCenter.call(this);
+
+        if (this.getViewport()) {
+            var zoom = this.getZoom(),
+                point = this.project(center, zoom);
+            point = point.subtract(this.getOffset());
+
+            center = this.unproject(point, zoom);
+        }
+
+        return center;
+    },
+
+    setView: function (center, zoom, options) {
+        center = L.latLng(center);
+
+        if (this.getViewport()) {
+            var point = this.project(center, zoom);
+            point = point.add(this.getOffset());
+            center = this.unproject(point, zoom);
+        }
+
+        return leafletActiveAreaPreviousMethods.setView.call(this, center, zoom, options);
+    },
+
+    setZoomAround: function (latlng, zoom, options) {
+        var vp = this.getViewport();
+
+        if (vp) {
+            var scale = this.getZoomScale(zoom),
+                viewHalf = this.getViewportBounds().getCenter(),
+                containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPoint(latlng),
+
+                centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
+                newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
+
+            return this.setView(newCenter, zoom, {zoom: options});
+        } else {
+            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, point, zoom, options);
+        }
+    },
+
+    getBoundsZoom: function (bounds, inside, padding) { // (LatLngBounds[, Boolean, Point]) -> Number
+        bounds = L.latLngBounds(bounds);
+
+        var zoom = this.getMinZoom() - (inside ? 1 : 0),
+            maxZoom = this.getMaxZoom(),
+            vp = this.getViewport(),
+            size = (vp) ? L.point(vp.clientWidth, vp.clientHeight) : this.getSize(),
+
+            nw = bounds.getNorthWest(),
+            se = bounds.getSouthEast(),
+
+            zoomNotFound = true,
+            boundsSize;
+
+        padding = L.point(padding || [0, 0]);
+
+        do {
+            zoom++;
+            boundsSize = this.project(se, zoom).subtract(this.project(nw, zoom)).add(padding);
+            zoomNotFound = !inside ? size.contains(boundsSize) : boundsSize.x < size.x || boundsSize.y < size.y;
+
+        } while (zoomNotFound && zoom <= maxZoom);
+
+        if (zoomNotFound && inside) {
+            return null;
+        }
+
+        return inside ? zoom : zoom - 1;
+    }
+
+});
+
+L.Map.include({
+    setActiveArea: function (css) {
+        var container = this.getContainer();
+        this._viewport = L.DomUtil.create('div', '');
+        container.insertBefore(this._viewport, container.firstChild);
+
+        if (typeof css === 'string') {
+            this._viewport.className = css;
+        } else {
+            L.extend(this._viewport.style, css);
+        }
+        return this;
+    }
+});
+},{}],8:[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 
 
@@ -62221,7 +62353,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 })();
 
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -62375,7 +62507,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":6,"underscore":26}],9:[function(require,module,exports){
+},{"ember":6,"underscore":27}],10:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 
@@ -62600,7 +62732,7 @@ App.AddOrganizationView = Ember.View.extend({
     templateName: 'organization/add'
 });
 
-},{"./geocode":12,"ember":6}],10:[function(require,module,exports){
+},{"./geocode":13,"ember":6}],11:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -62847,7 +62979,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":27,"./geocode":12,"./i18n":14,"./map":17,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":24,"qs":25,"underscore":26}],11:[function(require,module,exports){
+},{"../templates/templates":28,"./geocode":13,"./i18n":15,"./map":18,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":25,"qs":26,"underscore":27}],12:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -62905,7 +63037,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -62972,7 +63104,7 @@ module.exports = {
 
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 App.HelpOrganizationTypesRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -62999,7 +63131,7 @@ App.HelpOrganizationTypesView = Ember.View.extend({
     }
 });
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var qs = require('qs');
 
 var DEFAULT_LOCALE = 'en';
@@ -63025,7 +63157,7 @@ module.exports = {
     }
 };
 
-},{"qs":25}],15:[function(require,module,exports){
+},{"qs":26}],16:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 
@@ -63121,7 +63253,7 @@ App.ListOrganizationsView = Ember.View.extend({
 
 });
 
-},{"ember":6,"ember-list-view":7}],16:[function(require,module,exports){
+},{"ember":6,"ember-list-view":8}],17:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./add_organization');
@@ -63137,8 +63269,9 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":8,"./add_organization":9,"./app":10,"./carousel":11,"./help":13,"./i18n":14,"./list_organizations":15,"./models":18,"./organization":19,"./page":20,"./share":21}],17:[function(require,module,exports){
+},{"./add_media":9,"./add_organization":10,"./app":11,"./carousel":12,"./help":14,"./i18n":15,"./list_organizations":16,"./models":19,"./organization":20,"./page":21,"./share":22}],18:[function(require,module,exports){
 var _ = require('underscore');
+require('leaflet-active-area');
 
 var map,
     organizationLayer,
@@ -63211,6 +63344,7 @@ function addOrganizations(map, callback) {
 
 function initializeMap(id, center, zoom) {
     map = createMap(id, center, zoom);
+    map.setActiveArea('map-active-area');
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
@@ -63251,12 +63385,13 @@ module.exports = {
     addStreets: addStreets,
     addOrganizations: addOrganizations,
     isInitialized: function () { return initialized; },
+    setActiveArea: setActiveArea,
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
     }
 };
 
-},{"underscore":26}],18:[function(require,module,exports){
+},{"leaflet-active-area":7,"underscore":27}],19:[function(require,module,exports){
 var DS = require('ember-data');
 var videos = require('./videos');
 require('ember-data-extensions-embedded-adapter');
@@ -63325,11 +63460,17 @@ App.Video = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"./videos":22,"ember-data":5,"ember-data-extensions-embedded-adapter":4}],19:[function(require,module,exports){
+},{"./videos":23,"ember-data":5,"ember-data-extensions-embedded-adapter":4}],20:[function(require,module,exports){
 var Ember = require('ember');
+var map = require('./map');
 
 
 App.OrganizationView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('organization-view');
+    },
+
     didRenderElement : function() {
         this._super();
         $('#popup').show();
@@ -63337,6 +63478,11 @@ App.OrganizationView = Ember.View.extend({
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('organization-view');
     }
 });
 
@@ -63360,7 +63506,7 @@ App.OrganizationRoute = Ember.Route.extend({
     }
 });
 
-},{"ember":6}],20:[function(require,module,exports){
+},{"./map":18,"ember":6}],21:[function(require,module,exports){
 App.PageRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -63402,7 +63548,7 @@ App.NewsRoute = App.PageRoute.extend({
     }
 });
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -63486,7 +63632,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":17,"ember":6}],22:[function(require,module,exports){
+},{"./map":18,"ember":6}],23:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -63523,7 +63669,7 @@ module.exports = {
     }
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -63588,7 +63734,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -63743,7 +63889,7 @@ process.chdir = function (dir) {
 
 }).call(undefined, this);
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -64111,7 +64257,7 @@ function decode(str) {
   }
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -65456,7 +65602,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -66163,4 +66309,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[16])
+},{}]},{},[17])

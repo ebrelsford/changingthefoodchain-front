@@ -1,7 +1,13 @@
 var Ember = require('ember');
+var map = require('./map');
 
 
 App.OrganizationView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('organization-view');
+    },
+
     didRenderElement : function() {
         this._super();
         $('#popup').show();
@@ -9,6 +15,11 @@ App.OrganizationView = Ember.View.extend({
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
         $('.organization-details').outerHeight(popupHeight - headerHeight);
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('organization-view');
     }
 });
 

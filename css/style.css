@@ -3246,6 +3246,16 @@ body.help-organization-types-view header {
   height: 100%;
   width: 100%;
 }
+.map-active-area {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+body.organization-view .map-active-area {
+  left: 55%;
+}
 .map-ui-button {
   bottom: 25px;
   color: #bc461b;

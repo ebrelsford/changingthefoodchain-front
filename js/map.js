@@ -1,4 +1,5 @@
 var _ = require('underscore');
+require('leaflet-active-area');
 
 var map,
     organizationLayer,
@@ -71,6 +72,7 @@ function addOrganizations(map, callback) {
 
 function initializeMap(id, center, zoom) {
     map = createMap(id, center, zoom);
+    map.setActiveArea('map-active-area');
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
