@@ -2,10 +2,16 @@ module.exports = function(grunt) {
     grunt.initConfig({
         browserify: {
             standalone: {
+                options: {
+                    watch: true
+                },
                 src: ['js/main.js'],
                 dest: 'js/bundle.js'
             },
             embed: {
+                options: {
+                    watch: true
+                },
                 src: 'js/embed.js',
                 dest: 'js/embedbundle.js'
             }
@@ -64,14 +70,6 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            browserify: {
-                files: [
-                    "js/*.js", 'templates/*.js', '!js/bundle.js',
-                    '!js/embedbundle.js'
-                ],
-                tasks: ["browserify"]
-            },
-
             copy: {
                 files: ['config/development.js'],
                 tasks: ['copy:development']
@@ -91,7 +89,6 @@ module.exports = function(grunt) {
                 files: ["templates/**/*.hbs"],
                 tasks: ['emberTemplates']
             }
-
         }
     });
 
@@ -102,4 +99,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-ember-i18n-precompile');
     grunt.loadNpmTasks('grunt-ember-templates');
+
+    grunt.registerTask("dev", ["browserify", "watch"]);
 };

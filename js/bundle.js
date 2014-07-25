@@ -60755,8 +60755,8 @@ requireModule("ember");
 
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-}).call(this,require("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"FWaASH":26}],8:[function(require,module,exports){
+}).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"W5lFOV":27}],8:[function(require,module,exports){
 if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
     leafletActiveAreaPreviousMethods = {
@@ -64197,7 +64197,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":30,"./geocode":15,"./i18n":17,"./map":20,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":27,"ember-typeahead":6,"qs":28,"typeahead":10,"underscore":29}],14:[function(require,module,exports){
+},{"../templates/templates":30,"./geocode":15,"./i18n":17,"./map":20,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":26,"ember-typeahead":6,"qs":28,"typeahead":10,"underscore":29}],14:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -64977,71 +64977,6 @@ module.exports = {
 };
 
 },{}],26:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-}
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}],27:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -65195,6 +65130,71 @@ process.chdir = function (dir) {
   });
 
 }).call(undefined, this);
+
+},{}],27:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+}
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
 
 },{}],28:[function(require,module,exports){
 /**
