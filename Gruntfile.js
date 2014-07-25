@@ -17,6 +17,14 @@ module.exports = function(grunt) {
             }
         },
 
+        connect: {
+            server: {
+                options: {
+                    port: 8080
+                }
+            }
+        },
+
         copy: {
             development: {
                 files: [{
@@ -93,6 +101,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
@@ -100,5 +109,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ember-i18n-precompile');
     grunt.loadNpmTasks('grunt-ember-templates');
 
-    grunt.registerTask("dev", ["browserify", "watch"]);
+    grunt.registerTask("dev", ["browserify", "connect", "watch"]);
 };
