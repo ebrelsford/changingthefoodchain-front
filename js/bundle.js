@@ -62686,6 +62686,12 @@ Ember.View.reopen({
         makeFullHeight();
         makeFullWidth();
         initializeMap();
+    },
+});
+
+Ember.Route.reopen({
+    deactivate: function () {
+        this.controllerFor('application').set('previousUrl', window.location.href);
     }
 });
 
@@ -62775,6 +62781,7 @@ App.ApplicationController = Ember.Controller.extend({
         }
     ],
     searchText: '',
+    previousUrl: 'http://example.com/#/yes/',
 
     lat: null,
     lng: null,
@@ -63401,7 +63408,7 @@ var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
-    shareUrl: null
+    needs: ['application']
 });
 
 App.ShareRoute = Ember.Route.extend({
@@ -63417,15 +63424,6 @@ App.ShareRoute = Ember.Route.extend({
             into: 'application',
             outlet: 'modal'
         })
-    },
-
-    shareUrl: function () {
-        return window.location.protocol + '//' + window.location.host + '/#/' +
-            window.location.hash.slice(window.location.hash.indexOf('?'));
-    },
-
-    setupController: function (controller, model) {
-        controller.set('shareUrl', this.shareUrl());
     }
 });
 
@@ -66157,7 +66155,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),
-    'value': ("shareUrl")
+    'value': ("controllers.application.previousUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.embedView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));

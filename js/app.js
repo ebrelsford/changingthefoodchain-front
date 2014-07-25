@@ -83,6 +83,12 @@ Ember.View.reopen({
         makeFullHeight();
         makeFullWidth();
         initializeMap();
+    },
+});
+
+Ember.Route.reopen({
+    deactivate: function () {
+        this.controllerFor('application').set('previousUrl', window.location.href);
     }
 });
 
@@ -172,6 +178,7 @@ App.ApplicationController = Ember.Controller.extend({
         }
     ],
     searchText: '',
+    previousUrl: 'http://example.com/#/yes/',
 
     lat: null,
     lng: null,
