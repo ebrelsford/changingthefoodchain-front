@@ -44,13 +44,14 @@ function program7(depth0,data) {
   data.buffer.push(">english</a>\n            <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "es", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
   data.buffer.push(">español</a>\n        </div>\n    </div>\n    <div id=\"search\">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'class': ("form-control"),
-    'type': ("search"),
+  data.buffer.push(escapeExpression((helper = helpers['type-ahead'] || (depth0 && depth0['type-ahead']),options={hash:{
+    'data': ("organizations"),
+    'name': ("name"),
     'action': ("search"),
+    'selection': ("selectedOrganization"),
     'value': ("searchText"),
     'placeholder': ("Search by name, city, state")
-  },hashTypes:{'class': "STRING",'type': "STRING",'action': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'action': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  },hashTypes:{'data': "ID",'name': "STRING",'action': "STRING",'selection': "ID",'value': "ID",'placeholder': "STRING"},hashContexts:{'data': depth0,'name': depth0,'action': depth0,'selection': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "type-ahead", options))));
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <a class=\"pull-right help-button\" href=\"#\" ");

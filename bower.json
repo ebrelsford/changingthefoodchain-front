@@ -22,7 +22,8 @@
     "ember-data": "~0.0.14",
     "ember-data-extensions": "~1.0.0-beta.7",
     "list-view": "git+https://github.com/emberjs/list-view.git",
-    "leaflet-active-area": "https://github.com/Mappy/Leaflet-active-area.git"
+    "leaflet-active-area": "https://github.com/Mappy/Leaflet-active-area.git",
+    "ember-typeahead": "~0.1.1"
   },
   "resolutions": {
     "ember": "~1.5.1",
