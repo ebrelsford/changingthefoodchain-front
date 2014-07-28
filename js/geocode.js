@@ -12,7 +12,7 @@ function get_component(result, desired_type) {
     var matches = $.grep(result.address_components, function (component, i) {
         return ($.inArray(desired_type, component.types) >= 0);
     });
-    if (matches.length >= 0 && matches[0] !== null) {
+    if (matches.length >= 0 && matches[0]) {
         return matches[0].short_name;
     }
     return null;
