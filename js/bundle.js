@@ -63827,11 +63827,11 @@ App.AddOrganizationRoute = Ember.Route.extend({
 
     clearForm: function () {
         this.controller.set('name', null);
-        this.controller.set('address_line1', null);
-        this.controller.set('address_line2', null);
+        this.controller.set('address', null);
+        this.controller.set('address2', null);
         this.controller.set('city', null);
-        this.controller.set('state_province', null);
-        this.controller.set('postal_code', null);
+        this.controller.set('state', null);
+        this.controller.set('zip', null);
         this.controller.set('email', null);
         this.controller.set('phone', null);
         this.controller.set('centroid', null);
