@@ -63720,14 +63720,14 @@ App.AddOrganizationController = Ember.Controller.extend({
     potentialSectors: ['agriculture', 'service'],
     potentialTypes: ['advocacy', 'union', 'workers center'],
 
-    address: '',
-    address2: '',
-    city: '',
-    name: '',
-    state: '',
-    zip: '',
-    email: '',
-    phone: '',
+    address: null,
+    address2: null,
+    city: null,
+    name: null,
+    state: null,
+    zip: null,
+    email: null,
+    phone: null,
     sectors: [],
     types: [],
     centroid: null,
@@ -63770,19 +63770,38 @@ App.AddOrganizationController = Ember.Controller.extend({
         }
     }),
 
+    clearGeocodeResult: function () {
+        this.set('centroid', null);
+        this.set('geocodedAddress', null);
+        this.set('geocodedCity', null);
+        this.set('geocodedState', null);
+        this.set('geocodedZip', null);
+        this.set('geocodeError', false);
+        this.send('updateMap');
+    },
+
     actions: {
         updateCentroid: function () {
-            geocode(this.get('fullAddress'), null, null, function (result) {
-                if (result) {
-                    var controller = App.__container__.lookup('controller:add-organization');
-                    controller.set('centroid', result.latlng);
-                    controller.set('geocodedAddress', result.address);
-                    controller.set('geocodedCity', result.city);
-                    controller.set('geocodedState', result.state);
-                    controller.set('geocodedZip', result.zip);
-                    controller.send('updateMap');
-                }
-            });
+            // Only try to geocode if we have enough to go on
+            if (!(this.get('address') && this.get('city'))) {
+                return;
+            }
+            this.clearGeocodeResult();
+            (function (controller) {
+                geocode(controller.get('fullAddress'), null, null, function (result) {
+                    if (result) {
+                        controller.set('centroid', result.latlng);
+                        controller.set('geocodedAddress', result.address);
+                        controller.set('geocodedCity', result.city);
+                        controller.set('geocodedState', result.state);
+                        controller.set('geocodedZip', result.zip);
+                        controller.send('updateMap');
+                    }
+                    else {
+                        controller.set('geocodeError', true);
+                    }
+                });
+            })(this);
         },
 
         useGeocodedAddress: function () {
@@ -63924,11 +63943,14 @@ App.AddOrganizationView = Ember.View.extend({
 
         $('#page').show();
 
-        var marker = null;
+        var marker = null,
+            defaultCenter = [39.095963, -97.470703]
+            defaultZoom = 3;
         var addOrganizationMap = L.map('add-organization-map', {
-            center: [39.095963, -97.470703],
+            center: defaultCenter,
             maxZoom: 19,
-            zoom: 3,
+            scrollWheelZoom: false,
+            zoom: defaultZoom,
             zoomControl: false
         });
 
@@ -63936,8 +63958,15 @@ App.AddOrganizationView = Ember.View.extend({
             if (marker) {
                 addOrganizationMap.removeLayer(marker);
             }
-            marker = L.marker(e.latlng).addTo(addOrganizationMap);
-            addOrganizationMap.setView(e.latlng, 16);
+            if (e.latlng) {
+                // Center view around found location
+                marker = L.marker(e.latlng).addTo(addOrganizationMap);
+                addOrganizationMap.setView(e.latlng, 16);
+            }
+            else {
+                // No location--reset view
+                addOrganizationMap.setView(defaultCenter, defaultZoom);
+            }
         });
 
         var streets = L.tileLayer(CONFIG.TILE_URL, {
@@ -64286,7 +64315,7 @@ function get_component(result, desired_type) {
     var matches = $.grep(result.address_components, function (component, i) {
         return ($.inArray(desired_type, component.types) >= 0);
     });
-    if (matches.length >= 0 && matches[0] !== null) {
+    if (matches.length >= 0 && matches[0]) {
         return matches[0].short_name;
     }
     return null;
@@ -64321,7 +64350,7 @@ module.exports = {
         }, function (results, status) {
             for (var i = 0; i < results.length; i++) {
                 var result_state = get_component(results[i], 'administrative_area_level_1');
-                if (!state || result_state === state) {
+                if (!results[i].partial_match && (!state || result_state === state)) {
                     results[i].latlng = [get_latitude(results[i]),
                                          get_longitude(results[i])];
 
@@ -67356,6 +67385,12 @@ function program13(depth0,data) {
 
 function program15(depth0,data) {
   
+  
+  data.buffer.push("\n                <div class=\"add-organization-location-output-error\">\n                    Sorry, we couldn't find the address you added. Could you be\n                    more specific?\n                </div>\n                ");
+  }
+
+function program17(depth0,data) {
+  
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "typeCheckbox", {hash:{
@@ -67368,7 +67403,7 @@ function program15(depth0,data) {
   return buffer;
   }
 
-function program17(depth0,data) {
+function program19(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
@@ -67405,13 +67440,20 @@ function program17(depth0,data) {
   data.buffer.push("\n\n        <div class=\"add-organization-location-row\">\n            <div class=\"add-organization-location-output\">\n                <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                ");
   stack1 = helpers['if'].call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n                ");
+  stack1 = helpers['if'].call(depth0, "geocodeError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("organization-name"),
     'value': ("name")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                </div>\n\n                <div class=\"form-group\">\n                    <label for=\"address\">address</label>\n                    ");
+  data.buffer.push("\n                </div>\n\n                <div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":form-group geocodeError:has-error")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n                    <label for=\"address\">address</label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("address"),
@@ -67424,21 +67466,33 @@ function program17(depth0,data) {
     'id': ("address2"),
     'value': ("address2")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                </div>\n\n                <div class=\"add-organization-location-form-city-state\">\n                    <div class=\"form-group field-city\">\n                        <label for=\"city\">city</label>\n                        ");
+  data.buffer.push("\n                </div>\n\n                <div class=\"add-organization-location-form-city-state\">\n                    <div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":form-group :field-city geocodeError:has-error")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n                        <label for=\"city\">city</label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("city"),
     'value': ("city"),
     'focus-out': ("updateCentroid")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n\n                    <div class=\"form-group field-state\">\n                        <label for=\"state\">state</label>\n                        ");
+  data.buffer.push("\n                    </div>\n\n                    <div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":form-group :field-state geocodeError:has-error")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n                        <label for=\"state\">state</label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("state"),
     'value': ("state"),
     'focus-out': ("updateCentroid")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n\n                    <div class=\"form-group field-zip\">\n                        <label for=\"zip\">zip</label>\n                        ");
+  data.buffer.push("\n                    </div>\n\n                    <div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":form-group :field-zip geocodeError:has-error")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n                        <label for=\"zip\">zip</label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("zip"),
@@ -67460,10 +67514,10 @@ function program17(depth0,data) {
     'value': ("phone")
   },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-type\">\n                    <div class=\"form-group field-types\">\n                        <h3>organization types</h3>\n                        ");
-  stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-sectors\">\n                        <h3>sectors</h3>\n                        ");
-  stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div>\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"submit\" class=\"btn btn-primary\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{

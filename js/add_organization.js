@@ -6,14 +6,14 @@ App.AddOrganizationController = Ember.Controller.extend({
     potentialSectors: ['agriculture', 'service'],
     potentialTypes: ['advocacy', 'union', 'workers center'],
 
-    address: '',
-    address2: '',
-    city: '',
-    name: '',
-    state: '',
-    zip: '',
-    email: '',
-    phone: '',
+    address: null,
+    address2: null,
+    city: null,
+    name: null,
+    state: null,
+    zip: null,
+    email: null,
+    phone: null,
     sectors: [],
     types: [],
     centroid: null,
@@ -56,19 +56,38 @@ App.AddOrganizationController = Ember.Controller.extend({
         }
     }),
 
+    clearGeocodeResult: function () {
+        this.set('centroid', null);
+        this.set('geocodedAddress', null);
+        this.set('geocodedCity', null);
+        this.set('geocodedState', null);
+        this.set('geocodedZip', null);
+        this.set('geocodeError', false);
+        this.send('updateMap');
+    },
+
     actions: {
         updateCentroid: function () {
-            geocode(this.get('fullAddress'), null, null, function (result) {
-                if (result) {
-                    var controller = App.__container__.lookup('controller:add-organization');
-                    controller.set('centroid', result.latlng);
-                    controller.set('geocodedAddress', result.address);
-                    controller.set('geocodedCity', result.city);
-                    controller.set('geocodedState', result.state);
-                    controller.set('geocodedZip', result.zip);
-                    controller.send('updateMap');
-                }
-            });
+            // Only try to geocode if we have enough to go on
+            if (!(this.get('address') && this.get('city'))) {
+                return;
+            }
+            this.clearGeocodeResult();
+            (function (controller) {
+                geocode(controller.get('fullAddress'), null, null, function (result) {
+                    if (result) {
+                        controller.set('centroid', result.latlng);
+                        controller.set('geocodedAddress', result.address);
+                        controller.set('geocodedCity', result.city);
+                        controller.set('geocodedState', result.state);
+                        controller.set('geocodedZip', result.zip);
+                        controller.send('updateMap');
+                    }
+                    else {
+                        controller.set('geocodeError', true);
+                    }
+                });
+            })(this);
         },
 
         useGeocodedAddress: function () {
@@ -210,11 +229,14 @@ App.AddOrganizationView = Ember.View.extend({
 
         $('#page').show();
 
-        var marker = null;
+        var marker = null,
+            defaultCenter = [39.095963, -97.470703]
+            defaultZoom = 3;
         var addOrganizationMap = L.map('add-organization-map', {
-            center: [39.095963, -97.470703],
+            center: defaultCenter,
             maxZoom: 19,
-            zoom: 3,
+            scrollWheelZoom: false,
+            zoom: defaultZoom,
             zoomControl: false
         });
 
@@ -222,8 +244,15 @@ App.AddOrganizationView = Ember.View.extend({
             if (marker) {
                 addOrganizationMap.removeLayer(marker);
             }
-            marker = L.marker(e.latlng).addTo(addOrganizationMap);
-            addOrganizationMap.setView(e.latlng, 16);
+            if (e.latlng) {
+                // Center view around found location
+                marker = L.marker(e.latlng).addTo(addOrganizationMap);
+                addOrganizationMap.setView(e.latlng, 16);
+            }
+            else {
+                // No location--reset view
+                addOrganizationMap.setView(defaultCenter, defaultZoom);
+            }
         });
 
         var streets = L.tileLayer(CONFIG.TILE_URL, {

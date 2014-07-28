@@ -2887,6 +2887,10 @@ body > .ember-view {
 .add-organization-location-output-address-message {
   font-weight: bold;
 }
+.add-organization-location-output-error {
+  color: #d9534f;
+  font-weight: bold;
+}
 .add-organization-contact {
   margin-left: -15px;
   margin-right: -15px;

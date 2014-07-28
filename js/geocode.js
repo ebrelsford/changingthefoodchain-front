@@ -47,7 +47,7 @@ module.exports = {
         }, function (results, status) {
             for (var i = 0; i < results.length; i++) {
                 var result_state = get_component(results[i], 'administrative_area_level_1');
-                if (!state || result_state === state) {
+                if (!results[i].partial_match && (!state || result_state === state)) {
                     results[i].latlng = [get_latitude(results[i]),
                                          get_longitude(results[i])];
 
