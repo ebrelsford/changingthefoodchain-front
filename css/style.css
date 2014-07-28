@@ -997,9 +997,9 @@ output {
   font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
-  background-color: #ffffff;
+  background-color: transparent;
   background-image: none;
-  border: 1px solid #cccccc;
+  border: 1px solid #302390;
   border-radius: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -2781,6 +2781,10 @@ body > .ember-view {
   font-size: 50px;
   opacity: 1;
   filter: alpha(opacity=100);
+}
+.form-control {
+  border-width: 2px;
+  padding: 10px;
 }
 .nav-tabs > li {
   margin-right: 25px;
