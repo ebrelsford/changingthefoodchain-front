@@ -67329,6 +67329,25 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1;
+  data.buffer.push("\n                <div class=\"add-organization-location-output-address\">\n                    <div class=\"add-organization-location-output-address-message\">\n                        Your organization will be placed here. Make sure it's in\n                        the right spot on the map.\n                    </div>\n                    ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("<br />\n                    ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedState", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                </div>\n                ");
+  return buffer;
+  }
+
+function program15(depth0,data) {
+  
+  var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "typeCheckbox", {hash:{
     'name': ("type")
@@ -67340,7 +67359,7 @@ function program13(depth0,data) {
   return buffer;
   }
 
-function program15(depth0,data) {
+function program17(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
@@ -67374,19 +67393,10 @@ function program15(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n        <div class=\"add-organization-location-row\">\n            <div class=\"add-organization-location-output\">\n                <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                <div class=\"add-organization-location-output-address\">\n                    ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("\n\n        <div class=\"add-organization-location-row\">\n            <div class=\"add-organization-location-output\">\n                <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                ");
+  stack1 = helpers['if'].call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("<br />\n                    ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedState", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
+  data.buffer.push("\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("organization-name"),
@@ -67441,10 +67451,10 @@ function program15(depth0,data) {
     'value': ("phone")
   },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-type\">\n                    <div class=\"form-group field-types\">\n                        <h3>organization types</h3>\n                        ");
-  stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-sectors\">\n                        <h3>sectors</h3>\n                        ");
-  stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div>\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"submit\" class=\"btn btn-primary\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{

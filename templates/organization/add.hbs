@@ -37,10 +37,16 @@
         <div class="add-organization-location-row">
             <div class="add-organization-location-output">
                 <div id="add-organization-map" class="add-organization-location-output-map"></div>
+                {{#if geocodedAddress}}
                 <div class="add-organization-location-output-address">
+                    <div class="add-organization-location-output-address-message">
+                        Your organization will be placed here. Make sure it's in
+                        the right spot on the map.
+                    </div>
                     {{geocodedAddress}}<br />
                     {{geocodedCity}} {{geocodedState}} {{geocodedZip}}
                 </div>
+                {{/if}}
             </div>
             <div class="add-organization-location-form">
                 <div class="form-group">
