@@ -110,8 +110,8 @@
                         {{#each type in potentialTypes}}
                         <div>
                             <label>
-                                {{view typeCheckbox name=type}}
-                                {{type}}
+                                {{view typeCheckbox name=type.name}}
+                                {{type.name}}
                             </label>
                         </div>
                         {{/each}}
@@ -121,8 +121,8 @@
                         {{#each sector in potentialSectors}}
                         <div>
                             <label>
-                                {{view sectorCheckbox name=sector}}
-                                {{sector}}
+                                {{view sectorCheckbox name=sector.name}}
+                                {{sector.name}}
                             </label>
                         </div>
                         {{/each}}

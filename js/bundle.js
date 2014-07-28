@@ -63717,9 +63717,6 @@ var geocode = require('./geocode').geocode;
 
 
 App.AddOrganizationController = Ember.Controller.extend({
-    potentialSectors: ['agriculture', 'service'],
-    potentialTypes: ['advocacy', 'union', 'workers center'],
-
     address: null,
     address2: null,
     city: null,
@@ -63918,6 +63915,20 @@ App.AddOrganizationRoute = Ember.Route.extend({
         }
     },
 
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('potentialSectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('potentialTypes', types);
+            });
+    },
+
     renderTemplate: function () {
         this.render({
             into: 'application',
@@ -63944,7 +63955,7 @@ App.AddOrganizationView = Ember.View.extend({
         $('#page').show();
 
         var marker = null,
-            defaultCenter = [39.095963, -97.470703]
+            defaultCenter = [39.095963, -97.470703],
             defaultZoom = 3;
         var addOrganizationMap = L.map('add-organization-map', {
             center: defaultCenter,
@@ -67394,10 +67405,10 @@ function program17(depth0,data) {
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "typeCheckbox", {hash:{
-    'name': ("type")
+    'name': ("type.name")
   },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                                ");
-  stack1 = helpers._triageMustache.call(depth0, "type", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "type.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                            </label>\n                        </div>\n                        ");
   return buffer;
@@ -67408,10 +67419,10 @@ function program19(depth0,data) {
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "sectorCheckbox", {hash:{
-    'name': ("sector")
+    'name': ("sector.name")
   },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                                ");
-  stack1 = helpers._triageMustache.call(depth0, "sector", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "sector.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                            </label>\n                        </div>\n                        ");
   return buffer;

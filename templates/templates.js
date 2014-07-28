@@ -437,10 +437,10 @@ function program17(depth0,data) {
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "typeCheckbox", {hash:{
-    'name': ("type")
+    'name': ("type.name")
   },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                                ");
-  stack1 = helpers._triageMustache.call(depth0, "type", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "type.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                            </label>\n                        </div>\n                        ");
   return buffer;
@@ -451,10 +451,10 @@ function program19(depth0,data) {
   var buffer = '', stack1;
   data.buffer.push("\n                        <div>\n                            <label>\n                                ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "sectorCheckbox", {hash:{
-    'name': ("sector")
+    'name': ("sector.name")
   },hashTypes:{'name': "ID"},hashContexts:{'name': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                                ");
-  stack1 = helpers._triageMustache.call(depth0, "sector", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "sector.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                            </label>\n                        </div>\n                        ");
   return buffer;

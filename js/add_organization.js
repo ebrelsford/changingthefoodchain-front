@@ -3,9 +3,6 @@ var geocode = require('./geocode').geocode;
 
 
 App.AddOrganizationController = Ember.Controller.extend({
-    potentialSectors: ['agriculture', 'service'],
-    potentialTypes: ['advocacy', 'union', 'workers center'],
-
     address: null,
     address2: null,
     city: null,
@@ -204,6 +201,20 @@ App.AddOrganizationRoute = Ember.Route.extend({
         }
     },
 
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('potentialSectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('potentialTypes', types);
+            });
+    },
+
     renderTemplate: function () {
         this.render({
             into: 'application',
@@ -230,7 +241,7 @@ App.AddOrganizationView = Ember.View.extend({
         $('#page').show();
 
         var marker = null,
-            defaultCenter = [39.095963, -97.470703]
+            defaultCenter = [39.095963, -97.470703],
             defaultZoom = 3;
         var addOrganizationMap = L.map('add-organization-map', {
             center: defaultCenter,
