@@ -71,6 +71,13 @@ App.AddOrganizationController = Ember.Controller.extend({
             });
         },
 
+        useGeocodedAddress: function () {
+            this.set('address', this.get('geocodedAddress'));
+            this.set('city', this.get('geocodedCity'));
+            this.set('state', this.get('geocodedState'));
+            this.set('zip', this.get('geocodedZip'));
+        },
+
         updateMap: function () {
             this.get('map').fire('locationfound', {
                 latlng: this.get('centroid')

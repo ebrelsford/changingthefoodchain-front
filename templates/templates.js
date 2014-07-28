@@ -408,10 +408,10 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n                <div class=\"add-organization-location-output-address\">\n                    <div class=\"add-organization-location-output-address-message\">\n                        Your organization will be placed here. Make sure it's in\n                        the right spot on the map.\n                    </div>\n                    ");
+  data.buffer.push("\n                <div class=\"add-organization-location-output-address\">\n                    <div class=\"add-organization-location-output-address-message\">\n                        Your organization will be placed here. Make sure it's in\n                        the right spot on the map.\n                    </div>\n                    <div class=\"add-organization-location-output-address-address\">\n                        ");
   stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("<br />\n                    ");
+  data.buffer.push("<br />\n                        ");
   stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(" ");
@@ -420,7 +420,9 @@ function program13(depth0,data) {
   data.buffer.push(" ");
   stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n                ");
+  data.buffer.push("\n                    </div>\n                    <div class=\"add-organization-location-output-address-accept\">\n                        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "useGeocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Use this address</a>\n                    </div>\n                </div>\n                ");
   return buffer;
   }
 
