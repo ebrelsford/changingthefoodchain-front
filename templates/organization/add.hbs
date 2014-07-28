@@ -35,6 +35,13 @@
         {{/if}}
 
         <div class="add-organization-location-row">
+            <div class="add-organization-location-output">
+                <div id="add-organization-map" class="add-organization-location-output-map"></div>
+                <div class="add-organization-location-output-address">
+                    {{geocodedAddress}}<br />
+                    {{geocodedCity}} {{geocodedState}} {{geocodedZip}}
+                </div>
+            </div>
             <div class="add-organization-location-form">
                 <div class="form-group">
                     <label for="organization-name">organization name</label>
@@ -66,13 +73,6 @@
                         <label for="zip">zip</label>
                         {{input class="form-control" id="zip" value=zip focus-out="updateCentroid"}}
                     </div>
-                </div>
-            </div>
-            <div class="add-organization-location-output">
-                <div id="add-organization-map" class="add-organization-location-output-map"></div>
-                <div class="add-organization-location-output-address">
-                    {{geocodedAddress}}<br />
-                    {{geocodedCity}} {{geocodedState}} {{geocodedZip}}
                 </div>
             </div>
         </div>

@@ -453,7 +453,19 @@ function program15(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n        <div class=\"add-organization-location-row\">\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
+  data.buffer.push("\n\n        <div class=\"add-organization-location-row\">\n            <div class=\"add-organization-location-output\">\n                <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                <div class=\"add-organization-location-output-address\">\n                    ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("<br />\n                    ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedState", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                </div>\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("organization-name"),
@@ -493,19 +505,7 @@ function program15(depth0,data) {
     'value': ("zip"),
     'focus-out': ("updateCentroid")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n                </div>\n            </div>\n            <div class=\"add-organization-location-output\">\n                <div id=\"add-organization-map\" class=\"add-organization-location-output-map\"></div>\n                <div class=\"add-organization-location-output-address\">\n                    ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("<br />\n                    ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedCity", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedState", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" ");
-  stack1 = helpers._triageMustache.call(depth0, "geocodedZip", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n            </div>\n        </div>\n\n        <div class=\"add-organization-contact\">\n            <div class=\"row\">\n                <div class=\"form-group field-email\">\n                    <label for=\"email\">email</label>\n                    ");
+  data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"add-organization-contact\">\n            <div class=\"row\">\n                <div class=\"form-group field-email\">\n                    <label for=\"email\">email</label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("email"),
