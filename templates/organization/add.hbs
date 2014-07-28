@@ -1,7 +1,7 @@
 <div class="close" {{action 'close'}}>&times;</div>
-<h4 class="modal-title" id="addOrganizationModalLabel">Add My Organization</h4>
+<h4>Add My Organization</h4>
 
-<div class="modal-body">
+<div>
     <form>
         {{#if centroidError}}
             <div class="alert alert-danger" role="alert">
@@ -117,7 +117,7 @@
             </div>
         </div>
 
-        <div class="modal-footer">
+        <div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" {{bind-attr disabled=submitting}} {{action 'submit'}}>Submit</button>
         </div>
