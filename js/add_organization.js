@@ -123,7 +123,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
 
     actions: {
         close: function () {
-            this.disconnectOutlet('modal');
+            this.disconnectOutlet('page');
             history.back();
         },
 
@@ -181,18 +181,27 @@ App.AddOrganizationRoute = Ember.Route.extend({
     renderTemplate: function () {
         this.render({
             into: 'application',
-            outlet: 'modal'
+            outlet: 'page'
         });
     }
 });
 
 App.AddOrganizationView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('add-organization-view');
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('add-organization-view');
+        $('#page').hide();
+    },
+
     didRenderElement : function() {
         this._super();
-        $('#addOrganizationModal').modal()
-            .on('hide.bs.modal', function () {
-                App.__container__.lookup('route:add-organization').send('close');
-            });
+
+        $('#page').show();
 
         var marker = null;
         var addOrganizationMap = L.map('add-organization-map', {

@@ -3055,6 +3055,13 @@ body > .ember-view {
 body.list-organizations-view #filters {
   background-color: rgba(235, 223, 194, 0.9);
 }
+body.add-organization-view #filters {
+  background-color: rgba(235, 223, 194, 0.9);
+}
+body.add-organization-view #filters * {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
 .filters-sector .filters-sector-list-item.active {
   font-weight: bold;
 }
@@ -3159,6 +3166,7 @@ header #list-button {
 header #list-button:hover {
   color: #bc461b;
 }
+body.add-organization-view header,
 body.list-organizations-view header,
 body.help-organization-types-view header {
   background-color: rgba(235, 223, 194, 0.9);
