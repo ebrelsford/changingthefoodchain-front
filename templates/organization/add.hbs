@@ -74,45 +74,41 @@
                         {{input class="form-control" id="zip" value=zip focus-out="updateCentroid"}}
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="add-organization-contact">
-            <div class="row">
-                <div class="form-group field-email">
-                    <label for="email">email</label>
-                    {{input class="form-control" id="email" type="email" value=email}}
+                <div class="add-organization-contact">
+                    <div class="form-group field-email">
+                        <label for="email">email</label>
+                        {{input class="form-control" id="email" type="email" value=email}}
+                    </div>
+                    <div class="form-group field-phone">
+                        <label for="phone">phone</label>
+                        {{input class="form-control" id="phone" type="phone" value=phone}}
+                    </div>
                 </div>
-                <div class="form-group field-phone">
-                    <label for="phone">phone</label>
-                    {{input class="form-control" id="phone" type="phone" value=phone}}
-                </div>
-            </div>
-        </div>
 
-        <div class="add-organization-type">
-            <div class="row">
-                <div class="form-group field-types">
-                    <h3>organization types</h3>
-                    {{#each type in potentialTypes}}
-                    <div>
-                        <label>
-                            {{view typeCheckbox name=type}}
-                            {{type}}
-                        </label>
+                <div class="add-organization-type">
+                    <div class="form-group field-types">
+                        <h3>organization types</h3>
+                        {{#each type in potentialTypes}}
+                        <div>
+                            <label>
+                                {{view typeCheckbox name=type}}
+                                {{type}}
+                            </label>
+                        </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
-                </div>
-                <div class="form-group field-sectors">
-                    <h3>sectors</h3>
-                    {{#each sector in potentialSectors}}
-                    <div>
-                        <label>
-                            {{view sectorCheckbox name=sector}}
-                            {{sector}}
-                        </label>
+                    <div class="form-group field-sectors">
+                        <h3>sectors</h3>
+                        {{#each sector in potentialSectors}}
+                        <div>
+                            <label>
+                                {{view sectorCheckbox name=sector}}
+                                {{sector}}
+                            </label>
+                        </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
                 </div>
             </div>
         </div>
