@@ -63714,6 +63714,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
 },{"ember":7,"underscore":29}],12:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
+var _ = require('underscore');
 
 
 App.AddOrganizationController = Ember.Controller.extend({
@@ -63729,10 +63730,10 @@ App.AddOrganizationController = Ember.Controller.extend({
     types: [],
     centroid: null,
 
-    geocodedAddress: '',
-    geocodedCity: '',
-    geocodedState: '',
-    geocodedZip: '',
+    geocodedAddress: null,
+    geocodedCity: null,
+    geocodedState: null,
+    geocodedZip: null,
 
     fullAddress: function () {
         return [
@@ -63826,15 +63827,21 @@ App.AddOrganizationRoute = Ember.Route.extend({
     },
 
     clearForm: function () {
-        this.controller.set('name', null);
-        this.controller.set('address', null);
-        this.controller.set('address2', null);
-        this.controller.set('city', null);
-        this.controller.set('state', null);
-        this.controller.set('zip', null);
-        this.controller.set('email', null);
-        this.controller.set('phone', null);
-        this.controller.set('centroid', null);
+        var addressProperties = ['name', 'address', 'address2', 'city', 'state',
+                'zip', 'email', 'phone'],
+            geocodeProperties = ['centroid', 'geocodedAddress', 'geocodedCity',
+                'geocodedState', 'geocodedZip'],
+            propertyChanges = {};
+
+        _.each(_.union(addressProperties, geocodeProperties), function (property) {
+            propertyChanges[property] = null;
+        });
+
+        // Set all properties at the same time
+        this.controller.setProperties(propertyChanges);
+
+        // Update map (clear location)
+        this.controller.send('updateMap');
     },
 
     validate: function () {
@@ -63992,7 +63999,7 @@ App.AddOrganizationView = Ember.View.extend({
     templateName: 'organization/add'
 });
 
-},{"./geocode":15,"ember":7}],13:[function(require,module,exports){
+},{"./geocode":15,"ember":7,"underscore":29}],13:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
