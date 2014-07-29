@@ -26,6 +26,7 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     isLoading: false,
     page: null,
     nextPage: 1,
+    height: 400,
 
     actions: {
         openOrganization: function (id) {
@@ -51,6 +52,33 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
             })();
         }
     },
+
+    listView: Ember.ListView.extend({
+        didInsertElement: function () {
+            this._super();
+            // Add didRenderElement since this view comes from outside of
+            // the application
+            Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
+        },
+
+        didRenderElement: function () {
+            this._super();
+            this.set('height', this.calculateHeight());
+        },
+
+        height: function () {
+            return $(document).height();
+        }.property(),
+
+        calculateHeight: function () {
+            var pageHeight = $('#page').height(),
+                buttonHeight = $('.organizations-list-add-organization').outerHeight(),
+                headerHeight = $('.organizations-list-headers').outerHeight();
+            return pageHeight - buttonHeight - headerHeight;
+        },
+
+        rowHeight: 25
+    }),
 
     init: function () {
         this._super();

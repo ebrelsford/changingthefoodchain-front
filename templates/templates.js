@@ -217,10 +217,8 @@ function program2(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">add my organization</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
   stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
-    'contentBinding': ("controller.content"),
-    'height': (357),
-    'rowHeight': (25)
-  },hashTypes:{'contentBinding': "STRING",'height': "INTEGER",'rowHeight': "INTEGER"},hashContexts:{'contentBinding': depth0,'height': depth0,'rowHeight': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "Ember.ListView", options) : helperMissing.call(depth0, "collection", "Ember.ListView", options));
+    'contentBinding': ("controller.content")
+  },hashTypes:{'contentBinding': "STRING"},hashContexts:{'contentBinding': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "listView", options) : helperMissing.call(depth0, "collection", "listView", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
