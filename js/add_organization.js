@@ -74,11 +74,13 @@ App.AddOrganizationController = Ember.Controller.extend({
             (function (controller) {
                 geocode(controller.get('fullAddress'), null, null, function (result) {
                     if (result) {
-                        controller.set('centroid', result.latlng);
-                        controller.set('geocodedAddress', result.address);
-                        controller.set('geocodedCity', result.city);
-                        controller.set('geocodedState', result.state);
-                        controller.set('geocodedZip', result.zip);
+                        controller.setProperties({
+                            centroid: result.latlng,
+                            geocodedAddress: result.address,
+                            geocodedCity: result.city,
+                            geocodedState: result.state,
+                            geocodedZip: result.zip
+                        });
                         controller.send('updateMap');
                     }
                     else {
@@ -105,11 +107,11 @@ App.AddOrganizationController = Ember.Controller.extend({
 
 App.AddOrganizationRoute = Ember.Route.extend({
     clearValidation: function () {
-        this.controller.set('centroidError', false);
-        this.controller.set('error', false);
-        this.controller.set('nameError', false);
-        this.controller.set('sectorsError', false);
-        this.controller.set('typesError', false);
+        var errorProperties = ['centroidError', 'error', 'nameError', 
+            'sectorsError', 'typesError'];
+        _.each(errorProperties, function (errorProperty) {
+            this.set(errorProperty, false);
+        }, this.controller);
     },
 
     clearForm: function () {
