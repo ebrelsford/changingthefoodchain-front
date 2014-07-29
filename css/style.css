@@ -3122,7 +3122,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 2000;
+  z-index: 2001;
 }
 header #logo {
   position: relative;
@@ -3386,6 +3386,7 @@ body.organization-view .map-active-area {
   overflow-y: hidden;
   top: 0;
   width: 55%;
+  z-index: 2002;
 }
 #popup > section {
   margin-top: 20px;

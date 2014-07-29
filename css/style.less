@@ -3,11 +3,19 @@
 @logo-color: #BC461B;
 @filters-width: 200px;
 @foreground-color: #302390;
-@header-height: 100px;
-@interface-z-index: 2000;
+
 @overlay-background-color: rgba(235, 223, 194, 0.9);
+@interface-z-index: 2000;
+
+@header-height: 100px;
+// Bump header up so autocomplete suggestions get rendered on top of pages
+@header-z-index: @interface-z-index + 1;
+
 @popup-background-color: @overlay-background-color;
 @popup-width: 55%;
+// Bump popup up so it can appear on top of header. Won't block autocomplete.
+@popup-z-index: @header-z-index + 1;
+
 @ui-button-color: @logo-color;
 
 // Bootstrap
