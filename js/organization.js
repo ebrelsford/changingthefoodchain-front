@@ -52,6 +52,10 @@ App.OrganizationRoute = Ember.Route.extend({
         close: function () {
             this.transitionTo('index');
             map.deselectOrganization();
+        },
+
+        setPageTitle: function () {
+            document.title = this.makePageTitle(this.controllerFor('organization').get('model').get('name'));
         }
     },
 

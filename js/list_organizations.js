@@ -6,6 +6,10 @@ App.ListOrganizationsRoute = Ember.Route.extend({
     actions: {
         close: function () {
             this.transitionTo('index');
+        },
+
+        setPageTitle: function () {
+            document.title = this.makePageTitle('Organization List');
         }
     },
 

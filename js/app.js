@@ -89,6 +89,17 @@ Ember.View.reopen({
 });
 
 Ember.Route.reopen({
+    makePageTitle: function (title) {
+        var applicationTitle = 'Changing the Food Chain';
+        if (title) {
+            return title + ' | ' + applicationTitle;
+        }
+        if (this.title) {
+            return this.title() + ' | ' + applicationTitle;
+        }
+        return applicationTitle;
+    },
+
     deactivate: function () {
         this.controllerFor('application').set('previousUrl', window.location.href);
     }
@@ -125,6 +136,14 @@ App.Router.map(function() {
 
 App.ApplicationRoute = Ember.Route.extend({
     actions: {
+        didTransition: function () {
+            this.send('setPageTitle');
+        },
+
+        setPageTitle: function () {
+            document.title = this.makePageTitle();
+        },
+
         openAddOrganization: function () {
             this.transitionTo('add-organization');
         },

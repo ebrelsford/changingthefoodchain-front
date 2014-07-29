@@ -11,6 +11,10 @@ App.ShareRoute = Ember.Route.extend({
         close: function () {
             this.disconnectOutlet('modal');
             history.back();
+        },
+
+        setPageTitle: function () {
+            document.title = this.makePageTitle('Share');
         }
     },
 
