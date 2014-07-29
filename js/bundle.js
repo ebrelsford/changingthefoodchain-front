@@ -64150,51 +64150,33 @@ App.ApplicationRoute = Ember.Route.extend({
         openShare: function () {
             this.transitionTo('share');
         }
-    }
+    },
+
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('sectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('types', types);
+            });
+    },
 });
 
 App.ApplicationController = Ember.Controller.extend({
-    organizationTypes: [
-        {
-            label: 'workers center'
-        },
-        {
-            label: 'legal aid'
-        },
-        {
-            label: 'union'
-        },
-        {
-            label: 'advocacy group'
-        }
-    ],
-    sectors: [
-        {
-            label: 'agriculture'
-        },
-        {
-            label: 'food processing'
-        },
-        {
-            label: 'food service'
-        },
-        {
-            label: 'distribution'
-        },
-        {
-            label: 'retail'
-        }
-    ],
-
     // Organizations for autocomplete
     organizations: $.getJSON(CONFIG.API_BASE + '/organizations/names/').then(function (data) {
         return _.map(data, function (element) {
             return Ember.ObjectController.create(element);
         });
     }),
-    searchText: '',
+    searchText: null,
     selectedOrganization: null,
-    previousUrl: 'http://example.com/#/yes/',
+    previousUrl: null,
 
     lat: null,
     lng: null,
@@ -64214,14 +64196,14 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         filtersChanged: function () {
-            var types = _.chain(this.get('organizationTypes'))
-                .filter(function (type) { return type.isActive; })
-                .map(function (type) { return type.label; })
+            var types = _.chain(this.get('types.content'))
+                .filter(function (type) { return type.get('isActive'); })
+                .map(function (type) { return type.get('name'); })
                 .value();
 
-            var sectors = _.chain(this.get('sectors'))
-                .filter(function (sector) { return sector.isActive; })
-                .map(function (sector) { return sector.label; })
+            var sectors = _.chain(this.get('sectors.content'))
+                .filter(function (sector) { return sector.get('isActive'); })
+                .map(function (sector) { return sector.get('name'); })
                 .value();
 
             mapmodule.updateFilters({
@@ -67037,7 +67019,7 @@ function program7(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openHelpOrganizationTypes", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">?</a>\n        <h3>organization type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
-    'content': ("organizationTypes")
+    'content': ("types")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n    </section>\n    <section class=\"filters-sector\">\n        <h3>industry type</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
@@ -67212,7 +67194,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1;
 
 
-  stack1 = helpers._triageMustache.call(depth0, "view.content.label", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
@@ -67700,7 +67682,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1;
 
 
-  stack1 = helpers._triageMustache.call(depth0, "view.content.label", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;

@@ -144,51 +144,33 @@ App.ApplicationRoute = Ember.Route.extend({
         openShare: function () {
             this.transitionTo('share');
         }
-    }
+    },
+
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('sectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('types', types);
+            });
+    },
 });
 
 App.ApplicationController = Ember.Controller.extend({
-    organizationTypes: [
-        {
-            label: 'workers center'
-        },
-        {
-            label: 'legal aid'
-        },
-        {
-            label: 'union'
-        },
-        {
-            label: 'advocacy group'
-        }
-    ],
-    sectors: [
-        {
-            label: 'agriculture'
-        },
-        {
-            label: 'food processing'
-        },
-        {
-            label: 'food service'
-        },
-        {
-            label: 'distribution'
-        },
-        {
-            label: 'retail'
-        }
-    ],
-
     // Organizations for autocomplete
     organizations: $.getJSON(CONFIG.API_BASE + '/organizations/names/').then(function (data) {
         return _.map(data, function (element) {
             return Ember.ObjectController.create(element);
         });
     }),
-    searchText: '',
+    searchText: null,
     selectedOrganization: null,
-    previousUrl: 'http://example.com/#/yes/',
+    previousUrl: null,
 
     lat: null,
     lng: null,
@@ -208,14 +190,14 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         filtersChanged: function () {
-            var types = _.chain(this.get('organizationTypes'))
-                .filter(function (type) { return type.isActive; })
-                .map(function (type) { return type.label; })
+            var types = _.chain(this.get('types.content'))
+                .filter(function (type) { return type.get('isActive'); })
+                .map(function (type) { return type.get('name'); })
                 .value();
 
-            var sectors = _.chain(this.get('sectors'))
-                .filter(function (sector) { return sector.isActive; })
-                .map(function (sector) { return sector.label; })
+            var sectors = _.chain(this.get('sectors.content'))
+                .filter(function (sector) { return sector.get('isActive'); })
+                .map(function (sector) { return sector.get('name'); })
                 .value();
 
             mapmodule.updateFilters({
