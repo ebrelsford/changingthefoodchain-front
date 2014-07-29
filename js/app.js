@@ -182,6 +182,13 @@ App.ApplicationController = Ember.Controller.extend({
 
     queryParams: ['lat', 'lng', 'z'],
 
+    findActive: function (checkedModels) {
+        return _.chain(checkedModels)
+            .filter(function (model) { return model.get('isActive'); })
+            .map(function (model) { return model.get('name'); })
+            .value();
+    },
+
     actions: {
         search: function () {
             geocode(this.get('searchText'), map.getBounds(), null, function (result) {
@@ -190,25 +197,15 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         filtersChanged: function () {
-            var types = _.chain(this.get('types.content'))
-                .filter(function (type) { return type.get('isActive'); })
-                .map(function (type) { return type.get('name'); })
-                .value();
-
-            var sectors = _.chain(this.get('sectors.content'))
-                .filter(function (sector) { return sector.get('isActive'); })
-                .map(function (sector) { return sector.get('name'); })
-                .value();
-
             mapmodule.updateFilters({
-                sectors: sectors,
-                types: types
+                sectors: this.findActive(this.get('sectors.content')),
+                types: this.findActive(this.get('types.content'))
             });
         },
 
         setLocale: function (locale) {
             i18n.setLocale(locale);
-        },
+        }
     }
 });
 
