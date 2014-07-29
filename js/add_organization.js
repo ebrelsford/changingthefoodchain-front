@@ -91,10 +91,12 @@ App.AddOrganizationController = Ember.Controller.extend({
         },
 
         useGeocodedAddress: function () {
-            this.set('address', this.get('geocodedAddress'));
-            this.set('city', this.get('geocodedCity'));
-            this.set('state', this.get('geocodedState'));
-            this.set('zip', this.get('geocodedZip'));
+            this.setProperties({
+                address: this.get('geocodedAddress'),
+                city: this.get('geocodedCity'),
+                state: this.get('geocodedState'),
+                zip: this.get('geocodedZip')
+            });
         },
 
         updateMap: function () {
