@@ -3084,6 +3084,9 @@ body.add-organization-view #filters * {
   opacity: 0.3;
   filter: alpha(opacity=30);
 }
+body.page-view #filters * {
+  display: none;
+}
 .filters-sector .filters-sector-list-item.active {
   font-weight: bold;
 }
@@ -3190,7 +3193,8 @@ header #list-button:hover {
 }
 body.add-organization-view header,
 body.list-organizations-view header,
-body.help-organization-types-view header {
+body.help-organization-types-view header,
+body.page-view header {
   background-color: rgba(235, 223, 194, 0.9);
 }
 #help {
@@ -3343,7 +3347,6 @@ body.organization-view .map-active-area {
   top: 100px;
   width: 50%;
   z-index: 2000;
-  width: 850px;
 }
 #page > section {
   margin-top: 20px;
@@ -3356,6 +3359,16 @@ body.organization-view .map-active-area {
   margin-right: -10px;
   margin-top: -15px;
   opacity: 1;
+}
+.page-view #page {
+  left: 0;
+}
+.page-sections {
+  float: left;
+  width: 200px;
+}
+.page-content {
+  float: left;
 }
 #popup {
   display: none;

@@ -7,17 +7,24 @@ App.PageRoute = Ember.Route.extend({
 
     renderTemplate: function () {
         this.render('page', { outlet: 'page' });
-    },
-
-    deactivate: function () {
-        $('#page').hide();
     }
 });
 
 App.PageView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('page-view');
+    },
+
     didRenderElement: function () {
         $('#page').show();
         this._super();
+    },
+
+    willDestroyElement: function () {
+        $('#page').hide();
+        this._super();
+        $('body').removeClass('page-view');
     }
 });
 
