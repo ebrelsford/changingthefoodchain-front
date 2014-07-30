@@ -8,11 +8,12 @@
 
 .page {
     &-sections {
-        float: left;
-        width: @filters-width;
+        .make-md-column(3);
+        position: fixed;
     }
 
     &-content {
-        float: left;
+        .make-md-column(9);
+        .make-md-column-offset(3);
     }
 }

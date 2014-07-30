@@ -3364,11 +3364,34 @@ body.organization-view .map-active-area {
   left: 0;
 }
 .page-sections {
-  float: left;
-  width: 200px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: fixed;
+}
+@media (min-width: 992px) {
+  .page-sections {
+    float: left;
+    width: 25%;
+  }
 }
 .page-content {
-  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  .page-content {
+    float: left;
+    width: 75%;
+  }
+}
+@media (min-width: 992px) {
+  .page-content {
+    margin-left: 25%;
+  }
 }
 #popup {
   display: none;

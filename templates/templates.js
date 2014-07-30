@@ -797,11 +797,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"page-sections\">\n    sections\n</div>\n");
+  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        sections\n    </div>\n    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "content", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n<div class=\"clearfix\"></div>\n");
+  data.buffer.push("\n</div>\n");
   return buffer;
   
 });
