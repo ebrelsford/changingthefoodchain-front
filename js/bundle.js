@@ -64928,6 +64928,9 @@ App.OrganizationRoute = Ember.Route.extend({
 });
 
 },{"./map":20,"ember":7}],23:[function(require,module,exports){
+var i18n = require('./i18n');
+
+
 App.PageRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -64960,13 +64963,21 @@ App.PageView = Ember.View.extend({
 
 App.AboutRoute = App.PageRoute.extend({
     model: function () {
-        return $.get(CONFIG.API_BASE + '/pages/about/');
+        var url = CONFIG.API_BASE + '/pages/about/';
+        if (i18n.getLocale() !== CONFIG.DEFAULT_LOCALE) {
+            url += i18n.getLocale() + '/';
+        }
+        return $.get(url);
     }
 });
 
 App.ContactRoute = App.PageRoute.extend({
     model: function () {
-        return $.get(CONFIG.API_BASE + '/pages/contact/');
+        var url = CONFIG.API_BASE + '/pages/about/';
+        if (i18n.getLocale() !== CONFIG.DEFAULT_LOCALE) {
+            url += i18n.getLocale() + '/';
+        }
+        return $.get(url);
     }
 });
 
@@ -64976,7 +64987,7 @@ App.NewsRoute = App.PageRoute.extend({
     }
 });
 
-},{}],24:[function(require,module,exports){
+},{"./i18n":17}],24:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
