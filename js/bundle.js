@@ -65066,13 +65066,15 @@ App.EmbedView = Ember.View.extend({
 App.ShareView = Ember.View.extend({
     didRenderElement: function() {
         this._super();
-        $('#shareModal').modal()
-            .on('hide.bs.modal', function () {
-                try {
-                    App.__container__.lookup('route:share').send('close');
-                }
-                catch (e) {}
-            });
+        (function (view) {
+            $('#shareModal').modal()
+                .on('hide.bs.modal', function () {
+                    try {
+                        view.controller.send('close');
+                    }
+                    catch (e) {}
+                });
+        })(this);
     },
 
     willDestroyElement: function () {
