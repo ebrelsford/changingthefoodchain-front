@@ -25,9 +25,9 @@
         </div>
 
         <div class="organization-details-actions">
-            {{#link-to 'share' class="btn btn-primary"}}Share{{/link-to}}
-            <a href="#" class="btn btn-primary">Visit</a>
-            {{#link-to 'organization.add_media' class="btn btn-primary"}}Add media{{/link-to}}
+            {{#link-to 'share' class="btn btn-primary"}}{{t "organization.actions.share"}}{{/link-to}}
+            <a href="#" class="btn btn-primary">{{t "organization.actions.visit"}}</a>
+            {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
         </div>
 
         {{#if model.media}}

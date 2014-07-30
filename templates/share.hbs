@@ -6,16 +6,16 @@
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#share" role="tab" data-toggle="tab">Share</a></li>
-                    <li><a href="#embed" role="tab" data-toggle="tab" id="embed-tab">Embed</a></li>
+                    <li class="active"><a href="#share" role="tab" data-toggle="tab">{{t "share.tabs.share"}}</a></li>
+                    <li><a href="#embed" role="tab" data-toggle="tab" id="embed-tab">{{t "share.tabs.embed"}}</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="share">
                         <div class="form-group">
                             <div class="share-actions">
-                                <a href="#" class="btn btn-primary">share on facebook</a>
-                                <a href="#" class="btn btn-primary">share on twitter</a>
+                                <a href="#" class="btn btn-primary">{{t "share.actions.facebook"}}</a>
+                                <a href="#" class="btn btn-primary">{{t "share.actions.twitter"}}</a>
                             </div>
                             {{input class="form-control" type="url" value=this.controllers.application.previousUrl}}
                         </div>

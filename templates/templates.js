@@ -6,25 +6,25 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var helper, options;
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "title", options) : helperMissing.call(depth0, "t", "title", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.title", options) : helperMissing.call(depth0, "t", "application.title", options))));
   }
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("about");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.about", options) : helperMissing.call(depth0, "t", "application.nav.about", options))));
   }
 
 function program5(depth0,data) {
   
-  
-  data.buffer.push("contact");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.contact", options) : helperMissing.call(depth0, "t", "application.nav.contact", options))));
   }
 
 function program7(depth0,data) {
   
-  
-  data.buffer.push("news");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.news", options) : helperMissing.call(depth0, "t", "application.nav.news", options))));
   }
 
   data.buffer.push("<header>\n    <div id=\"logo\">");
@@ -39,7 +39,9 @@ function program7(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news", options) : helperMissing.call(depth0, "link-to", "news", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </nav>\n    <div id=\"tagline\">\n        <div>\n            An action map for food chain workers &amp; organizations.\n        </div>\n        <div>\n            <a href=\"#\" ");
+  data.buffer.push("\n    </nav>\n    <div id=\"tagline\">\n        <div>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.tagline", options) : helperMissing.call(depth0, "t", "application.tagline", options))));
+  data.buffer.push("\n        </div>\n        <div>\n            <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "en", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
   data.buffer.push(">english</a>\n            <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "es", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
@@ -56,11 +58,15 @@ function program7(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <h2>filters</h2>\n    <section class=\"filters-type\">\n        <a class=\"pull-right help-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openHelpOrganizationTypes", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">?</a>\n        <h3>organization type</h3>\n        ");
+  data.buffer.push(">?</a>\n        <h3>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.organization_type", options) : helperMissing.call(depth0, "t", "application.filters.organization_type", options))));
+  data.buffer.push("</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.OrganizationTypeView", {hash:{
     'content': ("types")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </section>\n    <section class=\"filters-sector\">\n        <h3>industry type</h3>\n        ");
+  data.buffer.push("\n    </section>\n    <section class=\"filters-sector\">\n        <h3>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.industry_type", options) : helperMissing.call(depth0, "t", "application.filters.industry_type", options))));
+  data.buffer.push("</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -213,9 +219,23 @@ function program2(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">name</div>\n    <div class=\"organizations-list-item-city\">city</div>\n    <div class=\"organizations-list-item-state\">state</div>\n    <div class=\"organizations-list-item-types\">types</div>\n    <div class=\"organizations-list-item-sectors\">sectors</div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>Don't see your organization in this list? Add it here.</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.name", options) : helperMissing.call(depth0, "t", "list_organizations.headers.name", options))));
+  data.buffer.push("</div>\n    <div class=\"organizations-list-item-city\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.city", options) : helperMissing.call(depth0, "t", "list_organizations.headers.city", options))));
+  data.buffer.push("</div>\n    <div class=\"organizations-list-item-state\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.state", options) : helperMissing.call(depth0, "t", "list_organizations.headers.state", options))));
+  data.buffer.push("</div>\n    <div class=\"organizations-list-item-types\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.types", options) : helperMissing.call(depth0, "t", "list_organizations.headers.types", options))));
+  data.buffer.push("</div>\n    <div class=\"organizations-list-item-sectors\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.sectors", options) : helperMissing.call(depth0, "t", "list_organizations.headers.sectors", options))));
+  data.buffer.push("</div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.message", options) : helperMissing.call(depth0, "t", "list_organizations.add.message", options))));
+  data.buffer.push("</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">add my organization</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
+  data.buffer.push(">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.button", options) : helperMissing.call(depth0, "t", "list_organizations.add.button", options))));
+  data.buffer.push("</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
   stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
     'contentBinding': ("controller.content")
   },hashTypes:{'contentBinding': "STRING"},hashContexts:{'contentBinding': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "listView", options) : helperMissing.call(depth0, "collection", "listView", options));
@@ -241,7 +261,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["organization"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -265,14 +285,14 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  
-  data.buffer.push("Share");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.actions.share", options) : helperMissing.call(depth0, "t", "organization.actions.share", options))));
   }
 
 function program7(depth0,data) {
   
-  
-  data.buffer.push("Add media");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.actions.add_media", options) : helperMissing.call(depth0, "t", "organization.actions.add_media", options))));
   }
 
 function program9(depth0,data) {
@@ -343,7 +363,9 @@ function program14(depth0,data) {
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share", options) : helperMissing.call(depth0, "link-to", "share", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n            <a href=\"#\" class=\"btn btn-primary\">Visit</a>\n            ");
+  data.buffer.push("\n            <a href=\"#\" class=\"btn btn-primary\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.actions.visit", options) : helperMissing.call(depth0, "t", "organization.actions.visit", options))));
+  data.buffer.push("</a>\n            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.add_media", options) : helperMissing.call(depth0, "link-to", "organization.add_media", options));
@@ -732,7 +754,15 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"modal fade\" id=\"shareModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"shareModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n            </div>\n            <div class=\"modal-body\">\n                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                    <li class=\"active\"><a href=\"#share\" role=\"tab\" data-toggle=\"tab\">Share</a></li>\n                    <li><a href=\"#embed\" role=\"tab\" data-toggle=\"tab\" id=\"embed-tab\">Embed</a></li>\n                </ul>\n\n                <div class=\"tab-content\">\n                    <div class=\"tab-pane active\" id=\"share\">\n                        <div class=\"form-group\">\n                            <div class=\"share-actions\">\n                                <a href=\"#\" class=\"btn btn-primary\">share on facebook</a>\n                                <a href=\"#\" class=\"btn btn-primary\">share on twitter</a>\n                            </div>\n                            ");
+  data.buffer.push("<div class=\"modal fade\" id=\"shareModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"shareModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n            </div>\n            <div class=\"modal-body\">\n                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                    <li class=\"active\"><a href=\"#share\" role=\"tab\" data-toggle=\"tab\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.tabs.share", options) : helperMissing.call(depth0, "t", "share.tabs.share", options))));
+  data.buffer.push("</a></li>\n                    <li><a href=\"#embed\" role=\"tab\" data-toggle=\"tab\" id=\"embed-tab\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.tabs.embed", options) : helperMissing.call(depth0, "t", "share.tabs.embed", options))));
+  data.buffer.push("</a></li>\n                </ul>\n\n                <div class=\"tab-content\">\n                    <div class=\"tab-pane active\" id=\"share\">\n                        <div class=\"form-group\">\n                            <div class=\"share-actions\">\n                                <a href=\"#\" class=\"btn btn-primary\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.actions.facebook", options) : helperMissing.call(depth0, "t", "share.actions.facebook", options))));
+  data.buffer.push("</a>\n                                <a href=\"#\" class=\"btn btn-primary\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.actions.twitter", options) : helperMissing.call(depth0, "t", "share.actions.twitter", options))));
+  data.buffer.push("</a>\n                            </div>\n                            ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),

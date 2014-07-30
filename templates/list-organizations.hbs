@@ -1,15 +1,15 @@
 <div class="close" {{action 'close'}}>&times;</div>
 <div class="organizations-list-headers">
-    <div class="organizations-list-item-name">name</div>
-    <div class="organizations-list-item-city">city</div>
-    <div class="organizations-list-item-state">state</div>
-    <div class="organizations-list-item-types">types</div>
-    <div class="organizations-list-item-sectors">sectors</div>
+    <div class="organizations-list-item-name">{{t "list_organizations.headers.name"}}</div>
+    <div class="organizations-list-item-city">{{t "list_organizations.headers.city"}}</div>
+    <div class="organizations-list-item-state">{{t "list_organizations.headers.state"}}</div>
+    <div class="organizations-list-item-types">{{t "list_organizations.headers.types"}}</div>
+    <div class="organizations-list-item-sectors">{{t "list_organizations.headers.sectors"}}</div>
 </div>
 
 <div class="organizations-list-add-organization">
-    <span>Don't see your organization in this list? Add it here.</span>
-    <a id="organizations-list-add-organization-button" class="pull-right" {{action 'openAddOrganization'}}>add my organization</a>
+    <span>{{t "list_organizations.add.message"}}</span>
+    <a id="organizations-list-add-organization-button" class="pull-right" {{action 'openAddOrganization'}}>{{t "list_organizations.add.button"}}</a>
     <div class="clearfix"></div>
 </div>
 

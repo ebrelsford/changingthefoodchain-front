@@ -1,13 +1,13 @@
 <header>
-    <div id="logo">{{#link-to 'index'}}{{t "title"}}{{/link-to}}</div>
+    <div id="logo">{{#link-to 'index'}}{{t "application.title"}}{{/link-to}}</div>
     <nav id="nav">
-        {{#link-to 'about'}}about{{/link-to}}
-        {{#link-to 'contact'}}contact{{/link-to}}
-        {{#link-to 'news'}}news{{/link-to}}
+        {{#link-to 'about'}}{{t "application.nav.about"}}{{/link-to}}
+        {{#link-to 'contact'}}{{t "application.nav.contact"}}{{/link-to}}
+        {{#link-to 'news'}}{{t "application.nav.news"}}{{/link-to}}
     </nav>
     <div id="tagline">
         <div>
-            An action map for food chain workers &amp; organizations.
+            {{t "application.tagline"}}
         </div>
         <div>
             <a href="#" {{action 'setLocale' 'en'}}>english</a>
@@ -26,11 +26,11 @@
     <h2>filters</h2>
     <section class="filters-type">
         <a class="pull-right help-button" href="#" {{action 'openHelpOrganizationTypes'}}>?</a>
-        <h3>organization type</h3>
+        <h3>{{t "application.filters.organization_type"}}</h3>
         {{view App.OrganizationTypeView content=types}}
     </section>
     <section class="filters-sector">
-        <h3>industry type</h3>
+        <h3>{{t "application.filters.industry_type"}}</h3>
         {{view App.SectorView content=sectors}}
     </section>
 </div>
