@@ -64096,7 +64096,7 @@ Ember.View.reopen({
 
 Ember.Route.reopen({
     makePageTitle: function (title) {
-        var applicationTitle = 'Changing the Food Chain';
+        var applicationTitle = Ember.I18n.t('application.title');
         if (title) {
             return title + ' | ' + applicationTitle;
         }
@@ -64465,7 +64465,7 @@ App.ListOrganizationsRoute = Ember.Route.extend({
         },
 
         setPageTitle: function () {
-            document.title = this.makePageTitle('Organization List');
+            document.title = this.makePageTitle(Ember.I18n.t('list_organizations.title'));
         }
     },
 
@@ -64993,7 +64993,7 @@ App.ShareRoute = Ember.Route.extend({
         },
 
         setPageTitle: function () {
-            document.title = this.makePageTitle('Share');
+            document.title = this.makePageTitle(Ember.I18n.t('share.title'));
         }
     },
 

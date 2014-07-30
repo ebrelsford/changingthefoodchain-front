@@ -9,7 +9,7 @@ App.ListOrganizationsRoute = Ember.Route.extend({
         },
 
         setPageTitle: function () {
-            document.title = this.makePageTitle('Organization List');
+            document.title = this.makePageTitle(Ember.I18n.t('list_organizations.title'));
         }
     },
 

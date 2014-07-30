@@ -90,7 +90,7 @@ Ember.View.reopen({
 
 Ember.Route.reopen({
     makePageTitle: function (title) {
-        var applicationTitle = 'Changing the Food Chain';
+        var applicationTitle = Ember.I18n.t('application.title');
         if (title) {
             return title + ' | ' + applicationTitle;
         }

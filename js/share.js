@@ -14,7 +14,7 @@ App.ShareRoute = Ember.Route.extend({
         },
 
         setPageTitle: function () {
-            document.title = this.makePageTitle('Share');
+            document.title = this.makePageTitle(Ember.I18n.t('share.title'));
         }
     },
 

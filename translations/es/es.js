@@ -14,6 +14,7 @@ Ember.I18n.translations = {
     },
 
     list_organizations: {
+        title: 'Organization List',
         headers: {
             name: 'name',
             city: 'city',
@@ -36,6 +37,7 @@ Ember.I18n.translations = {
     },
 
     share: {
+        title: 'Share',
         actions: {
             facebook: 'share on facebook',
             twitter: 'share on twitter'
