@@ -64417,7 +64417,6 @@ App.HelpOrganizationTypesView = Ember.View.extend({
 },{}],17:[function(require,module,exports){
 var qs = require('qs');
 
-var DEFAULT_LOCALE = 'en';
 
 function getLocale() {
     var search = window.location.search;
@@ -64427,7 +64426,7 @@ function getLocale() {
             return params.language;
         }
     }
-    return DEFAULT_LOCALE;
+    return CONFIG.DEFAULT_LOCALE;
 }
 
 module.exports = {
