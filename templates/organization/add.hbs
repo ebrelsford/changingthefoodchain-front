@@ -1,36 +1,36 @@
 <div class="close" {{action 'close'}}>&times;</div>
-<h4>Add My Organization</h4>
+<h4>{{t "organization_add.title"}}</h4>
 
 <div>
     <form>
         {{#if centroidError}}
             <div class="alert alert-danger" role="alert">
-                Please enter a valid address that shows up on the map.
+                {{t "organization_add.centroid"}}
             </div>
         {{/if}}
         {{#if nameError}}
             <div class="alert alert-danger" role="alert">
-                Please enter a name for your organization.
+                {{t "organization_add.name"}}
             </div>
         {{/if}}
         {{#if sectorsError}}
             <div class="alert alert-danger" role="alert">
-                Please choose a sector.
+                {{t "organization_add.sectors"}}
             </div>
         {{/if}}
         {{#if typesError}}
             <div class="alert alert-danger" role="alert">
-                Please choose a type.
+                {{t "organization_add.types"}}
             </div>
         {{/if}}
         {{#if error}}
             <div class="alert alert-danger" role="alert">
-                Something went wrong. Please try again.
+                {{t "organization_add.general"}}
             </div>
         {{/if}}
         {{#if success}}
             <div class="alert alert-success" role="alert">
-                Successfully added organization.
+                {{t "organization_add.success"}}
             </div>
         {{/if}}
 
@@ -40,73 +40,89 @@
                 {{#if geocodedAddress}}
                 <div class="add-organization-location-output-address">
                     <div class="add-organization-location-output-address-message">
-                        Your organization will be placed here. Make sure it's in
-                        the right spot on the map.
+                        {{t "organization_add.location.message"}}
                     </div>
                     <div class="add-organization-location-output-address-address">
                         {{geocodedAddress}}<br />
                         {{geocodedCity}} {{geocodedState}} {{geocodedZip}}
                     </div>
                     <div class="add-organization-location-output-address-accept">
-                        <a href="#" {{action 'useGeocodedAddress'}}>Use this address</a>
+                        <a href="#" {{action 'useGeocodedAddress'}}>
+                            {{t "organization_add.location.accept"}}
+                        </a>
                     </div>
                 </div>
                 {{/if}}
 
                 {{#if geocodeError}}
                 <div class="add-organization-location-output-error">
-                    Sorry, we couldn't find the address you added. Could you be
-                    more specific?
+                    {{t "organization_add.location.error"}}
                 </div>
                 {{/if}}
             </div>
             <div class="add-organization-location-form">
                 <div class="form-group">
-                    <label for="organization-name">organization name</label>
+                    <label for="organization-name">
+                        {{t "organization_add.fields.name"}}
+                    </label>
                     {{input class="form-control" id="organization-name" value=name}}
                 </div>
 
                 <div {{bind-attr class=":form-group geocodeError:has-error"}}>
-                    <label for="address">address</label>
+                    <label for="address">
+                        {{t "organization_add.fields.address"}}
+                    </label>
                     {{input class="form-control" id="address" value=address focus-out="updateCentroid"}}
                 </div>
 
                 <div class="form-group">
-                    <label for="address2">address line 2</label>
+                    <label for="address2">
+                        {{t "organization_add.fields.address2"}}
+                    </label>
                     {{input class="form-control" id="address2" value=address2}}
                 </div>
 
                 <div class="add-organization-location-form-city-state">
                     <div {{bind-attr class=":form-group :field-city geocodeError:has-error"}}>
-                        <label for="city">city</label>
+                        <label for="city">
+                            {{t "organization_add.fields.city"}}
+                        </label>
                         {{input class="form-control" id="city" value=city focus-out="updateCentroid"}}
                     </div>
 
                     <div {{bind-attr class=":form-group :field-state geocodeError:has-error"}}>
-                        <label for="state">state</label>
+                        <label for="state">
+                            {{t "organization_add.fields.state"}}
+                        </label>
                         {{input class="form-control" id="state" value=state focus-out="updateCentroid"}}
                     </div>
 
                     <div {{bind-attr class=":form-group :field-zip geocodeError:has-error"}}>
-                        <label for="zip">zip</label>
+                        <label for="zip">
+                            {{t "organization_add.fields.zip"}}
+                        </label>
                         {{input class="form-control" id="zip" value=zip focus-out="updateCentroid"}}
                     </div>
                 </div>
 
                 <div class="add-organization-contact">
                     <div class="form-group field-email">
-                        <label for="email">email</label>
+                        <label for="email">
+                            {{t "organization_add.fields.email"}}
+                        </label>
                         {{input class="form-control" id="email" type="email" value=email}}
                     </div>
                     <div class="form-group field-phone">
-                        <label for="phone">phone</label>
+                        <label for="phone">
+                            {{t "organization_add.fields.phone"}}
+                        </label>
                         {{input class="form-control" id="phone" type="phone" value=phone}}
                     </div>
                 </div>
 
                 <div class="add-organization-type">
                     <div class="form-group field-types">
-                        <h3>organization types</h3>
+                        <h3>{{t "organization_add.fields.types"}}</h3>
                         {{#each type in potentialTypes}}
                         <div>
                             <label>
@@ -117,7 +133,7 @@
                         {{/each}}
                     </div>
                     <div class="form-group field-sectors">
-                        <h3>sectors</h3>
+                        <h3>{{t "organization_add.fields.sectors"}}</h3>
                         {{#each sector in potentialSectors}}
                         <div>
                             <label>
@@ -132,8 +148,12 @@
         </div>
 
         <div>
-            <button type="button" class="btn btn-default" {{action 'close'}}>Close</button>
-            <button type="submit" class="btn btn-primary" {{bind-attr disabled=submitting}} {{action 'submit'}}>Submit</button>
+            <button type="button" class="btn btn-default" {{action 'close'}}>
+                {{t "buttons.cancel"}}
+            </button>
+            <button type="submit" class="btn btn-primary" {{bind-attr disabled=submitting}} {{action 'submit'}}>
+                {{t "buttons.submit"}}
+            </button>
         </div>
     </form>
 </div>

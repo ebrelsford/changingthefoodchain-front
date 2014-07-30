@@ -3,18 +3,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="addOrganizationMediaModalLabel">Add media</h4>
+                <h4 class="modal-title" id="addOrganizationMediaModalLabel">
+                    {{t "organization_add_media.title"}}
+                </h4>
             </div>
             <form>
                 <div class="modal-body">
                     {{#if error}}
                         <div class="alert alert-danger" role="alert">
-                            Something went wrong. Please try again.
+                            {{t "organization_add_media.error"}}
                         </div>
                     {{/if}}
                     {{#if success}}
                         <div class="alert alert-success" role="alert">
-                            Successfully added video.
+                            {{t "organization_add_media.success"}}
                         </div>
                     {{/if}}
 
@@ -22,8 +24,12 @@
                     {{view view.tabContentView content=tabs}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'close'}}>Close</button>
-                    <button type="submit" class="btn btn-primary" {{action 'submit'}}>Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'close'}}>
+                        {{t "buttons.cancel"}}
+                    </button>
+                    <button type="submit" class="btn btn-primary" {{bind-attr disabled=submitting}} {{action 'submit'}}>
+                        {{t "buttons.submit"}}
+                    </button>
                 </div>
             </form>
         </div>

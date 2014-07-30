@@ -67424,48 +67424,68 @@ function program14(depth0,data) {
 Ember.TEMPLATES["organization/add"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                Please enter a valid address that shows up on the map.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.centroid", options) : helperMissing.call(depth0, "t", "organization_add.centroid", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                Please enter a name for your organization.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.name", options) : helperMissing.call(depth0, "t", "organization_add.name", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program5(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                Please choose a sector.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.sectors", options) : helperMissing.call(depth0, "t", "organization_add.sectors", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program7(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                Please choose a type.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.types", options) : helperMissing.call(depth0, "t", "organization_add.types", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program9(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                Something went wrong. Please try again.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.general", options) : helperMissing.call(depth0, "t", "organization_add.general", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program11(depth0,data) {
   
-  
-  data.buffer.push("\n            <div class=\"alert alert-success\" role=\"alert\">\n                Successfully added organization.\n            </div>\n        ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n            <div class=\"alert alert-success\" role=\"alert\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.success", options) : helperMissing.call(depth0, "t", "organization_add.success", options))));
+  data.buffer.push("\n            </div>\n        ");
+  return buffer;
   }
 
 function program13(depth0,data) {
   
-  var buffer = '', stack1;
-  data.buffer.push("\n                <div class=\"add-organization-location-output-address\">\n                    <div class=\"add-organization-location-output-address-message\">\n                        Your organization will be placed here. Make sure it's in\n                        the right spot on the map.\n                    </div>\n                    <div class=\"add-organization-location-output-address-address\">\n                        ");
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n                <div class=\"add-organization-location-output-address\">\n                    <div class=\"add-organization-location-output-address-message\">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.location.message", options) : helperMissing.call(depth0, "t", "organization_add.location.message", options))));
+  data.buffer.push("\n                    </div>\n                    <div class=\"add-organization-location-output-address-address\">\n                        ");
   stack1 = helpers._triageMustache.call(depth0, "geocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("<br />\n                        ");
@@ -67479,14 +67499,19 @@ function program13(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                    <div class=\"add-organization-location-output-address-accept\">\n                        <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "useGeocodedAddress", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Use this address</a>\n                    </div>\n                </div>\n                ");
+  data.buffer.push(">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.location.accept", options) : helperMissing.call(depth0, "t", "organization_add.location.accept", options))));
+  data.buffer.push("\n                        </a>\n                    </div>\n                </div>\n                ");
   return buffer;
   }
 
 function program15(depth0,data) {
   
-  
-  data.buffer.push("\n                <div class=\"add-organization-location-output-error\">\n                    Sorry, we couldn't find the address you added. Could you be\n                    more specific?\n                </div>\n                ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n                <div class=\"add-organization-location-output-error\">\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.location.error", options) : helperMissing.call(depth0, "t", "organization_add.location.error", options))));
+  data.buffer.push("\n                </div>\n                ");
+  return buffer;
   }
 
 function program17(depth0,data) {
@@ -67519,7 +67544,9 @@ function program19(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<h4>Add My Organization</h4>\n\n<div>\n    <form>\n        ");
+  data.buffer.push(">&times;</div>\n<h4>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.title", options) : helperMissing.call(depth0, "t", "organization_add.title", options))));
+  data.buffer.push("</h4>\n\n<div>\n    <form>\n        ");
   stack1 = helpers['if'].call(depth0, "centroidError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
@@ -67543,7 +67570,9 @@ function program19(depth0,data) {
   data.buffer.push("\n\n                ");
   stack1 = helpers['if'].call(depth0, "geocodeError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">organization name</label>\n                    ");
+  data.buffer.push("\n            </div>\n            <div class=\"add-organization-location-form\">\n                <div class=\"form-group\">\n                    <label for=\"organization-name\">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.name", options) : helperMissing.call(depth0, "t", "organization_add.fields.name", options))));
+  data.buffer.push("\n                    </label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("organization-name"),
@@ -67553,14 +67582,18 @@ function program19(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":form-group geocodeError:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                    <label for=\"address\">address</label>\n                    ");
+  data.buffer.push(">\n                    <label for=\"address\">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.address", options) : helperMissing.call(depth0, "t", "organization_add.fields.address", options))));
+  data.buffer.push("\n                    </label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("address"),
     'value': ("address"),
     'focus-out': ("updateCentroid")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                </div>\n\n                <div class=\"form-group\">\n                    <label for=\"address2\">address line 2</label>\n                    ");
+  data.buffer.push("\n                </div>\n\n                <div class=\"form-group\">\n                    <label for=\"address2\">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.address2", options) : helperMissing.call(depth0, "t", "organization_add.fields.address2", options))));
+  data.buffer.push("\n                    </label>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("address2"),
@@ -67570,7 +67603,9 @@ function program19(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":form-group :field-city geocodeError:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                        <label for=\"city\">city</label>\n                        ");
+  data.buffer.push(">\n                        <label for=\"city\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.city", options) : helperMissing.call(depth0, "t", "organization_add.fields.city", options))));
+  data.buffer.push("\n                        </label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("city"),
@@ -67581,7 +67616,9 @@ function program19(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":form-group :field-state geocodeError:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                        <label for=\"state\">state</label>\n                        ");
+  data.buffer.push(">\n                        <label for=\"state\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.state", options) : helperMissing.call(depth0, "t", "organization_add.fields.state", options))));
+  data.buffer.push("\n                        </label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("state"),
@@ -67592,42 +67629,56 @@ function program19(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":form-group :field-zip geocodeError:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                        <label for=\"zip\">zip</label>\n                        ");
+  data.buffer.push(">\n                        <label for=\"zip\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.zip", options) : helperMissing.call(depth0, "t", "organization_add.fields.zip", options))));
+  data.buffer.push("\n                        </label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("zip"),
     'value': ("zip"),
     'focus-out': ("updateCentroid")
   },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'focus-out': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'focus-out': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-contact\">\n                    <div class=\"form-group field-email\">\n                        <label for=\"email\">email</label>\n                        ");
+  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-contact\">\n                    <div class=\"form-group field-email\">\n                        <label for=\"email\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.email", options) : helperMissing.call(depth0, "t", "organization_add.fields.email", options))));
+  data.buffer.push("\n                        </label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("email"),
     'type': ("email"),
     'value': ("email")
   },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-phone\">\n                        <label for=\"phone\">phone</label>\n                        ");
+  data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-phone\">\n                        <label for=\"phone\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.phone", options) : helperMissing.call(depth0, "t", "organization_add.fields.phone", options))));
+  data.buffer.push("\n                        </label>\n                        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'id': ("phone"),
     'type': ("phone"),
     'value': ("phone")
   },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-type\">\n                    <div class=\"form-group field-types\">\n                        <h3>organization types</h3>\n                        ");
+  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-type\">\n                    <div class=\"form-group field-types\">\n                        <h3>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.types", options) : helperMissing.call(depth0, "t", "organization_add.fields.types", options))));
+  data.buffer.push("</h3>\n                        ");
   stack1 = helpers.each.call(depth0, "type", "in", "potentialTypes", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-sectors\">\n                        <h3>sectors</h3>\n                        ");
+  data.buffer.push("\n                    </div>\n                    <div class=\"form-group field-sectors\">\n                        <h3>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.sectors", options) : helperMissing.call(depth0, "t", "organization_add.fields.sectors", options))));
+  data.buffer.push("</h3>\n                        ");
   stack1 = helpers.each.call(depth0, "sector", "in", "potentialSectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div>\n            <button type=\"button\" class=\"btn btn-default\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Close</button>\n            <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.cancel", options) : helperMissing.call(depth0, "t", "buttons.cancel", options))));
+  data.buffer.push("\n            </button>\n            <button type=\"submit\" class=\"btn btn-primary\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'disabled': ("submitting")
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Submit</button>\n        </div>\n    </form>\n</div>\n");
+  data.buffer.push(">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.submit", options) : helperMissing.call(depth0, "t", "buttons.submit", options))));
+  data.buffer.push("\n            </button>\n        </div>\n    </form>\n</div>\n");
   return buffer;
   
 });
@@ -67635,21 +67686,29 @@ function program19(depth0,data) {
 Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, self=this, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  
-  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            Something went wrong. Please try again.\n                        </div>\n                    ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.error", options) : helperMissing.call(depth0, "t", "organization_add_media.error", options))));
+  data.buffer.push("\n                        </div>\n                    ");
+  return buffer;
   }
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            Successfully added video.\n                        </div>\n                    ");
+  var buffer = '', helper, options;
+  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.success", options) : helperMissing.call(depth0, "t", "organization_add_media.success", options))));
+  data.buffer.push("\n                        </div>\n                    ");
+  return buffer;
   }
 
-  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabel\">Add media</h4>\n            </div>\n            <form>\n                <div class=\"modal-body\">\n                    ");
+  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabel\">\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.title", options) : helperMissing.call(depth0, "t", "organization_add_media.title", options))));
+  data.buffer.push("\n                </h4>\n            </div>\n            <form>\n                <div class=\"modal-body\">\n                    ");
   stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    ");
@@ -67665,9 +67724,17 @@ function program3(depth0,data) {
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Close</button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.cancel", options) : helperMissing.call(depth0, "t", "buttons.cancel", options))));
+  data.buffer.push("\n                    </button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'disabled': ("submitting")
+  },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Submit</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push(">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.submit", options) : helperMissing.call(depth0, "t", "buttons.submit", options))));
+  data.buffer.push("\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -67678,7 +67745,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"form-group\">\n    <label>Add a photo</label>\n    ");
+  data.buffer.push("<div class=\"form-group\">\n    <label>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.photo.label", options) : helperMissing.call(depth0, "t", "organization_add_media.photo.label", options))));
+  data.buffer.push("</label>\n    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'name': ("photo"),
     'class': ("form-control"),
@@ -67744,7 +67813,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"form-group\">\n    <label>Vimeo or YouTube link</label>\n    ");
+  data.buffer.push("<div class=\"form-group\">\n    <label>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.video.label", options) : helperMissing.call(depth0, "t", "organization_add_media.video.label", options))));
+  data.buffer.push("</label>\n    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("url"),
