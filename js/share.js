@@ -78,8 +78,18 @@ App.ShareView = Ember.View.extend({
         this._super();
         $('#shareModal').modal()
             .on('hide.bs.modal', function () {
-                App.__container__.lookup('route:share').send('close');
+                try {
+                    App.__container__.lookup('route:share').send('close');
+                }
+                catch (e) {}
             });
+    },
+
+    willDestroyElement: function () {
+        if ($('#shareModal').is(':visible')) {
+            $('#shareModal').modal('hide');
+        }
+        this._super();
     },
 
     embedView: App.EmbedView
