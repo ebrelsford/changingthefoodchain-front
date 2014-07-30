@@ -64427,16 +64427,16 @@ function parseHashQueryParams() {
 }
 
 function getLocale() {
+    var lang;
     try {
         // Parse lang query param from hash
 
         // This is necessary because we need to have the lang before Ember is
         // loaded
-        return parseHashQueryParams().lang;
+        lang = parseHashQueryParams().lang;
     }
-    catch (e) {
-        return CONFIG.DEFAULT_LOCALE;
-    }
+    catch (e) {}
+    return lang ? lang : CONFIG.DEFAULT_LOCALE;
 }
 
 module.exports = {
@@ -67048,20 +67048,20 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("about");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "nav.about", options) : helperMissing.call(depth0, "t", "nav.about", options))));
   }
 
 function program5(depth0,data) {
   
-  
-  data.buffer.push("contact");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "nav.contact", options) : helperMissing.call(depth0, "t", "nav.contact", options))));
   }
 
 function program7(depth0,data) {
   
-  
-  data.buffer.push("news");
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "nav.news", options) : helperMissing.call(depth0, "t", "nav.news", options))));
   }
 
   data.buffer.push("<header>\n    <div id=\"logo\">");

@@ -10,16 +10,16 @@ function parseHashQueryParams() {
 }
 
 function getLocale() {
+    var lang;
     try {
         // Parse lang query param from hash
 
         // This is necessary because we need to have the lang before Ember is
         // loaded
-        return parseHashQueryParams().lang;
+        lang = parseHashQueryParams().lang;
     }
-    catch (e) {
-        return CONFIG.DEFAULT_LOCALE;
-    }
+    catch (e) {}
+    return lang ? lang : CONFIG.DEFAULT_LOCALE;
 }
 
 module.exports = {
