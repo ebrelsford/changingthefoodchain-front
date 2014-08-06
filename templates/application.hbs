@@ -16,6 +16,11 @@
     </div>
     <div id="search">
         {{type-ahead data=organizations name="name" action="search" selection=selectedOrganization value=searchText placeholder="Search by name, city, state"}}
+        {{#if searchError}}
+        <div class="search-error">
+            {{t "application.search.error"}}
+        </div>
+        {{/if}}
     </div>
     <a id="list-button" href="#" {{action 'openOrganizationList'}}>list</a>
 </header>

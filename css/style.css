@@ -3505,6 +3505,10 @@ body.organization-view .map-active-area {
   margin: 0;
   padding: 15px;
 }
+#search .search-error {
+  color: #d9534f;
+  font-weight: bold;
+}
 #shareModal .embed-map {
   height: 250px;
   width: 100%;

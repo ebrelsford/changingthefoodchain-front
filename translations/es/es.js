@@ -15,6 +15,9 @@ Ember.I18n.translations = {
         filters: {
             organization_type: 'organization type',
             industry_type: 'industry type'
+        },
+        search: {
+            error: "Sorry we couldn't find the location you searched for. Try again?"
         }
     },
 

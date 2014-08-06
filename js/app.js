@@ -188,6 +188,7 @@ App.ApplicationController = Ember.Controller.extend({
         });
     }),
     searchText: null,
+    searchError: false,
     selectedOrganization: null,
     previousUrl: null,
 
@@ -210,8 +211,15 @@ App.ApplicationController = Ember.Controller.extend({
 
     actions: {
         search: function () {
-            geocode(this.get('searchText'), map.getBounds(), null, function (result) {
-                map.fire('locationfound', { latlng: result.latlng });
+            var route = this;
+            this.set('searchError', false);
+            geocode(route.get('searchText'), map.getBounds(), null, function (result) {
+                if (result) {
+                    map.fire('locationfound', { latlng: result.latlng });
+                }
+                else {
+                    route.set('searchError', true);
+                }
             });
         },
 
