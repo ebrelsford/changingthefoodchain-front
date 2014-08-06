@@ -28,6 +28,8 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     nextPage: 1,
     height: 400,
 
+    needs: ['application'],
+
     actions: {
         openOrganization: function (id) {
             this.transitionToRoute('organization', id);
@@ -35,11 +37,23 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
 
         loadNextPage: function () {
             var controller = this,
-                nextPage = controller.get('nextPage');
+                applicationController = this.get('controllers.application'),
+                sectors = applicationController.get('selectedSectors'),
+                types = applicationController.get('selectedTypes'),
+                nextPage = controller.get('nextPage'),
+                params = { page: nextPage };
             if (controller.get('isLoading') || !nextPage) return;
             controller.set('isLoading', true);
+
+            // Update parameters with filters
+            if (sectors && sectors.length > 0) {
+                params.sectors = sectors.join(',');
+            }
+            if (types && types.length > 0) {
+                params.types = types.join(',');
+            }
+
             (function () {
-                var params = { page: nextPage };
                 controller.store.find('organization', params).then(function (data) {
                     controller.addObjects(data.content);  
                     var meta = data.store.metadataFor('organization');

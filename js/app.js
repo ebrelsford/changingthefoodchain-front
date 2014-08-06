@@ -192,6 +192,9 @@ App.ApplicationController = Ember.Controller.extend({
     selectedOrganization: null,
     previousUrl: null,
 
+    selectedSectors: [],
+    selectedTypes: [],
+
     lat: null,
     lng: null,
     z: null,
@@ -224,9 +227,11 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         filtersChanged: function () {
+            this.set('selectedSectors', this.findActive(this.get('sectors.content')));
+            this.set('selectedTypes', this.findActive(this.get('types.content')));
             mapmodule.updateFilters({
-                sectors: this.findActive(this.get('sectors.content')),
-                types: this.findActive(this.get('types.content'))
+                sectors: this.get('selectedSectors'),
+                types: this.get('selectedTypes')
             });
         },
 
