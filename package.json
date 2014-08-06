@@ -7,7 +7,8 @@
     "ember-i18n": "^1.3.2",
     "querystring": "^0.2.0",
     "tinymce": "^4.0.28",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {
     "browserify": "^4.1.10",

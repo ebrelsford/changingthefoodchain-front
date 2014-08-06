@@ -792,13 +792,29 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["page"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            <li>\n                <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "scrollToSection", "id", {hash:{
+    'bubbles': ("false")
+  },hashTypes:{'bubbles': "STRING"},hashContexts:{'bubbles': depth0},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>\n            </li>\n            ");
+  return buffer;
+  }
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        sections\n    </div>\n    ");
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "content", {hash:{
+  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        <ul>\n            ");
+  stack1 = helpers.each.call(depth0, "sections", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </ul>\n    </div>\n    ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "model", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n</div>\n");

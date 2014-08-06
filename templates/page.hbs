@@ -1,7 +1,13 @@
 <div class="close" {{action 'close'}}>&times;</div>
 <div class="row">
     <div class="page-sections">
-        sections
+        <ul>
+            {{#each sections}}
+            <li>
+                <a href="#" {{action "scrollToSection" id bubbles="false"}}>{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
     </div>
-    {{{content}}}
+    {{{model}}}
 </div>
