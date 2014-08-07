@@ -30,6 +30,19 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
 
     needs: ['application'],
 
+    filtersChanged: function () {
+        Ember.run.debounce(this, this.refresh, 100);
+    }.observes('controllers.application.selectedSectors', 'controllers.application.selectedTypes'),
+
+    refresh: function () {
+        this.clear();
+        this.setProperties({
+            page: null,
+            nextPage: 1
+        });
+        this.send('loadNextPage');
+    },
+
     actions: {
         openOrganization: function (id) {
             this.transitionToRoute('organization', id);
