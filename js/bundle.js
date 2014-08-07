@@ -64870,8 +64870,34 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     page: null,
     nextPage: 1,
     height: 400,
+    sortBy: {},
 
     needs: ['application'],
+
+    sortByName: function () {
+        return this.get('sortBy').key === 'name';
+    }.property('sortBy'),
+
+    sortByCity: function () {
+        return this.get('sortBy').key === 'city';
+    }.property('sortBy'),
+
+    sortByState: function () {
+        return this.get('sortBy').key === 'state_province';
+    }.property('sortBy'),
+
+    sortByTypes: function () {
+        return this.get('sortBy').key === 'types';
+    }.property('sortBy'),
+
+    sortBySectors: function () {
+        return this.get('sortBy').key === 'sectors';
+    }.property('sortBy'),
+
+    sortAscending: function () {
+        console.log('sortAscending:', this.get('sortBy').dir);
+        return this.get('sortBy').dir === 'asc';
+    }.property('sortBy'),
 
     filtersChanged: function () {
         Ember.run.debounce(this, this.refresh, 100);
@@ -64887,6 +64913,19 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     },
 
     actions: {
+        sortBy: function (key) {
+            var sortBy = this.get('sortBy'),
+                dir = 'asc';
+            if (sortBy.key === key && sortBy.dir === 'asc') {
+                dir = 'desc';
+            }
+            this.set('sortBy', {
+                key: key,
+                dir: dir
+            });
+            this.refresh();
+        },
+
         openOrganization: function (id) {
             this.transitionToRoute('organization', id);
         },
@@ -64896,6 +64935,7 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
                 applicationController = this.get('controllers.application'),
                 sectors = applicationController.get('selectedSectors'),
                 types = applicationController.get('selectedTypes'),
+                sortBy = controller.get('sortBy'),
                 nextPage = controller.get('nextPage'),
                 params = { page: nextPage };
             if (controller.get('isLoading') || !nextPage) return;
@@ -64907,6 +64947,15 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
             }
             if (types && types.length > 0) {
                 params.types = types.join(',');
+            }
+
+            // Update parameters with sorting
+            if (sortBy && sortBy.key) {
+                params.sortby = sortBy.key;
+                // Add direction if descending
+                if (sortBy.dir === 'desc') {
+                    params.sortby = '-' + params.sortby;
+                }
             }
 
             (function () {
@@ -68413,17 +68462,51 @@ function program2(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\">\n    <div class=\"organizations-list-item-name\">");
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortAscending:sort-ascending:sort-descending")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n    <div class=\"organizations-list-item-name\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByName:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.name", options) : helperMissing.call(depth0, "t", "list_organizations.headers.name", options))));
-  data.buffer.push("</div>\n    <div class=\"organizations-list-item-city\">");
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-city\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByCity:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.city", options) : helperMissing.call(depth0, "t", "list_organizations.headers.city", options))));
-  data.buffer.push("</div>\n    <div class=\"organizations-list-item-state\">");
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-state\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByState:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.state", options) : helperMissing.call(depth0, "t", "list_organizations.headers.state", options))));
-  data.buffer.push("</div>\n    <div class=\"organizations-list-item-types\">");
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-types\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "types", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByTypes:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.types", options) : helperMissing.call(depth0, "t", "list_organizations.headers.types", options))));
-  data.buffer.push("</div>\n    <div class=\"organizations-list-item-sectors\">");
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-sectors\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "sectors", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortBySectors:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.sectors", options) : helperMissing.call(depth0, "t", "list_organizations.headers.sectors", options))));
-  data.buffer.push("</div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
+  data.buffer.push("\n    </div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.message", options) : helperMissing.call(depth0, "t", "list_organizations.add.message", options))));
   data.buffer.push("</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));

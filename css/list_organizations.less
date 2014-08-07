@@ -6,6 +6,17 @@
     &-headers {
         .make-row();
         font-weight: bold;
+
+        &.sort-ascending {
+            .sorted::after {
+                content: '\25BC';
+            }
+        }
+        &.sort-descending {
+            .sorted::after {
+                content: '\25B2';
+            }
+        }
     }
 
     &-item {

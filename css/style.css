@@ -2963,6 +2963,12 @@ body > .ember-view {
   margin-right: -15px;
   font-weight: bold;
 }
+.organizations-list-headers.sort-ascending .sorted::after {
+  content: '\25BC';
+}
+.organizations-list-headers.sort-descending .sorted::after {
+  content: '\25B2';
+}
 .organizations-list-item {
   margin-left: -15px;
   margin-right: -15px;
