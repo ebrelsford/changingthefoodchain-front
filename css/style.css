@@ -3502,6 +3502,9 @@ body.organization-view .map-active-area {
 #search .twitter-typeahead {
   width: 100%;
 }
+#search .twitter-typeahead .tt-dropdown-menu {
+  width: 100%;
+}
 #search .twitter-typeahead .tt-suggestions {
   margin-top: 10px;
 }
