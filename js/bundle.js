@@ -64598,7 +64598,10 @@ App.ApplicationController = Ember.Controller.extend({
             this.set('searchError', false);
             geocode(route.get('searchText'), map.getBounds(), null, function (result) {
                 if (result) {
-                    map.fire('locationfound', { latlng: result.latlng });
+                    map.fire('locationfound', {
+                        bounds: result.bounds,
+                        latlng: result.latlng 
+                    });
                 }
                 else {
                     route.set('searchError', true);
@@ -64758,14 +64761,22 @@ module.exports = {
             for (var i = 0; i < results.length; i++) {
                 var result_state = get_component(results[i], 'administrative_area_level_1');
                 if (!results[i].partial_match && (!state || result_state === state)) {
-                    results[i].latlng = [get_latitude(results[i]),
-                                         get_longitude(results[i])];
+                    var r = results[i],
+                        b = results[i].geometry.bounds;
+                    r.latlng = [get_latitude(r), get_longitude(r)];
 
-                    results[i].address = get_street(results[i]);
-                    results[i].city = get_component(results[i], 'sublocality_level_1');
-                    results[i].state = result_state;
-                    results[i].zip = get_component(results[i], 'postal_code');
-                    return f(results[i], status);
+                    if (b) {
+                        r.bounds = [
+                            [b.xa.k, b.pa.j],
+                            [b.xa.j, b.pa.k]
+                        ];
+                    }
+
+                    r.address = get_street(r);
+                    r.city = get_component(r, 'sublocality_level_1');
+                    r.state = result_state;
+                    r.zip = get_component(r, 'postal_code');
+                    return f(r, status);
                 }
             }
             return f(null, status);
@@ -65172,7 +65183,12 @@ function initializeMap(id, center, zoom) {
     });
 
     map.on('locationfound', function (e) {
-        map.setView(e.latlng, 16);
+        if (e.bounds) {
+            map.fitBounds(e.bounds);
+        }
+        else {
+            map.setView(e.latlng, 16);
+        }
     });
 
     initialized = true;

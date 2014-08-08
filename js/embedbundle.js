@@ -264,7 +264,12 @@ function initializeMap(id, center, zoom) {
     });
 
     map.on('locationfound', function (e) {
-        map.setView(e.latlng, 16);
+        if (e.bounds) {
+            map.fitBounds(e.bounds);
+        }
+        else {
+            map.setView(e.latlng, 16);
+        }
     });
 
     initialized = true;

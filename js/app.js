@@ -218,7 +218,10 @@ App.ApplicationController = Ember.Controller.extend({
             this.set('searchError', false);
             geocode(route.get('searchText'), map.getBounds(), null, function (result) {
                 if (result) {
-                    map.fire('locationfound', { latlng: result.latlng });
+                    map.fire('locationfound', {
+                        bounds: result.bounds,
+                        latlng: result.latlng 
+                    });
                 }
                 else {
                     route.set('searchError', true);
