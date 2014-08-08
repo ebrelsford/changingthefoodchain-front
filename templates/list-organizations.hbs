@@ -25,15 +25,15 @@
 
 {{#collection listView contentBinding="controller.content"}}
     <div class="organizations-list-item" {{action 'openOrganization' id}}>
-        <div class="organizations-list-item-name">{{name}}</div>
-        <div class="organizations-list-item-city">{{city}}</div>
-        <div class="organizations-list-item-state">{{state_province}}</div>
-        <div class="organizations-list-item-types">
+        <div class="organizations-list-item-field organizations-list-item-name">{{name}}</div>
+        <div class="organizations-list-item-field organizations-list-item-city">{{city}}</div>
+        <div class="organizations-list-item-field organizations-list-item-state">{{state_province}}</div>
+        <div class="organizations-list-item-field organizations-list-item-types">
             {{#each types}}
             {{name}}
             {{/each}}
         </div>
-        <div class="organizations-list-item-sectors">
+        <div class="organizations-list-item-field organizations-list-item-sectors">
             {{#each sectors}}
             {{name}}
             {{/each}}

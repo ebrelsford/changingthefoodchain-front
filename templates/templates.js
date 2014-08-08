@@ -201,19 +201,19 @@ function program1(depth0,data) {
   var buffer = '', stack1;
   data.buffer.push("\n    <div class=\"organizations-list-item\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganization", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push(">\n        <div class=\"organizations-list-item-name\">");
+  data.buffer.push(">\n        <div class=\"organizations-list-item-field organizations-list-item-name\">");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-city\">");
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-city\">");
   stack1 = helpers._triageMustache.call(depth0, "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-state\">");
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-state\">");
   stack1 = helpers._triageMustache.call(depth0, "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-types\">\n            ");
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-types\">\n            ");
   stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n        <div class=\"organizations-list-item-sectors\">\n            ");
+  data.buffer.push("\n        </div>\n        <div class=\"organizations-list-item-field organizations-list-item-sectors\">\n            ");
   stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n    </div>\n");

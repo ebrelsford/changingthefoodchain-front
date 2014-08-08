@@ -2976,6 +2976,12 @@ body > .ember-view {
   height: 25px;
   max-height: 25px;
 }
+.organizations-list-item-field {
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .organizations-list-item-name {
   position: relative;
   min-height: 1px;
