@@ -1,10 +1,10 @@
 <div class="close" {{action 'close'}}>&times;</div>
 <div class="row">
     <div class="page-sections">
-        <a href="#" {{action 'clear'}} class="news-category-clear">clear</a>
-        <h2>categories</h2>
+        <a href="#" {{action 'clear'}} class="news-category-clear">{{t "news.categories.clear"}}</a>
+        <h2>{{t "news.categories.header"}}</h2>
         <ul class="news-category-list">
-            <li class="news-category-list-item" {{action 'pickFeatured'}} {{bind-attr class="featured:active"}}>featured</li>
+            <li class="news-category-list-item" {{action 'pickFeatured'}} {{bind-attr class="featured:active"}}>{{t "news.categories.featured"}}</li>
         </ul>
         {{view App.NewsCategoryView content=categories}}
     </div>
@@ -19,11 +19,11 @@
                 {{{preview}}}
             </div>
             <div class="news-entry-link">
-                <a href="#" {{action 'openEntry' id}}>read more</a>
+                <a href="#" {{action 'openEntry' id}}>{{t "news.read_more"}}</a>
             </div>
         </div>
         {{else}}
-        No news to show for this category
+        {{t "news.empty"}}
         {{/each}}
     </div>
 </div>

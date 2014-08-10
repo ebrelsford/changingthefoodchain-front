@@ -36,6 +36,16 @@ Ember.I18n.translations = {
         }
     },
 
+    news: {
+        categories: {
+            clear: 'clear',
+            header: 'categories',
+            featured: 'featured'
+        },
+        empty: 'No news to show for this category',
+        read_more: 'read more'
+    },
+
     organization: {
         actions: {
             add_media: 'add media',
