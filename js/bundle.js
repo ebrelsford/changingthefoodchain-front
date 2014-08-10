@@ -61130,7 +61130,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"W5lFOV":27}],8:[function(require,module,exports){
+},{"W5lFOV":29}],8:[function(require,module,exports){
 if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
     leafletActiveAreaPreviousMethods = {
@@ -64085,7 +64085,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":7,"underscore":30}],12:[function(require,module,exports){
+},{"ember":7,"underscore":32}],12:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var _ = require('underscore');
@@ -64377,7 +64377,7 @@ App.AddOrganizationView = Ember.View.extend({
     templateName: 'organization/add'
 });
 
-},{"./geocode":15,"ember":7,"underscore":30}],13:[function(require,module,exports){
+},{"./geocode":15,"ember":7,"underscore":32}],13:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -64511,6 +64511,7 @@ App.Router.map(function() {
     this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
     this.route('news');
+    this.resource('news-entry', { path: '/news/:entry_id' });
     this.route('share');
 });
 
@@ -64652,7 +64653,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":31,"./geocode":15,"./i18n":17,"./map":20,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":26,"ember-typeahead":6,"qs":28,"typeahead":10,"underscore":30}],14:[function(require,module,exports){
+},{"../templates/templates":33,"./geocode":15,"./i18n":17,"./map":20,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":28,"ember-typeahead":6,"qs":30,"typeahead":10,"underscore":32}],14:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -64840,7 +64841,8 @@ function getLocale() {
 module.exports = {
     getLocale: getLocale,
     init: function () {
-        return $.getScript('translations/' + getLocale() + '.js');
+        CONFIG.language = getLocale();
+        return $.getScript('translations/' + CONFIG.language + '.js');
     },
     setLocale: function (locale) {
         // Add lang query param to hash, reload
@@ -64851,7 +64853,7 @@ module.exports = {
     }
 };
 
-},{"qs":28}],18:[function(require,module,exports){
+},{"qs":30}],18:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 
@@ -64906,7 +64908,6 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     }.property('sortBy'),
 
     sortAscending: function () {
-        console.log('sortAscending:', this.get('sortBy').dir);
         return this.get('sortBy').dir === 'asc';
     }.property('sortBy'),
 
@@ -65063,6 +65064,7 @@ require('./carousel');
 require('./help');
 require('./list_organizations');
 require('./models');
+require('./news');
 require('./organization');
 require('./page');
 require('./share');
@@ -65071,7 +65073,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":11,"./add_organization":12,"./app":13,"./carousel":14,"./help":16,"./i18n":17,"./list_organizations":18,"./models":21,"./organization":22,"./page":23,"./share":24}],20:[function(require,module,exports){
+},{"./add_media":11,"./add_organization":12,"./app":13,"./carousel":14,"./help":16,"./i18n":17,"./list_organizations":18,"./models":21,"./news":22,"./organization":23,"./page":24,"./share":26}],20:[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -65240,7 +65242,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":8,"underscore":30}],21:[function(require,module,exports){
+},{"leaflet-active-area":8,"underscore":32}],21:[function(require,module,exports){
 var DS = require('ember-data');
 var videos = require('./videos');
 require('ember-data-extensions-embedded-adapter');
@@ -65331,7 +65333,172 @@ App.Video = DS.Model.extend({
     url: DS.attr()
 });
 
-},{"./videos":25,"ember-data":5,"ember-data-extensions-embedded-adapter":4}],22:[function(require,module,exports){
+App.Category = DS.Model.extend({
+    name: DS.attr()
+});
+
+App.Entry = DS.Model.extend({
+    author: DS.attr(),
+    categories: DS.hasMany('category'),
+    main: DS.attr(),
+    preview: DS.attr(),
+    publication_date: DS.attr('date'),
+    title: DS.attr()
+});
+
+},{"./videos":27,"ember-data":5,"ember-data-extensions-embedded-adapter":4}],22:[function(require,module,exports){
+var _ = require('underscore');
+require('./pagemixins');
+
+
+App.NewsController = Ember.ArrayController.extend({
+    isLoading: false,
+    page: null,
+    nextPage: 1,
+
+    init: function () {
+        this._super();
+        this.send('loadNextPage');
+    },
+
+    refresh: function () {
+        console.log('NewsController#refresh');
+        this.clear();
+        this.setProperties({
+            page: null,
+            nextPage: 1
+        });
+        this.send('loadNextPage');
+    },
+
+    actions: {
+        loadNextPage: function () {
+            var controller = this,
+                nextPage = controller.get('nextPage'),
+                params = {
+                    language: CONFIG.language,
+                    page: nextPage 
+                },
+                category = controller.get('category'),
+                featured = controller.get('featured');
+            if (controller.get('isLoading') || !nextPage) return;
+            controller.set('isLoading', true);
+
+            if (category) {
+                params.category = category;
+            }
+            if (featured) {
+                params.featured = true;
+            }
+
+            (function () {
+                controller.store.find('entry', params).then(function (data) {
+                    controller.addObjects(data.content);  
+                    var meta = data.store.metadataFor('entry');
+                    controller.setProperties({
+                        isLoading: false,
+                        page: meta.current_page,
+                        nextPage: meta.next_page
+                    });
+                });
+            })();
+        },
+
+        openEntry: function (id) {
+            this.transitionToRoute('news-entry', id);
+        },
+
+        clear: function () {
+            var categories = this.get('categories');
+            _.each(categories, function (category) {
+                category.set('isActive', false);
+            });
+            this.set('category', null);
+            this.set('featured', null);
+            this.refresh();
+        },
+
+        pickFeatured: function () {
+            var categories = this.get('categories');
+            _.each(categories, function (category) {
+                category.set('isActive', false);
+            });
+            this.set('category', null);
+            this.set('featured', true);
+            this.refresh();
+        },
+
+        pickCategory: function (id) {
+            var categories = this.get('categories');
+            _.each(categories, function (category) {
+                category.set('isActive', category.get('id') === id);
+            });
+            this.set('category', id);
+            this.set('featured', false);
+            this.refresh();
+        }
+    }
+});
+
+App.NewsCategoryView = Ember.CollectionView.extend({
+    tagName: 'ul',
+    classNames: ['news-category-list'],
+    itemViewClass: Ember.View.extend({
+        classNames: ['news-category-list-item'],
+        classNameBindings: ['content.isActive:active'],
+        click: function () {
+            var id = Ember.get(this.content, 'id');
+            this.container.lookup('controller:news').send('pickCategory', id);
+        },
+        templateName: 'news-category-item'
+    })
+});
+
+App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
+    /*
+    activate: function (transition) {
+        this._super(transition);
+        console.log('NewsRoute#activate');
+        var newsController = this.controllerFor('news');
+        if (newsController.get('categories')) {
+            newsController.refresh();
+        }
+    },
+    */
+
+    setupController: function (controller, model) {
+        this._super(controller, model);
+        var params = { language: CONFIG.language };
+        controller.set('category', null);
+        controller.store.find('category', params).then(function (data) {
+            console.log('NewsRoute#setupController', data.content);
+            controller.set('categories', data.content);
+            console.log(controller.get('categories'));
+        });
+    },
+
+    templateName: 'news'
+});
+
+App.NewsView = Ember.View.extend(App.PageViewMixin, {
+    willDestroyElement: function () {
+        this._super();
+        this.controller.set('category', null);
+    }
+});
+
+
+App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
+    model: function (params) {
+        return this.store.find('entry', params.entry_id);
+    },
+
+    templateName: 'news-entry'
+});
+
+App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {});
+
+},{"./pagemixins":25,"underscore":32}],23:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -65406,22 +65573,11 @@ App.OrganizationRoute = Ember.Route.extend({
     }
 });
 
-},{"./map":20,"ember":7}],23:[function(require,module,exports){
+},{"./map":20,"ember":7}],24:[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
+require('./pagemixins');
 
-
-App.PageRouteMixin = Ember.Mixin.create({
-    actions: {
-        close: function () {
-            this.transitionTo('index');
-        }
-    },
-
-    renderTemplate: function () {
-        this.render('page', { outlet: 'page' });
-    }
-});
 
 App.PageView = Ember.View.extend({
     didInsertElement: function () {
@@ -65432,7 +65588,6 @@ App.PageView = Ember.View.extend({
     didRenderElement: function () {
         $('#page').show();
         this._super();
-        console.log('PageView#didRenderElement');
         this.$('h2').attr('id', function () {
             return _s.slugify($(this).text());
         });
@@ -65493,13 +65648,40 @@ App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
     }
 });
 
-App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
-    model: function () {
-        return $.get(CONFIG.API_BASE + '/pages/news/');
+},{"./i18n":17,"./pagemixins":25,"underscore.string":31}],25:[function(require,module,exports){
+App.PageRouteMixin = Ember.Mixin.create({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        }
+    },
+
+    renderTemplate: function () {
+        this.render(this.templateName, { outlet: 'page' });
+    },
+
+    templateName: 'page'
+});
+
+App.PageViewMixin = Ember.Mixin.create({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('page-view');
+    },
+
+    didRenderElement: function () {
+        $('#page').show();
+        this._super();
+    },
+
+    willDestroyElement: function () {
+        $('#page').hide();
+        this._super();
+        $('body').removeClass('page-view');
     }
 });
 
-},{"./i18n":17,"underscore.string":29}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -65599,7 +65781,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":20,"ember":7}],25:[function(require,module,exports){
+},{"./map":20,"ember":7}],27:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -65636,7 +65818,7 @@ module.exports = {
     }
 };
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -65791,7 +65973,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -65856,7 +66038,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -66224,7 +66406,7 @@ function decode(str) {
   }
 }
 
-},{}],29:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -66899,7 +67081,7 @@ function decode(str) {
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -68244,7 +68426,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -68534,6 +68716,94 @@ function program2(depth0,data) {
   },hashTypes:{'contentBinding': "STRING"},hashContexts:{'contentBinding': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "listView", options) : helperMissing.call(depth0, "collection", "listView", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["news-category-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1;
+
+
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["news-entry"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        categories\n    </div>\n    <div class=\"page-content\">\n        <div class=\"news-entry\">\n            <h2 class=\"news-entry-title\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
+  stack1 = helpers._triageMustache.call(depth0, "publication_date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-preview\">\n                ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "main", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n            </div>\n        </div>\n    </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["news"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        <div class=\"news-entry\">\n            <h2 class=\"news-entry-title\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
+  stack1 = helpers._triageMustache.call(depth0, "publication_date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-preview\">\n                ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "preview", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-link\">\n                <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openEntry", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">read more</a>\n            </div>\n        </div>\n        ");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\n        No news to show for this category\n        ");
+  }
+
+  data.buffer.push("<div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "clear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" class=\"news-category-clear\">clear</a>\n        <h2>categories</h2>\n        <ul class=\"news-category-list\">\n            <li class=\"news-category-list-item\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("featured:active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">featured</li>\n        </ul>\n        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
+    'content': ("categories")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n    </div>\n    <div class=\"page-content\">\n        ");
+  stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    </div>\n</div>\n");
   return buffer;
   
 });

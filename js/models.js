@@ -87,3 +87,16 @@ App.Video = DS.Model.extend({
     organization: DS.belongsTo('organization'),
     url: DS.attr()
 });
+
+App.Category = DS.Model.extend({
+    name: DS.attr()
+});
+
+App.Entry = DS.Model.extend({
+    author: DS.attr(),
+    categories: DS.hasMany('category'),
+    main: DS.attr(),
+    preview: DS.attr(),
+    publication_date: DS.attr('date'),
+    title: DS.attr()
+});

@@ -1,18 +1,7 @@
 var i18n = require('./i18n');
 var _s = require('underscore.string');
+require('./pagemixins');
 
-
-App.PageRouteMixin = Ember.Mixin.create({
-    actions: {
-        close: function () {
-            this.transitionTo('index');
-        }
-    },
-
-    renderTemplate: function () {
-        this.render('page', { outlet: 'page' });
-    }
-});
 
 App.PageView = Ember.View.extend({
     didInsertElement: function () {
@@ -23,7 +12,6 @@ App.PageView = Ember.View.extend({
     didRenderElement: function () {
         $('#page').show();
         this._super();
-        console.log('PageView#didRenderElement');
         this.$('h2').attr('id', function () {
             return _s.slugify($(this).text());
         });
@@ -81,11 +69,5 @@ App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
             url += i18n.getLocale() + '/';
         }
         return $.get(url);
-    }
-});
-
-App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
-    model: function () {
-        return $.get(CONFIG.API_BASE + '/pages/news/');
     }
 });

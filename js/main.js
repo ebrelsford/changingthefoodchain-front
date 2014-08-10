@@ -5,6 +5,7 @@ require('./carousel');
 require('./help');
 require('./list_organizations');
 require('./models');
+require('./news');
 require('./organization');
 require('./page');
 require('./share');

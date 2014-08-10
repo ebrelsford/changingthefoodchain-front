@@ -131,6 +131,7 @@ App.Router.map(function() {
     this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
     this.route('news');
+    this.resource('news-entry', { path: '/news/:entry_id' });
     this.route('share');
 });
 

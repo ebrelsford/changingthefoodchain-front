@@ -25,7 +25,8 @@ function getLocale() {
 module.exports = {
     getLocale: getLocale,
     init: function () {
-        return $.getScript('translations/' + getLocale() + '.js');
+        CONFIG.language = getLocale();
+        return $.getScript('translations/' + CONFIG.language + '.js');
     },
     setLocale: function (locale) {
         // Add lang query param to hash, reload

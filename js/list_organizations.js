@@ -52,7 +52,6 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     }.property('sortBy'),
 
     sortAscending: function () {
-        console.log('sortAscending:', this.get('sortBy').dir);
         return this.get('sortBy').dir === 'asc';
     }.property('sortBy'),
 
