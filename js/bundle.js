@@ -65340,9 +65340,10 @@ App.Category = DS.Model.extend({
 App.Entry = DS.Model.extend({
     author: DS.attr(),
     categories: DS.hasMany('category'),
+    cover: DS.attr(),
     main: DS.attr(),
     preview: DS.attr(),
-    publication_date: DS.attr('date'),
+    published_on: DS.attr('date'),
     title: DS.attr()
 });
 
@@ -68741,17 +68742,21 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        categories\n    </div>\n    <div class=\"page-content\">\n        <div class=\"news-entry\">\n            <h2 class=\"news-entry-title\">");
+  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        categories\n    </div>\n    <div class=\"page-content\">\n        <div class=\"news-entry-detail\">\n            <div class=\"news-entry-cover\">\n                ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "cover", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <h2 class=\"news-entry-title\">");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
+  data.buffer.push("</h2>\n                <div class=\"news-entry-meta\">\n                    <div class=\"news-entry-meta-publication-date\">");
   stack1 = helpers._triageMustache.call(depth0, "publication_date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-preview\">\n                ");
+  data.buffer.push("</div>\n                </div>\n                <div class=\"news-entry-preview\">\n                    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "main", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            </div>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push("\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -68764,21 +68769,25 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n        <div class=\"news-entry\">\n            <h2 class=\"news-entry-title\">");
+  data.buffer.push("\n        <div class=\"news-entry\">\n            <div class=\"news-entry-cover\">\n                ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "cover", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <h2 class=\"news-entry-title\">");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
-  stack1 = helpers._triageMustache.call(depth0, "publication_date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("</h2>\n                <div class=\"news-entry-meta\">\n                    <div class=\"news-entry-meta-publication-date\">");
+  stack1 = helpers._triageMustache.call(depth0, "published_on", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-preview\">\n                ");
+  data.buffer.push("</div>\n                </div>\n                <div class=\"news-entry-preview\">\n                    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "preview", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            </div>\n            <div class=\"news-entry-link\">\n                <a href=\"#\" ");
+  data.buffer.push("\n                </div>\n                <div class=\"news-entry-link\">\n                    <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openEntry", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
   data.buffer.push(">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.read_more", options) : helperMissing.call(depth0, "t", "news.read_more", options))));
-  data.buffer.push("</a>\n            </div>\n        </div>\n        ");
+  data.buffer.push("</a>\n                </div>\n            </div>\n        </div>\n        ");
   return buffer;
   }
 
@@ -68809,7 +68818,7 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("categories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </div>\n    <div class=\"page-content\">\n        <div class=\"close\" ");
+  data.buffer.push("\n    </div>\n    <div class=\"page-content news-entry-list\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n        <h1 class=\"news-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.header", options) : helperMissing.call(depth0, "t", "news.header", options))));

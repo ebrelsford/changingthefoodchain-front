@@ -32,3 +32,22 @@
         }
     }
 }
+
+.news-entry-list {
+    .news-entry {
+        .make-row();
+
+        &-cover {
+            .make-md-column(6);
+
+            img {
+                height: auto;
+                max-width: 100%;
+            }
+        }
+
+        &-content {
+            .make-md-column(6);
+        }
+    }
+}

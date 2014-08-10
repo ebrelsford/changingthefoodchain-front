@@ -7,20 +7,25 @@
         </ul>
         {{view App.NewsCategoryView content=categories}}
     </div>
-    <div class="page-content">
+    <div class="page-content news-entry-list">
         <div class="close" {{action 'close'}}>&times;</div>
         <h1 class="news-header">{{t "news.header"}}</h1>
         {{#each content}}
         <div class="news-entry">
-            <h2 class="news-entry-title">{{title}}</h2>
-            <div class="news-entry-meta">
-                <div class="news-entry-meta-publication-date">{{publication_date}}</div>
+            <div class="news-entry-cover">
+                {{{cover}}}
             </div>
-            <div class="news-entry-preview">
-                {{{preview}}}
-            </div>
-            <div class="news-entry-link">
-                <a href="#" {{action 'openEntry' id}}>{{t "news.read_more"}}</a>
+            <div class="news-entry-content">
+                <h2 class="news-entry-title">{{title}}</h2>
+                <div class="news-entry-meta">
+                    <div class="news-entry-meta-publication-date">{{published_on}}</div>
+                </div>
+                <div class="news-entry-preview">
+                    {{{preview}}}
+                </div>
+                <div class="news-entry-link">
+                    <a href="#" {{action 'openEntry' id}}>{{t "news.read_more"}}</a>
+                </div>
             </div>
         </div>
         {{else}}

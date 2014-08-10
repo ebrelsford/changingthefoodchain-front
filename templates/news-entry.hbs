@@ -4,13 +4,18 @@
         categories
     </div>
     <div class="page-content">
-        <div class="news-entry">
-            <h2 class="news-entry-title">{{title}}</h2>
-            <div class="news-entry-meta">
-                <div class="news-entry-meta-publication-date">{{publication_date}}</div>
+        <div class="news-entry-detail">
+            <div class="news-entry-cover">
+                {{{cover}}}
             </div>
-            <div class="news-entry-preview">
-                {{{main}}}
+            <div class="news-entry-content">
+                <h2 class="news-entry-title">{{title}}</h2>
+                <div class="news-entry-meta">
+                    <div class="news-entry-meta-publication-date">{{publication_date}}</div>
+                </div>
+                <div class="news-entry-preview">
+                    {{{main}}}
+                </div>
             </div>
         </div>
     </div>

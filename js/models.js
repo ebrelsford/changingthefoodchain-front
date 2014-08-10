@@ -95,8 +95,9 @@ App.Category = DS.Model.extend({
 App.Entry = DS.Model.extend({
     author: DS.attr(),
     categories: DS.hasMany('category'),
+    cover: DS.attr(),
     main: DS.attr(),
     preview: DS.attr(),
-    publication_date: DS.attr('date'),
+    published_on: DS.attr('date'),
     title: DS.attr()
 });
