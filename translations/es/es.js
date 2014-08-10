@@ -43,6 +43,7 @@ Ember.I18n.translations = {
             featured: 'featured'
         },
         empty: 'No news to show for this category',
+        header: 'news',
         read_more: 'read more'
     },
 

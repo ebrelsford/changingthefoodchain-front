@@ -1,6 +1,22 @@
+.news-header {
+    border-bottom: 2px solid @foreground-color;
+    color: @foreground-color;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
 .news-category-clear {
+    color: lighten(@foreground-color, 20%);
     float: right;
-    margin-top: 15px;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.news-category-header {
+    border-bottom: 1px solid @foreground-color;
+    color: @foreground-color;
+    margin-top: 0;
+    text-transform: uppercase;
 }
 
 .news-category-list {
@@ -8,6 +24,9 @@
     margin-top: 0;
 
     &-item {
+        font-size: 16px;
+        text-transform: capitalize;
+
         &.active {
             font-weight: bold;
         }

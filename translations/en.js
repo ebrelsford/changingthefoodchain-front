@@ -199,6 +199,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "No news to show for this category";
   }),
+        header: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "news";
+  }),
         read_more: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

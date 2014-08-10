@@ -3338,13 +3338,31 @@ body.organization-view .map-active-area {
 .leaflet-popup-tip {
   background-color: #302390;
 }
+.news-header {
+  border-bottom: 2px solid #302390;
+  color: #302390;
+  margin-top: 0;
+  text-transform: uppercase;
+}
 .news-category-clear {
+  color: #5747d2;
   float: right;
-  margin-top: 15px;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+.news-category-header {
+  border-bottom: 1px solid #302390;
+  color: #302390;
+  margin-top: 0;
+  text-transform: uppercase;
 }
 .news-category-list {
   margin-bottom: 0;
   margin-top: 0;
+}
+.news-category-list-item {
+  font-size: 16px;
+  text-transform: capitalize;
 }
 .news-category-list-item.active {
   font-weight: bold;
