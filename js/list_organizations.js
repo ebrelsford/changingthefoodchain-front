@@ -1,5 +1,6 @@
 var Ember = require('ember');
 require('ember-list-view');
+require('./pagemixins');
 
 
 App.ListOrganizationsRoute = Ember.Route.extend({
@@ -161,41 +162,21 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     }
 });
 
-App.ListOrganizationsView = Ember.View.extend({
+App.ListOrganizationsView = Ember.View.extend(App.PaginatedViewMixin, {
+    paginatedScrollSelector: '.ember-list-view',
+
     didInsertElement: function () {
         this._super();
-        $('.ember-list-view').bind('scroll', { view: this }, this.handleScroll);
         $('body').addClass('list-organizations-view');
     },
 
     willDestroyElement: function () {
         this._super();
-        $('.ember-list-view').unbind('scroll', this.handleScroll);
         $('body').removeClass('list-organizations-view');
     },
 
     didRenderElement: function () {
         this._super();
         $('#page').show();
-    },
-
-    handleScroll: function (event) {
-        var context = {
-            controller: event.data.view.controller,
-            element: this,
-            view: event.data.view
-        };
-        Ember.run.debounce(context, event.data.view.watchScroll, 150);
-    },
-
-    watchScroll: function () {
-        var element = this.element,
-            $element = $(element),
-            height = $element.outerHeight(),
-            scrollBottom = element.scrollHeight - element.scrollTop - height;
-        if (scrollBottom < height) {
-            this.controller.send('loadNextPage');
-        }
     }
-
 });

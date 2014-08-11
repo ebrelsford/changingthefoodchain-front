@@ -29,3 +29,36 @@ App.PageViewMixin = Ember.Mixin.create({
         $('body').removeClass('page-view');
     }
 });
+
+App.PaginatedViewMixin = Ember.Mixin.create({
+    paginatedScrollSelector: '#page',
+
+    didInsertElement: function () {
+        this._super();
+        $(this.paginatedScrollSelector).bind('scroll', { view: this }, this.handleScroll);
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $(this.paginatedScrollSelector).unbind('scroll', this.handleScroll);
+    },
+
+    handleScroll: function (event) {
+        var context = {
+            controller: event.data.view.controller,
+            element: this,
+            view: event.data.view
+        };
+        Ember.run.debounce(context, event.data.view.watchScroll, 150);
+    },
+
+    watchScroll: function () {
+        var element = this.element,
+            $element = $(element),
+            height = $element.outerHeight(),
+            scrollBottom = element.scrollHeight - element.scrollTop - height;
+        if (scrollBottom < height) {
+            this.controller.send('loadNextPage');
+        }
+    }
+});

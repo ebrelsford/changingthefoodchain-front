@@ -118,7 +118,7 @@ App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
     templateName: 'news'
 });
 
-App.NewsView = Ember.View.extend(App.PageViewMixin, {
+App.NewsView = Ember.View.extend(App.PageViewMixin, App.PaginatedViewMixin, {
     willDestroyElement: function () {
         this._super();
         this.controller.set('category', null);

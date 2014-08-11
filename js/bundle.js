@@ -64856,6 +64856,7 @@ module.exports = {
 },{"qs":31}],18:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
+require('./pagemixins');
 
 
 App.ListOrganizationsRoute = Ember.Route.extend({
@@ -65017,46 +65018,26 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     }
 });
 
-App.ListOrganizationsView = Ember.View.extend({
+App.ListOrganizationsView = Ember.View.extend(App.PaginatedViewMixin, {
+    paginatedScrollSelector: '.ember-list-view',
+
     didInsertElement: function () {
         this._super();
-        $('.ember-list-view').bind('scroll', { view: this }, this.handleScroll);
         $('body').addClass('list-organizations-view');
     },
 
     willDestroyElement: function () {
         this._super();
-        $('.ember-list-view').unbind('scroll', this.handleScroll);
         $('body').removeClass('list-organizations-view');
     },
 
     didRenderElement: function () {
         this._super();
         $('#page').show();
-    },
-
-    handleScroll: function (event) {
-        var context = {
-            controller: event.data.view.controller,
-            element: this,
-            view: event.data.view
-        };
-        Ember.run.debounce(context, event.data.view.watchScroll, 150);
-    },
-
-    watchScroll: function () {
-        var element = this.element,
-            $element = $(element),
-            height = $element.outerHeight(),
-            scrollBottom = element.scrollHeight - element.scrollTop - height;
-        if (scrollBottom < height) {
-            this.controller.send('loadNextPage');
-        }
     }
-
 });
 
-},{"ember":7,"ember-list-view":9}],19:[function(require,module,exports){
+},{"./pagemixins":25,"ember":7,"ember-list-view":9}],19:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./add_organization');
@@ -65479,7 +65460,7 @@ App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
     templateName: 'news'
 });
 
-App.NewsView = Ember.View.extend(App.PageViewMixin, {
+App.NewsView = Ember.View.extend(App.PageViewMixin, App.PaginatedViewMixin, {
     willDestroyElement: function () {
         this._super();
         this.controller.set('category', null);
@@ -65681,6 +65662,39 @@ App.PageViewMixin = Ember.Mixin.create({
         $('#page').hide();
         this._super();
         $('body').removeClass('page-view');
+    }
+});
+
+App.PaginatedViewMixin = Ember.Mixin.create({
+    paginatedScrollSelector: '#page',
+
+    didInsertElement: function () {
+        this._super();
+        $(this.paginatedScrollSelector).bind('scroll', { view: this }, this.handleScroll);
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $(this.paginatedScrollSelector).unbind('scroll', this.handleScroll);
+    },
+
+    handleScroll: function (event) {
+        var context = {
+            controller: event.data.view.controller,
+            element: this,
+            view: event.data.view
+        };
+        Ember.run.debounce(context, event.data.view.watchScroll, 150);
+    },
+
+    watchScroll: function () {
+        var element = this.element,
+            $element = $(element),
+            height = $element.outerHeight(),
+            scrollBottom = element.scrollHeight - element.scrollTop - height;
+        if (scrollBottom < height) {
+            this.controller.send('loadNextPage');
+        }
     }
 });
 
