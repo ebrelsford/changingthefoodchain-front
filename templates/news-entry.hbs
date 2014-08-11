@@ -1,22 +1,30 @@
-<div class="close" {{action 'close'}}>&times;</div>
 <div class="row">
     <div class="page-sections">
-        categories
+        <a href="#" {{action 'clear'}} class="news-category-clear">{{t "news.categories.clear"}}</a>
+        <h2 class="news-category-header">{{t "news.categories.header"}}</h2>
+        <ul class="news-category-list">
+            <li class="news-category-list-item" {{action 'pickFeatured'}} {{bind-attr class="featured:active"}}>{{t "news.categories.featured"}}</li>
+        </ul>
+        {{view App.NewsCategoryView content=controllers.news.categories}}
     </div>
     <div class="page-content">
-        <div class="news-entry-detail">
+        <div class="close" {{action 'close'}}>&times;</div>
+        <h1 class="news-header">{{#link-to 'news'}}{{t "news.header"}}{{/link-to}}</h1>
+        <div class="news-entry news-entry-detail">
+            {{#with content}}
+            <h2 class="news-entry-title">{{title}}</h2>
+            <div class="news-entry-meta">
+                <div class="news-entry-meta-publication-date">{{published_on_long}}</div>
+            </div>
             <div class="news-entry-cover">
                 {{{cover}}}
             </div>
             <div class="news-entry-content">
-                <h2 class="news-entry-title">{{title}}</h2>
-                <div class="news-entry-meta">
-                    <div class="news-entry-meta-publication-date">{{publication_date}}</div>
-                </div>
                 <div class="news-entry-preview">
                     {{{main}}}
                 </div>
             </div>
+            {{/with}}
         </div>
     </div>
 </div>

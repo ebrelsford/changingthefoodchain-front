@@ -65351,6 +65351,10 @@ App.Entry = DS.Model.extend({
 
     published_on_short: function () {
         return moment(this.get('published_on')).format('M.D.YY');
+    }.property('published_on'),
+
+    published_on_long: function () {
+        return moment(this.get('published_on')).format('MMMM Do, YYYY');
     }.property('published_on')
 });
 
@@ -65367,6 +65371,7 @@ App.NewsController = Ember.ArrayController.extend({
     init: function () {
         this._super();
         this.send('loadNextPage');
+        this.loadCategories();
     },
 
     refresh: function () {
@@ -65376,6 +65381,15 @@ App.NewsController = Ember.ArrayController.extend({
             nextPage: 1
         });
         this.send('loadNextPage');
+    },
+
+    loadCategories: function () {
+        var params = { language: CONFIG.language },
+            controller = this;
+        controller.set('category', null);
+        controller.store.find('category', params).then(function (data) {
+            controller.set('categories', data.content);
+        });
     },
 
     actions: {
@@ -65462,15 +65476,6 @@ App.NewsCategoryView = Ember.CollectionView.extend({
 });
 
 App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
-    setupController: function (controller, model) {
-        this._super(controller, model);
-        var params = { language: CONFIG.language };
-        controller.set('category', null);
-        controller.store.find('category', params).then(function (data) {
-            controller.set('categories', data.content);
-        });
-    },
-
     templateName: 'news'
 });
 
@@ -65481,6 +65486,10 @@ App.NewsView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
+
+App.NewsEntryController = Ember.Controller.extend({
+    needs: ['news']
+});
 
 App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
     model: function (params) {
@@ -71542,26 +71551,62 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["news-entry"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.header", options) : helperMissing.call(depth0, "t", "news.header", options))));
+  }
 
-  data.buffer.push("<div class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"row\">\n    <div class=\"page-sections\">\n        categories\n    </div>\n    <div class=\"page-content\">\n        <div class=\"news-entry-detail\">\n            <div class=\"news-entry-cover\">\n                ");
+function program3(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            <h2 class=\"news-entry-title\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
+  stack1 = helpers._triageMustache.call(depth0, "published_on_long", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-cover\">\n                ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "cover", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <h2 class=\"news-entry-title\">");
-  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h2>\n                <div class=\"news-entry-meta\">\n                    <div class=\"news-entry-meta-publication-date\">");
-  stack1 = helpers._triageMustache.call(depth0, "publication_date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n                </div>\n                <div class=\"news-entry-preview\">\n                    ");
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <div class=\"news-entry-preview\">\n                    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "main", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push("\n                </div>\n            </div>\n            ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "clear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" class=\"news-category-clear\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.clear", options) : helperMissing.call(depth0, "t", "news.categories.clear", options))));
+  data.buffer.push("</a>\n        <h2 class=\"news-category-header\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.header", options) : helperMissing.call(depth0, "t", "news.categories.header", options))));
+  data.buffer.push("</h2>\n        <ul class=\"news-category-list\">\n            <li class=\"news-category-list-item\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("featured:active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
+  data.buffer.push("</li>\n        </ul>\n        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
+    'content': ("controllers.news.categories")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n    </div>\n    <div class=\"page-content\">\n        <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n        <h1 class=\"news-header\">");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news", options) : helperMissing.call(depth0, "link-to", "news", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h1>\n        <div class=\"news-entry news-entry-detail\">\n            ");
+  stack1 = helpers['with'].call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });

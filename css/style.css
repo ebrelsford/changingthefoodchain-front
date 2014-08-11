@@ -3343,9 +3343,12 @@ body.organization-view .map-active-area {
 }
 .news-header {
   border-bottom: 2px solid #302390;
-  color: #302390;
   margin-top: 0;
   text-transform: uppercase;
+}
+.news-header,
+.news-header a {
+  color: #302390;
 }
 .news-category-clear {
   color: #5747d2;
@@ -3416,6 +3419,17 @@ body.organization-view .map-active-area {
 }
 .news-entry-list .news-entry-title {
   margin-top: 0;
+}
+.news-entry-detail .news-entry-cover {
+  float: left;
+  padding-right: 15px;
+  width: 70%;
+}
+.news-entry-detail .news-entry-meta {
+  margin-bottom: 10px;
+}
+.news-entry-detail .news-entry-meta-publication-date {
+  font-weight: bold;
 }
 .organization-details-actions {
   margin-bottom: 25px;

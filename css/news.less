@@ -1,8 +1,11 @@
 .news-header {
     border-bottom: 2px solid @foreground-color;
-    color: @foreground-color;
     margin-top: 0;
     text-transform: uppercase;
+
+    &, & a {
+        color: @foreground-color;
+    }
 }
 
 .news-category-clear {
@@ -66,6 +69,23 @@
 
         &-title {
             margin-top: 0;
+        }
+    }
+}
+
+.news-entry-detail {
+    .news-entry {
+        &-cover {
+            float: left;
+            padding-right: 15px;
+            width: 70%;
+        }
+        &-meta {
+            margin-bottom: 10px;
+
+            &-publication-date {
+                font-weight: bold;
+            }
         }
     }
 }

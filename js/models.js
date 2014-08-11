@@ -106,5 +106,9 @@ App.Entry = DS.Model.extend({
 
     published_on_short: function () {
         return moment(this.get('published_on')).format('M.D.YY');
+    }.property('published_on'),
+
+    published_on_long: function () {
+        return moment(this.get('published_on')).format('MMMM Do, YYYY');
     }.property('published_on')
 });

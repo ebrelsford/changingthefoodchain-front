@@ -10,6 +10,7 @@ App.NewsController = Ember.ArrayController.extend({
     init: function () {
         this._super();
         this.send('loadNextPage');
+        this.loadCategories();
     },
 
     refresh: function () {
@@ -19,6 +20,15 @@ App.NewsController = Ember.ArrayController.extend({
             nextPage: 1
         });
         this.send('loadNextPage');
+    },
+
+    loadCategories: function () {
+        var params = { language: CONFIG.language },
+            controller = this;
+        controller.set('category', null);
+        controller.store.find('category', params).then(function (data) {
+            controller.set('categories', data.content);
+        });
     },
 
     actions: {
@@ -105,15 +115,6 @@ App.NewsCategoryView = Ember.CollectionView.extend({
 });
 
 App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
-    setupController: function (controller, model) {
-        this._super(controller, model);
-        var params = { language: CONFIG.language };
-        controller.set('category', null);
-        controller.store.find('category', params).then(function (data) {
-            controller.set('categories', data.content);
-        });
-    },
-
     templateName: 'news'
 });
 
@@ -124,6 +125,10 @@ App.NewsView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
+
+App.NewsEntryController = Ember.Controller.extend({
+    needs: ['news']
+});
 
 App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
     model: function (params) {
