@@ -36,6 +36,13 @@
 .news-entry-list {
     .news-entry {
         .make-row();
+        border-bottom: 1px dashed @foreground-color;
+        margin-bottom: 25px;
+        padding-bottom: 50px;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
 
         &-cover {
             .make-md-column(6);
@@ -48,6 +55,17 @@
 
         &-content {
             .make-md-column(6);
+        }
+
+        &-link {
+            a, a:active, a:hover {
+                color: @foreground-color;
+                text-transform: uppercase;
+            }
+        }
+
+        &-title {
+            margin-top: 0;
         }
     }
 }

@@ -3373,6 +3373,12 @@ body.organization-view .map-active-area {
 .news-entry-list .news-entry {
   margin-left: -15px;
   margin-right: -15px;
+  border-bottom: 1px dashed #302390;
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+}
+.news-entry-list .news-entry:last-of-type {
+  border-bottom: none;
 }
 .news-entry-list .news-entry-cover {
   position: relative;
@@ -3401,6 +3407,15 @@ body.organization-view .map-active-area {
     float: left;
     width: 50%;
   }
+}
+.news-entry-list .news-entry-link a,
+.news-entry-list .news-entry-link a:active,
+.news-entry-list .news-entry-link a:hover {
+  color: #302390;
+  text-transform: uppercase;
+}
+.news-entry-list .news-entry-title {
+  margin-top: 0;
 }
 .organization-details-actions {
   margin-bottom: 25px;

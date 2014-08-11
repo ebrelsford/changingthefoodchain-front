@@ -1,4 +1,5 @@
 var DS = require('ember-data');
+var moment = require('moment');
 var videos = require('./videos');
 require('ember-data-extensions-embedded-adapter');
 
@@ -101,5 +102,9 @@ App.Entry = DS.Model.extend({
     published_on: DS.attr('date'),
     title: DS.attr(),
     link: DS.attr(),
-    read_more_at: DS.attr()
+    read_more_at: DS.attr(),
+
+    published_on_short: function () {
+        return moment(this.get('published_on')).format('M.D.YY');
+    }.property('published_on')
 });

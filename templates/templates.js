@@ -347,7 +347,7 @@ function program1(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h2>\n                <div class=\"news-entry-meta\">\n                    <div class=\"news-entry-meta-publication-date\">");
-  stack1 = helpers._triageMustache.call(depth0, "published_on", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "published_on_short", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n                </div>\n                <div class=\"news-entry-preview\">\n                    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "preview", {hash:{
