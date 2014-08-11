@@ -99,5 +99,7 @@ App.Entry = DS.Model.extend({
     main: DS.attr(),
     preview: DS.attr(),
     published_on: DS.attr('date'),
-    title: DS.attr()
+    title: DS.attr(),
+    link: DS.attr(),
+    read_more_at: DS.attr()
 });

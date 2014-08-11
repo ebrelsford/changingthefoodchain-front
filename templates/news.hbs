@@ -24,7 +24,17 @@
                     {{{preview}}}
                 </div>
                 <div class="news-entry-link">
+                    {{#if link}}
+                    <a {{bind-attr href=link}} target="_blank">
+                        {{#if read_more_at}}
+                        {{t "news.read_more_at"}} {{read_more_at}}
+                        {{else}}
+                        {{t "news.read_more"}}
+                        {{/if}}
+                    </a>
+                    {{else}}
                     <a href="#" {{action 'openEntry' id}}>{{t "news.read_more"}}</a>
+                    {{/if}}
                 </div>
             </div>
         </div>

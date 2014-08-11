@@ -13,7 +13,6 @@ App.NewsController = Ember.ArrayController.extend({
     },
 
     refresh: function () {
-        console.log('NewsController#refresh');
         this.clear();
         this.setProperties({
             page: null,
@@ -106,25 +105,12 @@ App.NewsCategoryView = Ember.CollectionView.extend({
 });
 
 App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
-    /*
-    activate: function (transition) {
-        this._super(transition);
-        console.log('NewsRoute#activate');
-        var newsController = this.controllerFor('news');
-        if (newsController.get('categories')) {
-            newsController.refresh();
-        }
-    },
-    */
-
     setupController: function (controller, model) {
         this._super(controller, model);
         var params = { language: CONFIG.language };
         controller.set('category', null);
         controller.store.find('category', params).then(function (data) {
-            console.log('NewsRoute#setupController', data.content);
             controller.set('categories', data.content);
-            console.log(controller.get('categories'));
         });
     },
 

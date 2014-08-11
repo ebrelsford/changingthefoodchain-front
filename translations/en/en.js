@@ -44,7 +44,8 @@ Ember.I18n.translations = {
         },
         empty: 'No news to show for this category',
         header: 'news',
-        read_more: 'read more'
+        read_more: 'read more',
+        read_more_at: 'read more at'
     },
 
     organization: {
