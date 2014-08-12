@@ -1,4 +1,5 @@
 @import "normalize.css";
+@import "lib/MyFontsWebfontsKit.css";
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -2769,11 +2770,18 @@ select[multiple].input-lg {
 }
 body,
 html {
+  color: #302390;
+  font-family: "Monosten A", Courier, monospace;
   margin: 0;
   overflow: hidden;
   padding: 0;
   height: 100%;
   width: 100%;
+}
+h1 {
+  font-family: AntiqueOli-Bol;
+  font-size: 40px;
+  font-weight: normal;
 }
 img {
   height: auto;
@@ -3153,6 +3161,7 @@ header #logo {
 }
 header #logo a {
   color: #bc461b;
+  font-family: AntiqueOli-Bol;
   font-size: 34px;
   font-weight: bold;
   line-height: 36px;
@@ -3172,8 +3181,9 @@ header #nav {
 }
 header #nav a {
   color: #302390;
+  font-family: AntiqueOli-Bol;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: normal;
   text-decoration: underline;
   text-transform: uppercase;
 }
