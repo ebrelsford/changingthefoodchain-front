@@ -6,6 +6,7 @@ Ember.I18n.translations = {
 
     application: {
         title: 'Changing the Food Chain',
+        header: 'Changing the<br />Food Chain',
         nav: {
             about: 'about',
             contact: 'contact',
