@@ -2783,6 +2783,10 @@ h1 {
   font-size: 40px;
   font-weight: normal;
 }
+h2 {
+  font-family: "Monosten D", Courier, monospace;
+  font-weight: normal;
+}
 img {
   height: auto;
   max-width: 100%;
