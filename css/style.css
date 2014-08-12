@@ -3252,7 +3252,7 @@ body.page-view header {
   margin-top: -15px;
   opacity: 1;
 }
-#help h2 {
+#help .help-organization-header {
   color: #302390;
   text-align: center;
   text-transform: uppercase;
