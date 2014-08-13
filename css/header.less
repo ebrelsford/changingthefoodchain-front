@@ -52,6 +52,19 @@ header {
             color: @ui-button-color;
         }
     }
+
+    .languages {
+        margin-top: 10px;
+
+        a {
+            color: @faded-color;
+
+            &.active {
+                color: @foreground-color;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 body.add-organization-view header,

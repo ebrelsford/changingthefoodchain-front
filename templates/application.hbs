@@ -9,9 +9,10 @@
         <div>
             {{t "application.tagline"}}
         </div>
-        <div>
-            <a href="#" {{action 'setLocale' 'en'}}>Eng</a>
-            <a href="#" {{action 'setLocale' 'es'}}>Esp</a>
+        <div class="languages">
+            {{#each languages}}
+            <a href="#" {{action 'setLocale' code}} {{bind-attr class="active"}}>{{label}}</a>
+            {{/each}}
         </div>
     </div>
     <div id="search">

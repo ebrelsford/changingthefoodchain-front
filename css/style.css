@@ -2775,7 +2775,7 @@ select[multiple].input-lg {
   opacity: 1;
 }
 .clear {
-  color: #726ab7;
+  color: rgba(68, 61, 126, 0.5);
   float: right;
   margin-top: 5px;
   text-transform: uppercase;
@@ -3177,7 +3177,7 @@ body.page-view #filters * {
   font-weight: bold;
 }
 .filters-clear {
-  color: #726ab7;
+  color: rgba(68, 61, 126, 0.5);
   float: right;
   margin-top: 5px;
   text-transform: uppercase;
@@ -3185,7 +3185,7 @@ body.page-view #filters * {
   margin-top: 9px;
 }
 .help-button {
-  background-color: #d4d1e9;
+  background-color: rgba(68, 61, 126, 0.5);
   border-radius: 50%;
   color: #443d7e;
   display: block;
@@ -3287,6 +3287,16 @@ header #list-button {
 }
 header #list-button:hover {
   color: #bc461b;
+}
+header .languages {
+  margin-top: 10px;
+}
+header .languages a {
+  color: rgba(68, 61, 126, 0.5);
+}
+header .languages a.active {
+  color: #443d7e;
+  text-decoration: underline;
 }
 body.add-organization-view header,
 body.list-organizations-view header,
@@ -3435,7 +3445,7 @@ body.organization-view .map-active-area {
   color: #443d7e;
 }
 .news-category-clear {
-  color: #726ab7;
+  color: rgba(68, 61, 126, 0.5);
   float: right;
   margin-top: 5px;
   text-transform: uppercase;

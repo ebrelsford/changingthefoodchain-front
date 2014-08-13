@@ -64580,9 +64580,24 @@ App.ApplicationController = Ember.Controller.extend({
     selectedSectors: [],
     selectedTypes: [],
 
+    languages: [
+        { label: 'Eng', code: 'en' },
+        { label: 'Esp', code: 'es' }
+    ],
+
     lat: null,
     lng: null,
     z: null,
+
+    init: function () {
+        this._super();
+        var selectedLanguage = i18n.getLocale(),
+            l = _.find(this.get('languages'), function (language) {
+                return language.code === selectedLanguage; 
+            });
+        l.active = true;
+        this.propertyDidChange('languages');
+    },
 
     organizationSelected: function () {
         this.send('openOrganization', this.get('selectedOrganization').get('id'));
@@ -71307,6 +71322,22 @@ function program7(depth0,data) {
 
 function program9(depth0,data) {
   
+  var buffer = '', stack1;
+  data.buffer.push("\n            <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "code", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">");
+  stack1 = helpers._triageMustache.call(depth0, "label", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>\n            ");
+  return buffer;
+  }
+
+function program11(depth0,data) {
+  
   var buffer = '', helper, options;
   data.buffer.push("\n        <div class=\"search-error\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.search.error", options) : helperMissing.call(depth0, "t", "application.search.error", options))));
@@ -71328,11 +71359,10 @@ function program9(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </nav>\n    <div id=\"tagline\">\n        <div>\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.tagline", options) : helperMissing.call(depth0, "t", "application.tagline", options))));
-  data.buffer.push("\n        </div>\n        <div>\n            <a href=\"#\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "en", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(">Eng</a>\n            <a href=\"#\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "setLocale", "es", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(">Esp</a>\n        </div>\n    </div>\n    <div id=\"search\">\n        ");
+  data.buffer.push("\n        </div>\n        <div class=\"languages\">\n            ");
+  stack1 = helpers.each.call(depth0, "languages", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n    </div>\n    <div id=\"search\">\n        ");
   data.buffer.push(escapeExpression((helper = helpers['type-ahead'] || (depth0 && depth0['type-ahead']),options={hash:{
     'data': ("organizations"),
     'name': ("name"),
@@ -71342,7 +71372,7 @@ function program9(depth0,data) {
     'placeholder': ("Search by name, city, state")
   },hashTypes:{'data': "ID",'name': "STRING",'action': "STRING",'selection': "ID",'value': "ID",'placeholder': "STRING"},hashContexts:{'data': depth0,'name': depth0,'action': depth0,'selection': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "type-ahead", options))));
   data.buffer.push("\n        ");
-  stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));

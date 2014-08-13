@@ -196,9 +196,24 @@ App.ApplicationController = Ember.Controller.extend({
     selectedSectors: [],
     selectedTypes: [],
 
+    languages: [
+        { label: 'Eng', code: 'en' },
+        { label: 'Esp', code: 'es' }
+    ],
+
     lat: null,
     lng: null,
     z: null,
+
+    init: function () {
+        this._super();
+        var selectedLanguage = i18n.getLocale(),
+            l = _.find(this.get('languages'), function (language) {
+                return language.code === selectedLanguage; 
+            });
+        l.active = true;
+        this.propertyDidChange('languages');
+    },
 
     organizationSelected: function () {
         this.send('openOrganization', this.get('selectedOrganization').get('id'));
