@@ -70,7 +70,9 @@ App.Sector = DS.Model.extend({
 });
 
 App.Type = DS.Model.extend({
-    name: DS.attr('string')
+    name: DS.attr('string'),
+    description: DS.attr(),
+    image: DS.attr()
 });
 
 App.Photo = DS.Model.extend({

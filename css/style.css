@@ -3477,6 +3477,9 @@ body.organization-view .map-active-area {
 .news-entry-detail .news-entry-meta-publication-date {
   font-weight: bold;
 }
+.organization-header img {
+  max-height: 100px;
+}
 .organization-details-actions {
   margin-bottom: 25px;
 }

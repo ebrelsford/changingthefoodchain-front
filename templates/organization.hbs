@@ -1,5 +1,9 @@
 {{#with model}}
-<div class="organization-header">organization type icon</div>
+<div class="organization-header">
+    {{#each types}}
+    <img {{bind-attr src=image alt=name}}" />
+    {{/each}}
+</div>
 
 <div class="organization-row">
     <div class="organization-filters">
@@ -50,17 +54,6 @@
                 <h3>sectors:</h3>
                 <ul>
                     {{#each sectors}}
-                    <li>{{name}}</li>
-                    {{/each}}
-                </ul>
-            </section>
-        {{/if}}
-
-        {{#if types}}
-            <section class="organization-types">
-                <h3>types:</h3>
-                <ul>
-                    {{#each types}}
                     <li>{{name}}</li>
                     {{/each}}
                 </ul>
