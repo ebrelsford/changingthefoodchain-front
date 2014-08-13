@@ -14,12 +14,7 @@
 
         &-item {
             .make-md-column(3);
-            border-right: 1px solid @foreground-color;
             padding: 10px;
-
-            &:last-child {
-                border-right: none;
-            }
 
             &-name {
                 font-weight: bold;
@@ -27,7 +22,14 @@
             }
 
             &-text {
+                border-right: 1px solid @foreground-color;
+                padding-left: 30px;
+                padding-right: 30px;
                 text-align: center;
+            }
+
+            &:last-child * {
+                border-right: none;
             }
         }
     }

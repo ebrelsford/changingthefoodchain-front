@@ -3281,7 +3281,6 @@ body.page-view header {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border-right: 1px solid #443d7e;
   padding: 10px;
 }
 @media (min-width: 992px) {
@@ -3290,15 +3289,18 @@ body.page-view header {
     width: 25%;
   }
 }
-#help .help-organization-types-item:last-child {
-  border-right: none;
-}
 #help .help-organization-types-item-name {
   font-weight: bold;
   text-align: center;
 }
 #help .help-organization-types-item-text {
+  border-right: 1px solid #443d7e;
+  padding-left: 30px;
+  padding-right: 30px;
   text-align: center;
+}
+#help .help-organization-types-item:last-child * {
+  border-right: none;
 }
 #map {
   overflow: hidden;
