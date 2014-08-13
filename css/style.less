@@ -3,7 +3,7 @@
 
 @logo-color: #BC461B;
 @filters-width: 200px;
-@foreground-color: #302390;
+@foreground-color: #443D7E;
 
 @overlay-background-color: rgba(235, 223, 194, 0.9);
 @interface-z-index: 2000;
@@ -20,9 +20,9 @@
 @ui-button-color: @logo-color;
 
 @body-font-family: "Monosten A", Courier, monospace;
-@header-font-family: AntiqueOli-Bol;
+@header-font-family: AntiqueOliCon-Bol;
 @header-font-weight: normal;
-@subheader-font-family: "Monosten D", Courier, monospace;
+@subheader-font-family: "Monosten A", Courier, monospace;
 @subheader-font-weight: normal;
 
 // Bootstrap
@@ -55,17 +55,20 @@ body, html {
     padding: 0;
     height: 100%;
     width: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-weight: @header-font-weight;
 }
 
 h1 {
     font-family: @header-font-family;
     font-size: 40px;
-    font-weight: @header-font-weight;
 }
 
 h2 {
     font-family: @subheader-font-family;
-    font-weight: @subheader-font-weight;
 }
 
 img {
