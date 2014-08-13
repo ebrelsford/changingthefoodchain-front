@@ -230,6 +230,18 @@ App.ApplicationController = Ember.Controller.extend({
             });
         },
 
+        clearFilters: function () {
+            var sectors = this.get('sectors.content'),
+                types = this.get('types.content');
+            _.each(sectors, function (sector) {
+                sector.set('isActive', false);
+            });
+            _.each(types, function (type) {
+                type.set('isActive', false);
+            });
+            this.send('filtersChanged');
+        },
+
         filtersChanged: function () {
             this.set('selectedSectors', this.findActive(this.get('sectors.content')));
             this.set('selectedTypes', this.findActive(this.get('types.content')));

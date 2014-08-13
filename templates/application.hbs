@@ -10,8 +10,8 @@
             {{t "application.tagline"}}
         </div>
         <div>
-            <a href="#" {{action 'setLocale' 'en'}}>english</a>
-            <a href="#" {{action 'setLocale' 'es'}}>español</a>
+            <a href="#" {{action 'setLocale' 'en'}}>Eng</a>
+            <a href="#" {{action 'setLocale' 'es'}}>Esp</a>
         </div>
     </div>
     <div id="search">
@@ -28,7 +28,8 @@
 <div id="map"></div>
 
 <div id="filters" class="full-height">
-    <h2>filters</h2>
+    <a href="#" {{action 'clearFilters'}} class="filters-clear">{{t "application.filters.clear"}}</a>
+    <h2>{{t "application.filters.header"}}</h2>
     <section class="filters-type">
         <a class="pull-right help-button" href="#" {{action 'openHelpOrganizationTypes'}}>?</a>
         <h3>{{t "application.filters.organization_type"}}</h3>

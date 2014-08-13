@@ -13,6 +13,8 @@ Ember.I18n.translations = {
         },
         tagline: 'An action map for food chain workers & organizations.',
         filters: {
+            header: 'filters',
+            clear: 'clear',
             organization_type: 'organization type',
             industry_type: 'industry type'
         },

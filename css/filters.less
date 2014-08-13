@@ -56,12 +56,20 @@ body.page-view #filters {
     }
 }
 
-.filters-sector-list-item {
-    .filters-item();
-}
+.filters {
+    &-sector-list-item {
+        .filters-item();
+    }
 
-.filters-type-list-item {
-    .filters-item();
+    &-type-list-item {
+        .filters-item();
+    }
+
+    &-clear {
+        .clear();
+        font-size: 11px;
+        margin-top: 9px;
+    }
 }
 
 .help-button {
