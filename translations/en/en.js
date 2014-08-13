@@ -80,6 +80,7 @@ Ember.I18n.translations = {
             state: 'state',
             zip: 'zip',
             email: 'email',
+            siteUrl: 'website',
             phone: 'phone',
             types: 'organization types',
             sectors: 'sectors'

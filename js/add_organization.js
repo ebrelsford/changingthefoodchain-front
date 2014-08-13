@@ -11,6 +11,7 @@ App.AddOrganizationController = Ember.Controller.extend({
     state: null,
     zip: null,
     email: null,
+    siteUrl: null,
     phone: null,
     sectors: [],
     types: [],
@@ -118,7 +119,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
 
     clearForm: function () {
         var addressProperties = ['name', 'address', 'address2', 'city', 'state',
-                'zip', 'email', 'phone'],
+                'zip', 'email', 'phone', 'siteUrl'],
             geocodeProperties = ['centroid', 'geocodedAddress', 'geocodedCity',
                 'geocodedState', 'geocodedZip'],
             propertyChanges = {};
@@ -175,6 +176,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
             data.append('state_province', controller.get('state'));
             data.append('postal_code', controller.get('zip'));
             data.append('email', controller.get('email'));
+            data.append('site_url', controller.get('siteUrl'));
             data.append('phone', controller.get('phone'));
             data.append('centroid', 'SRID=4326;POINT(' + centroid[1] + ' ' + centroid[0] + ')');
 
