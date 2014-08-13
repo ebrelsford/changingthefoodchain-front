@@ -64100,6 +64100,7 @@ App.AddOrganizationController = Ember.Controller.extend({
     zip: null,
     email: null,
     siteUrl: null,
+    mission: null,
     phone: null,
     sectors: [],
     types: [],
@@ -64207,7 +64208,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
 
     clearForm: function () {
         var addressProperties = ['name', 'address', 'address2', 'city', 'state',
-                'zip', 'email', 'phone', 'siteUrl'],
+                'zip', 'email', 'phone', 'siteUrl', 'mission'],
             geocodeProperties = ['centroid', 'geocodedAddress', 'geocodedCity',
                 'geocodedState', 'geocodedZip'],
             propertyChanges = {};
@@ -64265,6 +64266,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
             data.append('postal_code', controller.get('zip'));
             data.append('email', controller.get('email'));
             data.append('site_url', controller.get('siteUrl'));
+            data.append('mission', controller.get('mission'));
             data.append('phone', controller.get('phone'));
             data.append('centroid', 'SRID=4326;POINT(' + centroid[1] + ' ' + centroid[0] + ')');
 
@@ -72161,6 +72163,14 @@ function program19(depth0,data) {
     'type': ("url"),
     'value': ("siteUrl")
   },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-mission\">\n                    <div class=\"form-group field-mission\">\n                        <label for=\"mission\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.mission", options) : helperMissing.call(depth0, "t", "organization_add.fields.mission", options))));
+  data.buffer.push("\n                        </label>\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'class': ("form-control"),
+    'id': ("mission"),
+    'value': ("mission")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
   data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"add-organization-type\">\n                    <div class=\"form-group field-types\">\n                        <h3>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.fields.types", options) : helperMissing.call(depth0, "t", "organization_add.fields.types", options))));
   data.buffer.push("</h3>\n                        ");

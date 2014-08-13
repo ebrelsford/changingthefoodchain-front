@@ -119,6 +119,8 @@ hr {
 .add-organization-contact:after,
 .add-organization-email:before,
 .add-organization-email:after,
+.add-organization-mission:before,
+.add-organization-mission:after,
 .add-organization-type:before,
 .add-organization-type:after,
 .organizations-list-headers:before,
@@ -152,6 +154,7 @@ header:after,
 .add-organization-location-form-city-state:after,
 .add-organization-contact:after,
 .add-organization-email:after,
+.add-organization-mission:after,
 .add-organization-type:after,
 .organizations-list-headers:after,
 .organizations-list-item:after,
@@ -2945,6 +2948,11 @@ body > .ember-view {
 .add-organization-email {
   margin-left: -15px;
   margin-right: -15px;
+}
+.add-organization-mission {
+  margin-left: -15px;
+  margin-right: -15px;
+  margin: 0;
 }
 .add-organization-type {
   margin-left: -15px;
