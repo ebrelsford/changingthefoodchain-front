@@ -1,3 +1,4 @@
+{{#with model}}
 <div class="organization-header">organization type icon</div>
 
 <div class="organization-row">
@@ -7,19 +8,19 @@
 
     <div class="organization-details">
         <div class="close" {{action 'close'}}>&times;</div>
-        <h2>{{model.name}}</h2>
+        <h2>{{name}}</h2>
         <div class="organization-details-contact">
             <div>
-                {{model.address_line1}}, {{model.city}}, {{model.state_province}} {{model.postal_code}}
+                {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
             </div>
-            {{#if model.phone}}
+            {{#if phone}}
             <div class="organization-details-contact-phone">
-                {{model.phone}}
+                {{phone}}
             </div>
             {{/if}}
-            {{#if model.email}}
+            {{#if email}}
             <div class="organization-details-contact-email">
-                {{model.email}}
+                {{email}}
             </div>
             {{/if}}
         </div>
@@ -30,9 +31,9 @@
             {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
         </div>
 
-        {{#if model.media}}
+        {{#if media}}
         <div class="organization-details-media">
-            {{view App.CarouselView content=model.media}}
+            {{view App.CarouselView content=media}}
         </div>
         {{/if}}
 
@@ -40,22 +41,22 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
         </div>
 
-        {{#if model.sectors}}
+        {{#if sectors}}
             <section class="organization-sectors">
                 <h3>sectors:</h3>
                 <ul>
-                    {{#each model.sectors}}
+                    {{#each sectors}}
                     <li>{{name}}</li>
                     {{/each}}
                 </ul>
             </section>
         {{/if}}
 
-        {{#if model.types}}
+        {{#if types}}
             <section class="organization-types">
                 <h3>types:</h3>
                 <ul>
-                    {{#each model.types}}
+                    {{#each types}}
                     <li>{{name}}</li>
                     {{/each}}
                 </ul>
@@ -63,3 +64,4 @@
         {{/if}}
     </div>
 </div>
+{{/with}}
