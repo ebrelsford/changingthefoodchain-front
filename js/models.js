@@ -16,6 +16,7 @@ App.Organization = DS.Model.extend({
     centroid: DS.attr('centroid'),
     country: DS.attr(),
     email: DS.attr('string'),
+    site_url: DS.attr(),
     name: DS.attr('string'),
     phone: DS.attr('string'),
     postal_code: DS.attr('string'),

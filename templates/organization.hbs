@@ -27,7 +27,9 @@
 
         <div class="organization-details-actions">
             {{#link-to 'share' class="btn btn-primary"}}{{t "organization.actions.share"}}{{/link-to}}
-            <a href="#" class="btn btn-primary">{{t "organization.actions.visit"}}</a>
+            {{#if site_url}}
+            <a {{bind-attr href=site_url}} class="btn btn-primary" target="_blank">{{t "organization.actions.visit"}}</a>
+            {{/if}}
             {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
         </div>
 
