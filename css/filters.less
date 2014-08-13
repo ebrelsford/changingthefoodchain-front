@@ -43,16 +43,25 @@ body.page-view #filters {
     }
 }
 
-.filters-sector {
-    .filters-sector-list-item.active {
+.filters-item {
+    cursor: pointer;
+    text-transform: capitalize;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &.active {
         font-weight: bold;
     }
 }
 
-.filters-type {
-    .filters-type-list-item.active {
-        font-weight: bold;
-    }
+.filters-sector-list-item {
+    .filters-item();
+}
+
+.filters-type-list-item {
+    .filters-item();
 }
 
 .help-button {

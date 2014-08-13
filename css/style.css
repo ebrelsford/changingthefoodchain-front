@@ -3140,10 +3140,34 @@ body.add-organization-view #filters * {
 body.page-view #filters * {
   display: none;
 }
-.filters-sector .filters-sector-list-item.active {
+.filters-item {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.filters-item:hover {
+  text-decoration: underline;
+}
+.filters-item.active {
   font-weight: bold;
 }
-.filters-type .filters-type-list-item.active {
+.filters-sector-list-item {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.filters-sector-list-item:hover {
+  text-decoration: underline;
+}
+.filters-sector-list-item.active {
+  font-weight: bold;
+}
+.filters-type-list-item {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.filters-type-list-item:hover {
+  text-decoration: underline;
+}
+.filters-type-list-item.active {
   font-weight: bold;
 }
 .help-button {
