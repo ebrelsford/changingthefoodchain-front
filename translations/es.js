@@ -243,7 +243,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "visit";
   })
-        }
+        },
+        mission: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Our mission";
+  })
     },
 
     organization_add: {

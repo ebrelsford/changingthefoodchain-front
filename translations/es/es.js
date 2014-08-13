@@ -52,7 +52,8 @@ Ember.I18n.translations = {
             add_media: 'add media',
             share: 'share',
             visit: 'visit'
-        }
+        },
+        mission: 'Our mission'
     },
 
     organization_add: {

@@ -39,9 +39,11 @@
         </div>
         {{/if}}
 
+        {{#if mission}}
         <div class="organization-mission-statement">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit metus quis orci blandit varius. In sed pulvinar nisi. Vivamus sodales viverra magna in consequat. Nullam porta augue vel enim semper, ut tristique metus semper. Sed eget eros tortor. Aliquam semper rutrum eleifend. Fusce et egestas purus. Vestibulum vitae varius justo. Nam sagittis tristique turpis, nec vestibulum eros molestie quis.
+            {{t "organization.mission"}}: {{mission}}
         </div>
+        {{/if}}
 
         {{#if sectors}}
             <section class="organization-sectors">
