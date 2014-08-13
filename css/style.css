@@ -2810,6 +2810,7 @@ body > .ember-view {
   border-width: 2px;
 }
 .close {
+  font-family: Times;
   font-size: 50px;
   opacity: 1;
   filter: alpha(opacity=100);
