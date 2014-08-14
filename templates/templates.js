@@ -83,7 +83,7 @@ function program11(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clearFilters", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"filters-clear\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.clear", options) : helperMissing.call(depth0, "t", "application.filters.clear", options))));

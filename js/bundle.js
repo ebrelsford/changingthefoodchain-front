@@ -65124,11 +65124,18 @@ function createMap(id, center, zoom) {
 }
 
 function addStreets(map) {
-    return L.tileLayer(CONFIG.TILE_URL, {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-        mapId: CONFIG.MAP_ID,
-        maxZoom: 18
-    }).addTo(map);
+    if (CONFIG.MAP_TYPE === 'mapbox') {
+        return L.mapbox.tileLayer(CONFIG.MAP_ID, {
+            accessToken: CONFIG.MAP_ACCESS_TOKEN,
+            attribution: '<a href="http://openstreetmap.org/copyright">Map data: © OpenStreetMap</a> | <a href="http://mapbox.com/map-feedback/" class="mapbox-improve-map">Improve this map</a>'
+        }).addTo(map);
+    }
+    else {
+        return L.tileLayer(CONFIG.TILE_URL, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+    }
 }
 
 function addOrganizations(map, callback) {
@@ -71376,7 +71383,7 @@ function program11(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\"></div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
+  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clearFilters", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"filters-clear\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.clear", options) : helperMissing.call(depth0, "t", "application.filters.clear", options))));

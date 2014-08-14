@@ -191,11 +191,18 @@ function createMap(id, center, zoom) {
 }
 
 function addStreets(map) {
-    return L.tileLayer(CONFIG.TILE_URL, {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-        mapId: CONFIG.MAP_ID,
-        maxZoom: 18
-    }).addTo(map);
+    if (CONFIG.MAP_TYPE === 'mapbox') {
+        return L.mapbox.tileLayer(CONFIG.MAP_ID, {
+            accessToken: CONFIG.MAP_ACCESS_TOKEN,
+            attribution: '<a href="http://openstreetmap.org/copyright">Map data: © OpenStreetMap</a> | <a href="http://mapbox.com/map-feedback/" class="mapbox-improve-map">Improve this map</a>'
+        }).addTo(map);
+    }
+    else {
+        return L.tileLayer(CONFIG.TILE_URL, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+    }
 }
 
 function addOrganizations(map, callback) {
