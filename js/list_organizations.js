@@ -1,4 +1,5 @@
 var Ember = require('ember');
+var qs = require('qs');
 require('ember-list-view');
 require('./pagemixins');
 
@@ -29,6 +30,8 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     nextPage: 1,
     height: 400,
     sortBy: {},
+
+    queryParams: ['sortBy.key', 'sortBy.dir'],
 
     needs: ['application'],
 
@@ -158,6 +161,20 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
 
     init: function () {
         this._super();
+
+        var hash = window.location.hash,
+            s;
+        if (hash && hash.length > 0 && hash.indexOf('?') > 0) {
+            s = hash.slice(hash.indexOf('?'));
+        }
+        if (s && s.length > 0) {
+            var params = qs.parse(s.slice(1));
+            this.set('sortBy', {
+                dir: params['sortBy.dir'],
+                key: params['sortBy.key']
+            });
+        }
+
         this.send('loadNextPage');
     }
 });
