@@ -71600,7 +71600,7 @@ function program2(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.sectors", options) : helperMissing.call(depth0, "t", "list_organizations.headers.sectors", options))));
   data.buffer.push("\n    </div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.message", options) : helperMissing.call(depth0, "t", "list_organizations.add.message", options))));
-  data.buffer.push("</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"pull-right\" ");
+  data.buffer.push("</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"btn btn-primary pull-right\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.button", options) : helperMissing.call(depth0, "t", "list_organizations.add.button", options))));
