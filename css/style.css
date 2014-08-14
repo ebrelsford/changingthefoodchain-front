@@ -2829,6 +2829,7 @@ body > .ember-view {
   right: 25px;
   opacity: 1;
   filter: alpha(opacity=100);
+  z-index: 3000;
 }
 .form-control {
   border-width: 2px;
