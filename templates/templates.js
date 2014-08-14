@@ -524,7 +524,7 @@ function program1(depth0,data) {
   data.buffer.push("\n<div class=\"organization-header\">\n    ");
   stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\">\n        filters that match organization\n    </div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
+  data.buffer.push("\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n        <h2>");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
