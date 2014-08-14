@@ -3088,7 +3088,7 @@ body > .ember-view {
   }
 }
 .organizations-list-item:hover {
-  background: #aaa;
+  color: #bc461b;
 }
 .organizations-list-add-organization {
   color: #bc461b;
