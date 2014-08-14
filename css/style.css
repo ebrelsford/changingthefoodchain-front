@@ -2825,6 +2825,8 @@ body > .ember-view {
 .close {
   font-family: Times;
   font-size: 50px;
+  position: absolute;
+  right: 25px;
   opacity: 1;
   filter: alpha(opacity=100);
 }
