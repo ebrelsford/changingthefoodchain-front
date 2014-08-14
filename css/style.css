@@ -2794,6 +2794,10 @@ html {
   width: 100%;
   -webkit-font-smoothing: antialiased;
 }
+a,
+a:hover {
+  color: #443d7e;
+}
 h1,
 h2,
 h3,
@@ -3465,6 +3469,13 @@ body.organization-view .map-active-area {
 }
 #share-button {
   right: 50px;
+}
+#project-authors {
+  bottom: 10px;
+  font-size: 10px;
+  left: 150px;
+  position: absolute;
+  z-index: 2000;
 }
 .leaflet-bar {
   border-radius: 0;

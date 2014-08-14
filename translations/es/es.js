@@ -21,7 +21,8 @@ Ember.I18n.translations = {
         },
         search: {
             error: "Sorry we couldn't find the location you searched for. Try again?"
-        }
+        },
+        project_of: 'A project of'
     },
 
     list_organizations: {
