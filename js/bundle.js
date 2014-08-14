@@ -72104,9 +72104,9 @@ function program19(depth0,data) {
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<h4>");
+  data.buffer.push(">&times;</div>\n<h1 class=\"add-organization-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.title", options) : helperMissing.call(depth0, "t", "organization_add.title", options))));
-  data.buffer.push("</h4>\n\n<div>\n    <form>\n        ");
+  data.buffer.push("</h1>\n\n<div>\n    <form>\n        ");
   stack1 = helpers['if'].call(depth0, "centroidError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
