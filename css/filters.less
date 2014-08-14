@@ -21,6 +21,7 @@
         font-family: "AntiqueOli-Bol";
         font-size: 11px;
         letter-spacing: 1px;
+        margin-top: 15px;
         text-transform: uppercase;
     }
 }
@@ -45,20 +46,45 @@ body.page-view #filters {
 
 .filters-item {
     cursor: pointer;
+    padding-bottom: 5px;
+    padding-top: 5px;
     text-transform: capitalize;
 
-    &:hover {
-        text-decoration: underline;
+    .filters-indicator {
+        border: 1px solid @foreground-color;
+        border-radius: 50%;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
     }
 
+    &:hover,
     &.active {
-        font-weight: bold;
+        color: @logo-color;
+
+        .filters-indicator {
+            border-color: @logo-color;
+        }
     }
 }
 
+.filters-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .filters {
+    &-sector-list {
+        .filters-list();
+    }
+
     &-sector-list-item {
         .filters-item();
+    }
+
+    &-type-list {
+        .filters-list();
     }
 
     &-type-list-item {

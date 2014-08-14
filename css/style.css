@@ -3134,6 +3134,7 @@ body > .ember-view {
   font-family: "AntiqueOli-Bol";
   font-size: 11px;
   letter-spacing: 1px;
+  margin-top: 15px;
   text-transform: uppercase;
 }
 body.list-organizations-view #filters {
@@ -3151,33 +3152,81 @@ body.page-view #filters * {
 }
 .filters-item {
   cursor: pointer;
+  padding-bottom: 5px;
+  padding-top: 5px;
   text-transform: capitalize;
 }
-.filters-item:hover {
-  text-decoration: underline;
+.filters-item .filters-indicator {
+  border: 1px solid #443d7e;
+  border-radius: 50%;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
 }
+.filters-item:hover,
 .filters-item.active {
-  font-weight: bold;
+  color: #bc461b;
+}
+.filters-item:hover .filters-indicator,
+.filters-item.active .filters-indicator {
+  border-color: #bc461b;
+}
+.filters-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.filters-sector-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .filters-sector-list-item {
   cursor: pointer;
+  padding-bottom: 5px;
+  padding-top: 5px;
   text-transform: capitalize;
 }
-.filters-sector-list-item:hover {
-  text-decoration: underline;
+.filters-sector-list-item .filters-indicator {
+  border: 1px solid #443d7e;
+  border-radius: 50%;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
 }
+.filters-sector-list-item:hover,
 .filters-sector-list-item.active {
-  font-weight: bold;
+  color: #bc461b;
+}
+.filters-sector-list-item:hover .filters-indicator,
+.filters-sector-list-item.active .filters-indicator {
+  border-color: #bc461b;
+}
+.filters-type-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .filters-type-list-item {
   cursor: pointer;
+  padding-bottom: 5px;
+  padding-top: 5px;
   text-transform: capitalize;
 }
-.filters-type-list-item:hover {
-  text-decoration: underline;
+.filters-type-list-item .filters-indicator {
+  border: 1px solid #443d7e;
+  border-radius: 50%;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
 }
+.filters-type-list-item:hover,
 .filters-type-list-item.active {
-  font-weight: bold;
+  color: #bc461b;
+}
+.filters-type-list-item:hover .filters-indicator,
+.filters-type-list-item.active .filters-indicator {
+  border-color: #bc461b;
 }
 .filters-clear {
   color: rgba(68, 61, 126, 0.5);
