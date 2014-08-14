@@ -10,10 +10,38 @@
     &-sections {
         .make-md-column(3);
         position: fixed;
+
+        &-header {
+            border-bottom: 1px solid @foreground-color;
+            color: @foreground-color;
+            margin-top: 0;
+            padding-bottom: 13px;
+            padding-top: 13px;
+            text-transform: uppercase;
+        }
+
+        &-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            &-item a {
+                color: @foreground-color;
+            }
+        }
     }
 
     &-content {
         .make-md-column(9);
         .make-md-column-offset(3);
+
+        // Account for close button
+        margin-top: -30px;
+
+        h1 {
+            border-bottom: 2px solid @foreground-color;
+            margin-top: 0;
+            text-transform: uppercase;
+        }
     }
 }

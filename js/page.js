@@ -42,7 +42,7 @@ App.SectionsRouteMixin = Ember.Mixin.create({
     actions: {
         scrollToSection: function (sectionId) {
             $('#page').animate({
-                scrollTop: $('#' + sectionId).position().top + 50
+                scrollTop: $('#' + sectionId).position().top + 25
             }, 500);
         }
     }

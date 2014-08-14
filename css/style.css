@@ -3578,11 +3578,28 @@ body.organization-view .map-active-area {
     width: 25%;
   }
 }
+.page-sections-header {
+  border-bottom: 1px solid #443d7e;
+  color: #443d7e;
+  margin-top: 0;
+  padding-bottom: 13px;
+  padding-top: 13px;
+  text-transform: uppercase;
+}
+.page-sections-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.page-sections-list-item a {
+  color: #443d7e;
+}
 .page-content {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: -30px;
 }
 @media (min-width: 992px) {
   .page-content {
@@ -3594,6 +3611,11 @@ body.organization-view .map-active-area {
   .page-content {
     margin-left: 25%;
   }
+}
+.page-content h1 {
+  border-bottom: 2px solid #443d7e;
+  margin-top: 0;
+  text-transform: uppercase;
 }
 #popup {
   display: none;

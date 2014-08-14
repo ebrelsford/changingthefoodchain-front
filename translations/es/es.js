@@ -102,6 +102,12 @@ Ember.I18n.translations = {
         }
     },
 
+    page: {
+        sections: {
+            header: 'sections'
+        }
+    },
+
     share: {
         title: 'Share',
         actions: {

@@ -1,13 +1,14 @@
-<div class="close" {{action 'close'}}>&times;</div>
 <div class="row">
     <div class="page-sections">
-        <ul>
+        <h2 class="page-sections-header">{{t "page.sections.header"}}</h2>
+        <ul class="page-sections-list">
             {{#each sections}}
-            <li>
+            <li class="page-sections-list-item">
                 <a href="#" {{action "scrollToSection" id bubbles="false"}}>{{name}}</a>
             </li>
             {{/each}}
         </ul>
     </div>
+    <div class="close" {{action 'close'}}>&times;</div>
     {{{model}}}
 </div>
