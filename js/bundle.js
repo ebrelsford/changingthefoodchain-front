@@ -64424,14 +64424,15 @@ function initializeMap() {
         }
     }
 
-    map = mapmodule.init('map', center, zoom)
+    var controller = App.__container__.lookup('controller:application');
+    map = mapmodule.init('map', center, zoom, function () {
+        controller.send('organizationsReady');
+    })
         .on('featureclick', function (feature) {
-            var controller = App.__container__.lookup('controller:application');
             controller.transitionToRoute('organization', feature.id);
         })
         .on('moveend zoomend', function () {
-            var controller = App.__container__.lookup('controller:application'),
-                center = map.getCenter(),
+            var center = map.getCenter(),
                 lat = Math.round(center.lat * 100) / 100.0,
                 lng = Math.round(center.lng * 100) / 100.0,
                 z = map.getZoom();
@@ -64597,13 +64598,50 @@ App.ApplicationController = Ember.Controller.extend({
             });
         l.active = true;
         this.propertyDidChange('languages');
+
+        var hash = window.location.hash,
+            s;
+        if (hash && hash.length > 0 && hash.indexOf('?') > 0) {
+            s = hash.slice(hash.indexOf('?'));
+        }
+        if (s && s.length > 0) {
+            var params = qs.parse(s.slice(1));
+            if (params.selectedSectors) {
+                var selectedSectors = JSON.parse(params.selectedSectors);
+                this.set('selectedSectors', selectedSectors);
+            }
+            if (params.selectedTypes) {
+                var selectedTypes = JSON.parse(params.selectedTypes);
+                this.set('selectedTypes', selectedTypes);
+            }
+        }
     },
+
+    setSelectedSectors: function () {
+        // Once sectors are set, update with selectedSectors from queryParams
+        var selectedSectors = this.get('selectedSectors');
+        _.each(this.get('sectors.content'), function (type) {
+            if (_.contains(selectedSectors, type.get('name'))) {
+                type.set('isActive', true);
+            }
+        });
+    }.observes('sectors'),
+
+    setSelectedTypes: function () {
+        // Once types are set, update with selectedTypes from queryParams
+        var selectedTypes = this.get('selectedTypes');
+        _.each(this.get('types.content'), function (type) {
+            if (_.contains(selectedTypes, type.get('name'))) {
+                type.set('isActive', true);
+            }
+        });
+    }.observes('types'),
 
     organizationSelected: function () {
         this.send('openOrganization', this.get('selectedOrganization').get('id'));
     }.observes('selectedOrganization'),
 
-    queryParams: ['lat', 'lng', 'z'],
+    queryParams: ['lat', 'lng', 'z', 'selectedSectors', 'selectedTypes'],
 
     findActive: function (checkedModels) {
         return _.chain(checkedModels)
@@ -64639,6 +64677,14 @@ App.ApplicationController = Ember.Controller.extend({
                 type.set('isActive', false);
             });
             this.send('filtersChanged');
+        },
+
+        organizationsReady: function () {
+            // Once organizations layer is ready, update filters
+            mapmodule.updateFilters({
+                sectors: this.get('selectedSectors'),
+                types: this.get('selectedTypes')
+            });
         },
 
         filtersChanged: function () {
@@ -65191,7 +65237,7 @@ function addOrganizations(map, callback) {
     });
 }
 
-function initializeMap(id, center, zoom) {
+function initializeMap(id, center, zoom, organizationsCallback) {
     map = createMap(id, center, zoom);
     map.setActiveArea('map-active-area');
 
@@ -65218,6 +65264,10 @@ function initializeMap(id, center, zoom) {
                 }
             });
         });
+
+        if (organizationsCallback) {
+            organizationsCallback();
+        }
     });
 
     map.on('locationfound', function (e) {

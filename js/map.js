@@ -86,7 +86,7 @@ function addOrganizations(map, callback) {
     });
 }
 
-function initializeMap(id, center, zoom) {
+function initializeMap(id, center, zoom, organizationsCallback) {
     map = createMap(id, center, zoom);
     map.setActiveArea('map-active-area');
 
@@ -113,6 +113,10 @@ function initializeMap(id, center, zoom) {
                 }
             });
         });
+
+        if (organizationsCallback) {
+            organizationsCallback();
+        }
     });
 
     map.on('locationfound', function (e) {
