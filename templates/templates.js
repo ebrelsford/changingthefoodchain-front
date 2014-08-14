@@ -1119,7 +1119,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row\">\n    <div class=\"page-sections\">\n        <h2 class=\"page-sections-header\">");
+  data.buffer.push("<div class=\"text-page\">\n    <div class=\"page-sections\">\n        <h2 class=\"page-sections-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "page.sections.header", options) : helperMissing.call(depth0, "t", "page.sections.header", options))));
   data.buffer.push("</h2>\n        <ul class=\"page-sections-list\">\n            ");
   stack1 = helpers.each.call(depth0, "sections", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});

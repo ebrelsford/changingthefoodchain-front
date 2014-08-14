@@ -35,13 +35,19 @@
         .make-md-column(9);
         .make-md-column-offset(3);
 
-        // Account for close button
-        margin-top: -30px;
-
         h1 {
             border-bottom: 2px solid @foreground-color;
             margin-top: 0;
             text-transform: uppercase;
         }
+    }
+}
+
+.text-page {
+    .make-row();
+
+    .page-content {
+        // Account for close button
+        margin-top: -30px;
     }
 }

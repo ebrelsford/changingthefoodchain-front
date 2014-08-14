@@ -133,6 +133,8 @@ header:after,
 #help .help-organization-types:after,
 .news-entry-list .news-entry:before,
 .news-entry-list .news-entry:after,
+.text-page:before,
+.text-page:after,
 #popup .organization-header:before,
 #popup .organization-header:after,
 #popup .organization-row:before,
@@ -161,6 +163,7 @@ header:after,
 header:after,
 #help .help-organization-types:after,
 .news-entry-list .news-entry:after,
+.text-page:after,
 #popup .organization-header:after,
 #popup .organization-row:after {
   clear: both;
@@ -3599,7 +3602,6 @@ body.organization-view .map-active-area {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: -30px;
 }
 @media (min-width: 992px) {
   .page-content {
@@ -3616,6 +3618,13 @@ body.organization-view .map-active-area {
   border-bottom: 2px solid #443d7e;
   margin-top: 0;
   text-transform: uppercase;
+}
+.text-page {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.text-page .page-content {
+  margin-top: -30px;
 }
 #popup {
   display: none;
