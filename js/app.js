@@ -17,30 +17,23 @@ var map;
 function initializeMap() {
     if (mapmodule.isInitialized()) return;
     if ($('#map').length === 0) return;
+    var controller = App.__container__.lookup('controller:application');
 
     // Get initial map view from hash's search string
-    var hash = window.location.hash,
-        s,
+    var params = controller.getQueryParams(),
         center,
         zoom;
 
-    if (hash && hash.length > 0 && hash.indexOf('?') > 0) {
-        s = hash.slice(hash.indexOf('?'));
+    if (params.lat && params.lng) {
+        center = {
+            lng: parseFloat(params.lng),
+            lat: parseFloat(params.lat)
+        };
     }
-    if (s && s.length > 0) {
-        var params = qs.parse(s.slice(1));
-        if (params.lat && params.lng) {
-            center = {
-                lng: parseFloat(params.lng),
-                lat: parseFloat(params.lat)
-            };
-        }
-        if (params.z) {
-            zoom = parseInt(params.z);
-        }
+    if (params.z) {
+        zoom = parseInt(params.z);
     }
 
-    var controller = App.__container__.lookup('controller:application');
     map = mapmodule.init('map', center, zoom, function () {
         controller.send('organizationsReady');
     })
@@ -76,6 +69,20 @@ function makeFullWidth() {
     });
 }
 
+Ember.Controller.reopen({
+    getQueryParams: function () {
+        var hash = window.location.hash;
+        if (!(hash && hash.length > 0 && hash.indexOf('?') > 0)) {
+            return {};
+        }
+        hash = hash.slice(hash.indexOf('?') + 1);
+        if (!(hash && hash.length > 0)) {
+            return {};
+        }
+        return qs.parse(hash);
+    }
+});
+
 Ember.View.reopen({
     didInsertElement: function () {
         this._super();
@@ -86,7 +93,7 @@ Ember.View.reopen({
         makeFullHeight();
         makeFullWidth();
         initializeMap();
-    },
+    }
 });
 
 Ember.Route.reopen({
@@ -215,21 +222,12 @@ App.ApplicationController = Ember.Controller.extend({
         l.active = true;
         this.propertyDidChange('languages');
 
-        var hash = window.location.hash,
-            s;
-        if (hash && hash.length > 0 && hash.indexOf('?') > 0) {
-            s = hash.slice(hash.indexOf('?'));
+        var params = this.getQueryParams();
+        if (params.selectedSectors) {
+            this.set('selectedSectors', JSON.parse(params.selectedSectors));
         }
-        if (s && s.length > 0) {
-            var params = qs.parse(s.slice(1));
-            if (params.selectedSectors) {
-                var selectedSectors = JSON.parse(params.selectedSectors);
-                this.set('selectedSectors', selectedSectors);
-            }
-            if (params.selectedTypes) {
-                var selectedTypes = JSON.parse(params.selectedTypes);
-                this.set('selectedTypes', selectedTypes);
-            }
+        if (params.selectedTypes) {
+            this.set('selectedTypes', JSON.parse(params.selectedTypes));
         }
     },
 
