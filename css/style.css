@@ -3014,6 +3014,9 @@ body > .ember-view {
   margin-right: -15px;
   font-weight: bold;
 }
+.organizations-list-headers * {
+  cursor: pointer;
+}
 .organizations-list-headers.sort-ascending .sorted::after {
   content: '\25BC';
 }
