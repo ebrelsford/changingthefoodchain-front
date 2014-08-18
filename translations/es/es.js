@@ -66,7 +66,7 @@ Ember.I18n.translations = {
             centroid: 'Please enter a valid address that shows up on the map.',
             name: 'Please enter a name for your organization.',
             sectors: 'Please choose a sector.',
-            type: 'Please choose a type.',
+            types: 'Please choose a type.',
             general: 'Something went wrong. Please try again.'
         },
         success: 'Successfully added organization.',

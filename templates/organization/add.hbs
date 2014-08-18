@@ -5,27 +5,27 @@
     <form>
         {{#if centroidError}}
             <div class="alert alert-danger" role="alert">
-                {{t "organization_add.centroid"}}
+                {{t "organization_add.errors.centroid"}}
             </div>
         {{/if}}
         {{#if nameError}}
             <div class="alert alert-danger" role="alert">
-                {{t "organization_add.name"}}
+                {{t "organization_add.errors.name"}}
             </div>
         {{/if}}
         {{#if sectorsError}}
             <div class="alert alert-danger" role="alert">
-                {{t "organization_add.sectors"}}
+                {{t "organization_add.errors.sectors"}}
             </div>
         {{/if}}
         {{#if typesError}}
             <div class="alert alert-danger" role="alert">
-                {{t "organization_add.types"}}
+                {{t "organization_add.errors.types"}}
             </div>
         {{/if}}
         {{#if error}}
             <div class="alert alert-danger" role="alert">
-                {{t "organization_add.general"}}
+                {{t "organization_add.errors.general"}}
             </div>
         {{/if}}
         {{#if success}}
