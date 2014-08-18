@@ -164,7 +164,10 @@ App.AddOrganizationRoute = Ember.Route.extend({
         },
 
         submit: function () {
-            if (!this.validate()) return;
+            if (!this.validate()) {
+                $('#page').scrollTop(0);
+                return;
+            }
 
             var controller = this.controller,
                 fields = controller.getProperties([
@@ -179,7 +182,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
                     data.append(name, value);
                 }
             });
-            data.append('centroid', 'SRID=4326;POINT(' + properties.centroid[1] + ' ' + properties.centroid[0] + ')');
+            data.append('centroid', 'SRID=4326;POINT(' + fields.centroid[1] + ' ' + fields.centroid[0] + ')');
 
             $.each(controller.get('sectors'), function (i, sector) {
                 if (sector) {
@@ -211,6 +214,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
                 })
                 .always(function () {
                     this.controller.set('submitting', false);
+                    $('#page').scrollTop(0);
                 });
         }
     },

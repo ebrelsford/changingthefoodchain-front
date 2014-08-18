@@ -691,7 +691,7 @@ function program1(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.centroid", options) : helperMissing.call(depth0, "t", "organization_add.centroid", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.errors.centroid", options) : helperMissing.call(depth0, "t", "organization_add.errors.centroid", options))));
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
@@ -700,7 +700,7 @@ function program3(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.name", options) : helperMissing.call(depth0, "t", "organization_add.name", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.errors.name", options) : helperMissing.call(depth0, "t", "organization_add.errors.name", options))));
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
@@ -709,7 +709,7 @@ function program5(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.sectors", options) : helperMissing.call(depth0, "t", "organization_add.sectors", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.errors.sectors", options) : helperMissing.call(depth0, "t", "organization_add.errors.sectors", options))));
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
@@ -718,7 +718,7 @@ function program7(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.types", options) : helperMissing.call(depth0, "t", "organization_add.types", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.errors.types", options) : helperMissing.call(depth0, "t", "organization_add.errors.types", options))));
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
@@ -727,7 +727,7 @@ function program9(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n            <div class=\"alert alert-danger\" role=\"alert\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.general", options) : helperMissing.call(depth0, "t", "organization_add.general", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.errors.general", options) : helperMissing.call(depth0, "t", "organization_add.errors.general", options))));
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
