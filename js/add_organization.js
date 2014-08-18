@@ -167,20 +167,19 @@ App.AddOrganizationRoute = Ember.Route.extend({
             if (!this.validate()) return;
 
             var controller = this.controller,
-                centroid = controller.get('centroid'),
+                fields = controller.getProperties([
+                    'name', 'address', 'address2', 'city', 'state', 'zip',
+                    'email', 'siteUrl', 'mission', 'phone', 'centroid'
+                ]),
                 data = new FormData();
 
-            data.append('name', controller.get('name'));
-            data.append('address_line1', controller.get('address'));
-            data.append('address_line2', controller.get('address2'));
-            data.append('city', controller.get('city'));
-            data.append('state_province', controller.get('state'));
-            data.append('postal_code', controller.get('zip'));
-            data.append('email', controller.get('email'));
-            data.append('site_url', controller.get('siteUrl'));
-            data.append('mission', controller.get('mission'));
-            data.append('phone', controller.get('phone'));
-            data.append('centroid', 'SRID=4326;POINT(' + centroid[1] + ' ' + centroid[0] + ')');
+            _.each(fields, function (value, name) {
+                // Avoid adding null / empty values
+                if (name !== 'centroid' && value !== null && value !== '') {
+                    data.append(name, value);
+                }
+            });
+            data.append('centroid', 'SRID=4326;POINT(' + properties.centroid[1] + ' ' + properties.centroid[0] + ')');
 
             $.each(controller.get('sectors'), function (i, sector) {
                 if (sector) {
