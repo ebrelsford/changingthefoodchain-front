@@ -3364,7 +3364,7 @@ header #logo {
   padding-right: 15px;
   white-space: nowrap;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   header #logo {
     float: left;
     width: 25%;
@@ -3387,7 +3387,7 @@ header #nav {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   header #nav {
     float: left;
     width: 8.33333333%;
@@ -3408,7 +3408,7 @@ header #tagline {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   header #tagline {
     float: left;
     width: 25%;
@@ -3422,7 +3422,7 @@ header #list-button {
   color: #bc461b;
   text-transform: uppercase;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   header #list-button {
     float: left;
     width: 8.33333333%;
@@ -3911,7 +3911,7 @@ body.organization-view .map-active-area {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   #search {
     float: left;
     width: 25%;
