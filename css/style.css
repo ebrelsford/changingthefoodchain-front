@@ -3769,7 +3769,7 @@ body.organization-view .map-active-area {
   padding-right: 15px;
   position: fixed;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .page-sections {
     float: left;
     width: 25%;
@@ -3802,13 +3802,13 @@ body.organization-view .map-active-area {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .page-content {
     float: left;
     width: 75%;
   }
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .page-content {
     margin-left: 25%;
   }
