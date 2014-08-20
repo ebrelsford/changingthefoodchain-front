@@ -47,24 +47,29 @@
         }
 
         &-name {
-            .make-sm-column(5);
             .make-xs-column(9);
+            .make-sm-column(7);
+            .make-md-column(5);
         }
         &-city {
-            .make-sm-column(2);
             .hidden-xs();
+            .make-sm-column(3);
+            .make-md-column(2);
         }
         &-state {
-            .make-sm-column(1);
             .make-xs-column(3);
+            .make-sm-column(2);
+            .make-md-column(1);
         }
         &-types {
-            .make-sm-column(2);
             .hidden-xs();
+            .hidden-sm();
+            .make-md-column(2);
         }
         &-sectors {
-            .make-sm-column(2);
             .hidden-xs();
+            .hidden-sm();
+            .make-md-column(2);
         }
 
         &:hover {

@@ -3095,14 +3095,20 @@ body > .ember-view {
   white-space: nowrap;
 }
 .organizations-list-item-name {
-  position: relative;
   float: left;
   width: 75%;
+  position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
+  .organizations-list-item-name {
+    float: left;
+    width: 58.33333333%;
+  }
+}
+@media (min-width: 992px) {
   .organizations-list-item-name {
     float: left;
     width: 41.66666667%;
@@ -3114,26 +3120,38 @@ body > .ember-view {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 768px) {
-  .organizations-list-item-city {
-    float: left;
-    width: 16.66666667%;
-  }
-}
 @media (max-width: 767px) {
   .organizations-list-item-city {
     display: none !important;
   }
 }
+@media (min-width: 768px) {
+  .organizations-list-item-city {
+    float: left;
+    width: 25%;
+  }
+}
+@media (min-width: 992px) {
+  .organizations-list-item-city {
+    float: left;
+    width: 16.66666667%;
+  }
+}
 .organizations-list-item-state {
-  position: relative;
   float: left;
   width: 25%;
+  position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
+  .organizations-list-item-state {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+@media (min-width: 992px) {
   .organizations-list-item-state {
     float: left;
     width: 8.33333333%;
@@ -3145,15 +3163,20 @@ body > .ember-view {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 768px) {
-  .organizations-list-item-types {
-    float: left;
-    width: 16.66666667%;
-  }
-}
 @media (max-width: 767px) {
   .organizations-list-item-types {
     display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .organizations-list-item-types {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .organizations-list-item-types {
+    float: left;
+    width: 16.66666667%;
   }
 }
 .organizations-list-item-sectors {
@@ -3162,15 +3185,20 @@ body > .ember-view {
   padding-left: 15px;
   padding-right: 15px;
 }
-@media (min-width: 768px) {
-  .organizations-list-item-sectors {
-    float: left;
-    width: 16.66666667%;
-  }
-}
 @media (max-width: 767px) {
   .organizations-list-item-sectors {
     display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .organizations-list-item-sectors {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .organizations-list-item-sectors {
+    float: left;
+    width: 16.66666667%;
   }
 }
 .organizations-list-item:hover {
