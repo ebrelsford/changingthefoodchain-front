@@ -64846,8 +64846,8 @@ module.exports = {
 
                     if (b) {
                         r.bounds = [
-                            [b.xa.k, b.pa.j],
-                            [b.xa.j, b.pa.k]
+                            [b.getSouthWest().lat(), b.getSouthWest().lng()],
+                            [b.getNorthEast().lat(), b.getNorthEast().lng()]
                         ];
                     }
 
