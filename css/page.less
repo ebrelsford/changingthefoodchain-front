@@ -6,9 +6,20 @@
     left: 0;
 }
 
+.page-view {
+    .interface-hidden-xs();
+}
+
+@media (max-width: @screen-xs-max) {
+    #page {
+        left: 0;
+    }
+}
+
 .page {
     &-sections {
         .make-md-column(3);
+        .hidden-xs();
         position: fixed;
 
         &-header {

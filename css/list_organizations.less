@@ -1,3 +1,13 @@
+.list-organizations-view {
+    .interface-hidden-xs();
+}
+
+@media (max-width: @screen-xs-max) {
+    #organizations-list-add-organization-button {
+        width: 100%;
+    }
+}
+
 .organizations-list {
     list-style: none;
     margin: 0;
@@ -38,18 +48,23 @@
 
         &-name {
             .make-sm-column(5);
+            .make-xs-column(9);
         }
         &-city {
             .make-sm-column(2);
+            .hidden-xs();
         }
         &-state {
             .make-sm-column(1);
+            .make-xs-column(3);
         }
         &-types {
             .make-sm-column(2);
+            .hidden-xs();
         }
         &-sectors {
             .make-sm-column(2);
+            .hidden-xs();
         }
 
         &:hover {

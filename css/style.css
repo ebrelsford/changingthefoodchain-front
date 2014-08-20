@@ -2777,6 +2777,13 @@ select[multiple].input-lg {
   margin-top: -15px;
   opacity: 1;
 }
+@media (max-width: 767px) {
+  .interface-hidden-xs #nav,
+  .interface-hidden-xs #tagline,
+  .interface-hidden-xs #search {
+    display: none !important;
+  }
+}
 .clear {
   color: rgba(68, 61, 126, 0.5);
   float: right;
@@ -2880,6 +2887,13 @@ body > .ember-view {
 .nav-tabs > li.active > a:focus {
   border-width: 0;
   border-bottom: 3px solid #bc461b;
+}
+@media (max-width: 767px) {
+  .add-organization-view #nav,
+  .add-organization-view #tagline,
+  .add-organization-view #search {
+    display: none !important;
+  }
 }
 .add-organization-header {
   border-bottom: 2px solid #443d7e;
@@ -3036,6 +3050,18 @@ body > .ember-view {
     width: 50%;
   }
 }
+@media (max-width: 767px) {
+  .list-organizations-view #nav,
+  .list-organizations-view #tagline,
+  .list-organizations-view #search {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  #organizations-list-add-organization-button {
+    width: 100%;
+  }
+}
 .organizations-list {
   list-style: none;
   margin: 0;
@@ -3070,6 +3096,8 @@ body > .ember-view {
 }
 .organizations-list-item-name {
   position: relative;
+  float: left;
+  width: 75%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -3092,8 +3120,15 @@ body > .ember-view {
     width: 16.66666667%;
   }
 }
+@media (max-width: 767px) {
+  .organizations-list-item-city {
+    display: none !important;
+  }
+}
 .organizations-list-item-state {
   position: relative;
+  float: left;
+  width: 25%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -3116,6 +3151,11 @@ body > .ember-view {
     width: 16.66666667%;
   }
 }
+@media (max-width: 767px) {
+  .organizations-list-item-types {
+    display: none !important;
+  }
+}
 .organizations-list-item-sectors {
   position: relative;
   min-height: 1px;
@@ -3126,6 +3166,11 @@ body > .ember-view {
   .organizations-list-item-sectors {
     float: left;
     width: 16.66666667%;
+  }
+}
+@media (max-width: 767px) {
+  .organizations-list-item-sectors {
+    display: none !important;
   }
 }
 .organizations-list-item:hover {
@@ -3146,14 +3191,27 @@ body > .ember-view {
   width: 100%;
 }
 #filters {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
   background-color: transparent;
   height: 400px;
   overflow-y: auto;
   padding-left: 15px;
   position: absolute;
   top: 120px;
-  width: 220px;
   z-index: 2000;
+}
+@media (min-width: 992px) {
+  #filters {
+    float: left;
+    width: 25%;
+  }
+}
+@media (max-width: 767px) {
+  #filters {
+    display: none !important;
+  }
 }
 #filters section {
   border-top: 1px solid #443d7e;
@@ -3304,6 +3362,7 @@ header #logo {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  white-space: nowrap;
 }
 @media (min-width: 992px) {
   header #logo {
@@ -3505,6 +3564,11 @@ body.organization-view .map-active-area {
   position: absolute;
   z-index: 2000;
 }
+@media (max-width: 767px) {
+  #project-authors {
+    display: none !important;
+  }
+}
 .leaflet-bar {
   border-radius: 0;
   box-shadow: none;
@@ -3686,6 +3750,18 @@ body.organization-view .map-active-area {
 .page-view #page {
   left: 0;
 }
+@media (max-width: 767px) {
+  .page-view #nav,
+  .page-view #tagline,
+  .page-view #search {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  #page {
+    left: 0;
+  }
+}
 .page-sections {
   position: relative;
   min-height: 1px;
@@ -3697,6 +3773,11 @@ body.organization-view .map-active-area {
   .page-sections {
     float: left;
     width: 25%;
+  }
+}
+@media (max-width: 767px) {
+  .page-sections {
+    display: none !important;
   }
 }
 .page-sections-header {
@@ -3811,6 +3892,11 @@ body.organization-view .map-active-area {
   #popup .organization-details {
     float: left;
     width: 75%;
+  }
+}
+@media (max-width: 767px) {
+  #popup {
+    width: 100%;
   }
 }
 .carousel {

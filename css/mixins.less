@@ -26,6 +26,14 @@
     }
 }
 
+.interface-hidden-xs {
+    @media (max-width: @screen-xs-max) {
+        #nav, #tagline, #search {
+            .responsive-invisibility();
+        }
+    }
+}
+
 .clear {
     color: @faded-color;
     float: right;
