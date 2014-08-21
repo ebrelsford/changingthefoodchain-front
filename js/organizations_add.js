@@ -3,7 +3,7 @@ var geocode = require('./geocode').geocode;
 var _ = require('underscore');
 
 
-App.AddOrganizationController = Ember.Controller.extend({
+App.OrganizationsAddController = Ember.Controller.extend({
     address: null,
     address2: null,
     city: null,
@@ -109,7 +109,7 @@ App.AddOrganizationController = Ember.Controller.extend({
     }
 });
 
-App.AddOrganizationRoute = Ember.Route.extend({
+App.OrganizationsAddRoute = Ember.Route.extend({
     clearValidation: function () {
         var errorProperties = ['centroidError', 'error', 'nameError', 
             'sectorsError', 'typesError'];
@@ -241,7 +241,7 @@ App.AddOrganizationRoute = Ember.Route.extend({
     }
 });
 
-App.AddOrganizationView = Ember.View.extend({
+App.OrganizationsAddView = Ember.View.extend({
     didInsertElement: function () {
         this._super();
         $('body').addClass('add-organization-view');
@@ -256,6 +256,7 @@ App.AddOrganizationView = Ember.View.extend({
     didRenderElement : function() {
         this._super();
 
+        $('#popup').hide();
         $('#page').show();
 
         var marker = null,
@@ -291,7 +292,5 @@ App.AddOrganizationView = Ember.View.extend({
         }).addTo(addOrganizationMap);
 
         this.controller.set('map', addOrganizationMap);
-    },
-
-    templateName: 'organization/add'
+    }
 });

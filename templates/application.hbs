@@ -23,7 +23,7 @@
         </div>
         {{/if}}
     </div>
-    <a id="list-button" href="#" {{action 'openOrganizationList'}}>list</a>
+    <div id="list-button">{{#link-to 'organizations.list'}}list{{/link-to}}</div>
 </header>
 
 <div id="map">
@@ -50,11 +50,11 @@
     </section>
 </div>
 
-<a id="add-organization-button" class="map-ui-button" {{action 'openAddOrganization'}}>add org</a>
+{{#link-to 'organizations.add' id="add-organization-button" class="map-ui-button"}}add org{{/link-to}}
 <a id="share-button" class="map-ui-button" {{action 'openShare'}}>share</a>
 
 <div id="popup" class="full-height">
-    {{outlet popup}}
+    {{outlet}}
 </div>
 
 <div id="page" class="full-height full-width">

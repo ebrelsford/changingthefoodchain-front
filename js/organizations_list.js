@@ -3,19 +3,22 @@ require('ember-list-view');
 require('./pagemixins');
 
 
-App.ListOrganizationsRoute = Ember.Route.extend({
+App.OrganizationsListRoute = Ember.Route.extend({
     actions: {
         close: function () {
             this.transitionTo('index');
         },
 
         setPageTitle: function () {
-            document.title = this.makePageTitle(Ember.I18n.t('list_organizations.title'));
+            document.title = this.makePageTitle(Ember.I18n.t('organizations_list.title'));
         }
     },
 
     renderTemplate: function () {
-        this.render('list-organizations', { outlet: 'page' });
+        this.render('organizations/list', {
+            into: 'application',
+            outlet: 'page'
+        });
     },
 
     deactivate: function () {
@@ -23,7 +26,7 @@ App.ListOrganizationsRoute = Ember.Route.extend({
     }
 });
 
-App.ListOrganizationsController = Ember.ArrayController.extend({
+App.OrganizationsListController = Ember.ArrayController.extend({
     isLoading: false,
     page: null,
     nextPage: 1,
@@ -171,7 +174,7 @@ App.ListOrganizationsController = Ember.ArrayController.extend({
     }
 });
 
-App.ListOrganizationsView = Ember.View.extend(App.PaginatedViewMixin, {
+App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
     paginatedScrollSelector: '.ember-list-view',
 
     didInsertElement: function () {
@@ -186,6 +189,7 @@ App.ListOrganizationsView = Ember.View.extend(App.PaginatedViewMixin, {
 
     didRenderElement: function () {
         this._super();
+        $('#popup').hide();
         $('#page').show();
     }
 });

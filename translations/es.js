@@ -125,7 +125,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
     },
 
-    list_organizations: {
+    organizations_list: {
         title: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

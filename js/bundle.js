@@ -64088,305 +64088,6 @@ App.OrganizationAddMediaView = Ember.View.extend({
 },{"ember":7,"underscore":33}],12:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
-var _ = require('underscore');
-
-
-App.AddOrganizationController = Ember.Controller.extend({
-    address: null,
-    address2: null,
-    city: null,
-    name: null,
-    state: null,
-    zip: null,
-    email: null,
-    siteUrl: null,
-    mission: null,
-    phone: null,
-    sectors: [],
-    types: [],
-    centroid: null,
-
-    geocodedAddress: null,
-    geocodedCity: null,
-    geocodedState: null,
-    geocodedZip: null,
-
-    fullAddress: function () {
-        return [
-            this.get('address'),
-            this.get('city'),
-            this.get('state'),
-            this.get('zip')
-        ].join(', ');
-    }.property('address', 'city', 'state', 'zip'),
-
-    typeCheckbox: Ember.Checkbox.extend({
-        change: function () {
-            var types = this.get('controller').types;
-            if (this.checked) {
-                types.push(this.name);
-            }
-            else {
-                types.removeObject(this.name);
-            }
-        }
-    }),
-
-    sectorCheckbox: Ember.Checkbox.extend({
-        change: function () {
-            var sectors = this.get('controller').sectors;
-            if (this.checked) {
-                sectors.push(this.name);
-            }
-            else {
-                sectors.removeObject(this.name);
-            }
-        }
-    }),
-
-    clearGeocodeResult: function () {
-        this.set('centroid', null);
-        this.set('geocodedAddress', null);
-        this.set('geocodedCity', null);
-        this.set('geocodedState', null);
-        this.set('geocodedZip', null);
-        this.set('geocodeError', false);
-        this.send('updateMap');
-    },
-
-    actions: {
-        updateCentroid: function () {
-            // Only try to geocode if we have enough to go on
-            if (!(this.get('address') && this.get('city'))) {
-                return;
-            }
-            this.clearGeocodeResult();
-            (function (controller) {
-                geocode(controller.get('fullAddress'), null, null, function (result) {
-                    if (result) {
-                        controller.setProperties({
-                            centroid: result.latlng,
-                            geocodedAddress: result.address,
-                            geocodedCity: result.city,
-                            geocodedState: result.state,
-                            geocodedZip: result.zip
-                        });
-                        controller.send('updateMap');
-                    }
-                    else {
-                        controller.set('geocodeError', true);
-                    }
-                });
-            })(this);
-        },
-
-        useGeocodedAddress: function () {
-            this.setProperties({
-                address: this.get('geocodedAddress'),
-                city: this.get('geocodedCity'),
-                state: this.get('geocodedState'),
-                zip: this.get('geocodedZip')
-            });
-        },
-
-        updateMap: function () {
-            this.get('map').fire('locationfound', {
-                latlng: this.get('centroid')
-            });
-        }
-    }
-});
-
-App.AddOrganizationRoute = Ember.Route.extend({
-    clearValidation: function () {
-        var errorProperties = ['centroidError', 'error', 'nameError', 
-            'sectorsError', 'typesError'];
-        _.each(errorProperties, function (errorProperty) {
-            this.set(errorProperty, false);
-        }, this.controller);
-    },
-
-    clearForm: function () {
-        var addressProperties = ['name', 'address', 'address2', 'city', 'state',
-                'zip', 'email', 'phone', 'siteUrl', 'mission'],
-            geocodeProperties = ['centroid', 'geocodedAddress', 'geocodedCity',
-                'geocodedState', 'geocodedZip'],
-            propertyChanges = {};
-
-        _.each(_.union(addressProperties, geocodeProperties), function (property) {
-            propertyChanges[property] = null;
-        });
-
-        // Set all properties at the same time
-        this.controller.setProperties(propertyChanges);
-
-        // Update map (clear location)
-        this.controller.send('updateMap');
-    },
-
-    validate: function () {
-        this.clearValidation();
-        if (!this.controller.get('name')) {
-            this.controller.set('nameError', true);
-            return false;
-        }
-        if (!this.controller.get('centroid')) {
-            this.controller.set('centroidError', true);
-            return false;
-        }
-        if (this.controller.get('types').length === 0) {
-            this.controller.set('typesError', true);
-            return false;
-        }
-        if (this.controller.get('sectors').length === 0) {
-            this.controller.set('sectorsError', true);
-            return false;
-        }
-        return true;
-    },
-
-    actions: {
-        close: function () {
-            this.disconnectOutlet('page');
-            history.back();
-        },
-
-        submit: function () {
-            if (!this.validate()) {
-                $('#page').scrollTop(0);
-                return;
-            }
-
-            var controller = this.controller,
-                fields = controller.getProperties([
-                    'name', 'address', 'address2', 'city', 'state', 'zip',
-                    'email', 'siteUrl', 'mission', 'phone', 'centroid'
-                ]),
-                data = new FormData();
-
-            _.each(fields, function (value, name) {
-                // Avoid adding null / empty values
-                if (name !== 'centroid' && value !== null && value !== '') {
-                    data.append(name, value);
-                }
-            });
-            data.append('centroid', 'SRID=4326;POINT(' + fields.centroid[1] + ' ' + fields.centroid[0] + ')');
-
-            $.each(controller.get('sectors'), function (i, sector) {
-                if (sector) {
-                    data.append('sectors', sector);
-                }
-            });
-            $.each(controller.get('types'), function (i, type) {
-                if (type) {
-                    data.append('types', type);
-                }
-            });
-
-            controller.set('submitting', true);
-            $.ajax({
-                context: this,
-                type: 'POST',
-                url: CONFIG.API_BASE + '/organizations/',
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false
-            })
-                .done(function () {
-                    this.controller.set('success', true);
-                    this.clearForm();
-                })
-                .fail(function () {
-                    this.controller.set('error', true);
-                })
-                .always(function () {
-                    this.controller.set('submitting', false);
-                    $('#page').scrollTop(0);
-                });
-        }
-    },
-
-    setupController: function (controller, model) {
-        this._super(controller, model);
-
-        this.store.findAll('sector')
-            .then(function (sectors) {
-                controller.set('potentialSectors', sectors);
-            });
-
-        this.store.findAll('type')
-            .then(function (types) {
-                controller.set('potentialTypes', types);
-            });
-    },
-
-    renderTemplate: function () {
-        this.render({
-            into: 'application',
-            outlet: 'page'
-        });
-    }
-});
-
-App.AddOrganizationView = Ember.View.extend({
-    didInsertElement: function () {
-        this._super();
-        $('body').addClass('add-organization-view');
-    },
-
-    willDestroyElement: function () {
-        this._super();
-        $('body').removeClass('add-organization-view');
-        $('#page').hide();
-    },
-
-    didRenderElement : function() {
-        this._super();
-
-        $('#page').show();
-
-        var marker = null,
-            defaultCenter = [39.095963, -97.470703],
-            defaultZoom = 3;
-        var addOrganizationMap = L.map('add-organization-map', {
-            center: defaultCenter,
-            maxZoom: 19,
-            scrollWheelZoom: false,
-            zoom: defaultZoom,
-            zoomControl: false
-        });
-
-        addOrganizationMap.on('locationfound', function (e) {
-            if (marker) {
-                addOrganizationMap.removeLayer(marker);
-            }
-            if (e.latlng) {
-                // Center view around found location
-                marker = L.marker(e.latlng).addTo(addOrganizationMap);
-                addOrganizationMap.setView(e.latlng, 16);
-            }
-            else {
-                // No location--reset view
-                addOrganizationMap.setView(defaultCenter, defaultZoom);
-            }
-        });
-
-        var streets = L.tileLayer(CONFIG.TILE_URL, {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-            mapId: CONFIG.MAP_ID,
-            maxZoom: 18
-        }).addTo(addOrganizationMap);
-
-        this.controller.set('map', addOrganizationMap);
-    },
-
-    templateName: 'organization/add'
-});
-
-},{"./geocode":15,"ember":7,"underscore":33}],13:[function(require,module,exports){
-var Ember = require('ember');
-var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
 var qs = require('qs');
@@ -64515,13 +64216,14 @@ window.App = Ember.Application.create({
 App.deferReadiness();
 
 App.Router.map(function() {
-    this.route('add-organization', { path: '/organizations/add' });
-    this.route('list-organizations', { path: '/organizations' });
-    this.resource('organization', {
-        path: '/organizations/:organization_id'
-    }, function () {
-        this.route('add_media', { path: '/add-media' });
+    this.resource('organizations', { path: '/organizations' }, function () {
+        this.route('add', { path: 'add' });
+        this.route('list', { path: 'all' });
+        this.resource('organization', { path: ':organization_id' }, function () {
+            this.route('add_media', { path: 'add-media' });
+        });
     });
+
     this.route('about');
     this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
@@ -64540,20 +64242,12 @@ App.ApplicationRoute = Ember.Route.extend({
             document.title = this.makePageTitle();
         },
 
-        openAddOrganization: function () {
-            this.transitionTo('add-organization');
-        },
-
         openHelpOrganizationTypes: function () {
             this.transitionTo('help-organization-types');
         },
 
         openOrganization: function (id) {
             this.transitionTo('organization', id);
-        },
-
-        openOrganizationList: function () {
-            this.transitionTo('list-organizations');
         },
 
         openShare: function () {
@@ -64731,7 +64425,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":34,"./geocode":15,"./i18n":17,"./map":20,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":28,"ember-typeahead":6,"qs":31,"typeahead":10,"underscore":33}],14:[function(require,module,exports){
+},{"../templates/templates":34,"./geocode":14,"./i18n":16,"./map":18,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":28,"ember-typeahead":6,"qs":31,"typeahead":10,"underscore":33}],13:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -64789,7 +64483,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -64864,7 +64558,7 @@ module.exports = {
 
 };
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 App.HelpOrganizationTypesRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -64891,7 +64585,7 @@ App.HelpOrganizationTypesView = Ember.View.extend({
     }
 });
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var qs = require('qs');
 
 
@@ -64931,209 +64625,16 @@ module.exports = {
     }
 };
 
-},{"qs":31}],18:[function(require,module,exports){
-var Ember = require('ember');
-require('ember-list-view');
-require('./pagemixins');
-
-
-App.ListOrganizationsRoute = Ember.Route.extend({
-    actions: {
-        close: function () {
-            this.transitionTo('index');
-        },
-
-        setPageTitle: function () {
-            document.title = this.makePageTitle(Ember.I18n.t('list_organizations.title'));
-        }
-    },
-
-    renderTemplate: function () {
-        this.render('list-organizations', { outlet: 'page' });
-    },
-
-    deactivate: function () {
-        $('#page').hide();
-    }
-});
-
-App.ListOrganizationsController = Ember.ArrayController.extend({
-    isLoading: false,
-    page: null,
-    nextPage: 1,
-    height: 400,
-    sortBy: {},
-
-    queryParams: ['sortBy.key', 'sortBy.dir'],
-
-    needs: ['application'],
-
-    sortByName: function () {
-        return this.get('sortBy').key === 'name';
-    }.property('sortBy'),
-
-    sortByCity: function () {
-        return this.get('sortBy').key === 'city';
-    }.property('sortBy'),
-
-    sortByState: function () {
-        return this.get('sortBy').key === 'state_province';
-    }.property('sortBy'),
-
-    sortByTypes: function () {
-        return this.get('sortBy').key === 'types';
-    }.property('sortBy'),
-
-    sortBySectors: function () {
-        return this.get('sortBy').key === 'sectors';
-    }.property('sortBy'),
-
-    sortAscending: function () {
-        return this.get('sortBy').dir === 'asc';
-    }.property('sortBy'),
-
-    filtersChanged: function () {
-        Ember.run.debounce(this, this.refresh, 100);
-    }.observes('controllers.application.selectedSectors', 'controllers.application.selectedTypes'),
-
-    refresh: function () {
-        this.clear();
-        this.setProperties({
-            page: null,
-            nextPage: 1
-        });
-        this.send('loadNextPage');
-    },
-
-    actions: {
-        sortBy: function (key) {
-            var sortBy = this.get('sortBy'),
-                dir = 'asc';
-            if (sortBy.key === key && sortBy.dir === 'asc') {
-                dir = 'desc';
-            }
-            this.set('sortBy', {
-                key: key,
-                dir: dir
-            });
-            this.refresh();
-        },
-
-        openOrganization: function (id) {
-            this.transitionToRoute('organization', id);
-        },
-
-        loadNextPage: function () {
-            var controller = this,
-                applicationController = this.get('controllers.application'),
-                sectors = applicationController.get('selectedSectors'),
-                types = applicationController.get('selectedTypes'),
-                sortBy = controller.get('sortBy'),
-                nextPage = controller.get('nextPage'),
-                params = { page: nextPage };
-            if (controller.get('isLoading') || !nextPage) return;
-            controller.set('isLoading', true);
-
-            // Update parameters with filters
-            if (sectors && sectors.length > 0) {
-                params.sectors = sectors.join(',');
-            }
-            if (types && types.length > 0) {
-                params.types = types.join(',');
-            }
-
-            // Update parameters with sorting
-            if (sortBy && sortBy.key) {
-                params.sortby = sortBy.key;
-                // Add direction if descending
-                if (sortBy.dir === 'desc') {
-                    params.sortby = '-' + params.sortby;
-                }
-            }
-
-            (function () {
-                controller.store.find('organization', params).then(function (data) {
-                    controller.addObjects(data.content);  
-                    var meta = data.store.metadataFor('organization');
-                    controller.setProperties({
-                        isLoading: false,
-                        page: meta.current_page,
-                        nextPage: meta.next_page
-                    });
-                });
-            })();
-        }
-    },
-
-    listView: Ember.ListView.extend({
-        didInsertElement: function () {
-            this._super();
-            // Add didRenderElement since this view comes from outside of
-            // the application
-            Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
-        },
-
-        didRenderElement: function () {
-            this._super();
-            this.set('height', this.calculateHeight());
-        },
-
-        height: function () {
-            return $(document).height();
-        }.property(),
-
-        calculateHeight: function () {
-            var pageHeight = $('#page').height(),
-                buttonHeight = $('.organizations-list-add-organization').outerHeight(),
-                headerHeight = $('.organizations-list-headers').outerHeight();
-            return pageHeight - buttonHeight - headerHeight;
-        },
-
-        rowHeight: 25
-    }),
-
-    init: function () {
-        this._super();
-
-        var params = this.container.lookup('controller:application').getQueryParams();
-        this.set('sortBy', {
-            dir: params['sortBy.dir'],
-            key: params['sortBy.key']
-        });
-
-        this.send('loadNextPage');
-    }
-});
-
-App.ListOrganizationsView = Ember.View.extend(App.PaginatedViewMixin, {
-    paginatedScrollSelector: '.ember-list-view',
-
-    didInsertElement: function () {
-        this._super();
-        $('body').addClass('list-organizations-view');
-    },
-
-    willDestroyElement: function () {
-        this._super();
-        $('body').removeClass('list-organizations-view');
-    },
-
-    didRenderElement: function () {
-        this._super();
-        $('#page').show();
-    }
-});
-
-},{"./pagemixins":25,"ember":7,"ember-list-view":9}],19:[function(require,module,exports){
+},{"qs":31}],17:[function(require,module,exports){
 require('./app');
 require('./add_media');
-require('./add_organization');
 require('./carousel');
 require('./help');
-require('./list_organizations');
 require('./models');
 require('./news');
 require('./organization');
+require('./organizations_add');
+require('./organizations_list');
 require('./page');
 require('./share');
 
@@ -65141,7 +64642,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":11,"./add_organization":12,"./app":13,"./carousel":14,"./help":16,"./i18n":17,"./list_organizations":18,"./models":21,"./news":22,"./organization":23,"./page":24,"./share":26}],20:[function(require,module,exports){
+},{"./add_media":11,"./app":12,"./carousel":13,"./help":15,"./i18n":16,"./models":19,"./news":20,"./organization":21,"./organizations_add":22,"./organizations_list":23,"./page":24,"./share":26}],18:[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -65321,7 +64822,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":8,"underscore":33}],21:[function(require,module,exports){
+},{"leaflet-active-area":8,"underscore":33}],19:[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');
@@ -65441,7 +64942,7 @@ App.Entry = DS.Model.extend({
     }.property('published_on')
 });
 
-},{"./videos":27,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":30}],22:[function(require,module,exports){
+},{"./videos":27,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":30}],20:[function(require,module,exports){
 var _ = require('underscore');
 require('./pagemixins');
 
@@ -65584,20 +65085,46 @@ App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
 
 App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {});
 
-},{"./pagemixins":25,"underscore":33}],23:[function(require,module,exports){
+},{"./pagemixins":25,"underscore":33}],21:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
 
-App.OrganizationView = Ember.View.extend({
+App.OrganizationsView = Ember.View.extend({
     didInsertElement: function () {
         this._super();
         $('body').addClass('organization-view');
+        $('#popup').show();
     },
 
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('organization-view');
+    }
+});
+
+App.OrganizationsRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+            map.deselectOrganization();
+        }
+    },
+
+    deactivate: function () {
+        $('#popup').hide();
+    }
+});
+
+App.OrganizationsErrorRoute = App.OrganizationsRoute.extend({});
+App.OrganizationsErrorView = App.OrganizationsView.extend({});
+
+App.OrganizationsLoadingRoute = App.OrganizationsRoute.extend({});
+App.OrganizationsLoadingView = App.OrganizationsView.extend({});
+
+App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {
         this._super();
-        $('#popup').show();
 
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
@@ -65614,11 +65141,6 @@ App.OrganizationView = Ember.View.extend({
         // If we're moving to the view from another where the map is ready
         // select here
         this.controller.send('selectOrganization');
-    },
-
-    willDestroyElement: function () {
-        this._super();
-        $('body').removeClass('organization-view');
     }
 });
 
@@ -65634,13 +65156,8 @@ App.OrganizationController = Ember.Controller.extend({
     }.observes('model')
 });
 
-App.OrganizationRoute = Ember.Route.extend({
+App.OrganizationRoute = App.OrganizationsRoute.extend({
     actions: {
-        close: function () {
-            this.transitionTo('index');
-            map.deselectOrganization();
-        },
-
         setPageTitle: function () {
             document.title = this.makePageTitle(this.controllerFor('organization').get('model').get('name'));
         }
@@ -65648,18 +65165,509 @@ App.OrganizationRoute = Ember.Route.extend({
 
     model: function (params) {
         return this.store.find('organization', params.organization_id);
-    },
-
-    deactivate: function () {
-        $('#popup').hide();
-    },
-
-    renderTemplate: function () {
-        this.render('organization', { outlet: 'popup' });
     }
 });
 
-},{"./map":20,"ember":7}],24:[function(require,module,exports){
+App.OrganizationIndexController = Ember.Controller.extend({
+    needs: ['organization']
+});
+
+},{"./map":18,"ember":7}],22:[function(require,module,exports){
+var Ember = require('ember');
+var geocode = require('./geocode').geocode;
+var _ = require('underscore');
+
+
+App.OrganizationsAddController = Ember.Controller.extend({
+    address: null,
+    address2: null,
+    city: null,
+    name: null,
+    state: null,
+    zip: null,
+    email: null,
+    siteUrl: null,
+    mission: null,
+    phone: null,
+    sectors: [],
+    types: [],
+    centroid: null,
+
+    geocodedAddress: null,
+    geocodedCity: null,
+    geocodedState: null,
+    geocodedZip: null,
+
+    fullAddress: function () {
+        return [
+            this.get('address'),
+            this.get('city'),
+            this.get('state'),
+            this.get('zip')
+        ].join(', ');
+    }.property('address', 'city', 'state', 'zip'),
+
+    typeCheckbox: Ember.Checkbox.extend({
+        change: function () {
+            var types = this.get('controller').types;
+            if (this.checked) {
+                types.push(this.name);
+            }
+            else {
+                types.removeObject(this.name);
+            }
+        }
+    }),
+
+    sectorCheckbox: Ember.Checkbox.extend({
+        change: function () {
+            var sectors = this.get('controller').sectors;
+            if (this.checked) {
+                sectors.push(this.name);
+            }
+            else {
+                sectors.removeObject(this.name);
+            }
+        }
+    }),
+
+    clearGeocodeResult: function () {
+        this.set('centroid', null);
+        this.set('geocodedAddress', null);
+        this.set('geocodedCity', null);
+        this.set('geocodedState', null);
+        this.set('geocodedZip', null);
+        this.set('geocodeError', false);
+        this.send('updateMap');
+    },
+
+    actions: {
+        updateCentroid: function () {
+            // Only try to geocode if we have enough to go on
+            if (!(this.get('address') && this.get('city'))) {
+                return;
+            }
+            this.clearGeocodeResult();
+            (function (controller) {
+                geocode(controller.get('fullAddress'), null, null, function (result) {
+                    if (result) {
+                        controller.setProperties({
+                            centroid: result.latlng,
+                            geocodedAddress: result.address,
+                            geocodedCity: result.city,
+                            geocodedState: result.state,
+                            geocodedZip: result.zip
+                        });
+                        controller.send('updateMap');
+                    }
+                    else {
+                        controller.set('geocodeError', true);
+                    }
+                });
+            })(this);
+        },
+
+        useGeocodedAddress: function () {
+            this.setProperties({
+                address: this.get('geocodedAddress'),
+                city: this.get('geocodedCity'),
+                state: this.get('geocodedState'),
+                zip: this.get('geocodedZip')
+            });
+        },
+
+        updateMap: function () {
+            this.get('map').fire('locationfound', {
+                latlng: this.get('centroid')
+            });
+        }
+    }
+});
+
+App.OrganizationsAddRoute = Ember.Route.extend({
+    clearValidation: function () {
+        var errorProperties = ['centroidError', 'error', 'nameError', 
+            'sectorsError', 'typesError'];
+        _.each(errorProperties, function (errorProperty) {
+            this.set(errorProperty, false);
+        }, this.controller);
+    },
+
+    clearForm: function () {
+        var addressProperties = ['name', 'address', 'address2', 'city', 'state',
+                'zip', 'email', 'phone', 'siteUrl', 'mission'],
+            geocodeProperties = ['centroid', 'geocodedAddress', 'geocodedCity',
+                'geocodedState', 'geocodedZip'],
+            propertyChanges = {};
+
+        _.each(_.union(addressProperties, geocodeProperties), function (property) {
+            propertyChanges[property] = null;
+        });
+
+        // Set all properties at the same time
+        this.controller.setProperties(propertyChanges);
+
+        // Update map (clear location)
+        this.controller.send('updateMap');
+    },
+
+    validate: function () {
+        this.clearValidation();
+        if (!this.controller.get('name')) {
+            this.controller.set('nameError', true);
+            return false;
+        }
+        if (!this.controller.get('centroid')) {
+            this.controller.set('centroidError', true);
+            return false;
+        }
+        if (this.controller.get('types').length === 0) {
+            this.controller.set('typesError', true);
+            return false;
+        }
+        if (this.controller.get('sectors').length === 0) {
+            this.controller.set('sectorsError', true);
+            return false;
+        }
+        return true;
+    },
+
+    actions: {
+        close: function () {
+            this.disconnectOutlet('page');
+            history.back();
+        },
+
+        submit: function () {
+            if (!this.validate()) {
+                $('#page').scrollTop(0);
+                return;
+            }
+
+            var controller = this.controller,
+                fields = controller.getProperties([
+                    'name', 'address', 'address2', 'city', 'state', 'zip',
+                    'email', 'siteUrl', 'mission', 'phone', 'centroid'
+                ]),
+                data = new FormData();
+
+            _.each(fields, function (value, name) {
+                // Avoid adding null / empty values
+                if (name !== 'centroid' && value !== null && value !== '') {
+                    data.append(name, value);
+                }
+            });
+            data.append('centroid', 'SRID=4326;POINT(' + fields.centroid[1] + ' ' + fields.centroid[0] + ')');
+
+            $.each(controller.get('sectors'), function (i, sector) {
+                if (sector) {
+                    data.append('sectors', sector);
+                }
+            });
+            $.each(controller.get('types'), function (i, type) {
+                if (type) {
+                    data.append('types', type);
+                }
+            });
+
+            controller.set('submitting', true);
+            $.ajax({
+                context: this,
+                type: 'POST',
+                url: CONFIG.API_BASE + '/organizations/',
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+                .done(function () {
+                    this.controller.set('success', true);
+                    this.clearForm();
+                })
+                .fail(function () {
+                    this.controller.set('error', true);
+                })
+                .always(function () {
+                    this.controller.set('submitting', false);
+                    $('#page').scrollTop(0);
+                });
+        }
+    },
+
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('potentialSectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('potentialTypes', types);
+            });
+    },
+
+    renderTemplate: function () {
+        this.render({
+            into: 'application',
+            outlet: 'page'
+        });
+    }
+});
+
+App.OrganizationsAddView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('add-organization-view');
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('add-organization-view');
+        $('#page').hide();
+    },
+
+    didRenderElement : function() {
+        this._super();
+
+        $('#popup').hide();
+        $('#page').show();
+
+        var marker = null,
+            defaultCenter = [39.095963, -97.470703],
+            defaultZoom = 3;
+        var addOrganizationMap = L.map('add-organization-map', {
+            center: defaultCenter,
+            maxZoom: 19,
+            scrollWheelZoom: false,
+            zoom: defaultZoom,
+            zoomControl: false
+        });
+
+        addOrganizationMap.on('locationfound', function (e) {
+            if (marker) {
+                addOrganizationMap.removeLayer(marker);
+            }
+            if (e.latlng) {
+                // Center view around found location
+                marker = L.marker(e.latlng).addTo(addOrganizationMap);
+                addOrganizationMap.setView(e.latlng, 16);
+            }
+            else {
+                // No location--reset view
+                addOrganizationMap.setView(defaultCenter, defaultZoom);
+            }
+        });
+
+        var streets = L.tileLayer(CONFIG.TILE_URL, {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+            mapId: CONFIG.MAP_ID,
+            maxZoom: 18
+        }).addTo(addOrganizationMap);
+
+        this.controller.set('map', addOrganizationMap);
+    }
+});
+
+},{"./geocode":14,"ember":7,"underscore":33}],23:[function(require,module,exports){
+var Ember = require('ember');
+require('ember-list-view');
+require('./pagemixins');
+
+
+App.OrganizationsListRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+        },
+
+        setPageTitle: function () {
+            document.title = this.makePageTitle(Ember.I18n.t('organizations_list.title'));
+        }
+    },
+
+    renderTemplate: function () {
+        this.render('organizations/list', {
+            into: 'application',
+            outlet: 'page'
+        });
+    },
+
+    deactivate: function () {
+        $('#page').hide();
+    }
+});
+
+App.OrganizationsListController = Ember.ArrayController.extend({
+    isLoading: false,
+    page: null,
+    nextPage: 1,
+    height: 400,
+    sortBy: {},
+
+    queryParams: ['sortBy.key', 'sortBy.dir'],
+
+    needs: ['application'],
+
+    sortByName: function () {
+        return this.get('sortBy').key === 'name';
+    }.property('sortBy'),
+
+    sortByCity: function () {
+        return this.get('sortBy').key === 'city';
+    }.property('sortBy'),
+
+    sortByState: function () {
+        return this.get('sortBy').key === 'state_province';
+    }.property('sortBy'),
+
+    sortByTypes: function () {
+        return this.get('sortBy').key === 'types';
+    }.property('sortBy'),
+
+    sortBySectors: function () {
+        return this.get('sortBy').key === 'sectors';
+    }.property('sortBy'),
+
+    sortAscending: function () {
+        return this.get('sortBy').dir === 'asc';
+    }.property('sortBy'),
+
+    filtersChanged: function () {
+        Ember.run.debounce(this, this.refresh, 100);
+    }.observes('controllers.application.selectedSectors', 'controllers.application.selectedTypes'),
+
+    refresh: function () {
+        this.clear();
+        this.setProperties({
+            page: null,
+            nextPage: 1
+        });
+        this.send('loadNextPage');
+    },
+
+    actions: {
+        sortBy: function (key) {
+            var sortBy = this.get('sortBy'),
+                dir = 'asc';
+            if (sortBy.key === key && sortBy.dir === 'asc') {
+                dir = 'desc';
+            }
+            this.set('sortBy', {
+                key: key,
+                dir: dir
+            });
+            this.refresh();
+        },
+
+        openOrganization: function (id) {
+            this.transitionToRoute('organization', id);
+        },
+
+        loadNextPage: function () {
+            var controller = this,
+                applicationController = this.get('controllers.application'),
+                sectors = applicationController.get('selectedSectors'),
+                types = applicationController.get('selectedTypes'),
+                sortBy = controller.get('sortBy'),
+                nextPage = controller.get('nextPage'),
+                params = { page: nextPage };
+            if (controller.get('isLoading') || !nextPage) return;
+            controller.set('isLoading', true);
+
+            // Update parameters with filters
+            if (sectors && sectors.length > 0) {
+                params.sectors = sectors.join(',');
+            }
+            if (types && types.length > 0) {
+                params.types = types.join(',');
+            }
+
+            // Update parameters with sorting
+            if (sortBy && sortBy.key) {
+                params.sortby = sortBy.key;
+                // Add direction if descending
+                if (sortBy.dir === 'desc') {
+                    params.sortby = '-' + params.sortby;
+                }
+            }
+
+            (function () {
+                controller.store.find('organization', params).then(function (data) {
+                    controller.addObjects(data.content);  
+                    var meta = data.store.metadataFor('organization');
+                    controller.setProperties({
+                        isLoading: false,
+                        page: meta.current_page,
+                        nextPage: meta.next_page
+                    });
+                });
+            })();
+        }
+    },
+
+    listView: Ember.ListView.extend({
+        didInsertElement: function () {
+            this._super();
+            // Add didRenderElement since this view comes from outside of
+            // the application
+            Ember.run.scheduleOnce('afterRender', this, this.didRenderElement);
+        },
+
+        didRenderElement: function () {
+            this._super();
+            this.set('height', this.calculateHeight());
+        },
+
+        height: function () {
+            return $(document).height();
+        }.property(),
+
+        calculateHeight: function () {
+            var pageHeight = $('#page').height(),
+                buttonHeight = $('.organizations-list-add-organization').outerHeight(),
+                headerHeight = $('.organizations-list-headers').outerHeight();
+            return pageHeight - buttonHeight - headerHeight;
+        },
+
+        rowHeight: 25
+    }),
+
+    init: function () {
+        this._super();
+
+        var params = this.container.lookup('controller:application').getQueryParams();
+        this.set('sortBy', {
+            dir: params['sortBy.dir'],
+            key: params['sortBy.key']
+        });
+
+        this.send('loadNextPage');
+    }
+});
+
+App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
+    paginatedScrollSelector: '.ember-list-view',
+
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('list-organizations-view');
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('list-organizations-view');
+    },
+
+    didRenderElement: function () {
+        this._super();
+        $('#popup').hide();
+        $('#page').show();
+    }
+});
+
+},{"./pagemixins":25,"ember":7,"ember-list-view":9}],24:[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
 require('./pagemixins');
@@ -65734,7 +65742,7 @@ App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
     }
 });
 
-},{"./i18n":17,"./pagemixins":25,"underscore.string":32}],25:[function(require,module,exports){
+},{"./i18n":16,"./pagemixins":25,"underscore.string":32}],25:[function(require,module,exports){
 App.PageRouteMixin = Ember.Mixin.create({
     actions: {
         close: function () {
@@ -65900,7 +65908,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":20,"ember":7}],27:[function(require,module,exports){
+},{"./map":18,"ember":7}],27:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -71412,6 +71420,18 @@ function program11(depth0,data) {
   return buffer;
   }
 
+function program13(depth0,data) {
+  
+  
+  data.buffer.push("list");
+  }
+
+function program15(depth0,data) {
+  
+  
+  data.buffer.push("add org");
+  }
+
   data.buffer.push("<header>\n    <div id=\"logo\">");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -71441,9 +71461,10 @@ function program11(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </div>\n    <a id=\"list-button\" href=\"#\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganizationList", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">list</a>\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"project-authors\">\n    ");
+  data.buffer.push("\n    </div>\n    <div id=\"list-button\">");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.list", options) : helperMissing.call(depth0, "link-to", "organizations.list", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"project-authors\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.project_of", options) : helperMissing.call(depth0, "t", "application.project_of", options))));
   data.buffer.push("\n    <a href=\"http://foodchainworkers.org/\" target=\"_blank\">Food Chain Workers Alliance</a> &amp;\n    <a href=\"http://thehandthatfeedsfilm.com/\" target=\"_blank\">The Hand That Feeds</a>\n</div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clearFilters", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
@@ -71465,12 +71486,17 @@ function program11(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.SectorView", {hash:{
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </section>\n</div>\n\n<a id=\"add-organization-button\" class=\"map-ui-button\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">add org</a>\n<a id=\"share-button\" class=\"map-ui-button\" ");
+  data.buffer.push("\n    </section>\n</div>\n\n");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'id': ("add-organization-button"),
+    'class': ("map-ui-button")
+  },hashTypes:{'id': "STRING",'class': "STRING"},hashContexts:{'id': depth0,'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n<a id=\"share-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">share</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
-  data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "popup", options) : helperMissing.call(depth0, "outlet", "popup", options))));
+  stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height full-width\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.outlet || (depth0 && depth0.outlet),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "page", options) : helperMissing.call(depth0, "outlet", "page", options))));
   data.buffer.push("\n</div>\n\n<div id=\"help\" class=\"full-height full-width\">\n    ");
@@ -71561,6 +71587,16 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
+Ember.TEMPLATES["error"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("We're sorry, but there was a problem while loading the page. Please try again\nand let us know if it continues to happen.\n");
+  
+});
+
 Ember.TEMPLATES["help-organization-types"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -71570,106 +71606,6 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n\n<h1 class=\"help-organization-header\">Organization Types</h1>\n<div class=\"help-organization-types\">\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">\n            <img src=\"img/advocacy.png\" />\n        </div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Praesent nec purus ut est eleifend viverra nec non nisi. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Nam egestas diam odio, vitae ornare justo adipiscing ut. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">\n            <img src=\"img/service.png\" />\n        </div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Proin nec arcu in leo euismod porta a et tellus. Mauris tristique velit sit amet fringilla viverra. Maecenas nec interdum sem, vel mollis augue. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">\n            <img src=\"img/workerscenter.png\" />\n        </div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Aenean blandit cursus quam. Nulla sed lacus sed est feugiat volutpat. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Vestibulum quis suscipit lacus, tristique convallis nibh. Nulla suscipit aliquet iaculis. Aenean sagittis cursus est sed dictum. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n    <div class=\"help-organization-types-item\">\n        <div class=\"help-organization-types-item-name\">\n            <img src=\"img/union.png\" />\n        </div>\n        <div class=\"help-organization-types-item-text\">\nAenean ac purus feugiat, sagittis lectus id, volutpat magna. Integer bibendum urna eget leo sodales, interdum suscipit sem blandit. Ut ullamcorper erat ac ipsum viverra, sit amet sollicitudin tellus mollis. Proin nec arcu in leo euismod porta a et tellus. Maecenas nec interdum sem, vel mollis augue. Curabitur sed neque suscipit, ullamcorper augue egestas, tristique mi. Nulla suscipit aliquet iaculis. Aenean suscipit nisi id orci viverra, eget adipiscing turpis tincidunt.\n        </div>\n    </div>\n</div>\n");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["list-organizations"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
-
-function program1(depth0,data) {
-  
-  var buffer = '', stack1;
-  data.buffer.push("\n    <div class=\"organizations-list-item\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganization", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push(">\n        <div class=\"organizations-list-item-field organizations-list-item-name\">");
-  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-city\">");
-  stack1 = helpers._triageMustache.call(depth0, "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-state\">");
-  stack1 = helpers._triageMustache.call(depth0, "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-types\">\n            ");
-  stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n        <div class=\"organizations-list-item-field organizations-list-item-sectors\">\n            ");
-  stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        </div>\n    </div>\n");
-  return buffer;
-  }
-function program2(depth0,data) {
-  
-  var buffer = '', stack1;
-  data.buffer.push("\n            ");
-  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n            ");
-  return buffer;
-  }
-
-  data.buffer.push("<div class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortAscending:sort-ascending:sort-descending")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n    <div class=\"organizations-list-item-name\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortByName:sorted")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.name", options) : helperMissing.call(depth0, "t", "list_organizations.headers.name", options))));
-  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-city\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortByCity:sorted")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.city", options) : helperMissing.call(depth0, "t", "list_organizations.headers.city", options))));
-  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-state\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortByState:sorted")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.state", options) : helperMissing.call(depth0, "t", "list_organizations.headers.state", options))));
-  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-types\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "types", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortByTypes:sorted")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.types", options) : helperMissing.call(depth0, "t", "list_organizations.headers.types", options))));
-  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-sectors\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "sectors", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("sortBySectors:sorted")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.headers.sectors", options) : helperMissing.call(depth0, "t", "list_organizations.headers.sectors", options))));
-  data.buffer.push("\n    </div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.message", options) : helperMissing.call(depth0, "t", "list_organizations.add.message", options))));
-  data.buffer.push("</span>\n    <a id=\"organizations-list-add-organization-button\" class=\"btn btn-primary pull-right\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openAddOrganization", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "list_organizations.add.button", options) : helperMissing.call(depth0, "t", "list_organizations.add.button", options))));
-  data.buffer.push("</a>\n    <div class=\"clearfix\"></div>\n</div>\n\n");
-  stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
-    'contentBinding': ("controller.content")
-  },hashTypes:{'contentBinding': "STRING"},hashContexts:{'contentBinding': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "listView", options) : helperMissing.call(depth0, "collection", "listView", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n");
   return buffer;
   
 });
@@ -71880,6 +71816,162 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["organization"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1;
+
+
+  stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.error", options) : helperMissing.call(depth0, "t", "organization_add_media.error", options))));
+  data.buffer.push("\n                        </div>\n                    ");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.success", options) : helperMissing.call(depth0, "t", "organization_add_media.success", options))));
+  data.buffer.push("\n                        </div>\n                    ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabel\">\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.title", options) : helperMissing.call(depth0, "t", "organization_add_media.title", options))));
+  data.buffer.push("\n                </h4>\n            </div>\n            <form>\n                <div class=\"modal-body\">\n                    ");
+  stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    ");
+  stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n                    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabButtonsView", {hash:{
+    'content': ("tabs")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabContentView", {hash:{
+    'content': ("tabs")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.cancel", options) : helperMissing.call(depth0, "t", "buttons.cancel", options))));
+  data.buffer.push("\n                    </button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'disabled': ("submitting")
+  },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.submit", options) : helperMissing.call(depth0, "t", "buttons.submit", options))));
+  data.buffer.push("\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_photo"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"form-group\">\n    <label>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.photo.label", options) : helperMissing.call(depth0, "t", "organization_add_media.photo.label", options))));
+  data.buffer.push("</label>\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'name': ("photo"),
+    'class': ("form-control"),
+    'type': ("file")
+  },hashTypes:{'name': "STRING",'class': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'class': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_tab_button"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<a ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'href': ("view.content.tabId")
+  },hashTypes:{'href': "STRING"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" role=\"tab\" data-toggle=\"tab\">");
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_tab_content"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n<div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'id': ("tabId")
+  },hashTypes:{'id': "ID"},hashContexts:{'id': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":tab-pane isActive:active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "tabView", {hash:{
+    'content': ("view.content")
+  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n</div>\n");
+  return buffer;
+  }
+
+  stack1 = helpers.each.call(depth0, "view.content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/add_media_video"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"form-group\">\n    <label>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.video.label", options) : helperMissing.call(depth0, "t", "organization_add_media.video.label", options))));
+  data.buffer.push("</label>\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'type': ("url"),
+    'value': ("controller.videoUrl")
+  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organization/index"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
@@ -72035,14 +72127,27 @@ function program19(depth0,data) {
   return buffer;
   }
 
-  stack1 = helpers['with'].call(depth0, "model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['with'].call(depth0, "controllers.organization.model", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
   
 });
 
-Ember.TEMPLATES["organization/add"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["organizations"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1;
+
+
+  stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organizations/add"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
@@ -72321,145 +72426,136 @@ function program19(depth0,data) {
   
 });
 
-Ember.TEMPLATES["organization/add_media"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["organizations/error"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n        Sorry, there was an error while loading this organization. Please try\n        again and let us know if this continues to happen.\n    </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["organizations/list"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = '', helper, options;
-  data.buffer.push("\n                        <div class=\"alert alert-danger\" role=\"alert\">\n                            ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.error", options) : helperMissing.call(depth0, "t", "organization_add_media.error", options))));
-  data.buffer.push("\n                        </div>\n                    ");
-  return buffer;
+  var helper, options;
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.add.button", options) : helperMissing.call(depth0, "t", "organizations_list.add.button", options))));
   }
 
 function program3(depth0,data) {
   
-  var buffer = '', helper, options;
-  data.buffer.push("\n                        <div class=\"alert alert-success\" role=\"alert\">\n                            ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.success", options) : helperMissing.call(depth0, "t", "organization_add_media.success", options))));
-  data.buffer.push("\n                        </div>\n                    ");
+  var buffer = '', stack1;
+  data.buffer.push("\n    <div class=\"organizations-list-item\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openOrganization", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">\n        <div class=\"organizations-list-item-field organizations-list-item-name\">");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-city\">");
+  stack1 = helpers._triageMustache.call(depth0, "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-state\">");
+  stack1 = helpers._triageMustache.call(depth0, "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</div>\n        <div class=\"organizations-list-item-field organizations-list-item-types\">\n            ");
+  stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n        <div class=\"organizations-list-item-field organizations-list-item-sectors\">\n            ");
+  stack1 = helpers.each.call(depth0, "sectors", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n    </div>\n");
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            ");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            ");
   return buffer;
   }
 
-  data.buffer.push("<div class=\"modal fade\" id=\"addOrganizationMediaModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addOrganizationMediaModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                <h4 class=\"modal-title\" id=\"addOrganizationMediaModalLabel\">\n                    ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.title", options) : helperMissing.call(depth0, "t", "organization_add_media.title", options))));
-  data.buffer.push("\n                </h4>\n            </div>\n            <form>\n                <div class=\"modal-body\">\n                    ");
-  stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                    ");
-  stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n                    ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabButtonsView", {hash:{
-    'content': ("tabs")
-  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                    ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.tabContentView", {hash:{
-    'content': ("tabs")
-  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" ");
+  data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">\n                        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.cancel", options) : helperMissing.call(depth0, "t", "buttons.cancel", options))));
-  data.buffer.push("\n                    </button>\n                    <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(">&times;</div>\n<div class=\"organizations-list-headers\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'disabled': ("submitting")
-  },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">\n                        ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.submit", options) : helperMissing.call(depth0, "t", "buttons.submit", options))));
-  data.buffer.push("\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["organization/add_media_photo"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-
-  data.buffer.push("<div class=\"form-group\">\n    <label>");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.photo.label", options) : helperMissing.call(depth0, "t", "organization_add_media.photo.label", options))));
-  data.buffer.push("</label>\n    ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'name': ("photo"),
-    'class': ("form-control"),
-    'type': ("file")
-  },hashTypes:{'name': "STRING",'class': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'class': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n</div>\n");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["organization/add_media_tab_button"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression;
-
-
-  data.buffer.push("<a ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'href': ("view.content.tabId")
-  },hashTypes:{'href': "STRING"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" role=\"tab\" data-toggle=\"tab\">");
-  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</a>\n");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["organization/add_media_tab_content"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
-
-function program1(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\n<div ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'id': ("tabId")
-  },hashTypes:{'id': "ID"},hashContexts:{'id': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': (":tab-pane isActive:active")
+    'class': ("sortAscending:sort-ascending:sort-descending")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n    ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "tabView", {hash:{
-    'content': ("view.content")
-  },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n</div>\n");
-  return buffer;
-  }
-
-  stack1 = helpers.each.call(depth0, "view.content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push(">\n    <div class=\"organizations-list-item-name\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByName:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.headers.name", options) : helperMissing.call(depth0, "t", "organizations_list.headers.name", options))));
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-city\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "city", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByCity:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.headers.city", options) : helperMissing.call(depth0, "t", "organizations_list.headers.city", options))));
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-state\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "state_province", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByState:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.headers.state", options) : helperMissing.call(depth0, "t", "organizations_list.headers.state", options))));
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-types\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "types", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortByTypes:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.headers.types", options) : helperMissing.call(depth0, "t", "organizations_list.headers.types", options))));
+  data.buffer.push("\n    </div>\n    <div class=\"organizations-list-item-sectors\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sortBy", "sectors", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("sortBySectors:sorted")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.headers.sectors", options) : helperMissing.call(depth0, "t", "organizations_list.headers.sectors", options))));
+  data.buffer.push("\n    </div>\n</div>\n\n<div class=\"organizations-list-add-organization\">\n    <span>");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations_list.add.message", options) : helperMissing.call(depth0, "t", "organizations_list.add.message", options))));
+  data.buffer.push("</span>\n    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'id': ("organizations-list-add-organization-button"),
+    'class': ("btn btn-primary pull-right")
+  },hashTypes:{'id': "STRING",'class': "STRING"},hashContexts:{'id': depth0,'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    <div class=\"clearfix\"></div>\n</div>\n\n");
+  stack1 = (helper = helpers.collection || (depth0 && depth0.collection),options={hash:{
+    'contentBinding': ("controller.content")
+  },hashTypes:{'contentBinding': "STRING"},hashContexts:{'contentBinding': depth0},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "listView", options) : helperMissing.call(depth0, "collection", "listView", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n");
   return buffer;
   
 });
 
-Ember.TEMPLATES["organization/add_media_video"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["organizations/loading"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"form-group\">\n    <label>");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add_media.video.label", options) : helperMissing.call(depth0, "t", "organization_add_media.video.label", options))));
-  data.buffer.push("</label>\n    ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'class': ("form-control"),
-    'type': ("url"),
-    'value': ("controller.videoUrl")
-  },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n</div>\n");
+  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n        loading..........\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -72539,4 +72635,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[19])
+},{}]},{},[17])

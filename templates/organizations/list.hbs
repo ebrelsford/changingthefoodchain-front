@@ -1,25 +1,25 @@
 <div class="close" {{action 'close'}}>&times;</div>
 <div class="organizations-list-headers" {{bind-attr class="sortAscending:sort-ascending:sort-descending"}}>
     <div class="organizations-list-item-name" {{action 'sortBy' 'name'}} {{bind-attr class="sortByName:sorted"}}>
-        {{t "list_organizations.headers.name"}}
+        {{t "organizations_list.headers.name"}}
     </div>
     <div class="organizations-list-item-city" {{action 'sortBy' 'city'}} {{bind-attr class="sortByCity:sorted"}}>
-        {{t "list_organizations.headers.city"}}
+        {{t "organizations_list.headers.city"}}
     </div>
     <div class="organizations-list-item-state" {{action 'sortBy' 'state_province'}} {{bind-attr class="sortByState:sorted"}}>
-        {{t "list_organizations.headers.state"}}
+        {{t "organizations_list.headers.state"}}
     </div>
     <div class="organizations-list-item-types" {{action 'sortBy' 'types'}} {{bind-attr class="sortByTypes:sorted"}}>
-        {{t "list_organizations.headers.types"}}
+        {{t "organizations_list.headers.types"}}
     </div>
     <div class="organizations-list-item-sectors" {{action 'sortBy' 'sectors'}} {{bind-attr class="sortBySectors:sorted"}}>
-        {{t "list_organizations.headers.sectors"}}
+        {{t "organizations_list.headers.sectors"}}
     </div>
 </div>
 
 <div class="organizations-list-add-organization">
-    <span>{{t "list_organizations.add.message"}}</span>
-    <a id="organizations-list-add-organization-button" class="btn btn-primary pull-right" {{action 'openAddOrganization'}}>{{t "list_organizations.add.button"}}</a>
+    <span>{{t "organizations_list.add.message"}}</span>
+    {{#link-to 'organizations.add' id="organizations-list-add-organization-button" class="btn btn-primary pull-right"}}{{t "organizations_list.add.button"}}{{/link-to}}
     <div class="clearfix"></div>
 </div>
 

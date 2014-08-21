@@ -128,13 +128,14 @@ window.App = Ember.Application.create({
 App.deferReadiness();
 
 App.Router.map(function() {
-    this.route('add-organization', { path: '/organizations/add' });
-    this.route('list-organizations', { path: '/organizations' });
-    this.resource('organization', {
-        path: '/organizations/:organization_id'
-    }, function () {
-        this.route('add_media', { path: '/add-media' });
+    this.resource('organizations', { path: '/organizations' }, function () {
+        this.route('add', { path: 'add' });
+        this.route('list', { path: 'all' });
+        this.resource('organization', { path: ':organization_id' }, function () {
+            this.route('add_media', { path: 'add-media' });
+        });
     });
+
     this.route('about');
     this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
@@ -153,20 +154,12 @@ App.ApplicationRoute = Ember.Route.extend({
             document.title = this.makePageTitle();
         },
 
-        openAddOrganization: function () {
-            this.transitionTo('add-organization');
-        },
-
         openHelpOrganizationTypes: function () {
             this.transitionTo('help-organization-types');
         },
 
         openOrganization: function (id) {
             this.transitionTo('organization', id);
-        },
-
-        openOrganizationList: function () {
-            this.transitionTo('list-organizations');
         },
 
         openShare: function () {

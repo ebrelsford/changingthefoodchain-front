@@ -1,12 +1,12 @@
 require('./app');
 require('./add_media');
-require('./add_organization');
 require('./carousel');
 require('./help');
-require('./list_organizations');
 require('./models');
 require('./news');
 require('./organization');
+require('./organizations_add');
+require('./organizations_list');
 require('./page');
 require('./share');
 

@@ -25,7 +25,7 @@ Ember.I18n.translations = {
         project_of: 'A project of'
     },
 
-    list_organizations: {
+    organizations_list: {
         title: 'Organization List',
         headers: {
             name: 'name',

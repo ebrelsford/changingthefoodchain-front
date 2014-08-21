@@ -1,0 +1,62 @@
+{{#with controllers.organization.model}}
+<div class="organization-header">
+    {{#each types}}
+    <img {{bind-attr src=image alt=name}}" />
+    {{/each}}
+</div>
+
+<div class="organization-row">
+    <div class="organization-filters"></div>
+
+    <div class="organization-details">
+        <div class="close" {{action 'close'}}>&times;</div>
+        <h2>{{name}}</h2>
+        <div class="organization-details-contact">
+            <div>
+                {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
+            </div>
+            {{#if phone}}
+            <div class="organization-details-contact-phone">
+                {{phone}}
+            </div>
+            {{/if}}
+            {{#if email}}
+            <div class="organization-details-contact-email">
+                {{email}}
+            </div>
+            {{/if}}
+        </div>
+
+        <div class="organization-details-actions">
+            {{#link-to 'share' class="btn btn-primary"}}{{t "organization.actions.share"}}{{/link-to}}
+            {{#if site_url}}
+            <a {{bind-attr href=site_url}} class="btn btn-primary" target="_blank">{{t "organization.actions.visit"}}</a>
+            {{/if}}
+            {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
+        </div>
+
+        {{#if media}}
+        <div class="organization-details-media">
+            {{view App.CarouselView content=media}}
+        </div>
+        {{/if}}
+
+        {{#if mission}}
+        <div class="organization-mission-statement">
+            {{t "organization.mission"}}: {{mission}}
+        </div>
+        {{/if}}
+
+        {{#if sectors}}
+            <section class="organization-sectors">
+                <h3>sectors:</h3>
+                <ul>
+                    {{#each sectors}}
+                    <li>{{name}}</li>
+                    {{/each}}
+                </ul>
+            </section>
+        {{/if}}
+    </div>
+</div>
+{{/with}}

@@ -2,15 +2,41 @@ var Ember = require('ember');
 var map = require('./map');
 
 
-App.OrganizationView = Ember.View.extend({
+App.OrganizationsView = Ember.View.extend({
     didInsertElement: function () {
         this._super();
         $('body').addClass('organization-view');
+        $('#popup').show();
     },
 
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('organization-view');
+    }
+});
+
+App.OrganizationsRoute = Ember.Route.extend({
+    actions: {
+        close: function () {
+            this.transitionTo('index');
+            map.deselectOrganization();
+        }
+    },
+
+    deactivate: function () {
+        $('#popup').hide();
+    }
+});
+
+App.OrganizationsErrorRoute = App.OrganizationsRoute.extend({});
+App.OrganizationsErrorView = App.OrganizationsView.extend({});
+
+App.OrganizationsLoadingRoute = App.OrganizationsRoute.extend({});
+App.OrganizationsLoadingView = App.OrganizationsView.extend({});
+
+App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {
         this._super();
-        $('#popup').show();
 
         var popupHeight = $('#popup').height(),
             headerHeight = $('.organization-header').height();
@@ -27,11 +53,6 @@ App.OrganizationView = Ember.View.extend({
         // If we're moving to the view from another where the map is ready
         // select here
         this.controller.send('selectOrganization');
-    },
-
-    willDestroyElement: function () {
-        this._super();
-        $('body').removeClass('organization-view');
     }
 });
 
@@ -47,13 +68,8 @@ App.OrganizationController = Ember.Controller.extend({
     }.observes('model')
 });
 
-App.OrganizationRoute = Ember.Route.extend({
+App.OrganizationRoute = App.OrganizationsRoute.extend({
     actions: {
-        close: function () {
-            this.transitionTo('index');
-            map.deselectOrganization();
-        },
-
         setPageTitle: function () {
             document.title = this.makePageTitle(this.controllerFor('organization').get('model').get('name'));
         }
@@ -61,13 +77,9 @@ App.OrganizationRoute = Ember.Route.extend({
 
     model: function (params) {
         return this.store.find('organization', params.organization_id);
-    },
-
-    deactivate: function () {
-        $('#popup').hide();
-    },
-
-    renderTemplate: function () {
-        this.render('organization', { outlet: 'popup' });
     }
+});
+
+App.OrganizationIndexController = Ember.Controller.extend({
+    needs: ['organization']
 });
