@@ -3207,6 +3207,9 @@ body.page-view header {
 #help .help-organization-types-item:last-child * {
   border-right: none;
 }
+.loading {
+  height: 200px;
+}
 #map {
   overflow: hidden;
   height: 100%;

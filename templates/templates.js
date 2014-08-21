@@ -1185,9 +1185,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
+  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details loading\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n        loading..........\n    </div>\n</div>\n");
+  data.buffer.push(">&times;</div>\n        <div class=\"loading-indicator\"></div>\n    </div>\n</div>\n");
   return buffer;
   
 });

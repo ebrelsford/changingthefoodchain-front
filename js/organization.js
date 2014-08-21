@@ -1,4 +1,5 @@
 var Ember = require('ember');
+var Spinner = require('spinjs');
 var map = require('./map');
 
 
@@ -32,7 +33,21 @@ App.OrganizationsErrorRoute = App.OrganizationsRoute.extend({});
 App.OrganizationsErrorView = App.OrganizationsView.extend({});
 
 App.OrganizationsLoadingRoute = App.OrganizationsRoute.extend({});
-App.OrganizationsLoadingView = App.OrganizationsView.extend({});
+App.OrganizationsLoadingView = App.OrganizationsView.extend({
+    didInsertElement: function () {
+        this._super();
+        var spinner = new Spinner({
+            lines: 13,
+            length: 20,
+            width: 5,
+            radius: 25,
+            corners: 1,
+            trail: 60,
+            top: '50%',
+            left: '50%'
+        }).spin($('.loading-indicator')[0]);
+    }
+});
 
 App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {

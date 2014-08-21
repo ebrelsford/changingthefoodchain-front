@@ -44,6 +44,7 @@
     "ember-list-view": "./bower_components/list-view/dist/list-view.js",
     "ember-typeahead": "./bower_components/ember-typeahead/dist/ember-typeahead.js",
     "leaflet-active-area": "./bower_components/leaflet-active-area/src/L.activearea.js",
+    "spinjs": "./bower_components/spin.js/spin.js",
     "typeahead": "./bower_components/typeahead.js/dist/typeahead.js"
   },
   "browserify": {
@@ -53,6 +54,7 @@
   },
   "browserify-shim": {
     "./bower_components/ember/ember.js": "Ember",
-    "./bower_components/ember-data/ember-data.js": "DS"
+    "./bower_components/ember-data/ember-data.js": "DS",
+    "./bower_components/spin.js/spin.js": "Spinner"
   }
 }

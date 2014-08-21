@@ -61130,7 +61130,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"W5lFOV":29}],8:[function(require,module,exports){
+},{"W5lFOV":30}],8:[function(require,module,exports){
 if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
     leafletActiveAreaPreviousMethods = {
@@ -62792,6 +62792,357 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 
 
 },{}],10:[function(require,module,exports){
+/**
+ * Copyright (c) 2011-2014 Felix Gnass
+ * Licensed under the MIT license
+ */
+(function(root, factory) {
+
+  /* CommonJS */
+  if (typeof exports == 'object')  module.exports = factory()
+
+  /* AMD module */
+  else if (typeof define == 'function' && define.amd) define(factory)
+
+  /* Browser global */
+  else root.Spinner = factory()
+}
+(this, function() {
+  "use strict";
+
+  var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
+    , animations = {} /* Animation rules keyed by their name */
+    , useCssAnimations /* Whether to use CSS animations or setTimeout */
+
+  /**
+   * Utility function to create elements. If no tag name is given,
+   * a DIV is created. Optionally properties can be passed.
+   */
+  function createEl(tag, prop) {
+    var el = document.createElement(tag || 'div')
+      , n
+
+    for(n in prop) el[n] = prop[n]
+    return el
+  }
+
+  /**
+   * Appends children and returns the parent.
+   */
+  function ins(parent /* child1, child2, ...*/) {
+    for (var i=1, n=arguments.length; i<n; i++)
+      parent.appendChild(arguments[i])
+
+    return parent
+  }
+
+  /**
+   * Insert a new stylesheet to hold the @keyframe or VML rules.
+   */
+  var sheet = (function() {
+    var el = createEl('style', {type : 'text/css'})
+    ins(document.getElementsByTagName('head')[0], el)
+    return el.sheet || el.styleSheet
+  }())
+
+  /**
+   * Creates an opacity keyframe animation rule and returns its name.
+   * Since most mobile Webkits have timing issues with animation-delay,
+   * we create separate rules for each line/segment.
+   */
+  function addAnimation(alpha, trail, i, lines) {
+    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
+      , start = 0.01 + i/lines * 100
+      , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
+      , prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase()
+      , pre = prefix && '-' + prefix + '-' || ''
+
+    if (!animations[name]) {
+      sheet.insertRule(
+        '@' + pre + 'keyframes ' + name + '{' +
+        '0%{opacity:' + z + '}' +
+        start + '%{opacity:' + alpha + '}' +
+        (start+0.01) + '%{opacity:1}' +
+        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+        '100%{opacity:' + z + '}' +
+        '}', sheet.cssRules.length)
+
+      animations[name] = 1
+    }
+
+    return name
+  }
+
+  /**
+   * Tries various vendor prefixes and returns the first supported property.
+   */
+  function vendor(el, prop) {
+    var s = el.style
+      , pp
+      , i
+
+    prop = prop.charAt(0).toUpperCase() + prop.slice(1)
+    for(i=0; i<prefixes.length; i++) {
+      pp = prefixes[i]+prop
+      if(s[pp] !== undefined) return pp
+    }
+    if(s[prop] !== undefined) return prop
+  }
+
+  /**
+   * Sets multiple style properties at once.
+   */
+  function css(el, prop) {
+    for (var n in prop)
+      el.style[vendor(el, n)||n] = prop[n]
+
+    return el
+  }
+
+  /**
+   * Fills in default values.
+   */
+  function merge(obj) {
+    for (var i=1; i < arguments.length; i++) {
+      var def = arguments[i]
+      for (var n in def)
+        if (obj[n] === undefined) obj[n] = def[n]
+    }
+    return obj
+  }
+
+  /**
+   * Returns the absolute page-offset of the given element.
+   */
+  function pos(el) {
+    var o = { x:el.offsetLeft, y:el.offsetTop }
+    while((el = el.offsetParent))
+      o.x+=el.offsetLeft, o.y+=el.offsetTop
+
+    return o
+  }
+
+  /**
+   * Returns the line color from the given string or array.
+   */
+  function getColor(color, idx) {
+    return typeof color == 'string' ? color : color[idx % color.length]
+  }
+
+  // Built-in defaults
+
+  var defaults = {
+    lines: 12,            // The number of lines to draw
+    length: 7,            // The length of each line
+    width: 5,             // The line thickness
+    radius: 10,           // The radius of the inner circle
+    rotate: 0,            // Rotation offset
+    corners: 1,           // Roundness (0..1)
+    color: '#000',        // #rgb or #rrggbb
+    direction: 1,         // 1: clockwise, -1: counterclockwise
+    speed: 1,             // Rounds per second
+    trail: 100,           // Afterglow percentage
+    opacity: 1/4,         // Opacity of the lines
+    fps: 20,              // Frames per second when using setTimeout()
+    zIndex: 2e9,          // Use a high z-index by default
+    className: 'spinner', // CSS class to assign to the element
+    top: '50%',           // center vertically
+    left: '50%',          // center horizontally
+    position: 'absolute'  // element position
+  }
+
+  /** The constructor */
+  function Spinner(o) {
+    this.opts = merge(o || {}, Spinner.defaults, defaults)
+  }
+
+  // Global defaults that override the built-ins:
+  Spinner.defaults = {}
+
+  merge(Spinner.prototype, {
+
+    /**
+     * Adds the spinner to the given target element. If this instance is already
+     * spinning, it is automatically removed from its previous target b calling
+     * stop() internally.
+     */
+    spin: function(target) {
+      this.stop()
+
+      var self = this
+        , o = self.opts
+        , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
+        , mid = o.radius+o.length+o.width
+
+      css(el, {
+        left: o.left,
+        top: o.top
+      })
+        
+      if (target) {
+        target.insertBefore(el, target.firstChild||null)
+      }
+
+      el.setAttribute('role', 'progressbar')
+      self.lines(el, self.opts)
+
+      if (!useCssAnimations) {
+        // No CSS animation support, use setTimeout() instead
+        var i = 0
+          , start = (o.lines - 1) * (1 - o.direction) / 2
+          , alpha
+          , fps = o.fps
+          , f = fps/o.speed
+          , ostep = (1-o.opacity) / (f*o.trail / 100)
+          , astep = f/o.lines
+
+        ;(function anim() {
+          i++;
+          for (var j = 0; j < o.lines; j++) {
+            alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
+
+            self.opacity(el, j * o.direction + start, alpha, o)
+          }
+          self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
+        })()
+      }
+      return self
+    },
+
+    /**
+     * Stops and removes the Spinner.
+     */
+    stop: function() {
+      var el = this.el
+      if (el) {
+        clearTimeout(this.timeout)
+        if (el.parentNode) el.parentNode.removeChild(el)
+        this.el = undefined
+      }
+      return this
+    },
+
+    /**
+     * Internal method that draws the individual lines. Will be overwritten
+     * in VML fallback mode below.
+     */
+    lines: function(el, o) {
+      var i = 0
+        , start = (o.lines - 1) * (1 - o.direction) / 2
+        , seg
+
+      function fill(color, shadow) {
+        return css(createEl(), {
+          position: 'absolute',
+          width: (o.length+o.width) + 'px',
+          height: o.width + 'px',
+          background: color,
+          boxShadow: shadow,
+          transformOrigin: 'left',
+          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
+          borderRadius: (o.corners * o.width>>1) + 'px'
+        })
+      }
+
+      for (; i < o.lines; i++) {
+        seg = css(createEl(), {
+          position: 'absolute',
+          top: 1+~(o.width/2) + 'px',
+          transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
+          opacity: o.opacity,
+          animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+        })
+
+        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
+        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
+      }
+      return el
+    },
+
+    /**
+     * Internal method that adjusts the opacity of a single line.
+     * Will be overwritten in VML fallback mode below.
+     */
+    opacity: function(el, i, val) {
+      if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
+    }
+
+  })
+
+
+  function initVML() {
+
+    /* Utility function to create a VML tag */
+    function vml(tag, attr) {
+      return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr)
+    }
+
+    // No CSS transforms but VML support, add a CSS rule for VML elements:
+    sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
+
+    Spinner.prototype.lines = function(el, o) {
+      var r = o.length+o.width
+        , s = 2*r
+
+      function grp() {
+        return css(
+          vml('group', {
+            coordsize: s + ' ' + s,
+            coordorigin: -r + ' ' + -r
+          }),
+          { width: s, height: s }
+        )
+      }
+
+      var margin = -(o.width+o.length)*2 + 'px'
+        , g = css(grp(), {position: 'absolute', top: margin, left: margin})
+        , i
+
+      function seg(i, dx, filter) {
+        ins(g,
+          ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
+            ins(css(vml('roundrect', {arcsize: o.corners}), {
+                width: r,
+                height: o.width,
+                left: o.radius,
+                top: -o.width>>1,
+                filter: filter
+              }),
+              vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
+              vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
+            )
+          )
+        )
+      }
+
+      if (o.shadow)
+        for (i = 1; i <= o.lines; i++)
+          seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)')
+
+      for (i = 1; i <= o.lines; i++) seg(i)
+      return ins(el, g)
+    }
+
+    Spinner.prototype.opacity = function(el, i, val, o) {
+      var c = el.firstChild
+      o = o.shadow && o.lines || 0
+      if (c && i+o < c.childNodes.length) {
+        c = c.childNodes[i+o]; c = c && c.firstChild; c = c && c.firstChild
+        if (c) c.opacity = val
+      }
+    }
+  }
+
+  var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+
+  if (!vendor(probe, 'transform') && probe.adj) initVML()
+  else useCssAnimations = vendor(probe, 'animation')
+
+  return Spinner
+
+}));
+
+},{}],11:[function(require,module,exports){
 /*!
  * typeahead.js 0.9.3
  * https://github.com/twitter/typeahead
@@ -63931,7 +64282,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
         };
     })();
 })(window.jQuery);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -64086,7 +64437,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":7,"underscore":33}],12:[function(require,module,exports){
+},{"ember":7,"underscore":34}],13:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -64426,7 +64777,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":34,"./geocode":14,"./i18n":16,"./map":18,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":28,"ember-typeahead":6,"qs":31,"typeahead":10,"underscore":33}],13:[function(require,module,exports){
+},{"../templates/templates":35,"./geocode":15,"./i18n":17,"./map":19,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-i18n":29,"ember-typeahead":6,"qs":32,"typeahead":11,"underscore":34}],14:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -64484,7 +64835,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -64559,7 +64910,7 @@ module.exports = {
 
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 App.HelpOrganizationTypesRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -64586,7 +64937,7 @@ App.HelpOrganizationTypesView = Ember.View.extend({
     }
 });
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var qs = require('qs');
 
 
@@ -64626,7 +64977,7 @@ module.exports = {
     }
 };
 
-},{"qs":31}],17:[function(require,module,exports){
+},{"qs":32}],18:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./carousel');
@@ -64643,7 +64994,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":11,"./app":12,"./carousel":13,"./help":15,"./i18n":16,"./models":19,"./news":20,"./organization":21,"./organizations_add":22,"./organizations_list":23,"./page":24,"./share":26}],18:[function(require,module,exports){
+},{"./add_media":12,"./app":13,"./carousel":14,"./help":16,"./i18n":17,"./models":20,"./news":21,"./organization":22,"./organizations_add":23,"./organizations_list":24,"./page":25,"./share":27}],19:[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -64823,7 +65174,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":8,"underscore":33}],19:[function(require,module,exports){
+},{"leaflet-active-area":8,"underscore":34}],20:[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');
@@ -64943,7 +65294,7 @@ App.Entry = DS.Model.extend({
     }.property('published_on')
 });
 
-},{"./videos":27,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":30}],20:[function(require,module,exports){
+},{"./videos":28,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":31}],21:[function(require,module,exports){
 var _ = require('underscore');
 require('./pagemixins');
 
@@ -65086,8 +65437,9 @@ App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
 
 App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {});
 
-},{"./pagemixins":25,"underscore":33}],21:[function(require,module,exports){
+},{"./pagemixins":26,"underscore":34}],22:[function(require,module,exports){
 var Ember = require('ember');
+var Spinner = require('spinjs');
 var map = require('./map');
 
 
@@ -65121,7 +65473,21 @@ App.OrganizationsErrorRoute = App.OrganizationsRoute.extend({});
 App.OrganizationsErrorView = App.OrganizationsView.extend({});
 
 App.OrganizationsLoadingRoute = App.OrganizationsRoute.extend({});
-App.OrganizationsLoadingView = App.OrganizationsView.extend({});
+App.OrganizationsLoadingView = App.OrganizationsView.extend({
+    didInsertElement: function () {
+        this._super();
+        var spinner = new Spinner({
+            lines: 13,
+            length: 20,
+            width: 5,
+            radius: 25,
+            corners: 1,
+            trail: 60,
+            top: '50%',
+            left: '50%'
+        }).spin($('.loading-indicator')[0]);
+    }
+});
 
 App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {
@@ -65173,7 +65539,7 @@ App.OrganizationIndexController = Ember.Controller.extend({
     needs: ['organization']
 });
 
-},{"./map":18,"ember":7}],22:[function(require,module,exports){
+},{"./map":19,"ember":7,"spinjs":10}],23:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var _ = require('underscore');
@@ -65471,7 +65837,7 @@ App.OrganizationsAddView = Ember.View.extend({
     }
 });
 
-},{"./geocode":14,"ember":7,"underscore":33}],23:[function(require,module,exports){
+},{"./geocode":15,"ember":7,"underscore":34}],24:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 require('./pagemixins');
@@ -65668,7 +66034,7 @@ App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
     }
 });
 
-},{"./pagemixins":25,"ember":7,"ember-list-view":9}],24:[function(require,module,exports){
+},{"./pagemixins":26,"ember":7,"ember-list-view":9}],25:[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
 require('./pagemixins');
@@ -65743,7 +66109,7 @@ App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
     }
 });
 
-},{"./i18n":16,"./pagemixins":25,"underscore.string":32}],25:[function(require,module,exports){
+},{"./i18n":17,"./pagemixins":26,"underscore.string":33}],26:[function(require,module,exports){
 App.PageRouteMixin = Ember.Mixin.create({
     actions: {
         close: function () {
@@ -65809,7 +66175,7 @@ App.PaginatedViewMixin = Ember.Mixin.create({
     }
 });
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -65909,7 +66275,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":18,"ember":7}],27:[function(require,module,exports){
+},{"./map":19,"ember":7}],28:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -65946,7 +66312,7 @@ module.exports = {
     }
 };
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -66101,7 +66467,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -66166,7 +66532,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.1
@@ -68978,7 +69344,7 @@ process.chdir = function (dir) {
 }).call(this);
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -69346,7 +69712,7 @@ function decode(str) {
   }
 }
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -70021,7 +70387,7 @@ function decode(str) {
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -71366,7 +71732,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -72554,9 +72920,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
+  data.buffer.push("<div class=\"organization-header\">\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details loading\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n        loading..........\n    </div>\n</div>\n");
+  data.buffer.push(">&times;</div>\n        <div class=\"loading-indicator\"></div>\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -72636,4 +73002,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[17])
+},{}]},{},[18])
