@@ -16,6 +16,7 @@ App.OrganizationAddMediaRoute = Ember.Route.extend({
     },
 
     renderTemplate: function () {
+        this.render('organization.index');
         this.render({
             into: 'application',
             outlet: 'modal'
