@@ -54,8 +54,8 @@ function program11(depth0,data) {
 
 function program13(depth0,data) {
   
-  
-  data.buffer.push("list");
+  var buffer = '';
+  return buffer;
   }
 
 function program15(depth0,data) {
@@ -93,10 +93,12 @@ function program15(depth0,data) {
   data.buffer.push("\n        ");
   stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n    </div>\n    <div id=\"list-button\">");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.list", options) : helperMissing.call(depth0, "link-to", "organizations.list", options));
+  data.buffer.push("\n    </div>\n\n    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'id': ("list-button")
+  },hashTypes:{'id': "STRING"},hashContexts:{'id': depth0},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.list", options) : helperMissing.call(depth0, "link-to", "organizations.list", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"project-authors\">\n    ");
+  data.buffer.push("\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"project-authors\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.project_of", options) : helperMissing.call(depth0, "t", "application.project_of", options))));
   data.buffer.push("\n    <a href=\"http://foodchainworkers.org/\" target=\"_blank\">Food Chain Workers Alliance</a> &amp;\n    <a href=\"http://thehandthatfeedsfilm.com/\" target=\"_blank\">The Hand That Feeds</a>\n</div>\n\n<div id=\"filters\" class=\"full-height\">\n    <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clearFilters", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));

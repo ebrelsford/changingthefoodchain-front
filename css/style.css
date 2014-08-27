@@ -3113,21 +3113,16 @@ header #tagline {
   }
 }
 header #list-button {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color: #bc461b;
-  text-transform: uppercase;
-}
-@media (min-width: 768px) {
-  header #list-button {
-    float: left;
-    width: 8.33333333%;
-  }
+  background: url(../img/list.png) no-repeat 100% 100%;
+  background-size: contain;
+  display: block;
+  height: 40px;
+  position: absolute;
+  right: 40px;
+  width: 55px;
 }
 header #list-button:hover {
-  color: #bc461b;
+  background-image: url(../img/list_hover.png);
 }
 header .languages {
   margin-top: 10px;

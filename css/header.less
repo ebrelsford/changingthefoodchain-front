@@ -44,13 +44,18 @@ header {
     #tagline {
         .make-sm-column(3);
     }
+
     #list-button {
-        .make-sm-column(1);
-        color: @ui-button-color;
-        text-transform: uppercase;
+        background: url(../img/list.png) no-repeat 100% 100%;
+        background-size: contain;
+        display: block;
+        height: 40px;
+        position: absolute;
+        right: 40px;
+        width: 55px;
 
         &:hover {
-            color: @ui-button-color;
+            background-image: url(../img/list_hover.png);
         }
     }
 
