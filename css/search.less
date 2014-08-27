@@ -1,12 +1,36 @@
+.search-input-text {
+    color: rgba(68, 61, 126, 0.6);
+    font-size: 14px;
+}
+
 #search {
     .make-sm-column(3);
+    height: 45px;
 
     input {
+        .search-input-text();
         background: transparent;
         border: 2px solid @foreground-color;
         border-radius: 0;
         padding: 10px;
         width: 100%;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::-webkit-input-placeholder {
+            .search-input-text();
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+            .search-input-text();
+        }
+        &::-moz-placeholder {  /* Firefox 19+ */
+            .search-input-text();
+        }
+        &:-ms-input-placeholder {  
+            .search-input-text();
+        }
     }
 
     .twitter-typeahead {

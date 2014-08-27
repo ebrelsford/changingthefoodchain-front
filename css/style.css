@@ -2819,7 +2819,7 @@ select[multiple].input-lg {
 body,
 html {
   color: #443d7e;
-  font-family: "Monosten A", Courier, monospace;
+  font-family: "Monosten D", Courier, monospace;
   margin: 0;
   overflow: hidden;
   padding: 0;
@@ -3931,11 +3931,16 @@ body.organization-view .map-active-area {
 .carousel-control {
   padding-top: 85px;
 }
+.search-input-text {
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
+}
 #search {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  height: 45px;
 }
 @media (min-width: 768px) {
   #search {
@@ -3944,11 +3949,34 @@ body.organization-view .map-active-area {
   }
 }
 #search input {
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
   background: transparent;
   border: 2px solid #443d7e;
   border-radius: 0;
   padding: 10px;
   width: 100%;
+}
+#search input:focus {
+  outline: none;
+}
+#search input::-webkit-input-placeholder {
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
+}
+#search input:-moz-placeholder {
+  /* Firefox 18- */
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
+}
+#search input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
+}
+#search input:-ms-input-placeholder {
+  color: rgba(68, 61, 126, 0.6);
+  font-size: 14px;
 }
 #search .twitter-typeahead {
   width: 100%;
