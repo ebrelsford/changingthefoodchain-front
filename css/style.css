@@ -2790,6 +2790,10 @@ select[multiple].input-lg {
   margin-top: 5px;
   text-transform: uppercase;
 }
+.clear:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
 .section-list {
   list-style: none;
   margin: 0;
@@ -2804,9 +2808,16 @@ select[multiple].input-lg {
 .section-list-item .section-indicator {
   border: 1px solid #443d7e;
   border-radius: 50%;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
+  float: left;
+  height: 25px;
+  width: 25px;
+}
+.section-list-item .section-label {
+  float: left;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 1px;
+  width: 275px;
 }
 .section-list-item:hover,
 .section-list-item.active {
@@ -2814,6 +2825,8 @@ select[multiple].input-lg {
 }
 .section-list-item:hover .section-indicator,
 .section-list-item.active .section-indicator {
+  background: url(../img/x_hover.png) no-repeat center, center;
+  background-size: 60% 60%;
   border-color: #bc461b;
 }
 body,
@@ -2842,7 +2855,7 @@ h1 {
   font-size: 40px;
 }
 h2 {
-  font-family: "Monosten A", Courier, monospace;
+  font-family: "Monosten D", Courier, monospace;
 }
 img {
   height: auto;
@@ -2915,12 +2928,12 @@ body > .ember-view {
   border-top: 1px solid #443d7e;
 }
 #filters h2 {
-  font-size: 11px;
+  font-size: 16px;
   text-transform: uppercase;
 }
 #filters h3 {
   font-family: "AntiqueOli-Bol";
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1px;
   margin-top: 15px;
   text-transform: uppercase;
@@ -2947,9 +2960,16 @@ body.page-view #filters * {
 .filters-item .section-indicator {
   border: 1px solid #443d7e;
   border-radius: 50%;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
+  float: left;
+  height: 25px;
+  width: 25px;
+}
+.filters-item .section-label {
+  float: left;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 1px;
+  width: 275px;
 }
 .filters-item:hover,
 .filters-item.active {
@@ -2957,6 +2977,8 @@ body.page-view #filters * {
 }
 .filters-item:hover .section-indicator,
 .filters-item.active .section-indicator {
+  background: url(../img/x_hover.png) no-repeat center, center;
+  background-size: 60% 60%;
   border-color: #bc461b;
 }
 .filters-list {
@@ -2978,9 +3000,16 @@ body.page-view #filters * {
 .filters-sector-list-item .section-indicator {
   border: 1px solid #443d7e;
   border-radius: 50%;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
+  float: left;
+  height: 25px;
+  width: 25px;
+}
+.filters-sector-list-item .section-label {
+  float: left;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 1px;
+  width: 275px;
 }
 .filters-sector-list-item:hover,
 .filters-sector-list-item.active {
@@ -2988,6 +3017,8 @@ body.page-view #filters * {
 }
 .filters-sector-list-item:hover .section-indicator,
 .filters-sector-list-item.active .section-indicator {
+  background: url(../img/x_hover.png) no-repeat center, center;
+  background-size: 60% 60%;
   border-color: #bc461b;
 }
 .filters-type-list {
@@ -3004,9 +3035,16 @@ body.page-view #filters * {
 .filters-type-list-item .section-indicator {
   border: 1px solid #443d7e;
   border-radius: 50%;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
+  float: left;
+  height: 25px;
+  width: 25px;
+}
+.filters-type-list-item .section-label {
+  float: left;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 1px;
+  width: 275px;
 }
 .filters-type-list-item:hover,
 .filters-type-list-item.active {
@@ -3014,6 +3052,8 @@ body.page-view #filters * {
 }
 .filters-type-list-item:hover .section-indicator,
 .filters-type-list-item.active .section-indicator {
+  background: url(../img/x_hover.png) no-repeat center, center;
+  background-size: 60% 60%;
   border-color: #bc461b;
 }
 .filters-clear {
@@ -3021,8 +3061,12 @@ body.page-view #filters * {
   float: right;
   margin-top: 5px;
   text-transform: uppercase;
-  font-size: 11px;
-  margin-top: 9px;
+  font-size: 14px;
+  margin-top: 13px;
+}
+.filters-clear:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 .help-button {
   background-color: rgba(68, 61, 126, 0.6);
@@ -3317,6 +3361,10 @@ body.organization-view .map-active-area {
   margin-top: 5px;
   text-transform: uppercase;
 }
+.news-category-clear:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
 .news-category-header {
   border-bottom: 1px solid #443d7e;
   color: #443d7e;
@@ -3337,9 +3385,16 @@ body.organization-view .map-active-area {
 .news-category-list-item .section-indicator {
   border: 1px solid #443d7e;
   border-radius: 50%;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
+  float: left;
+  height: 25px;
+  width: 25px;
+}
+.news-category-list-item .section-label {
+  float: left;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 1px;
+  width: 275px;
 }
 .news-category-list-item:hover,
 .news-category-list-item.active {
@@ -3347,6 +3402,8 @@ body.organization-view .map-active-area {
 }
 .news-category-list-item:hover .section-indicator,
 .news-category-list-item.active .section-indicator {
+  background: url(../img/x_hover.png) no-repeat center, center;
+  background-size: 60% 60%;
   border-color: #bc461b;
 }
 .news-entry-list .news-entry {

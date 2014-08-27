@@ -39,6 +39,10 @@
     float: right;
     margin-top: 5px;
     text-transform: uppercase;
+
+    &:hover {
+        .opacity(1);
+    }
 }
 
 .section-list {
@@ -56,9 +60,17 @@
     .section-indicator {
         border: 1px solid @foreground-color;
         border-radius: 50%;
-        display: inline-block;
-        height: 15px;
-        width: 15px;
+        float: left;
+        height: 25px;
+        width: 25px;
+    }
+
+    .section-label {
+        float: left;
+        font-size: 16px;
+        margin-left: 15px;
+        margin-top: 1px;
+        width: 275px;
     }
 
     &:hover,
@@ -66,6 +78,8 @@
         color: @logo-color;
 
         .section-indicator {
+            background: url(../img/x_hover.png) no-repeat center, center;
+            background-size: 60% 60%;
             border-color: @logo-color;
         }
     }
