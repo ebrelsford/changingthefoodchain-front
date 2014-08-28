@@ -5,7 +5,7 @@ header {
     margin-left: 0;
     margin-right: 0;
     padding-bottom: 15px;
-    padding-top: 15px;
+    padding-top: @top;
     position: absolute;
     top: 0;
     left: 0;
@@ -14,17 +14,23 @@ header {
 
     #logo {
         .make-sm-column(3);
+        padding-left: @left;
         white-space: nowrap;
 
         a {
-            .opacity(0.97);
+            .opacity(0.95);
             color: @logo-color;
             font-family: @header-font-family;
             font-size: 60px;
             font-weight: @header-font-weight;
-            line-height: 44px;
+            line-height: 46px;
             letter-spacing: -1px;
             text-transform: uppercase;
+
+            &:hover {
+                .opacity(1);
+                text-decoration: none;
+            }
         }
     }
 
@@ -53,7 +59,7 @@ header {
         display: block;
         height: 40px;
         position: absolute;
-        right: 40px;
+        right: @right;
         width: 55px;
 
         &:hover {
