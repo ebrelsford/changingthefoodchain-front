@@ -61,7 +61,7 @@ function program13(depth0,data) {
 function program15(depth0,data) {
   
   
-  data.buffer.push("add org");
+  data.buffer.push("\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    add org\n");
   }
 
   data.buffer.push("<header>\n    <div id=\"logo\">");
@@ -122,13 +122,12 @@ function program15(depth0,data) {
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n    </section>\n</div>\n\n");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-    'id': ("add-organization-button"),
-    'class': ("map-ui-button")
-  },hashTypes:{'id': "STRING",'class': "STRING"},hashContexts:{'id': depth0,'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
+    'class': ("map-ui-button add-organization-button")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n<a id=\"share-button\" class=\"map-ui-button\" ");
+  data.buffer.push("\n\n<a id=\"share-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">share</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
+  data.buffer.push(">\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    share\n</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height full-width\">\n    ");

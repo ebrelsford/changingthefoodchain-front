@@ -51,8 +51,15 @@
     </section>
 </div>
 
-{{#link-to 'organizations.add' id="add-organization-button" class="map-ui-button"}}add org{{/link-to}}
-<a id="share-button" class="map-ui-button" {{action 'openShare'}}>share</a>
+{{#link-to 'organizations.add' class="map-ui-button add-organization-button"}}
+    <div class="map-ui-button-icon add-organization-button-icon"></div>
+    add org
+{{/link-to}}
+
+<a id="share-button" class="map-ui-button" {{action 'openShare'}}>
+    <div class="map-ui-button-icon add-organization-button-icon"></div>
+    share
+</a>
 
 <div id="popup" class="full-height">
     {{outlet}}

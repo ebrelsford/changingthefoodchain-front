@@ -3299,13 +3299,35 @@ body.organization-view .map-active-area {
   z-index: 2000;
 }
 .map-ui-button:hover {
-  color: #bc461b;
+  color: #443d7e;
 }
-#add-organization-button {
+.map-ui-button-icon {
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 30px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30px;
+}
+.add-organization-button {
   right: 155px;
+}
+.add-organization-button .map-ui-button-icon {
+  background-image: url(../img/addorg.png);
+}
+.add-organization-button:hover .map-ui-button-icon {
+  background-image: url(../img/addorg_hover.png);
 }
 #share-button {
   right: 90px;
+}
+#share-button .map-ui-button-icon {
+  background-image: url(../img/share.png);
+  width: 19px;
+}
+#share-button:hover .map-ui-button-icon {
+  background-image: url(../img/share_hover.png);
 }
 #project-authors {
   background: rgba(68, 61, 126, 0.5);
