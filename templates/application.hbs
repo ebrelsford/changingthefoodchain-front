@@ -41,11 +41,12 @@
     <a href="#" {{action 'clearFilters'}} class="filters-clear">{{t "application.filters.clear"}}</a>
     <h2>{{t "application.filters.header"}}</h2>
     <section class="filters-type">
-        <a class="pull-right help-button" href="#" {{action 'openHelpOrganizationTypes'}}>?</a>
+        {{#link-to 'help-organization-types' class="pull-right help-button"}}?{{/link-to}}
         <h3>{{t "application.filters.organization_type"}}</h3>
         {{view App.OrganizationTypeView content=types}}
     </section>
     <section class="filters-sector">
+        {{#link-to 'help-industry-types' class="pull-right help-button"}}?{{/link-to}}
         <h3>{{t "application.filters.industry_type"}}</h3>
         {{view App.SectorView content=sectors}}
     </section>

@@ -2,14 +2,14 @@
     .overlay-content();
     left: 0;
 
-    .help-organization-header {
+    .help-header {
         color: @foreground-color;
         text-align: center;
         text-transform: uppercase;
         text-decoration: underline;
     }
 
-    .help-organization-types {
+    .help-types {
         .make-row();
 
         &-item {
@@ -19,6 +19,10 @@
             &-name {
                 font-weight: bold;
                 text-align: center;
+
+                img {
+                    max-height: 100px;
+                }
             }
 
             &-text {
@@ -31,6 +35,12 @@
             &:last-child * {
                 border-right: none;
             }
+        }
+    }
+
+    .help-industry-types {
+        .help-types-item {
+            .make-md-column(2);
         }
     }
 }

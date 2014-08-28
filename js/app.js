@@ -137,6 +137,7 @@ App.Router.map(function() {
     });
 
     this.route('about');
+    this.route('help-industry-types', { path: '/help/industry-types' });
     this.route('help-organization-types', { path: '/help/organization-types' });
     this.route('contact');
     this.route('news');
@@ -152,10 +153,6 @@ App.ApplicationRoute = Ember.Route.extend({
 
         setPageTitle: function () {
             document.title = this.makePageTitle();
-        },
-
-        openHelpOrganizationTypes: function () {
-            this.transitionTo('help-organization-types');
         },
 
         openOrganization: function (id) {
