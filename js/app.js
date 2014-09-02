@@ -254,6 +254,10 @@ App.ApplicationController = Ember.Controller.extend({
             .value();
     },
 
+    clearSearchError: function () {
+        this.set('searchError', false);
+    }.observes('searchText'),
+
     actions: {
         search: function () {
             var route = this;
