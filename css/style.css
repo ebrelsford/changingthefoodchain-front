@@ -4129,7 +4129,7 @@ body.organization-view .map-active-area {
 }
 #search .twitter-typeahead .tt-suggestion {
   background-color: rgba(68, 61, 126, 0.75);
-  color: white;
+  color: #f1e7cd;
   margin-bottom: 2px;
 }
 #search .twitter-typeahead .tt-suggestion:hover {
