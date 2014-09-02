@@ -348,7 +348,7 @@ module.exports = {
         map.closePopup();
         var organization = getOrganization(parseInt(id));
         if (!organization) return;
-        map.setView(organization.getLatLng(), 15);
+        map.setView(organization.getLatLng(), 11);
         organization.setStyle(organizationSelectStyle);
         selectedOrganization = organization;
     },
