@@ -117,6 +117,8 @@ header:after,
 #help .help-types:after,
 .news-entry-list .news-entry:before,
 .news-entry-list .news-entry:after,
+.organization-header:before,
+.organization-header:after,
 .add-organization-location-row:before,
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:before,
@@ -135,8 +137,6 @@ header:after,
 .organizations-list-item:after,
 .text-page:before,
 .text-page:after,
-#popup .organization-header:before,
-#popup .organization-header:after,
 #popup .organization-row:before,
 #popup .organization-row:after {
   content: " ";
@@ -155,6 +155,7 @@ header:after,
 header:after,
 #help .help-types:after,
 .news-entry-list .news-entry:after,
+.organization-header:after,
 .add-organization-location-row:after,
 .add-organization-location-form-city-state:after,
 .add-organization-contact:after,
@@ -164,7 +165,6 @@ header:after,
 .organizations-list-headers:after,
 .organizations-list-item:after,
 .text-page:after,
-#popup .organization-header:after,
 #popup .organization-row:after {
   clear: both;
 }
@@ -3549,8 +3549,32 @@ body.organization-view .map-active-area {
 .news-entry-detail .news-entry-meta-publication-date {
   font-weight: bold;
 }
-.organization-header img {
-  max-height: 100px;
+.organization-header {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.organization-header-details {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 240px;
+}
+@media (min-width: 992px) {
+  .organization-header-details {
+    float: left;
+    width: 75%;
+  }
+}
+@media (min-width: 992px) {
+  .organization-header-details {
+    margin-left: 25%;
+  }
+}
+.organization-header-details img {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  max-height: 160px;
 }
 .organization-details h2 {
   font-family: "Monosten C", Courier, monospace;
@@ -4037,28 +4061,6 @@ body.organization-view .map-active-area {
 #popup .close {
   margin-right: 0;
   margin-top: 0;
-}
-#popup .organization-header {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-#popup .organization-header-details {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 120px;
-}
-@media (min-width: 992px) {
-  #popup .organization-header-details {
-    float: left;
-    width: 75%;
-  }
-}
-@media (min-width: 992px) {
-  #popup .organization-header-details {
-    margin-left: 25%;
-  }
 }
 #popup .organization-row {
   margin-left: -15px;
