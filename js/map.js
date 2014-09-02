@@ -31,6 +31,10 @@ var organizationSelectStyle = organizationHoverStyle;
 function createMap(id, center, zoom) {
     return L.map(id, {
         center: center || defaultCenter,
+        maxBounds: [
+            [0, -210],
+            [74, 0]
+        ],
         maxZoom: 19,
         minZoom: 3,
         zoom: zoom || defaultZoom,
