@@ -7,21 +7,23 @@ var map,
     selectedOrganization,
     initialized = false,
     defaultCenter = [39.095963, -97.470703],
-    defaultZoom = 5;
+    defaultZoom = 5,
+    defaultRadius = 6;
 
 var organizationStyle = {
     fillColor: '#E3BE26',
     fillOpacity: 0.7,
-    radius: 5,
+    radius: defaultRadius,
     stroke: false
 };
 
 var organizationHoverStyle = {
     color: '#F1E7CD',
     fillColor: '#493F90',
-    fillOpacity: 0.7,
+    fillOpacity: 0.5,
+    opacity: 1,
     stroke: true,
-    radius: 15
+    radius: 20
 };
 
 var organizationSelectStyle = organizationHoverStyle;
@@ -30,6 +32,7 @@ function createMap(id, center, zoom) {
     return L.map(id, {
         center: center || defaultCenter,
         maxZoom: 19,
+        minZoom: 3,
         zoom: zoom || defaultZoom,
         zoomControl: false
     });
@@ -50,6 +53,15 @@ function addStreets(map) {
     }
 }
 
+function getOrganizationStyle(map) {
+    var zoom = map.getZoom(),
+        radius = defaultRadius;
+    if (zoom > 8) {
+        radius = radius + 1 + Math.floor(zoom - 8 / 3);
+    }
+    return _.extend({}, organizationStyle, { radius: radius });
+}
+
 function addOrganizations(map, callback) {
     $.getJSON(CONFIG.API_BASE + '/organizations/geojson/', function (data) {
         var organizationLayer = L.geoJson(data, {
@@ -67,12 +79,12 @@ function addOrganizations(map, callback) {
                 layer.on('mouseout', function () {
                     layer.closePopup();
                     if (selectedOrganization && layer === selectedOrganization) return;
-                    layer.setStyle(organizationStyle);
+                    layer.setStyle(getOrganizationStyle(map));
                 });
             },
 
             pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, organizationStyle);
+                return L.circleMarker(latlng, getOrganizationStyle(map));
             }
         });
         organizationLayer.addTo(map);
@@ -117,6 +129,16 @@ function initializeMap(id, center, zoom, organizationsCallback) {
         if (organizationsCallback) {
             organizationsCallback();
         }
+    });
+
+    map.on('zoomend', function () {
+        // Update all organization features' radii
+        var style = getOrganizationStyle(map);
+        organizationLayer.eachLayer(function (l) {
+            // Except for selected org, if any?
+            if (selectedOrganization && l === selectedOrganization) return;
+            l.setStyle(style);
+        });
     });
 
     map.on('locationfound', function (e) {

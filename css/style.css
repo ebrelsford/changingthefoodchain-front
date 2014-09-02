@@ -3395,14 +3395,16 @@ body.organization-view .map-active-area {
   margin-top: 5px;
 }
 .leaflet-popup-content-wrapper {
-  background-color: #443d7e;
+  background-color: rgba(68, 61, 126, 0.9);
   border-radius: 0;
+  box-shadow: none;
   color: #f1e7cd;
-  font-size: 16px;
+  font-family: "Monosten C", Courier, monospace;
+  font-size: 18px;
   font-weight: bold;
 }
 .leaflet-popup-tip {
-  background-color: #443d7e;
+  background-color: rgba(68, 61, 126, 0.9);
 }
 .leaflet-bottom {
   bottom: 15px;
