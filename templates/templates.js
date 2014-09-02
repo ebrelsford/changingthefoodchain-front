@@ -637,12 +637,12 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n<div class=\"organization-header\">\n    ");
+  data.buffer.push("\n\n<div class=\"organization-header\">\n    <div class=\"organization-header-details\">\n        <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n        ");
   stack1 = helpers.each.call(depth0, "types", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <div class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n        <h2>");
+  data.buffer.push("\n    </div>\n</div>\n\n<div class=\"organization-row\">\n    <div class=\"organization-filters\"></div>\n\n    <div class=\"organization-details\">\n        <h2>");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h2>\n        <div class=\"organization-details-contact\">\n            <div>\n                ");
@@ -691,12 +691,12 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n    <img ");
+  data.buffer.push("\n        <img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("image"),
     'alt': ("name")
   },hashTypes:{'src': "ID",'alt': "ID"},hashContexts:{'src': depth0,'alt': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\" />\n    ");
+  data.buffer.push("\" />\n        ");
   return buffer;
   }
 
@@ -759,7 +759,7 @@ function program14(depth0,data) {
 function program16(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n        <div class=\"organization-mission-statement\">\n            ");
+  data.buffer.push("\n        <div class=\"organization-details-mission-statement\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization.mission", options) : helperMissing.call(depth0, "t", "organization.mission", options))));
   data.buffer.push(": ");
   stack1 = helpers._triageMustache.call(depth0, "mission", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});

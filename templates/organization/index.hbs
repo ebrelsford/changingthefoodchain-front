@@ -1,15 +1,18 @@
 {{#with controllers.organization.model}}
+
 <div class="organization-header">
-    {{#each types}}
-    <img {{bind-attr src=image alt=name}}" />
-    {{/each}}
+    <div class="organization-header-details">
+        <div class="close" {{action 'close'}}>&times;</div>
+        {{#each types}}
+        <img {{bind-attr src=image alt=name}}" />
+        {{/each}}
+    </div>
 </div>
 
 <div class="organization-row">
     <div class="organization-filters"></div>
 
     <div class="organization-details">
-        <div class="close" {{action 'close'}}>&times;</div>
         <h2>{{name}}</h2>
         <div class="organization-details-contact">
             <div>
@@ -42,7 +45,7 @@
         {{/if}}
 
         {{#if mission}}
-        <div class="organization-mission-statement">
+        <div class="organization-details-mission-statement">
             {{t "organization.mission"}}: {{mission}}
         </div>
         {{/if}}

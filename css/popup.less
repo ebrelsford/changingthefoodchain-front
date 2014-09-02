@@ -14,8 +14,12 @@
 
     .organization-header {
         .make-row();
-        height: @header-height;
-        text-align: center;
+
+        &-details {
+            .make-md-column(9);
+            .make-md-column-offset(3);
+            height: @header-height;
+        }
     }
 
     .organization-row {
