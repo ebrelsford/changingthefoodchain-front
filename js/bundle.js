@@ -64570,6 +64570,17 @@ window.App = Ember.Application.create({
             Ember.run.debounce(this, makeFullHeight, 100);
             Ember.run.debounce(this, makeFullWidth, 100);
         });
+
+        // When a modal is shown, make it vertically centered
+        function centerModal() {
+            var $dialog = $(this).find('.modal-dialog'),
+                offset = ($('body').height() - $dialog.height()) / 2;
+            $dialog.css("margin-top", offset);
+        }
+        $('body').on('shown.bs.modal', centerModal);
+        $(window).on("resize", function () {
+            $('.modal:visible').each(centerModal);
+        });
     }
 });
 App.deferReadiness();
