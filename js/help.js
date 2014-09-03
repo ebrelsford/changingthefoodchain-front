@@ -11,6 +11,15 @@ App.HelpView = Ember.View.extend({
         $('#help').show();
         this._super();
         $('body').addClass('help-view');
+
+        var maxHeight = 0;
+        $('.help-types-item-text').each(function () {
+            var height = $(this).height();
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+        $('.help-types-item-text').height(maxHeight);
     },
 
     willDestroyElement: function () {

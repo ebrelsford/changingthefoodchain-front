@@ -3198,7 +3198,7 @@ body.page-view header {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  padding: 10px;
+  padding: 0;
 }
 @media (min-width: 992px) {
   #help .help-types-item {
@@ -3208,6 +3208,7 @@ body.page-view header {
 }
 #help .help-types-item-name {
   font-weight: bold;
+  padding-bottom: 15px;
   text-align: center;
 }
 #help .help-types-item-name img {
@@ -3215,8 +3216,9 @@ body.page-view header {
 }
 #help .help-types-item-text {
   border-right: 1px solid #443d7e;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 15px;
   text-align: center;
 }
 #help .help-types-item:last-child * {
