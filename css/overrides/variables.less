@@ -2,6 +2,9 @@
 @border-radius-large: 0;
 
 @btn-font-weight: bold;
+@btn-default-color: @foreground-color;
+@btn-default-bg: transparent;
+@btn-default-border: @foreground-color;
 @btn-primary-color: @ui-button-color;
 @btn-primary-bg: transparent;
 @btn-primary-border: @ui-button-color;
@@ -15,11 +18,16 @@
 @input-height-base: 45px;
 
 @modal-content-bg: @overlay-background-color;
+@modal-footer-border-color: transparent;
+@modal-header-border-color: transparent;
 
 @nav-link-hover-bg: transparent;
+@nav-link-padding: 5px 15px;
 @nav-tabs-active-link-hover-bg: transparent;
 @nav-tabs-active-link-hover-border-color: @ui-button-color;
 @nav-tabs-active-link-hover-color: @ui-button-color;
-@nav-tabs-link-hover-border-color: tranparent;
+@nav-tabs-border-color: transparent;
+@nav-tabs-link-hover-border-color: transparent;
 
-@zindex-modal: @interface-z-index + 50;
+@zindex-modal-background: @interface-z-index + 50;
+@zindex-modal: @zindex-modal-background + 1;

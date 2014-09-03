@@ -412,7 +412,7 @@ header:after,
 }
 .btn:hover,
 .btn:focus {
-  color: #333333;
+  color: #443d7e;
   text-decoration: none;
 }
 .btn:active,
@@ -433,18 +433,18 @@ fieldset[disabled] .btn {
   box-shadow: none;
 }
 .btn-default {
-  color: #333333;
-  background-color: #ffffff;
-  border-color: #cccccc;
+  color: #443d7e;
+  background-color: transparent;
+  border-color: #443d7e;
 }
 .btn-default:hover,
 .btn-default:focus,
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
-  color: #333333;
-  background-color: #ebebeb;
-  border-color: #adadad;
+  color: #443d7e;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #2e2955;
 }
 .btn-default:active,
 .btn-default.active,
@@ -466,12 +466,12 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-  background-color: #ffffff;
-  border-color: #cccccc;
+  background-color: transparent;
+  border-color: #443d7e;
 }
 .btn-default .badge {
-  color: #ffffff;
-  background-color: #333333;
+  color: transparent;
+  background-color: #443d7e;
 }
 .btn-primary {
   color: #bc461b;
@@ -1986,7 +1986,7 @@ select[multiple].input-lg {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2050;
+  z-index: 2051;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
@@ -2026,7 +2026,7 @@ select[multiple].input-lg {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 2050;
   background-color: #000000;
 }
 .modal-backdrop.fade {
@@ -2039,7 +2039,7 @@ select[multiple].input-lg {
 }
 .modal-header {
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid transparent;
   min-height: 16.42857143px;
 }
 .modal-header .close {
@@ -2057,7 +2057,7 @@ select[multiple].input-lg {
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid transparent;
 }
 .modal-footer .btn + .btn {
   margin-left: 5px;
@@ -2569,7 +2569,7 @@ select[multiple].input-lg {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 5px 15px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -2602,7 +2602,7 @@ select[multiple].input-lg {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
 }
 .nav-tabs > li {
   float: left;
@@ -2615,7 +2615,7 @@ select[multiple].input-lg {
   border-radius: 0 0 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: tranparent tranparent #dddddd;
+  border-color: transparent transparent transparent;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -2863,6 +2863,9 @@ body > .ember-view {
 .form-control {
   border-width: 2px;
   padding: 10px;
+}
+.nav-tabs {
+  padding-bottom: 15px;
 }
 .nav-tabs > li {
   margin-right: 25px;
