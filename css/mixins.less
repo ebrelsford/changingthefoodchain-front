@@ -51,8 +51,20 @@
     padding: 0;
 }
 
-.section-list-item {
-    cursor: pointer;
+.section-list-item-active {
+    color: @logo-color;
+
+    .section-indicator {
+        background: url(../img/x_hover.png) no-repeat center, center;
+        background-size: 60% 60%;
+        border-color: @logo-color;
+    }
+}
+
+.section-list-item(@hoverable: true) {
+    & when (@hoverable = true) {
+        cursor: pointer;
+    }
     padding-bottom: 5px;
     padding-top: 5px;
     text-transform: capitalize;
@@ -73,14 +85,65 @@
         width: 240px;
     }
 
-    &:hover,
-    &.active {
-        color: @logo-color;
+    &:hover when (@hoverable = true) {
+        .section-list-item-active();
+    }
 
-        .section-indicator {
-            background: url(../img/x_hover.png) no-repeat center, center;
-            background-size: 60% 60%;
-            border-color: @logo-color;
-        }
+    &.active {
+        .section-list-item-active();
+    }
+}
+
+.filters-item(@hoverable: true) {
+    .section-list-item(@hoverable);
+}
+
+.filters-list {
+    .section-list();
+}
+
+.filters(@hoverable: true) {
+    .hidden-xs();
+    background-color: transparent;
+    overflow-y: auto;
+    padding-left: @left;
+
+    section {
+        border-top: 1px solid @foreground-color;
+    }
+
+    h2 {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    h3 {
+        font-family: "AntiqueOli-Bol";
+        font-size: 12px;
+        letter-spacing: 1px;
+        margin-top: 15px;
+        text-transform: uppercase;
+    }
+
+    .filters-sector-list {
+        .filters-list();
+    }
+
+    .filters-sector-list-item {
+        .filters-item(@hoverable);
+    }
+
+    .filters-type-list {
+        .filters-list();
+    }
+
+    .filters-type-list-item {
+        .filters-item(@hoverable);
+    }
+
+    .filters-clear {
+        .clear();
+        font-size: 14px;
+        margin-top: 13px;
     }
 }

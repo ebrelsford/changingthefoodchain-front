@@ -1,65 +1,68 @@
-{{#with controllers.organization.model}}
-
-<div class="organization-header">
-    <div class="organization-header-details">
-        <div class="close" {{action 'close'}}>&times;</div>
-        {{#each types}}
-        <img {{bind-attr src=image alt=name}}" />
-        {{/each}}
-    </div>
-</div>
-
 <div class="organization-row">
-    <div class="organization-filters"></div>
-
-    <div class="organization-details">
-        <h2>{{name}}</h2>
-        <div class="organization-details-contact">
-            <div>
-                {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
-            </div>
-            {{#if phone}}
-            <div class="organization-details-contact-phone">
-                {{phone}}
-            </div>
-            {{/if}}
-            {{#if email}}
-            <div class="organization-details-contact-email">
-                {{email}}
-            </div>
-            {{/if}}
-        </div>
-
-        <div class="organization-details-actions">
-            {{#link-to 'share' class="btn btn-primary"}}{{t "organization.actions.share"}}{{/link-to}}
-            {{#if site_url}}
-            <a {{bind-attr href=site_url}} class="btn btn-primary" target="_blank">{{t "organization.actions.visit"}}</a>
-            {{/if}}
-            {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
-        </div>
-
-        {{#if media}}
-        <div class="organization-details-media">
-            {{view App.CarouselView content=media}}
-        </div>
-        {{/if}}
-
-        {{#if mission}}
-        <div class="organization-details-mission-statement">
-            {{t "organization.mission"}}: {{mission}}
-        </div>
-        {{/if}}
-
-        {{#if sectors}}
-            <section class="organization-sectors">
-                <h3>sectors:</h3>
-                <ul>
-                    {{#each sectors}}
-                    <li>{{name}}</li>
-                    {{/each}}
-                </ul>
-            </section>
-        {{/if}}
+    {{#with controllers.organization}}
+    <div class="organization-filters">
+        <h2>{{t "application.filters.header"}}</h2>
+        <section class="filters-type">
+            {{#link-to 'help-organization-types' class="pull-right help-button"}}?{{/link-to}}
+            <h3>{{t "application.filters.organization_type"}}</h3>
+            {{view App.OrganizationTypeView content=types}}
+        </section>
+        <section class="filters-sector">
+            {{#link-to 'help-industry-types' class="pull-right help-button"}}?{{/link-to}}
+            <h3>{{t "application.filters.industry_type"}}</h3>
+            {{view App.SectorView content=sectors}}
+        </section>
     </div>
+    {{/with}}
+
+    {{#with controllers.organization.model}}
+    <div class="organization-details">
+
+        <div class="organization-header">
+            <div class="close" {{action 'close'}}>&times;</div>
+            {{#each types}}
+            <img {{bind-attr src=image alt=name}} />
+            {{/each}}
+        </div>
+
+        <div class="organization-details-inner">
+            <h2>{{name}}</h2>
+            <div class="organization-details-contact">
+                <div>
+                    {{address_line1}}, {{city}}, {{state_province}} {{postal_code}}
+                </div>
+                {{#if phone}}
+                <div class="organization-details-contact-phone">
+                    {{phone}}
+                </div>
+                {{/if}}
+                {{#if email}}
+                <div class="organization-details-contact-email">
+                    {{email}}
+                </div>
+                {{/if}}
+            </div>
+
+            <div class="organization-details-actions">
+                {{#link-to 'share' class="btn btn-primary"}}{{t "organization.actions.share"}}{{/link-to}}
+                {{#if site_url}}
+                <a {{bind-attr href=site_url}} class="btn btn-primary" target="_blank">{{t "organization.actions.visit"}}</a>
+                {{/if}}
+                {{#link-to 'organization.add_media' class="btn btn-primary"}}{{t "organization.actions.add_media"}}{{/link-to}}
+            </div>
+
+            {{#if media}}
+            <div class="organization-details-media">
+                {{view App.CarouselView content=media}}
+            </div>
+            {{/if}}
+
+            {{#if mission}}
+            <div class="organization-details-mission-statement">
+                {{t "organization.mission"}}: {{mission}}
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{/with}}
 </div>
-{{/with}}

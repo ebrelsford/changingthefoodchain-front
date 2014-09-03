@@ -1,6 +1,7 @@
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');
+var _ = require('underscore');
 
 
 App.OrganizationsView = Ember.View.extend({
@@ -53,9 +54,7 @@ App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {
         this._super();
 
-        var popupHeight = $('#popup').height(),
-            headerHeight = $('.organization-header').height();
-        $('.organization-details').outerHeight(popupHeight - headerHeight);
+        $('.organization-details').outerHeight($('#popup').height());
 
         // If this is the first view we're seeing, the model will have changed
         // before the map is ready to zoom, so add a listener
@@ -78,9 +77,60 @@ App.OrganizationController = Ember.Controller.extend({
         }
     },
 
+    init: function () {
+        this._super();
+
+        var controller = this;
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('sectors', sectors.map(function (item) {
+                    // Create a non-persisted clone of the item
+                    var newItem =  _.extend({}, item);
+                    _.each(item.get('data'), function (value, key) {
+                        newItem.set(key, value);
+                    });
+                    newItem.set('isActive', false);
+                    return newItem;
+                }));
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('types', types.map(function (item) {
+                    // Create a non-persisted clone of the item
+                    var newItem =  _.extend({}, item);
+                    _.each(item.get('data'), function (value, key) {
+                        newItem.set(key, value);
+                    });
+                    newItem.set('isActive', false);
+                    return newItem;
+                }));
+            });
+    },
+
     updateCenter: function () {
         this.send('selectOrganization');
-    }.observes('model')
+    }.observes('model'),
+
+    updateSelectedSectors: function () {
+        // Update isActive for sectors active on this organization
+        var selectedSectors = _.map(this.get('model').get('sectors').content, function (type) {
+            return type.get('name');
+        });
+        _.each(this.get('sectors'), function (type) {
+            type.set('isActive', _.contains(selectedSectors, type.get('name')));
+        });
+    }.observes('model', 'sectors'),
+
+    updateSelectedTypes: function () {
+        // Update isActive for types active on this organization
+        var selectedTypes = _.map(this.get('model').get('types').content, function (type) {
+            return type.get('name');
+        });
+        _.each(this.get('types'), function (type) {
+            type.set('isActive', _.contains(selectedTypes, type.get('name')));
+        });
+    }.observes('model', 'types')
 });
 
 App.OrganizationRoute = App.OrganizationsRoute.extend({

@@ -1,20 +1,23 @@
 .organization-header {
-    .make-row();
+    height: 200px;
 
-    &-details {
-        .make-md-column(9);
-        .make-md-column-offset(3);
-        height: 240px;
-
-        img {
-            margin-bottom: 40px;
-            margin-top: 40px;
-            max-height: 160px;
-        }
+    img {
+        margin-bottom: 40px;
+        margin-top: 40px;
+        max-height: 120px;
     }
 }
 
+.organization-filters {
+    .make-md-column(6);
+    .filters(false);
+    padding-top: @header-height - @top;
+}
+
 .organization-details {
+    .make-md-column(6);
+    overflow-y: auto;
+
     h2 {
         font-family: "Monosten C", Courier, monospace;
         font-size: 18px;

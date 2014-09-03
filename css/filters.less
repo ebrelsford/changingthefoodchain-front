@@ -1,30 +1,9 @@
 #filters {
     .make-md-column(3);
-    .hidden-xs();
-    background-color: transparent;
-    height: 400px;
-    overflow-y: auto;
-    padding-left: @left;
+    .filters();
     position: absolute;
     top: @header-height;
     z-index: @interface-z-index;
-
-    section {
-        border-top: 1px solid @foreground-color;
-    }
-
-    h2 {
-        font-size: 16px;
-        text-transform: uppercase;
-    }
-
-    h3 {
-        font-family: "AntiqueOli-Bol";
-        font-size: 12px;
-        letter-spacing: 1px;
-        margin-top: 15px;
-        text-transform: uppercase;
-    }
 }
 
 body.list-organizations-view #filters {
@@ -39,41 +18,10 @@ body.add-organization-view #filters {
     }
 }
 
+body.organization-view #filters,
 body.page-view #filters {
     * {
         display: none;
-    }
-}
-
-.filters-item {
-    .section-list-item();
-}
-
-.filters-list {
-    .section-list();
-}
-
-.filters {
-    &-sector-list {
-        .filters-list();
-    }
-
-    &-sector-list-item {
-        .filters-item();
-    }
-
-    &-type-list {
-        .filters-list();
-    }
-
-    &-type-list-item {
-        .filters-item();
-    }
-
-    &-clear {
-        .clear();
-        font-size: 14px;
-        margin-top: 13px;
     }
 }
 

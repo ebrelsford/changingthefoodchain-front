@@ -162,21 +162,7 @@ App.ApplicationRoute = Ember.Route.extend({
         openShare: function () {
             this.transitionTo('share');
         }
-    },
-
-    setupController: function (controller, model) {
-        this._super(controller, model);
-
-        this.store.findAll('sector')
-            .then(function (sectors) {
-                controller.set('sectors', sectors);
-            });
-
-        this.store.findAll('type')
-            .then(function (types) {
-                controller.set('types', types);
-            });
-    },
+    }
 });
 
 App.ApplicationController = Ember.Controller.extend({
@@ -219,6 +205,17 @@ App.ApplicationController = Ember.Controller.extend({
         if (params.selectedTypes) {
             this.set('selectedTypes', JSON.parse(params.selectedTypes));
         }
+
+        var controller = this;
+        this.store.findAll('sector')
+            .then(function (sectors) {
+                controller.set('sectors', sectors);
+            });
+
+        this.store.findAll('type')
+            .then(function (types) {
+                controller.set('types', types);
+            });
     },
 
     setSelectedSectors: function () {
