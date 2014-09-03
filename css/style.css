@@ -3216,9 +3216,9 @@ body.page-view header {
 }
 #help .help-types-item-text {
   border-right: 1px solid #443d7e;
+  padding-bottom: 15px;
   padding-left: 40px;
   padding-right: 40px;
-  padding-bottom: 15px;
   text-align: center;
 }
 #help .help-types-item:last-child * {
@@ -3229,6 +3229,8 @@ body.page-view header {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  padding: 0;
+  width: 20% !important;
 }
 @media (min-width: 992px) {
   #help .help-industry-types .help-types-item {
