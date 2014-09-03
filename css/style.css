@@ -2944,7 +2944,7 @@ body > .ember-view {
   font-size: 16px;
   margin-left: 15px;
   margin-top: 1px;
-  width: 240px;
+  width: 200px;
 }
 #filters .filters-sector-list-item:hover {
   color: #bc461b;
@@ -2985,7 +2985,7 @@ body > .ember-view {
   font-size: 16px;
   margin-left: 15px;
   margin-top: 1px;
-  width: 240px;
+  width: 200px;
 }
 #filters .filters-type-list-item:hover {
   color: #bc461b;
@@ -3436,7 +3436,7 @@ body.organization-view .map-active-area {
   font-size: 16px;
   margin-left: 15px;
   margin-top: 1px;
-  width: 240px;
+  width: 200px;
 }
 .news-category-list-item:hover {
   color: #bc461b;
@@ -3533,7 +3533,7 @@ body.organization-view .map-active-area {
 @media (min-width: 992px) {
   .organization-filters {
     float: left;
-    width: 50%;
+    width: 41.66666667%;
   }
 }
 @media (max-width: 767px) {
@@ -3577,7 +3577,7 @@ body.organization-view .map-active-area {
   font-size: 16px;
   margin-left: 15px;
   margin-top: 1px;
-  width: 240px;
+  width: 200px;
 }
 .organization-filters .filters-sector-list-item.active {
   color: #bc461b;
@@ -3609,7 +3609,7 @@ body.organization-view .map-active-area {
   font-size: 16px;
   margin-left: 15px;
   margin-top: 1px;
-  width: 240px;
+  width: 200px;
 }
 .organization-filters .filters-type-list-item.active {
   color: #bc461b;
@@ -3641,7 +3641,7 @@ body.organization-view .map-active-area {
 @media (min-width: 992px) {
   .organization-details {
     float: left;
-    width: 50%;
+    width: 58.33333333%;
   }
 }
 .organization-details h2 {
