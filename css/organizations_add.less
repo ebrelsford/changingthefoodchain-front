@@ -5,8 +5,11 @@
 .add-organization {
     &-header {
         border-bottom: 2px solid @foreground-color;
-        margin-top: 0;
         text-transform: uppercase;
+
+        // XXX this is annoying but was having a hard time making the header
+        // stay above the header spacer
+        margin-top: -100px;
     }
 
     &-location {

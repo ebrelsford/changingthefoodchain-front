@@ -65481,6 +65481,12 @@ App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
 });
 
 App.NewsView = Ember.View.extend(App.PageViewMixin, App.PaginatedViewMixin, {
+    didRenderElement: function () {
+        this._super();
+        this.$('.fixed-header')
+            .width($('.page-content').width());
+    },
+
     willDestroyElement: function () {
         this._super();
         this.controller.set('category', null);
@@ -65910,7 +65916,7 @@ App.OrganizationsAddView = Ember.View.extend({
         $('#page').hide();
     },
 
-    didRenderElement : function() {
+    didRenderElement: function() {
         this._super();
 
         $('#popup').hide();
@@ -65949,6 +65955,11 @@ App.OrganizationsAddView = Ember.View.extend({
         }).addTo(addOrganizationMap);
 
         this.controller.set('map', addOrganizationMap);
+
+        // Give the page a little time to load before setting the header width
+        window.setTimeout(function () {
+            $('.fixed-header').width($('.add-organization-location-row').width());
+        }, 100);
     }
 });
 
@@ -66167,6 +66178,14 @@ App.PageView = Ember.View.extend({
         this.$('h2').attr('id', function () {
             return _s.slugify($(this).text());
         });
+
+        // Add fixed headerness since any h1 is coming from CMS
+        this.$('.text-page h1')
+            .addClass('fixed-header')
+            .append($('.close'))
+            .width($('.page-content').width());
+        this.$('.text-page h1').nextAll(':not(script):eq(0)')
+            .addClass('fixed-header-spacer');
     },
 
     willDestroyElement: function () {
@@ -72297,11 +72316,11 @@ function program9(depth0,data) {
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("categories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n    </div>\n    <div class=\"page-content news-entry-list\">\n        <div class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n        <h1 class=\"news-header\">");
+  data.buffer.push("\n    </div>\n    <div class=\"page-content news-entry-list\">\n        <h1 class=\"news-header fixed-header\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.header", options) : helperMissing.call(depth0, "t", "news.header", options))));
-  data.buffer.push("</h1>\n        ");
+  data.buffer.push("\n            <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n        </h1>\n        ");
   stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n</div>\n");
@@ -72796,11 +72815,11 @@ function program19(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n<h1 class=\"add-organization-header\">");
+  data.buffer.push("<h1 class=\"add-organization-header fixed-header\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organization_add.title", options) : helperMissing.call(depth0, "t", "organization_add.title", options))));
-  data.buffer.push("</h1>\n\n<div>\n    <form>\n        ");
+  data.buffer.push("\n    <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n</h1>\n\n<div class=\"fixed-header-spacer\">\n    <form>\n        ");
   stack1 = helpers['if'].call(depth0, "centroidError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");

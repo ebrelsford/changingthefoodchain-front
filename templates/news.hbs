@@ -11,8 +11,10 @@
         {{view App.NewsCategoryView content=categories}}
     </div>
     <div class="page-content news-entry-list">
-        <div class="close" {{action 'close'}}>&times;</div>
-        <h1 class="news-header">{{t "news.header"}}</h1>
+        <h1 class="news-header fixed-header">
+            {{t "news.header"}}
+            <div class="close" {{action 'close'}}>&times;</div>
+        </h1>
         {{#each content}}
         <div class="news-entry">
             <div class="news-entry-cover">

@@ -253,7 +253,7 @@ App.OrganizationsAddView = Ember.View.extend({
         $('#page').hide();
     },
 
-    didRenderElement : function() {
+    didRenderElement: function() {
         this._super();
 
         $('#popup').hide();
@@ -292,5 +292,10 @@ App.OrganizationsAddView = Ember.View.extend({
         }).addTo(addOrganizationMap);
 
         this.controller.set('map', addOrganizationMap);
+
+        // Give the page a little time to load before setting the header width
+        window.setTimeout(function () {
+            $('.fixed-header').width($('.add-organization-location-row').width());
+        }, 100);
     }
 });

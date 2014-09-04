@@ -1,7 +1,9 @@
-<div class="close" {{action 'close'}}>&times;</div>
-<h1 class="add-organization-header">{{t "organization_add.title"}}</h1>
+<h1 class="add-organization-header fixed-header">
+    {{t "organization_add.title"}}
+    <div class="close" {{action 'close'}}>&times;</div>
+</h1>
 
-<div>
+<div class="fixed-header-spacer">
     <form>
         {{#if centroidError}}
             <div class="alert alert-danger" role="alert">

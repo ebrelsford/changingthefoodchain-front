@@ -96,6 +96,20 @@ body > .ember-view {
     width: 100%;
 }
 
+.fixed-header {
+    background-color: @overlay-background-color;
+    position: fixed;
+    z-index: @interface-z-index;
+
+    &-spacer {
+        margin-top: 100px;
+    }
+
+    .close {
+        margin-top: -40px !important;
+    }
+}
+
 @import "overrides/buttons.less";
 @import "overrides/close.less";
 @import "overrides/forms.less";
