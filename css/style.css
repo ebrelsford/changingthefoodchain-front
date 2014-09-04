@@ -3113,8 +3113,14 @@ header #nav a {
   font-size: 24px;
   font-weight: normal;
   line-height: 28px;
+  padding: 5px;
   text-decoration: underline;
   text-transform: uppercase;
+}
+header #nav a.active,
+header #nav a:hover {
+  background-color: #443d7e;
+  color: #f1e7cd;
 }
 header #tagline {
   position: relative;
