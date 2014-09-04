@@ -3482,6 +3482,8 @@ body.organization-view .map-active-area {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  font-family: "Monosten A", Courier, monospace;
+  font-size: 10px;
 }
 @media (min-width: 992px) {
   .news-entry-list .news-entry-cover {
@@ -3498,6 +3500,8 @@ body.organization-view .map-active-area {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  font-family: "Monosten A", Courier, monospace;
+  font-size: 14px;
 }
 @media (min-width: 992px) {
   .news-entry-list .news-entry-content {
@@ -3509,9 +3513,12 @@ body.organization-view .map-active-area {
 .news-entry-list .news-entry-link a:active,
 .news-entry-list .news-entry-link a:hover {
   color: #443d7e;
+  text-decoration: underline;
   text-transform: uppercase;
 }
 .news-entry-list .news-entry-title {
+  font-family: "Monosten C", Courier, monospace;
+  font-size: 18px;
   margin-top: 0;
 }
 .news-entry-detail .news-entry-cover {

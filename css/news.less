@@ -40,6 +40,8 @@
 
         &-cover {
             .make-md-column(6);
+            font-family: @news-content-font-family;
+            font-size: 10px;
 
             img {
                 height: auto;
@@ -49,16 +51,21 @@
 
         &-content {
             .make-md-column(6);
+            font-family: @news-content-font-family;
+            font-size: 14px;
         }
 
         &-link {
             a, a:active, a:hover {
                 color: @foreground-color;
+                text-decoration: underline;
                 text-transform: uppercase;
             }
         }
 
         &-title {
+            font-family: @news-header-font-family;
+            font-size: 18px;
             margin-top: 0;
         }
     }
