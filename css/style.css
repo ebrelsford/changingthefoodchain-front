@@ -2861,7 +2861,7 @@ body > .ember-view {
   z-index: 3000;
 }
 .form-control {
-  border-width: 2px;
+  border-width: 1px;
   padding: 10px;
 }
 .nav-tabs {
@@ -3704,6 +3704,9 @@ body.organization-view .map-active-area {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  font-family: "Monosten A", Courier, monospace;
+  font-size: 12px;
+  text-transform: capitalize;
 }
 @media (min-width: 768px) {
   .add-organization-location-form {
