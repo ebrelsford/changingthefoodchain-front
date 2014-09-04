@@ -37,7 +37,8 @@
 .clear {
     color: @faded-color;
     float: right;
-    margin-top: 5px;
+    font-size: 14px;
+    margin-top: 13px;
     text-transform: uppercase;
 
     &:hover {
@@ -49,6 +50,16 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.section-list-header {
+    border-bottom: 1px solid @foreground-color;
+    color: @foreground-color;
+    font-size: 16px;
+    margin-top: 0;
+    padding-bottom: 13px;
+    padding-top: 13px;
+    text-transform: uppercase;
 }
 
 .section-list-item-active {
@@ -143,7 +154,5 @@
 
     .filters-clear {
         .clear();
-        font-size: 14px;
-        margin-top: 13px;
     }
 }

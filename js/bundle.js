@@ -72145,10 +72145,10 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1;
 
 
-  data.buffer.push("<div class=\"section-indicator\"></div>\n");
+  data.buffer.push("<div class=\"section-indicator\"></div>\n<div class=\"section-label\">\n    ");
   stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n");
+  data.buffer.push("\n</div>\n<div class=\"clearfix\"></div>\n");
   return buffer;
   
 });
@@ -72298,7 +72298,7 @@ function program9(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
+  data.buffer.push("<div class=\"news-row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"news-category-clear\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.clear", options) : helperMissing.call(depth0, "t", "news.categories.clear", options))));
@@ -72310,9 +72310,9 @@ function program9(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("featured:active")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                ");
+  data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                <div class=\"section-label\">\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
-  data.buffer.push("\n            </li>\n        </ul>\n        ");
+  data.buffer.push("\n                </div>\n                <div class=\"clearfix\"></div>\n            </li>\n        </ul>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("categories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));

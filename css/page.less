@@ -1,6 +1,7 @@
 #page {
     .overlay-content();
     padding-top: 0;
+    padding-left: 0;
 }
 
 .page-view #page {
@@ -21,16 +22,11 @@
     &-sections {
         .make-sm-column(3);
         .hidden-xs();
+        padding-left: @left;
         position: fixed;
 
         &-header {
-            border-bottom: 1px solid @foreground-color;
-            color: @foreground-color;
-            font-size: 16px;
-            margin-top: 0;
-            padding-bottom: 13px;
-            padding-top: 13px;
-            text-transform: uppercase;
+            .section-list-header();
         }
 
         &-list {
@@ -41,6 +37,10 @@
 
             &-item a {
                 color: @foreground-color;
+
+                &:hover {
+                    color: @logo-color;
+                }
             }
         }
     }
@@ -60,4 +60,6 @@
 
 .text-page {
     .make-row();
+    margin-left: 0;
+    margin-right: 0;
 }
