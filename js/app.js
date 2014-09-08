@@ -269,6 +269,12 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('searchText'),
 
     actions: {
+        reset: function () {
+            mapmodule.reset(map);
+            this.send('clearFilters');
+            this.transitionTo('index');
+        },
+
         search: function () {
             var route = this;
             this.set('searchError', false);

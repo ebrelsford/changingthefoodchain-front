@@ -1,5 +1,7 @@
 <header>
-    <div id="logo">{{#link-to 'index'}}{{t "application.header"}}{{/link-to}}</div>
+    <div id="logo">
+        <a href="#" {{action 'reset'}}>{{t "application.header"}}</a>
+    </div>
     <nav id="nav">
         {{#link-to 'about'}}{{t "application.nav.about"}}{{/link-to}}
         {{#link-to 'news'}}{{t "application.nav.news"}}{{/link-to}}

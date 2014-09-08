@@ -342,6 +342,10 @@ module.exports = {
 
     deselectOrganization: deselectOrganization,
 
+    reset: function (map) {
+        map.setView(defaultCenter, defaultZoom);
+    },
+
     selectOrganization: function (id) {
         if (!map || !organizationLayer) return;
         deselectOrganization();

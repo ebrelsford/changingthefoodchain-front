@@ -64716,6 +64716,12 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('searchText'),
 
     actions: {
+        reset: function () {
+            mapmodule.reset(map);
+            this.send('clearFilters');
+            this.transitionTo('index');
+        },
+
         search: function () {
             var route = this;
             this.set('searchError', false);
@@ -65224,6 +65230,10 @@ module.exports = {
     },
 
     deselectOrganization: deselectOrganization,
+
+    reset: function (map) {
+        map.setView(defaultCenter, defaultZoom);
+    },
 
     selectOrganization: function (id) {
         if (!map || !organizationLayer) return;
@@ -71894,28 +71904,22 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var helper, options;
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.header", options) : helperMissing.call(depth0, "t", "application.header", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.about", options) : helperMissing.call(depth0, "t", "application.nav.about", options))));
   }
 
 function program3(depth0,data) {
   
   var helper, options;
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.about", options) : helperMissing.call(depth0, "t", "application.nav.about", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.news", options) : helperMissing.call(depth0, "t", "application.nav.news", options))));
   }
 
 function program5(depth0,data) {
   
   var helper, options;
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.news", options) : helperMissing.call(depth0, "t", "application.nav.news", options))));
-  }
-
-function program7(depth0,data) {
-  
-  var helper, options;
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.nav.contact", options) : helperMissing.call(depth0, "t", "application.nav.contact", options))));
   }
 
-function program9(depth0,data) {
+function program7(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\n            <a href=\"#\" ");
@@ -71931,7 +71935,7 @@ function program9(depth0,data) {
   return buffer;
   }
 
-function program11(depth0,data) {
+function program9(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n        <div class=\"search-error\">\n            ");
@@ -71940,40 +71944,41 @@ function program11(depth0,data) {
   return buffer;
   }
 
-function program13(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = '';
   return buffer;
   }
 
-function program15(depth0,data) {
+function program13(depth0,data) {
   
   
   data.buffer.push("?");
   }
 
-function program17(depth0,data) {
+function program15(depth0,data) {
   
   
   data.buffer.push("\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    add org\n");
   }
 
-  data.buffer.push("<header>\n    <div id=\"logo\">");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n    <nav id=\"nav\">\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news", options) : helperMissing.call(depth0, "link-to", "news", options));
+  data.buffer.push("<header>\n    <div id=\"logo\">\n        <a href=\"#\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "reset", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.header", options) : helperMissing.call(depth0, "t", "application.header", options))));
+  data.buffer.push("</a>\n    </div>\n    <nav id=\"nav\">\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact", options) : helperMissing.call(depth0, "link-to", "contact", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news", options) : helperMissing.call(depth0, "link-to", "news", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact", options) : helperMissing.call(depth0, "link-to", "contact", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </nav>\n    <div id=\"tagline\">\n        <div>\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.tagline", options) : helperMissing.call(depth0, "t", "application.tagline", options))));
   data.buffer.push("\n        </div>\n        <div class=\"languages\">\n            ");
-  stack1 = helpers.each.call(depth0, "languages", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "languages", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n    </div>\n    <div id=\"search\">\n        ");
   data.buffer.push(escapeExpression((helper = helpers['type-ahead'] || (depth0 && depth0['type-ahead']),options={hash:{
@@ -71985,12 +71990,12 @@ function program17(depth0,data) {
     'placeholder': ("Search by name, city, state")
   },hashTypes:{'data': "ID",'name': "STRING",'action': "STRING",'selection': "ID",'value': "ID",'placeholder': "STRING"},hashContexts:{'data': depth0,'name': depth0,'action': depth0,'selection': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "type-ahead", options))));
   data.buffer.push("\n        ");
-  stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n\n    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'id': ("list-button")
-  },hashTypes:{'id': "STRING"},hashContexts:{'id': depth0},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.list", options) : helperMissing.call(depth0, "link-to", "organizations.list", options));
+  },hashTypes:{'id': "STRING"},hashContexts:{'id': depth0},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.list", options) : helperMissing.call(depth0, "link-to", "organizations.list", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</header>\n\n<div id=\"map\">\n    <a href=\"http://mapbox.com/about/maps\" class='mapbox-maplogo' target=\"_blank\">MapBox</a>\n</div>\n\n<div id=\"project-authors\">\n    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.project_of", options) : helperMissing.call(depth0, "t", "application.project_of", options))));
@@ -72003,7 +72008,7 @@ function program17(depth0,data) {
   data.buffer.push("</h2>\n    <section class=\"filters-type\">\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("pull-right help-button")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help-organization-types", options) : helperMissing.call(depth0, "link-to", "help-organization-types", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help-organization-types", options) : helperMissing.call(depth0, "link-to", "help-organization-types", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        <h3>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.organization_type", options) : helperMissing.call(depth0, "t", "application.filters.organization_type", options))));
@@ -72014,7 +72019,7 @@ function program17(depth0,data) {
   data.buffer.push("\n    </section>\n    <section class=\"filters-sector\">\n        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("pull-right help-button")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help-industry-types", options) : helperMissing.call(depth0, "link-to", "help-industry-types", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help-industry-types", options) : helperMissing.call(depth0, "link-to", "help-industry-types", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        <h3>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.industry_type", options) : helperMissing.call(depth0, "t", "application.filters.industry_type", options))));
@@ -72025,7 +72030,7 @@ function program17(depth0,data) {
   data.buffer.push("\n    </section>\n</div>\n\n");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("map-ui-button add-organization-button")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "organizations.add", options) : helperMissing.call(depth0, "link-to", "organizations.add", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n<a id=\"share-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
