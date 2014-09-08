@@ -109,6 +109,7 @@ Ember.Route.reopen({
     },
 
     deactivate: function () {
+        this.controllerFor('application').set('previousTitle', document.title);
         this.controllerFor('application').set('previousUrl', window.location.href);
     }
 });
@@ -186,6 +187,7 @@ App.ApplicationController = Ember.Controller.extend({
     searchText: null,
     searchError: false,
     selectedOrganization: null,
+    previousTitle: null,
     previousUrl: null,
 
     selectedSectors: [],

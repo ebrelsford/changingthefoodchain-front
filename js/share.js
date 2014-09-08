@@ -3,6 +3,23 @@ var map = require('./map');
 
 
 App.ShareController = Ember.Controller.extend({
+    previousTitle: Ember.computed.alias('controllers.application.previousTitle'),
+    previousUrl: Ember.computed.alias('controllers.application.previousUrl'),
+
+    facebookUrl: function () {
+        return 'http://www.facebook.com/sharer/sharer.php?' + $.param({
+            u: this.get('previousUrl')
+        });
+    }.property('previousUrl'),
+
+    twitterUrl: function () {
+        return 'http://twitter.com/intent/tweet?' + $.param({
+            related: 'foodchainworker,jubileefilms',
+            text: this.get('previousTitle'),
+            url: this.get('previousUrl')
+        });
+    }.property('previousUrl'),
+
     needs: ['application']
 });
 
