@@ -3346,7 +3346,6 @@ body.organization-view .map-active-area {
   background-image: url(../img/share_hover.png);
 }
 #project-authors {
-  background: rgba(68, 61, 126, 0.5);
   bottom: 15px;
   font-family: "Monosten A", Courier, monospace;
   font-size: 10px;
@@ -3415,7 +3414,7 @@ body.organization-view .map-active-area {
   margin-right: 0;
 }
 .leaflet-container .leaflet-control-attribution {
-  background: rgba(68, 61, 126, 0.5);
+  background: transparent;
   color: #443d7e;
   font-family: "Monosten A", Courier, monospace;
   font-size: 10px;
