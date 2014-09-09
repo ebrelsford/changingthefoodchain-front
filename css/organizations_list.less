@@ -15,10 +15,19 @@
 
     &-headers {
         .make-row();
-        font-weight: bold;
+        border-bottom: 1px solid @foreground-color;
+        color: @faded-color;
+        text-transform: uppercase;
 
-        * {
+        & > div {
             cursor: pointer;
+            padding-bottom: 10px;
+            padding-top: 10px;
+
+            &:hover,
+            &.sorted {
+                color: @foreground-color;
+            }
         }
 
         &.sort-ascending {

@@ -3905,10 +3905,18 @@ body.organization-view .map-active-area {
 .organizations-list-headers {
   margin-left: -15px;
   margin-right: -15px;
-  font-weight: bold;
+  border-bottom: 1px solid #443d7e;
+  color: rgba(68, 61, 126, 0.6);
+  text-transform: uppercase;
 }
-.organizations-list-headers * {
+.organizations-list-headers > div {
   cursor: pointer;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.organizations-list-headers > div:hover,
+.organizations-list-headers > div.sorted {
+  color: #443d7e;
 }
 .organizations-list-headers.sort-ascending .sorted::after {
   content: '\25BC';
