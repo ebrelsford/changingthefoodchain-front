@@ -62,7 +62,7 @@ header {
     }
 
     #list-button {
-        background: url(../img/list.png) no-repeat 50% 50%;
+        background: data-uri('../img/list.png') no-repeat 50% 50%;
         background-size: 65% 65%;
         border: 1px solid @ui-button-color;
         display: block;
@@ -72,7 +72,7 @@ header {
         width: 50px;
 
         &:hover {
-            background-image: url(../img/list_hover.png);
+            background-image: data-uri('../img/list_hover.png');
             border-color: @foreground-color;
         }
     }
