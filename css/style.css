@@ -3400,7 +3400,7 @@ body.organization-view .map-active-area {
   box-shadow: none;
   color: #f1e7cd;
   font-family: "Monosten C", Courier, monospace;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
 }
 .leaflet-popup-tip {
