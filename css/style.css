@@ -3162,16 +3162,18 @@ header #tagline {
   }
 }
 header #list-button {
-  background: url(../img/list.png) no-repeat 100% 100%;
-  background-size: contain;
+  background: url(../img/list.png) no-repeat 50% 50%;
+  background-size: 65% 65%;
+  border: 1px solid #bc461b;
   display: block;
   height: 40px;
   position: absolute;
   right: 40px;
-  width: 55px;
+  width: 50px;
 }
 header #list-button:hover {
   background-image: url(../img/list_hover.png);
+  border-color: #443d7e;
 }
 header .languages {
   margin-top: 10px;
@@ -4232,7 +4234,7 @@ body.organization-view .map-active-area {
   color: rgba(68, 61, 126, 0.6);
   font-size: 14px;
   background: transparent;
-  border: 2px solid #443d7e;
+  border: 1px solid #443d7e;
   border-radius: 0;
   padding: 10px;
   width: 100%;
