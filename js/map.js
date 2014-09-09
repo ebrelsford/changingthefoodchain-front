@@ -8,7 +8,7 @@ var map,
     initialized = false,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5,
-    defaultRadius = 6;
+    defaultRadius = 5;
 
 var organizationStyle = {
     fillColor: '#E3BE26',
