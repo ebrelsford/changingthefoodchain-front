@@ -80,6 +80,7 @@
     padding-bottom: 5px;
     padding-top: 5px;
     text-transform: capitalize;
+    width: 260px;
 
     .section-indicator {
         border: 1px solid @foreground-color;
@@ -115,10 +116,10 @@
 }
 
 .filters(@hoverable: true) {
-    .hidden-xs();
     background-color: transparent;
     overflow-y: auto;
     padding-left: @left;
+    width: @filters-width;
 
     section {
         border-top: 1px solid @foreground-color;

@@ -3,6 +3,7 @@
     background-color: @popup-background-color;
     left: 0;
     overflow-y: hidden;
+    padding: 0;
     top: 0;
     width: @popup-width;
     z-index: @popup-z-index;
@@ -12,8 +13,8 @@
         margin-top: 0;
     }
 
-    .organization-row {
-        .make-row();
+    @media (max-width: @screen-md-max) {
+        overflow-y: auto;
     }
 }
 

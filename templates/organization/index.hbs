@@ -1,19 +1,4 @@
 <div class="organization-row">
-    {{#with controllers.organization}}
-    <div class="organization-filters">
-        <h2>{{t "application.filters.header"}}</h2>
-        <section class="filters-type">
-            {{#link-to 'help-organization-types' class="pull-right help-button"}}?{{/link-to}}
-            <h3>{{t "application.filters.organization_type"}}</h3>
-            {{view App.OrganizationTypeView content=types}}
-        </section>
-        <section class="filters-sector">
-            {{#link-to 'help-industry-types' class="pull-right help-button"}}?{{/link-to}}
-            <h3>{{t "application.filters.industry_type"}}</h3>
-            {{view App.SectorView content=sectors}}
-        </section>
-    </div>
-    {{/with}}
 
     {{#with controllers.organization.model}}
     <div class="organization-details">
@@ -63,6 +48,22 @@
             </div>
             {{/if}}
         </div>
+    </div>
+    {{/with}}
+
+    {{#with controllers.organization}}
+    <div class="organization-filters">
+        <h2>{{t "application.filters.header"}}</h2>
+        <section class="filters-type">
+            {{#link-to 'help-organization-types' class="pull-right help-button"}}?{{/link-to}}
+            <h3>{{t "application.filters.organization_type"}}</h3>
+            {{view App.OrganizationTypeView content=types}}
+        </section>
+        <section class="filters-sector">
+            {{#link-to 'help-industry-types' class="pull-right help-button"}}?{{/link-to}}
+            <h3>{{t "application.filters.industry_type"}}</h3>
+            {{view App.SectorView content=sectors}}
+        </section>
     </div>
     {{/with}}
 </div>

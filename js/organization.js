@@ -54,7 +54,13 @@ App.OrganizationView = App.OrganizationsView.extend({
     didRenderElement : function() {
         this._super();
 
-        $('.organization-details').outerHeight($('#popup').height());
+        // Make full height on screen bigger than md
+        if (Modernizr.mq('(min-width: 1200px)')) {
+            $('.organization-details').outerHeight($('#popup').height());
+        }
+        else {
+            $('.organization-details').css('height', '');
+        }
 
         // If this is the first view we're seeing, the model will have changed
         // before the map is ready to zoom, so add a listener

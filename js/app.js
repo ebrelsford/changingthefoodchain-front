@@ -69,6 +69,18 @@ function makeFullWidth() {
     });
 }
 
+function adjustOrganizationDimensions() {
+    if (Modernizr.mq('(min-width: 1200px)')) {
+        var parentWidth = $('.organization-details').parent().outerWidth(),
+            filtersWidth = $('.organization-filters').outerWidth(),
+            width = parentWidth - filtersWidth - 10;
+        $('.organization-details').outerWidth(width);
+    }
+    else {
+        $('.organization-details').css('width', '');
+    }
+}
+
 Ember.Controller.reopen({
     getQueryParams: function () {
         var hash = window.location.hash;
@@ -92,6 +104,7 @@ Ember.View.reopen({
     didRenderElement: function () {
         makeFullHeight();
         makeFullWidth();
+        adjustOrganizationDimensions();
         initializeMap();
     }
 });
@@ -123,6 +136,7 @@ window.App = Ember.Application.create({
         $(window).resize(function () {
             Ember.run.debounce(this, makeFullHeight, 100);
             Ember.run.debounce(this, makeFullWidth, 100);
+            Ember.run.debounce(this, adjustOrganizationDimensions, 100);
         });
 
         // When a modal is shown, make it vertically centered

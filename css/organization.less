@@ -1,3 +1,7 @@
+.organization-row {
+    .make-row(0);
+}
+
 .organization-header {
     height: 200px;
 
@@ -9,14 +13,23 @@
 }
 
 .organization-filters {
-    .make-md-column(5);
     .filters(false);
-    padding-top: @header-height - @top;
+    padding-left: @left;
+    padding-top: (@header-height - @top - 10px);
 }
 
 .organization-details {
-    .make-md-column(7);
+    float: right;
     overflow-y: auto;
+    padding-left: 20px;
+
+    // Width set dynamically when screen greater than md
+
+    @media (max-width: @screen-md-max) {
+        float: none;
+        padding-left: @left;
+        width: 100%;
+    }
 
     h2 {
         font-family: "Monosten C", Courier, monospace;
