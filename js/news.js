@@ -119,12 +119,6 @@ App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
 });
 
 App.NewsView = Ember.View.extend(App.PageViewMixin, App.PaginatedViewMixin, {
-    didRenderElement: function () {
-        this._super();
-        this.$('.fixed-header')
-            .width($('.page-content').width());
-    },
-
     willDestroyElement: function () {
         this._super();
         this.controller.set('category', null);

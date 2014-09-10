@@ -64528,6 +64528,12 @@ function adjustOrganizationDimensions() {
     }
 }
 
+function adjustFixedHeader() {
+    var $fixedHeader = $('.fixed-header'),
+        $parent = $fixedHeader.parent();
+    $fixedHeader.width($parent.outerWidth());
+}
+
 Ember.Controller.reopen({
     getQueryParams: function () {
         var hash = window.location.hash;
@@ -64552,6 +64558,7 @@ Ember.View.reopen({
         makeFullHeight();
         makeFullWidth();
         adjustOrganizationDimensions();
+        adjustFixedHeader();
         initializeMap();
     }
 });
@@ -64584,6 +64591,7 @@ window.App = Ember.Application.create({
             Ember.run.debounce(this, makeFullHeight, 100);
             Ember.run.debounce(this, makeFullWidth, 100);
             Ember.run.debounce(this, adjustOrganizationDimensions, 100);
+            Ember.run.debounce(this, adjustFixedHeader, 100);
         });
 
         // When a modal is shown, make it vertically centered
@@ -65515,12 +65523,6 @@ App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
 });
 
 App.NewsView = Ember.View.extend(App.PageViewMixin, App.PaginatedViewMixin, {
-    didRenderElement: function () {
-        this._super();
-        this.$('.fixed-header')
-            .width($('.page-content').width());
-    },
-
     willDestroyElement: function () {
         this._super();
         this.controller.set('category', null);
@@ -65995,11 +65997,6 @@ App.OrganizationsAddView = Ember.View.extend({
         }).addTo(addOrganizationMap);
 
         this.controller.set('map', addOrganizationMap);
-
-        // Give the page a little time to load before setting the header width
-        window.setTimeout(function () {
-            $('.fixed-header').width($('.add-organization-location-row').width());
-        }, 100);
     }
 });
 
@@ -66222,8 +66219,7 @@ App.PageView = Ember.View.extend({
         // Add fixed headerness since any h1 is coming from CMS
         this.$('.text-page h1')
             .addClass('fixed-header')
-            .append($('.close'))
-            .width($('.page-content').width());
+            .append($('.close'));
         this.$('.text-page h1').nextAll(':not(script):eq(0)')
             .addClass('fixed-header-spacer');
     },

@@ -81,6 +81,12 @@ function adjustOrganizationDimensions() {
     }
 }
 
+function adjustFixedHeader() {
+    var $fixedHeader = $('.fixed-header'),
+        $parent = $fixedHeader.parent();
+    $fixedHeader.width($parent.outerWidth());
+}
+
 Ember.Controller.reopen({
     getQueryParams: function () {
         var hash = window.location.hash;
@@ -105,6 +111,7 @@ Ember.View.reopen({
         makeFullHeight();
         makeFullWidth();
         adjustOrganizationDimensions();
+        adjustFixedHeader();
         initializeMap();
     }
 });
@@ -137,6 +144,7 @@ window.App = Ember.Application.create({
             Ember.run.debounce(this, makeFullHeight, 100);
             Ember.run.debounce(this, makeFullWidth, 100);
             Ember.run.debounce(this, adjustOrganizationDimensions, 100);
+            Ember.run.debounce(this, adjustFixedHeader, 100);
         });
 
         // When a modal is shown, make it vertically centered

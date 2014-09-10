@@ -19,8 +19,7 @@ App.PageView = Ember.View.extend({
         // Add fixed headerness since any h1 is coming from CMS
         this.$('.text-page h1')
             .addClass('fixed-header')
-            .append($('.close'))
-            .width($('.page-content').width());
+            .append($('.close'));
         this.$('.text-page h1').nextAll(':not(script):eq(0)')
             .addClass('fixed-header-spacer');
     },

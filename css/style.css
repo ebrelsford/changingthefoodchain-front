@@ -2861,6 +2861,7 @@ body > .ember-view {
 .fixed-header {
   background-color: #ebdfc2;
   position: fixed;
+  top: 120px;
   z-index: 2000;
 }
 .fixed-header-spacer {
@@ -3040,11 +3041,11 @@ body.list-organizations-view #filters {
 body.add-organization-view #filters {
   background-color: rgba(235, 223, 194, 0.9);
 }
-body.add-organization-view #filters * {
-  opacity: 0.3;
-  filter: alpha(opacity=30);
+body.add-organization-view #filters > * {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
 }
-body.organization-view:not(.list-organizations-view) #filters *,
+body.organization-view:not(.list-organizations-view):not(.add-organization-view) #filters *,
 body.page-view #filters * {
   display: none;
 }
@@ -3712,10 +3713,13 @@ body.organization-view .map-active-area {
     display: none !important;
   }
 }
+.add-organization-view #page {
+  padding-left: 20px;
+}
 .add-organization-header {
   border-bottom: 2px solid #443d7e;
+  margin-top: 0;
   text-transform: uppercase;
-  margin-top: -100px;
 }
 .add-organization-location-row {
   margin-left: -15px;
@@ -4089,8 +4093,8 @@ body.organization-view .map-active-area {
   top: 120px;
   width: 50%;
   z-index: 2000;
-  padding-top: 0;
   padding-left: 0;
+  padding-top: 0;
 }
 #page > section {
   margin-top: 20px;

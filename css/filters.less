@@ -13,12 +13,12 @@ body.list-organizations-view #filters {
 body.add-organization-view #filters {
     background-color: @overlay-background-color;
 
-    * {
-        .opacity(0.3);
+    & > * {
+        .opacity(0.4);
     }
 }
 
-body.organization-view:not(.list-organizations-view) #filters,
+body.organization-view:not(.list-organizations-view):not(.add-organization-view) #filters,
 body.page-view #filters {
     * {
         display: none;
