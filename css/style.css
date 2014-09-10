@@ -2859,7 +2859,7 @@ body > .ember-view {
   width: 100%;
 }
 .fixed-header {
-  background-color: rgba(235, 223, 194, 0.9);
+  background-color: #ebdfc2;
   position: fixed;
   z-index: 2000;
 }
@@ -2867,7 +2867,7 @@ body > .ember-view {
   margin-top: 100px;
 }
 .fixed-header .close {
-  margin-top: -40px !important;
+  margin-top: -54px !important;
 }
 .btn {
   border-width: 2px;
