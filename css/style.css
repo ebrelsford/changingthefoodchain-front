@@ -3163,6 +3163,7 @@ header #list-button {
   height: 40px;
   position: absolute;
   right: 40px;
+  top: 15px;
   width: 40px;
 }
 header #list-button:hover {
