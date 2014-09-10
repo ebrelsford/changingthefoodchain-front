@@ -66136,7 +66136,7 @@ App.OrganizationsListController = Ember.ArrayController.extend({
             return pageHeight - buttonHeight - headerHeight;
         },
 
-        rowHeight: 25
+        rowHeight: 60
     }),
 
     init: function () {

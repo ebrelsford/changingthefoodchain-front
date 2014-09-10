@@ -44,13 +44,21 @@
 
     &-item {
         .make-row();
+        border-bottom: 1px solid fadeout(@faded-color, 30%);
         cursor: pointer;
-        height: 25px;
-        max-height: 25px;
+
+        // These have to follow to the rowHeight setting in the Ember.ListView
+        // used in the organizations list
+        height: 60px;
+        max-height: 60px;
 
         &-field {
-            height: 100%;
+            color: @faded-color;
+            font-size: 12px;
+            height: 60px;
             overflow: hidden;
+            padding-bottom: 20px;
+            padding-top: 20px;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
@@ -59,6 +67,12 @@
             .make-xs-column(9);
             .make-sm-column(7);
             .make-md-column(5);
+            color: @foreground-color;
+            font-size: 14px;
+
+            &:hover {
+                color: @logo-color;
+            }
         }
         &-city {
             .hidden-xs();
@@ -74,15 +88,29 @@
             .hidden-xs();
             .hidden-sm();
             .make-md-column(2);
+
+            &.organizations-list-item-field {
+                text-transform: capitalize;
+            }
         }
         &-sectors {
             .hidden-xs();
             .hidden-sm();
             .make-md-column(2);
-        }
 
-        &:hover {
-            color: @logo-color;
+            &.organizations-list-item-field {
+                text-transform: capitalize;
+
+                &::after {
+                    color: @foreground-color;
+                    content: '❭';
+                    float: right;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-right: 5px;
+                    margin-top: -10px;
+                }
+            }
         }
     }
 
