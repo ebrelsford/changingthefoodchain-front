@@ -17,12 +17,6 @@
     </div>
 </div>
 
-<div class="organizations-list-add-organization">
-    <span>{{t "organizations_list.add.message"}}</span>
-    {{#link-to 'organizations.add' id="organizations-list-add-organization-button" class="btn btn-primary pull-right"}}{{t "organizations_list.add.button"}}{{/link-to}}
-    <div class="clearfix"></div>
-</div>
-
 {{#collection listView contentBinding="controller.content"}}
     <div class="organizations-list-item" {{action 'openOrganization' id}}>
         <div class="organizations-list-item-field organizations-list-item-name">{{name}}</div>
@@ -40,3 +34,9 @@
         </div>
     </div>
 {{/collection}}
+
+<div class="organizations-list-add-organization">
+    <span>{{t "organizations_list.add.message"}}</span>
+    {{#link-to 'organizations.add' id="organizations-list-add-organization-button" class="btn btn-primary pull-right"}}{{t "organizations_list.add.button"}}{{/link-to}}
+    <div class="clearfix"></div>
+</div>
