@@ -173,6 +173,14 @@ App.ApplicationRoute = Ember.Route.extend({
 
         openShare: function () {
             this.transitionTo('share');
+        },
+
+        toggleList: function () {
+            if (App.Router.router.currentHandlerInfos.slice(-1)[0].name === 'organizations.list') {
+                this.transitionTo('index');
+                return;
+            }
+            this.transitionTo('organizations.list');
         }
     }
 });

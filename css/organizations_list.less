@@ -1,5 +1,17 @@
 .list-organizations-view {
     .interface-hidden-xs();
+
+    .ember-list-view {
+        margin-right: -15px;
+    }
+
+    #list-button {
+        background-image: data-uri('../img/x_hover.png');
+
+        &:hover {
+            background-image: data-uri('../img/x.png');
+        }
+    }
 }
 
 @media (max-width: @screen-xs-max) {
