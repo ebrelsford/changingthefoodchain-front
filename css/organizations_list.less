@@ -1,6 +1,10 @@
 .list-organizations-view {
     .interface-hidden-xs();
 
+    #page {
+        padding-left: 20px;
+    }
+
     .ember-list-view {
         margin-right: -15px;
     }
@@ -26,15 +30,15 @@
     padding: 0;
 
     &-headers {
-        .make-row();
+        .make-row(0);
         border-bottom: 1px solid @foreground-color;
         color: @faded-color;
         text-transform: uppercase;
 
         & > div {
             cursor: pointer;
-            padding-bottom: 10px;
-            padding-top: 10px;
+            padding-bottom: 11px;
+            padding-top: 11px;
 
             &:hover,
             &.sorted {
@@ -55,7 +59,7 @@
     }
 
     &-item {
-        .make-row();
+        .make-row(0);
         border-bottom: 1px solid fadeout(@faded-color, 30%);
         cursor: pointer;
 
@@ -119,7 +123,7 @@
                     float: right;
                     font-size: 24px;
                     font-weight: bold;
-                    margin-right: 5px;
+                    margin-right: -10px;
                     margin-top: -10px;
                 }
             }
