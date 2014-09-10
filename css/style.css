@@ -3551,9 +3551,13 @@ body.organization-view .map-active-area {
   text-transform: uppercase;
 }
 .news-entry-list .news-entry-title {
+  cursor: pointer;
   font-family: "Monosten C", Courier, monospace;
   font-size: 18px;
   margin-top: 0;
+}
+.news-entry-list .news-entry-title:hover {
+  text-decoration: underline;
 }
 .news-entry-detail .news-entry-cover {
   float: left;

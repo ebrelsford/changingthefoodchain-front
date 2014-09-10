@@ -345,7 +345,9 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "cover", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <h2 class=\"news-entry-title\">");
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <h2 class=\"news-entry-title\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openEntry", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">");
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</h2>\n                <div class=\"news-entry-meta\">\n                    <div class=\"news-entry-meta-publication-date\">");
