@@ -125,6 +125,51 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
     },
 
+    help: {
+        industries: {
+            agriculture: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "As the first stage of all food items, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.";
+  }),
+            processing: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.";
+  }),
+            distribution: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "At this stage, workers transport food from one destination to another and load and unload food at warehouses and distribution centers. These may be final points of sale or intermediate locations for storage or further processing. Essentially, distribution connects the material at each stage of the food system. While a large component of this involves transportation, this stage also includes warehousing, refrigeration, logistics, and coordination.";
+  }),
+            retail: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Workers in this sector sell food directly to consumers in retail outlets including supermarkets, convenience, grocery stores, and buyers’ clubs. Workers in retail also include those who cook and prepare foods for delis and bakeries within the retail outlets, receive shipments, stock shelves, and clean the facilities.";
+  }),
+            service: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "The service sector is the largest segment of the food system. Workers in this segment prepare, cook and serve food, bartend, and wash dishes. This sector includes full-service restaurants, casual dining and quick service establishments, catering businesses, food trucks, street vendors, and food service establishments such as cafeterias and dining halls.";
+  })
+        }
+    },
+
     organizations_list: {
         title: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
