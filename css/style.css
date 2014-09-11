@@ -4310,6 +4310,7 @@ body.organization-view .map-active-area {
 #search .twitter-typeahead .tt-suggestion {
   background-color: rgba(68, 61, 126, 0.75);
   color: #f1e7cd;
+  cursor: pointer;
   margin-bottom: 2px;
 }
 #search .twitter-typeahead .tt-suggestion:hover {
