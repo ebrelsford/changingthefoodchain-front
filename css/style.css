@@ -2912,6 +2912,26 @@ body > .ember-view {
   border-width: 0;
   border-bottom: 3px solid #bc461b;
 }
+@media (max-width: 767px) {
+  .contact-view #nav,
+  .contact-view #tagline,
+  .contact-view #search {
+    display: none !important;
+  }
+}
+.contact-view #page {
+  padding-left: 20px;
+}
+.contact-header {
+  border-bottom: 2px solid #443d7e;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.contact-form {
+  font-family: "Monosten A", Courier, monospace;
+  font-size: 12px;
+  text-transform: capitalize;
+}
 #filters {
   background-color: transparent;
   overflow-y: auto;
@@ -3038,10 +3058,12 @@ body > .ember-view {
 body.list-organizations-view #filters {
   background-color: rgba(235, 223, 194, 0.9);
 }
-body.add-organization-view #filters {
+body.add-organization-view #filters,
+body.contact-view #filters {
   background-color: rgba(235, 223, 194, 0.9);
 }
-body.add-organization-view #filters > * {
+body.add-organization-view #filters > *,
+body.contact-view #filters > * {
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
@@ -3181,6 +3203,7 @@ header .languages a.active {
   text-decoration: underline;
 }
 body.add-organization-view header,
+body.contact-view header,
 body.list-organizations-view header,
 body.help-view header,
 body.page-view header {

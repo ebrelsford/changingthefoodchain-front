@@ -68,13 +68,3 @@ App.AboutRoute = Ember.Route.extend(App.PageRouteMixin, App.SectionsRouteMixin, 
 
     viewName: 'about'
 });
-
-App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
-    model: function () {
-        var url = CONFIG.API_BASE + '/pages/about/';
-        if (i18n.getLocale() !== CONFIG.DEFAULT_LOCALE) {
-            url += i18n.getLocale() + '/';
-        }
-        return $.get(url);
-    }
-});

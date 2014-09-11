@@ -61066,7 +61066,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"W5lFOV":30}],7:[function(require,module,exports){
+},{"W5lFOV":31}],7:[function(require,module,exports){
 if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
     leafletActiveAreaPreviousMethods = {
@@ -65023,7 +65023,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":6,"underscore":34}],12:[function(require,module,exports){
+},{"ember":6,"underscore":35}],12:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -65404,7 +65404,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":35,"./geocode":14,"./i18n":16,"./map":18,"./typeahead":27,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":29,"qs":32,"underscore":34}],13:[function(require,module,exports){
+},{"../templates/templates":36,"./geocode":15,"./i18n":17,"./map":19,"./typeahead":28,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":30,"qs":33,"underscore":35}],13:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -65463,6 +65463,131 @@ App.CarouselView = Ember.View.extend({
 });
 
 },{}],14:[function(require,module,exports){
+var Ember = require('ember');
+var _ = require('underscore');
+
+
+App.ContactController = Ember.Controller.extend({
+    email: null,
+    subject: null,
+    text: null,
+
+    emailError: false,
+    error: false,
+    textError: false,
+
+    success: false
+});
+
+App.ContactRoute = Ember.Route.extend({
+    clearValidation: function () {
+        var errorProperties = ['emailError', 'textError', 'error'];
+        _.each(errorProperties, function (errorProperty) {
+            this.set(errorProperty, false);
+        }, this.controller);
+    },
+
+    clearForm: function () {
+        var properties = ['email', 'subject', 'text'],
+            propertyChanges = {};
+
+        _.each(properties, function (property) {
+            propertyChanges[property] = null;
+        });
+
+        // Set all properties at the same time
+        this.controller.setProperties(propertyChanges);
+    },
+
+    validate: function () {
+        this.clearValidation();
+        if (!this.controller.get('email')) {
+            this.controller.set('emailError', true);
+            return false;
+        }
+        if (!this.controller.get('text')) {
+            this.controller.set('textError', true);
+            return false;
+        }
+        return true;
+    },
+
+    actions: {
+        close: function () {
+            this.disconnectOutlet('page');
+            history.back();
+        },
+
+        submit: function () {
+            if (!this.validate()) {
+                $('#page').scrollTop(0);
+                return;
+            }
+
+            var controller = this.controller,
+                fields = controller.getProperties(['email', 'subject', 'text']),
+                data = new FormData();
+
+            _.each(fields, function (value, name) {
+                // Avoid adding null / empty values
+                if (value !== null && value !== '') {
+                    data.append(name, value);
+                }
+            });
+
+            controller.set('submitting', true);
+            $.ajax({
+                context: this,
+                type: 'POST',
+                url: CONFIG.API_BASE + '/contact/',
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+                .done(function () {
+                    this.controller.set('success', true);
+                    this.clearForm();
+                })
+                .fail(function () {
+                    this.controller.set('error', true);
+                })
+                .always(function () {
+                    this.controller.set('submitting', false);
+                    $('#page').scrollTop(0);
+                });
+        }
+    },
+
+    renderTemplate: function () {
+        this.render({
+            into: 'application',
+            outlet: 'page'
+        });
+    }
+});
+
+App.ContactView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+        $('body').addClass('contact-view');
+    },
+
+    willDestroyElement: function () {
+        this._super();
+        $('body').removeClass('contact-view');
+        $('#page').hide();
+    },
+
+    didRenderElement: function() {
+        this._super();
+
+        $('#popup').hide();
+        $('#page').show();
+    }
+});
+
+},{"ember":6,"underscore":35}],15:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -65537,7 +65662,7 @@ module.exports = {
 
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 App.HelpRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -65587,7 +65712,7 @@ App.HelpIndustryTypesRoute = App.HelpRoute.extend({
 
 App.HelpIndustryTypesView = App.HelpView.extend({});
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var qs = require('qs');
 
 
@@ -65627,10 +65752,11 @@ module.exports = {
     }
 };
 
-},{"qs":32}],17:[function(require,module,exports){
+},{"qs":33}],18:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./carousel');
+require('./contact');
 require('./help');
 require('./models');
 require('./news');
@@ -65644,7 +65770,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":11,"./app":12,"./carousel":13,"./help":15,"./i18n":16,"./models":19,"./news":20,"./organization":21,"./organizations_add":22,"./organizations_list":23,"./page":24,"./share":26}],18:[function(require,module,exports){
+},{"./add_media":11,"./app":12,"./carousel":13,"./contact":14,"./help":16,"./i18n":17,"./models":20,"./news":21,"./organization":22,"./organizations_add":23,"./organizations_list":24,"./page":25,"./share":27}],19:[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -65854,7 +65980,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":7,"underscore":34}],19:[function(require,module,exports){
+},{"leaflet-active-area":7,"underscore":35}],20:[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');
@@ -65974,7 +66100,7 @@ App.Entry = DS.Model.extend({
     }.property('published_on')
 });
 
-},{"./videos":28,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":31}],20:[function(require,module,exports){
+},{"./videos":29,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":32}],21:[function(require,module,exports){
 var _ = require('underscore');
 require('./pagemixins');
 
@@ -66117,7 +66243,7 @@ App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
 
 App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {});
 
-},{"./pagemixins":25,"underscore":34}],21:[function(require,module,exports){
+},{"./pagemixins":26,"underscore":35}],22:[function(require,module,exports){
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');
@@ -66275,7 +66401,7 @@ App.OrganizationIndexController = Ember.Controller.extend({
     needs: ['organization']
 });
 
-},{"./map":18,"ember":6,"spinjs":9,"underscore":34}],22:[function(require,module,exports){
+},{"./map":19,"ember":6,"spinjs":9,"underscore":35}],23:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var _ = require('underscore');
@@ -66573,7 +66699,7 @@ App.OrganizationsAddView = Ember.View.extend({
     }
 });
 
-},{"./geocode":14,"ember":6,"underscore":34}],23:[function(require,module,exports){
+},{"./geocode":15,"ember":6,"underscore":35}],24:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 require('./pagemixins');
@@ -66770,7 +66896,7 @@ App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
     }
 });
 
-},{"./pagemixins":25,"ember":6,"ember-list-view":8}],24:[function(require,module,exports){
+},{"./pagemixins":26,"ember":6,"ember-list-view":8}],25:[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
 require('./pagemixins');
@@ -66842,17 +66968,7 @@ App.AboutRoute = Ember.Route.extend(App.PageRouteMixin, App.SectionsRouteMixin, 
     viewName: 'about'
 });
 
-App.ContactRoute = Ember.Route.extend(App.PageRouteMixin, {
-    model: function () {
-        var url = CONFIG.API_BASE + '/pages/about/';
-        if (i18n.getLocale() !== CONFIG.DEFAULT_LOCALE) {
-            url += i18n.getLocale() + '/';
-        }
-        return $.get(url);
-    }
-});
-
-},{"./i18n":16,"./pagemixins":25,"underscore.string":33}],25:[function(require,module,exports){
+},{"./i18n":17,"./pagemixins":26,"underscore.string":34}],26:[function(require,module,exports){
 App.PageRouteMixin = Ember.Mixin.create({
     actions: {
         close: function () {
@@ -66918,7 +67034,7 @@ App.PaginatedViewMixin = Ember.Mixin.create({
     }
 });
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -67035,7 +67151,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":18,"ember":6}],27:[function(require,module,exports){
+},{"./map":19,"ember":6}],28:[function(require,module,exports){
 /*
  * Typeahead component for Ember, strongly based on 
  *
@@ -67114,7 +67230,7 @@ require('typeahead');
     Ember.Handlebars.helper('type-ahead', Ember.TypeAheadComponent);
 }(this));
 
-},{"typeahead":10}],28:[function(require,module,exports){
+},{"typeahead":10}],29:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -67151,7 +67267,7 @@ module.exports = {
     }
 };
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -67306,7 +67422,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -67371,7 +67487,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.1
@@ -70183,7 +70299,7 @@ process.chdir = function (dir) {
 }).call(this);
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -70551,7 +70667,7 @@ function decode(str) {
   }
 }
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -71226,7 +71342,7 @@ function decode(str) {
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -72571,7 +72687,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -72767,6 +72883,105 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'target': ("view")
   },hashTypes:{'target': "STRING"},hashContexts:{'target': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(">›</a>   \n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["contact"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n        <div class=\"alert alert-success\" role=\"alert\">\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.success", options) : helperMissing.call(depth0, "t", "contact.success", options))));
+  data.buffer.push("\n        </div>\n    ");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n        <div class=\"alert alert-danger\" role=\"alert\">\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.errors.error", options) : helperMissing.call(depth0, "t", "contact.errors.error", options))));
+  data.buffer.push("\n        </div>\n    ");
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n        <div class=\"alert alert-danger\" role=\"alert\">\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.errors.email", options) : helperMissing.call(depth0, "t", "contact.errors.email", options))));
+  data.buffer.push("\n        </div>\n    ");
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n        <div class=\"alert alert-danger\" role=\"alert\">\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.errors.text", options) : helperMissing.call(depth0, "t", "contact.errors.text", options))));
+  data.buffer.push("\n        </div>\n    ");
+  return buffer;
+  }
+
+  data.buffer.push("<h1 class=\"contact-header fixed-header\">\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.title", options) : helperMissing.call(depth0, "t", "contact.title", options))));
+  data.buffer.push("\n    <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">&times;</div>\n</h1>\n\n<div class=\"fixed-header-spacer\">\n    ");
+  stack1 = helpers['if'].call(depth0, "success", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    ");
+  stack1 = helpers['if'].call(depth0, "error", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    ");
+  stack1 = helpers['if'].call(depth0, "emailError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n    ");
+  stack1 = helpers['if'].call(depth0, "textError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n    <form class=\"contact-form\">\n        <div class=\"form-group field-email\">\n            <label for=\"email\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.fields.email", options) : helperMissing.call(depth0, "t", "contact.fields.email", options))));
+  data.buffer.push("\n            </label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("email"),
+    'type': ("email"),
+    'value': ("email")
+  },hashTypes:{'class': "STRING",'id': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n        </div>\n\n        <div class=\"form-group field-subject\">\n            <label for=\"subject\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.fields.subject", options) : helperMissing.call(depth0, "t", "contact.fields.subject", options))));
+  data.buffer.push("\n            </label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'class': ("form-control"),
+    'id': ("subject"),
+    'value': ("subject")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n        </div>\n\n        <div class=\"form-group field-text\">\n            <label for=\"text\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contact.fields.text", options) : helperMissing.call(depth0, "t", "contact.fields.text", options))));
+  data.buffer.push("\n            </label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'class': ("form-control"),
+    'id': ("text"),
+    'value': ("text")
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\n        </div>\n\n        <div>\n            <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.cancel", options) : helperMissing.call(depth0, "t", "buttons.cancel", options))));
+  data.buffer.push("\n            </button>\n            <button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'disabled': ("submitting")
+  },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "buttons.submit", options) : helperMissing.call(depth0, "t", "buttons.submit", options))));
+  data.buffer.push("\n            </button>\n        </div>\n    </form>\n</div>\n");
   return buffer;
   
 });
@@ -73899,4 +74114,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[17])
+},{}]},{},[18])

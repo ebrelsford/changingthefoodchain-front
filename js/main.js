@@ -1,6 +1,7 @@
 require('./app');
 require('./add_media');
 require('./carousel');
+require('./contact');
 require('./help');
 require('./models');
 require('./news');

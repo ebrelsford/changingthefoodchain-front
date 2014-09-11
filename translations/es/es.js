@@ -25,6 +25,21 @@ Ember.I18n.translations = {
         project_of: 'A project of'
     },
 
+    contact: {
+        title: "Contact",
+        fields: {
+            email: "your email address",
+            subject: "subject",
+            text: "text"
+        },
+        errors: {
+            email: "Please enter your email address.",
+            text: "Please enter some text.",
+            error: "Something went wrong while sending, try again?"
+        },
+        success: "Sent! You should hear back from us soon."
+    },
+
     help: {
         industries: {
             agriculture: "As the first stage of all food items, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.",

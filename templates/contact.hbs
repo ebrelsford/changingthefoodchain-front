@@ -1,0 +1,59 @@
+<h1 class="contact-header fixed-header">
+    {{t "contact.title"}}
+    <div class="close" {{action 'close'}}>&times;</div>
+</h1>
+
+<div class="fixed-header-spacer">
+    {{#if success}}
+        <div class="alert alert-success" role="alert">
+            {{t "contact.success"}}
+        </div>
+    {{/if}}
+    {{#if error}}
+        <div class="alert alert-danger" role="alert">
+            {{t "contact.errors.error"}}
+        </div>
+    {{/if}}
+    {{#if emailError}}
+        <div class="alert alert-danger" role="alert">
+            {{t "contact.errors.email"}}
+        </div>
+    {{/if}}
+    {{#if textError}}
+        <div class="alert alert-danger" role="alert">
+            {{t "contact.errors.text"}}
+        </div>
+    {{/if}}
+
+    <form class="contact-form">
+        <div class="form-group field-email">
+            <label for="email">
+                {{t "contact.fields.email"}}
+            </label>
+            {{input class="form-control" id="email" type="email" value=email}}
+        </div>
+
+        <div class="form-group field-subject">
+            <label for="subject">
+                {{t "contact.fields.subject"}}
+            </label>
+            {{input class="form-control" id="subject" value=subject}}
+        </div>
+
+        <div class="form-group field-text">
+            <label for="text">
+                {{t "contact.fields.text"}}
+            </label>
+            {{textarea class="form-control" id="text" value=text}}
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-default" {{action 'close'}}>
+                {{t "buttons.cancel"}}
+            </button>
+            <button type="submit" class="btn btn-primary" {{bind-attr disabled=submitting}} {{action 'submit'}}>
+                {{t "buttons.submit"}}
+            </button>
+        </div>
+    </form>
+</div>
