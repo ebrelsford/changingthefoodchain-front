@@ -167,6 +167,40 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "The service sector is the largest segment of the food system. Workers in this segment prepare, cook and serve food, bartend, and wash dishes. This sector includes full-service restaurants, casual dining and quick service establishments, catering businesses, food trucks, street vendors, and food service establishments such as cafeterias and dining halls.";
   })
+        },
+        organization_types: {
+            advocacy: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Advocacy groups amplify the voices of the public to influence policy change at the local, state and national level. Examples could include groups advocating for immigration reform or raising the minimum wage.";
+  }),
+            service: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.";
+  }),
+            workers_center: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.";
+  }),
+            union: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations.";
+  })
         }
     },
 
