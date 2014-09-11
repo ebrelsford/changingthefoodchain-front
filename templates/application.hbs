@@ -18,7 +18,7 @@
         </div>
     </div>
     <div id="search">
-        {{type-ahead data=organizations name="name" action="search" selection=selectedOrganization value=searchText placeholder="Search by name, city, state"}}
+        {{type-ahead remote=searchRemote name="displayName" action="search" selection=selectedOrganization value=searchText placeholder="Search by name, city, state"}}
         {{#if searchError}}
         <div class="search-error">
             {{t "application.search.error"}}

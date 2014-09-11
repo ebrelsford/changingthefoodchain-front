@@ -9,8 +9,7 @@ require('bootstrap_carousel');
 require('bootstrap_modal');
 require('bootstrap_tab');
 require('../templates/templates');
-require('typeahead');
-require('ember-typeahead');
+require('./typeahead');
 
 var map;
 
@@ -208,12 +207,7 @@ App.ApplicationRoute = Ember.Route.extend({
 });
 
 App.ApplicationController = Ember.Controller.extend({
-    // Organizations for autocomplete
-    organizations: $.getJSON(CONFIG.API_BASE + '/organizations/names/').then(function (data) {
-        return _.map(data, function (element) {
-            return Ember.ObjectController.create(element);
-        });
-    }),
+    searchRemote: CONFIG.API_BASE + '/organizations/names/?q=%QUERY',
     searchText: null,
     searchError: false,
     selectedOrganization: null,
@@ -282,7 +276,7 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('types'),
 
     organizationSelected: function () {
-        this.send('openOrganization', this.get('selectedOrganization').get('id'));
+        this.send('openOrganization', this.get('selectedOrganization').id);
     }.observes('selectedOrganization'),
 
     queryParams: ['lat', 'lng', 'z', 'selectedSectors', 'selectedTypes'],

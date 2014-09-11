@@ -1,198 +1,197 @@
 describe('Transport', function() {
-  var successData = { prop: 'val' },
-      successResp = { status: 200, responseText: JSON.stringify(successData) },
-      errorResp = { status: 500 },
-      _debounce;
 
   beforeEach(function() {
     jasmine.Ajax.useMock();
-    jasmine.RequestCache.useMock();
+    jasmine.Clock.useMock();
 
-    _debounce = utils.debounce;
-    utils.debounce = function(fn) { return fn; };
-
-    this.transport = new Transport({
-      url: 'http://example.com?q=$$',
-      wildcard: '$$',
-      debounce: true,
-      maxParallelRequests: 3
-    });
-
-    // request cache is hidden in transport's closure
-    // so this is how we access it to spy on its methods
-    this.requestCache = RequestCache.instance;
-    spyOn(this.requestCache, 'get');
-    spyOn(this.requestCache, 'set');
+    this.transport = new Transport();
   });
 
   afterEach(function() {
-    utils.debounce = _debounce;
-
     // run twice to flush out  on-deck requests
-    for (var i = 0; i < 2; i ++) {
-      ajaxRequests.forEach(respond);
-    }
+    $.each(ajaxRequests, drop);
+    $.each(ajaxRequests, drop);
 
     clearAjaxRequests();
+    Transport.resetCache();
 
-    function respond(req) { req.response(successResp); }
+    function drop(i, req) {
+      req.readyState !== 4 && req.response(fixtures.ajaxResps.ok);
+    }
   });
 
-  // public methods
-  // --------------
+  it('should use jQuery.ajax as the default transport mechanism', function() {
+    var req, resp = fixtures.ajaxResps.ok, spy = jasmine.createSpy();
 
-  describe('#get', function() {
-    describe('when request is available in cache', function() {
-      beforeEach(function() {
-        this.spy = jasmine.createSpy();
-        this.requestCache.get.andReturn({ data: ['val'] });
+    this.transport.get('/test', spy);
 
-        this.transport.filter = jasmine.createSpy().andReturn(['val']);
-        this.transport.get('query', this.spy);
-        this.request = mostRecentAjaxRequest();
-      });
+    req = mostRecentAjaxRequest();
+    req.response(resp);
 
-      it('should not call $.ajax', function() {
-        expect(this.request).toBeNull();
-      });
+    expect(req.url).toBe('/test');
+    expect(spy).toHaveBeenCalledWith(null, resp.parsed);
+  });
 
-      it('should call filter', function() {
-        waitsFor(function() {
-          return this.transport.filter.callCount === 1;
-        });
-      });
+  it('should allow the transport mechanism to be configured', function() {
+    var resp = fixtures.ajaxResps.ok,
+        cbSpy = jasmine.createSpy(),
+        sendSpy = jasmine.createSpy().andCallFake(send);
 
-      it('should invoke callback with data', function() {
-        waitsFor(function() { return this.spy.callCount === 1; });
+    this.transport = new Transport({ transport: sendSpy });
+    this.transport.get('/test', cbSpy);
 
-        runs(function() {
-          expect(this.spy).toHaveBeenCalledWith(['val']);
-        });
-      });
+    jasmine.Clock.tick(0);
+
+    expect(cbSpy).toHaveBeenCalledWith(null, resp.parsed);
+    expect(sendSpy).toHaveBeenCalledWith(
+      '/test',
+      {},
+      jasmine.any(Function),
+      jasmine.any(Function)
+    );
+
+    // send must be async
+    function send(url, o, onSuccess, onError) { onSuccess(resp.parsed); }
+  });
+
+  it('should respect maxPendingRequests configuration', function() {
+    for (var i = 0; i < 10; i++) {
+      this.transport.get('/test' + i, $.noop);
+    }
+
+    expect(ajaxRequests.length).toBe(6);
+  });
+
+  it('should support rate limiting', function() {
+    this.transport = new Transport({ rateLimiter: rateLimiter });
+
+    for (var i = 0; i < 5; i++) {
+      this.transport.get('/test' + i, $.noop);
+    }
+
+    jasmine.Clock.tick(100);
+    expect(ajaxRequests.length).toBe(1);
+
+    function rateLimiter(fn) { return _.debounce(fn, 20); }
+  });
+
+  it('should cache most recent requests', function() {
+    var spy1 = jasmine.createSpy(), spy2 = jasmine.createSpy();
+
+    this.transport.get('/test1', $.noop);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
+
+    this.transport.get('/test2', $.noop);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok1);
+
+    expect(ajaxRequests.length).toBe(2);
+
+    this.transport.get('/test1', spy1);
+    this.transport.get('/test2', spy2);
+
+    jasmine.Clock.tick(0);
+
+    // no ajax requests were made on subsequent requests
+    expect(ajaxRequests.length).toBe(2);
+
+    expect(spy1).toHaveBeenCalledWith(null, fixtures.ajaxResps.ok.parsed);
+    expect(spy2).toHaveBeenCalledWith(null, fixtures.ajaxResps.ok1.parsed);
+  });
+
+  it('should not cache requests if cache option is false', function() {
+    this.transport = new Transport({ cache: false });
+
+    this.transport.get('/test1', $.noop);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
+    this.transport.get('/test1', $.noop);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
+
+    expect(ajaxRequests.length).toBe(2);
+  });
+
+  it('should prevent dog pile', function() {
+    var spy1 = jasmine.createSpy(), spy2 = jasmine.createSpy();
+
+    this.transport.get('/test1', spy1);
+    this.transport.get('/test1', spy2);
+
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
+
+    expect(ajaxRequests.length).toBe(1);
+
+    waitsFor(function() { return spy1.callCount && spy2.callCount; });
+
+    runs(function() {
+      expect(spy1).toHaveBeenCalledWith(null, fixtures.ajaxResps.ok.parsed);
+      expect(spy2).toHaveBeenCalledWith(null, fixtures.ajaxResps.ok.parsed);
+    });
+  });
+
+  it('should always make a request for the last call to #get', function() {
+    var spy = jasmine.createSpy();
+
+    for (var i = 0; i < 6; i++) {
+      this.transport.get('/test' + i, $.noop);
+    }
+
+    this.transport.get('/test' + i, spy);
+    expect(ajaxRequests.length).toBe(6);
+
+    _.each(ajaxRequests, function(req) {
+      req.response(fixtures.ajaxResps.ok);
     });
 
-    describe('when below pending requests threshold', function() {
-      it('should make remote request', function() {
-        this.transport.get('has space');
-        this.request = mostRecentAjaxRequest();
+    expect(ajaxRequests.length).toBe(7);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
 
-        expect(this.request).not.toBeNull();
-      });
+    expect(spy).toHaveBeenCalled();
+  });
 
-      it('should replace wildcard in url with encoded query', function() {
-        this.transport.get('has space');
-        this.request = mostRecentAjaxRequest();
+  it('should invoke the callback with err set to true on failure', function() {
+    var req, resp = fixtures.ajaxResps.err, spy = jasmine.createSpy();
 
-        expect(this.request.url).toEqual('http://example.com?q=has%20space');
+    this.transport.get('/test', spy);
 
-        this.transport.replace = function(url, query) { return url + query; };
-        this.transport.get('has space');
-        this.request = mostRecentAjaxRequest();
+    req = mostRecentAjaxRequest();
+    req.response(resp);
 
-        expect(this.request.url).toEqual('http://example.com?q=$$has%20space');
-      });
+    expect(req.url).toBe('/test');
+    expect(spy).toHaveBeenCalledWith(true);
+  });
 
-      it('should piggyback off of pending requests', function() {
-        this.spy1 = jasmine.createSpy();
-        this.spy2 = jasmine.createSpy();
-        this.transport2 = new Transport({ url: 'http://example.com?q=%QUERY' });
+  it('should not send cancelled requests', function() {
+    this.transport = new Transport({ rateLimiter: rateLimiter });
 
-        this.transport.get('hazel', this.spy1);
-        this.transport2.get('hazel', this.spy2);
+    this.transport.get('/test', $.noop);
+    this.transport.cancel();
 
-        this.request = mostRecentAjaxRequest();
-        this.request.response(successResp);
+    jasmine.Clock.tick(100);
+    expect(ajaxRequests.length).toBe(0);
 
-        expect(ajaxRequests.length).toBe(1);
-        expect(this.spy1).toHaveBeenCalledWith(successData);
-        expect(this.spy2).toHaveBeenCalledWith(successData);
-      });
-    });
+    function rateLimiter(fn) { return _.debounce(fn, 20); }
+  });
 
-    describe('when at concurrent request threshold', function() {
-      beforeEach(function() {
-        this.goodRequests = [];
+  it('should not send outdated requests', function() {
+    this.transport = new Transport({ rateLimiter: rateLimiter });
 
-        for (var i = 0; i < 3; i++) {
-          this.transport.get('good' + i);
-          this.goodRequests.push(mostRecentAjaxRequest());
-        }
+    // warm cache
+    this.transport.get('/test1', $.noop);
+    jasmine.Clock.tick(100);
+    mostRecentAjaxRequest().response(fixtures.ajaxResps.ok);
 
-        this.transport.get('bad', $.noop);
-      });
+    expect(mostRecentAjaxRequest().url).toBe('/test1');
+    expect(ajaxRequests.length).toBe(1);
 
-      it('should not call $.ajax', function() {
-        expect(ajaxRequests.length).toBe(3);
-      });
+    // within the same rate-limit cycle, request test2 and test1. test2 becomes
+    // outdated after test1 is requested and no request is sent for test1
+    // because it's a cache hit
+    this.transport.get('/test2', $.noop);
+    this.transport.get('/test1', $.noop);
 
-      it('should set args for the on-deck request', function() {
-        expect(this.transport.onDeckRequestArgs)
-        .toEqual(['http://example.com?q=bad', $.noop]);
-      });
-    });
+    jasmine.Clock.tick(100);
 
-    describe('when request succeeds', function() {
-      beforeEach(function() {
-        this.spy = jasmine.createSpy();
+    expect(ajaxRequests.length).toBe(1);
 
-        this.transport.filter = jasmine.createSpy().andReturn({ prop: 'val' });
-
-        this.transport.get('has space', this.spy);
-        this.request = mostRecentAjaxRequest();
-        this.request.response(successResp);
-      });
-
-      it('should invoke callback with json response', function() {
-        var spy = jasmine.createSpy();
-
-        expect(this.spy).toHaveBeenCalledWith(successData);
-      });
-
-      it('should add response to the cache', function() {
-        expect(this.requestCache.set)
-        .toHaveBeenCalledWith('http://example.com?q=has%20space', successData);
-      });
-
-      it('should call filter', function() {
-        expect(this.transport.filter).toHaveBeenCalledWith(successData);
-      });
-    });
-
-    describe('when request fails', function() {
-      beforeEach(function() {
-        this.spy = jasmine.createSpy();
-
-        this.transport.get('has space', this.spy);
-        this.request = mostRecentAjaxRequest();
-        this.request.response(errorResp);
-      });
-
-      it('should not invoke callback', function() {
-        expect(this.spy).not.toHaveBeenCalled();
-      });
-
-      it('should not add response to the cache', function() {
-        expect(this.requestCache.set).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('when request count drops below threshold', function() {
-      it('should call #get with on-deck request args', function() {
-        var requests = [];
-
-        for (var i = 0; i < 3; i++) {
-          this.transport.get('good' + i);
-          requests.push(mostRecentAjaxRequest());
-        }
-
-        this.transport.get('bad');
-
-        expect(ajaxRequests.length).toBe(3);
-        requests[0].response(successResp);
-        expect(ajaxRequests.length).toBe(4);
-
-        expect(mostRecentAjaxRequest().url).toBe('http://example.com?q=bad');
-      });
-    });
+    function rateLimiter(fn) { return _.debounce(fn, 20); }
   });
 });

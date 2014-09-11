@@ -78,13 +78,13 @@ function program13(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n    </div>\n    <div id=\"search\">\n        ");
   data.buffer.push(escapeExpression((helper = helpers['type-ahead'] || (depth0 && depth0['type-ahead']),options={hash:{
-    'data': ("organizations"),
-    'name': ("name"),
+    'remote': ("searchRemote"),
+    'name': ("displayName"),
     'action': ("search"),
     'selection': ("selectedOrganization"),
     'value': ("searchText"),
     'placeholder': ("Search by name, city, state")
-  },hashTypes:{'data': "ID",'name': "STRING",'action': "STRING",'selection': "ID",'value': "ID",'placeholder': "STRING"},hashContexts:{'data': depth0,'name': depth0,'action': depth0,'selection': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "type-ahead", options))));
+  },hashTypes:{'remote': "ID",'name': "STRING",'action': "STRING",'selection': "ID",'value': "ID",'placeholder': "STRING"},hashContexts:{'remote': depth0,'name': depth0,'action': depth0,'selection': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "type-ahead", options))));
   data.buffer.push("\n        ");
   stack1 = helpers['if'].call(depth0, "searchError", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
