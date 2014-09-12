@@ -80,7 +80,7 @@ L.Map.include({
 
             return this.setView(newCenter, zoom, {zoom: options});
         } else {
-            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, point, zoom, options);
+            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, latlng, zoom, options);
         }
     },
 
@@ -130,6 +130,7 @@ L.Map.include({
         return this;
     }
 });
+
 },{}],2:[function(require,module,exports){
 var map = require('./map');
 var qs = require('qs');

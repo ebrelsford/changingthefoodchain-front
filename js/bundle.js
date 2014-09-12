@@ -61982,7 +61982,7 @@ L.Map.include({
 
             return this.setView(newCenter, zoom, {zoom: options});
         } else {
-            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, point, zoom, options);
+            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, latlng, zoom, options);
         }
     },
 
@@ -62032,6 +62032,7 @@ L.Map.include({
         return this;
     }
 });
+
 },{}],8:[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 

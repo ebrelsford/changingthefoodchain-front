@@ -42,7 +42,7 @@
     "ember-data": "./bower_components/ember-data/ember-data.js",
     "ember-data-extensions-embedded-adapter": "./bower_components/ember-data-extensions/dist/embedded-adapter.js",
     "ember-list-view": "./bower_components/list-view/dist/list-view.js",
-    "leaflet-active-area": "./bower_components/leaflet-active-area/src/L.activearea.js",
+    "leaflet-active-area": "./bower_components/leaflet-active-area/src/leaflet.activearea.js",
     "spinjs": "./bower_components/spin.js/spin.js",
     "typeahead": "./bower_components/typeahead.js/dist/typeahead.bundle.js"
   },
