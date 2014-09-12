@@ -3749,6 +3749,9 @@ body.organization-view .map-active-area {
   margin-top: 0;
   text-transform: uppercase;
 }
+.add-organization-actions {
+  margin-bottom: 50px;
+}
 .add-organization-location-row {
   margin-left: -15px;
   margin-right: -15px;
