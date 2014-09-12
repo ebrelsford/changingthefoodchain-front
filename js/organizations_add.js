@@ -174,12 +174,21 @@ App.OrganizationsAddRoute = Ember.Route.extend({
                     'name', 'address', 'address2', 'city', 'state', 'zip',
                     'email', 'siteUrl', 'mission', 'phone', 'centroid'
                 ]),
+
+                // Map form field names to API field names
+                fieldMappings = {
+                    address: 'address_line1',
+                    address2: 'address_line2',
+                    siteUrl: 'site_url',
+                    state: 'state_province',
+                    zip: 'postal_code'
+                },
                 data = new FormData();
 
             _.each(fields, function (value, name) {
                 // Avoid adding null / empty values
                 if (name !== 'centroid' && value !== null && value !== '') {
-                    data.append(name, value);
+                    data.append(fieldMappings[name] || name, value);
                 }
             });
             data.append('centroid', 'SRID=4326;POINT(' + fields.centroid[1] + ' ' + fields.centroid[0] + ')');
