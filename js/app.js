@@ -134,8 +134,8 @@ Ember.Route.reopen({
 });
 
 window.App = Ember.Application.create({
-    LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_TRANSITIONS: CONFIG.DEBUG,
+    LOG_TRANSITIONS_INTERNAL: CONFIG.DEBUG,
 
     ready: function () {
         // When the window is resized, fix heights of full-height elements
