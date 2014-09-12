@@ -62,8 +62,8 @@ App.EmbedController = Ember.Controller.extend({
     size: 'small',
     sizes: ['small', 'large'],
     dimensions: {
-        small: [200, 300], 
-        large: [400, 600]
+        small: [300, 200], 
+        large: [600, 400]
     }
 });
 
