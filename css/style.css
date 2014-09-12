@@ -2875,6 +2875,11 @@ body > .ember-view {
   font-size: 16px;
   text-transform: capitalize;
 }
+.carousel-control.left,
+.carousel-control.right {
+  background-image: none;
+  cursor: pointer;
+}
 .close {
   color: #443d7e;
   font-family: Times;
