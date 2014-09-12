@@ -67143,6 +67143,9 @@ App.OrganizationView = App.OrganizationsView.extend({
             $('.organization-details').css('height', '');
         }
 
+        // Adjust videos to be the appropriate size
+        $('.video').attr('width', $('.carousel').width() - 15);
+
         // If this is the first view we're seeing, the model will have changed
         // before the map is ready to zoom, so add a listener
         (function (controller) {
@@ -68085,7 +68088,7 @@ id.youtube = function (url) {
 
 embed.youtube = function (url) {
     var embedUrl = '//www.youtube.com/embed/' + id.youtube(url);
-    return '<iframe width="560" height="315" src="' + embedUrl + '" frameborder="0" allowfullscreen></iframe>';
+    return '<iframe class="video video-youtube" width="560" height="315" src="' + embedUrl + '" frameborder="0" allowfullscreen></iframe>';
 };
 
 id.vimeo = function (url) {
@@ -68095,7 +68098,7 @@ id.vimeo = function (url) {
 
 embed.vimeo = function (url) {
     var embedUrl = '//player.vimeo.com/video/' + id.vimeo(url);
-    return '<iframe src="' + embedUrl + '" width="500" height="209" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+    return '<iframe class="video video-vimeo" src="' + embedUrl + '" width="500" height="209" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 };
 
 module.exports = {

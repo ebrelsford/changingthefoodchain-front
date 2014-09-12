@@ -62,6 +62,9 @@ App.OrganizationView = App.OrganizationsView.extend({
             $('.organization-details').css('height', '');
         }
 
+        // Adjust videos to be the appropriate size
+        $('.video').attr('width', $('.carousel').width() - 15);
+
         // If this is the first view we're seeing, the model will have changed
         // before the map is ready to zoom, so add a listener
         (function (controller) {
