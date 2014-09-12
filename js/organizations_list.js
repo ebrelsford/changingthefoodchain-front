@@ -103,6 +103,8 @@ App.OrganizationsListController = Ember.ArrayController.extend({
             if (controller.get('isLoading') || !nextPage) return;
             controller.set('isLoading', true);
 
+            params.bbox = controller.get('controllers.application.bboxString');
+
             // Update parameters with filters
             if (sectors && sectors.length > 0) {
                 params.sectors = sectors.join(',');
@@ -191,5 +193,8 @@ App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
         this._super();
         $('#popup').hide();
         $('#page').show();
+
+        // Refresh to ensure we only get organizations in bbox
+        this.controller.refresh();
     }
 });

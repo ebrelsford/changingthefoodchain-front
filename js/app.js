@@ -40,14 +40,19 @@ function initializeMap() {
             controller.transitionToRoute('organization', feature.id);
         })
         .on('moveend zoomend', function () {
-            var center = map.getCenter(),
+            var bboxString = map.getBounds().toBBoxString(),
+                center = map.getCenter(),
                 lat = Math.round(center.lat * 100) / 100.0,
                 lng = Math.round(center.lng * 100) / 100.0,
                 z = map.getZoom();
-            controller.set('lat', lat);
-            controller.set('lng', lng);
-            controller.set('z', z);
+            controller.setProperties({
+                bboxString: bboxString,
+                lat: lat,
+                lng: lng,
+                z: z
+            });
         });
+    controller.set('bboxString', map.getBounds().toBBoxString());
 }
 
 function makeFullHeight() {
