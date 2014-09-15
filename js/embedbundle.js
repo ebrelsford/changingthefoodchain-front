@@ -1,7 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
+(function(previousMethods){
+if (typeof previousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
-    leafletActiveAreaPreviousMethods = {
+    previousMethods = {
         getCenter: L.Map.prototype.getCenter,
         setView: L.Map.prototype.setView,
         setZoomAround: L.Map.prototype.setZoomAround,
@@ -11,6 +12,18 @@ if (typeof leafletActiveAreaPreviousMethods === 'undefined') {
 
 
 L.Map.include({
+    getBounds: function() {
+        if (this._viewport) {
+            return this.getViewportLatLngBounds()
+        } else {
+            var bounds = this.getPixelBounds(),
+            sw = this.unproject(bounds.getBottomLeft()),
+            ne = this.unproject(bounds.getTopRight());
+
+            return new L.LatLngBounds(sw, ne);
+        }
+    },
+
     getViewport: function() {
         return this._viewport;
     },
@@ -21,9 +34,13 @@ L.Map.include({
             vpsize = L.point(vp.clientWidth, vp.clientHeight);
 
         if (vpsize.x === 0 || vpsize.y === 0) {
-            if (window.console) {
-                console.error('The viewport has no size. Check your CSS.');
+            //Our own viewport has no good size - so we fallback to the container size:
+            vp = this.getContainer();
+            if(vp){
+              topleft = L.point(0, 0);
+              vpsize = L.point(vp.clientWidth, vp.clientHeight);
             }
+
         }
 
         return L.bounds(topleft, topleft.add(vpsize));
@@ -42,7 +59,7 @@ L.Map.include({
     },
 
     getCenter: function () {
-        var center = leafletActiveAreaPreviousMethods.getCenter.call(this);
+        var center = previousMethods.getCenter.call(this);
 
         if (this.getViewport()) {
             var zoom = this.getZoom(),
@@ -64,7 +81,7 @@ L.Map.include({
             center = this.unproject(point, zoom);
         }
 
-        return leafletActiveAreaPreviousMethods.setView.call(this, center, zoom, options);
+        return previousMethods.setView.call(this, center, zoom, options);
     },
 
     setZoomAround: function (latlng, zoom, options) {
@@ -80,7 +97,7 @@ L.Map.include({
 
             return this.setView(newCenter, zoom, {zoom: options});
         } else {
-            return leafletActiveAreaPreviousMethods.setZoomAround.call(this, latlng, zoom, options);
+            return previousMethods.setZoomAround.call(this, latlng, zoom, options);
         }
     },
 
@@ -118,9 +135,12 @@ L.Map.include({
 
 L.Map.include({
     setActiveArea: function (css) {
-        var container = this.getContainer();
-        this._viewport = L.DomUtil.create('div', '');
-        container.insertBefore(this._viewport, container.firstChild);
+        if( !this._viewport ){
+            //Make viewport if not already made
+            var container = this.getContainer();
+            this._viewport = L.DomUtil.create('div', '');
+            container.insertBefore(this._viewport, container.firstChild);
+        }
 
         if (typeof css === 'string') {
             this._viewport.className = css;
@@ -130,6 +150,7 @@ L.Map.include({
         return this;
     }
 });
+})(window.leafletActiveAreaPreviousMethods);
 
 },{}],2:[function(require,module,exports){
 var map = require('./map');

@@ -90,6 +90,29 @@ header {
             }
         }
     }
+
+    @media (max-width: @screen-xs-max) {
+        & {
+            height: @header-height-xs;
+
+            #logo {
+                padding-left: @left-xs;
+
+                a {
+                    font-size: 40px;
+                    line-height: 30px;
+                }
+            }
+
+            #list-button {
+                right: @right-xs;
+            }
+
+            #tagline {
+                font-size: 10px;
+            }
+        }
+    }
 }
 
 body.add-organization-view header,

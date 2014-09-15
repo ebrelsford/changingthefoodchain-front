@@ -64,6 +64,12 @@ body.organization-view .map-active-area {
 .add-organization-button {
     right: @right + 115px;
 
+    @media (max-width: @screen-xs-max) {
+        & {
+            right: @right-xs + 115px;
+        }
+    }
+
     .map-ui-button-icon {
         background-image: data-uri('../img/addorg.png');
     }
@@ -77,6 +83,12 @@ body.organization-view .map-active-area {
 
 #share-button {
     right: @right + 50px;
+
+    @media (max-width: @screen-xs-max) {
+        & {
+            right: @right-xs + 50px;
+        }
+    }
 
     .map-ui-button-icon {
         background-image: data-uri('../img/share.png');
@@ -160,6 +172,12 @@ body.organization-view .map-active-area {
 
     .leaflet-control {
         margin-right: 0;
+    }
+
+    @media (max-width: @screen-xs-max) {
+        & {
+            right: @right-xs;
+        }
     }
 }
 

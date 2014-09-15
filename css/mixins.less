@@ -11,6 +11,12 @@
     width: 50%;
     z-index: @interface-z-index;
 
+    @media (max-width: @screen-xs-max) {
+        & {
+            top: @header-height-xs;
+        }
+    }
+
     & > section {
         margin-top: 20px;
     }

@@ -12,6 +12,7 @@
 @interface-z-index: 2000;
 
 @header-height: 120px;
+@header-height-xs: 100px;
 // Bump header up so autocomplete suggestions get rendered on top of pages
 @header-z-index: @interface-z-index + 1;
 
@@ -34,7 +35,9 @@
 
 @bottom: 15px;
 @left: 40px;
+@left-xs: 15px;
 @right: 40px;
+@right-xs: 15px;
 @top: 15px;
 
 // Bootstrap
@@ -110,7 +113,18 @@ body > .ember-view {
     .close {
         margin-top: -54px !important;
     }
+
+    @media (max-width: @screen-xs-max) {
+        & {
+            top: @header-height-xs;
+
+            &-spacer {
+                margin-top: 50px;
+            }
+        }
+    }
 }
+
 
 @import "overrides/buttons.less";
 @import "overrides/carousel.less";
