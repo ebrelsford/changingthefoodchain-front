@@ -3890,6 +3890,12 @@ body.organization-view .map-active-area {
 .add-organization-location-output-address-message {
   font-weight: bold;
 }
+.add-organization-location-output-address-accept {
+  cursor: pointer;
+}
+.add-organization-location-output-address-accept:hover {
+  text-decoration: underline;
+}
 .add-organization-location-output-error {
   color: #d9534f;
   font-weight: bold;

@@ -48,10 +48,8 @@
                         {{geocodedAddress}}<br />
                         {{geocodedCity}} {{geocodedState}} {{geocodedZip}}
                     </div>
-                    <div class="add-organization-location-output-address-accept">
-                        <a href="#" {{action 'useGeocodedAddress'}}>
-                            {{t "organization_add.location.accept"}}
-                        </a>
+                    <div class="add-organization-location-output-address-accept" {{action 'useGeocodedAddress' on="mouseDown"}}>
+                        {{t "organization_add.location.accept"}}
                     </div>
                 </div>
                 {{/if}}
