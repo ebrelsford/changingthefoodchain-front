@@ -18,6 +18,7 @@ App.Organization = DS.Model.extend({
     email: DS.attr('string'),
     site_url: DS.attr(),
     mission: DS.attr(),
+    mission_es: DS.attr(),
     name: DS.attr('string'),
     phone: DS.attr('string'),
     postal_code: DS.attr('string'),
@@ -32,7 +33,16 @@ App.Organization = DS.Model.extend({
         media.addObjects(this.get('photos'));
         media.addObjects(this.get('videos'));
         return media;
-    }.property('photos')
+    }.property('photos'),
+
+    mission_translated: function () {
+        var en = this.get('mission'),
+            es = this.get('mission_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('mission', 'mission_es')
 });
 
 App.OrganizationSerializer = App.ApplicationSerializer.extend({
