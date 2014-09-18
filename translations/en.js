@@ -204,7 +204,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "As the first stage of all food items, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.";
+  return "At the first stage of all food, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. Other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.";
   }),
             processing: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
