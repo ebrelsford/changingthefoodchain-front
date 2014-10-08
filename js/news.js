@@ -138,4 +138,9 @@ App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
     templateName: 'news-entry'
 });
 
-App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {});
+App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {
+    didRenderElement: function () {
+        this._super();
+        $('#page').scrollTop(0);
+    }
+});
