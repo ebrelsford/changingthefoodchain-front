@@ -282,6 +282,7 @@ App.ApplicationController = Ember.Controller.extend({
 
     organizationSelected: function () {
         this.send('openOrganization', this.get('selectedOrganization').id);
+        this.set('organizationAutocompleted', true);
     }.observes('selectedOrganization'),
 
     queryParams: ['lat', 'lng', 'z', 'selectedSectors', 'selectedTypes'],
@@ -307,17 +308,20 @@ App.ApplicationController = Ember.Controller.extend({
         search: function () {
             var route = this;
             this.set('searchError', false);
-            geocode(route.get('searchText'), map.getBounds(), null, function (result) {
-                if (result) {
-                    map.fire('locationfound', {
-                        bounds: result.bounds,
-                        latlng: result.latlng 
-                    });
-                }
-                else {
-                    route.set('searchError', true);
-                }
-            });
+            if (!this.get('organizationAutocompleted')) {
+                geocode(route.get('searchText'), map.getBounds(), null, function (result) {
+                    if (result) {
+                        map.fire('locationfound', {
+                            bounds: result.bounds,
+                            latlng: result.latlng 
+                        });
+                    }
+                    else {
+                        route.set('searchError', true);
+                    }
+                });
+            }
+            this.set('organizationAutocompleted', false);
         },
 
         clearFilters: function () {
