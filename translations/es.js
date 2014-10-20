@@ -1,731 +1,721 @@
 (function() {
 var t = Handlebars.template;
 Ember.I18n.translations = {
-    buttons: {
-        cancel: t(function (Handlebars,depth0,helpers,partials,data) {
+    "organization_add": {
+        "fields": {
+            "city": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "cancel";
-  }),
-        submit: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Ciudad";
+  }), 
+            "siteUrl": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "submit";
+  return "Página de Internet";
+  }), 
+            "name": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Nombre de la organización";
+  }), 
+            "zip": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Código postal";
+  }), 
+            "sectors": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Sectores";
+  }), 
+            "address2": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Dirección línea 2";
+  }), 
+            "mission": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Misión";
+  }), 
+            "phone": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Teléfono";
+  }), 
+            "state": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Estado";
+  }), 
+            "address": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Dirección";
+  }), 
+            "email": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Email";
+  }), 
+            "types": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipos de organización";
   })
-    },
-
-    application: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "errors": {
+            "types": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Changing the Food Chain";
-  }),
-        header: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Elija un tipo.";
+  }), 
+            "centroid": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Changing the<br />Food Chain";
-  }),
-        nav: {
-            about: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Introduzca un email valido que aparezca en el mapa.";
+  }), 
+            "name": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "about";
-  }),
-            contact: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Introduzca un nombre para su organización.";
+  }), 
+            "sectors": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "contact";
-  }),
-            news: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Elija un sector.";
+  }), 
+            "general": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "news";
+  return "Algo sucedió. Intente de nuevo.";
   })
-        },
-        tagline: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "location": {
+            "message": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "An action map for food chain workers & organizations.";
-  }),
-        filters: {
-            header: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Se colocará a su organización aquí. Asegúrese de que este en el lugar correcto en el mapa.";
+  }), 
+            "accept": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "filters";
-  }),
-            clear: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Utilice esta dirección";
+  }), 
+            "error": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "clear";
-  }),
-            organization_type: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "organization type";
-  }),
-            industry_type: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "industry type";
+  return "Perdón, no ubicamos la dirección que añadió. ¿Puede ser más específico?";
   })
-        },
-        search: {
-            error: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "success": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Sorry we couldn't find the location you searched for. Try again?";
+  return "Éxito con añadir su organización.";
+  }), 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Añada mi organización";
   })
-        },
-        project_of: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "help": {
+        "industries": {
+            "distribution": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "A project of";
+  return "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribución. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para más procesamiento. En sí, la distribución conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa también incluye almacenamiento, refrigeración, logística y coordinación.";
+  }), 
+            "processing": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Los trabajadores en el proceso alimentaria convierten la comida cruda en productos terminados, ya sea por mano o en líneas de ensamble en plantas o fábricas. Esto incluye refrigerios muy procesados y más simples como panes, queso y tortillas. También incluidos en esta categoría son los trabajadores de mataderos y procesadores de animales.";
+  }), 
+            "agriculture": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "En la primera etapa de la comida, los trabajadores siembran, cuidan y cultivan comida cruda así como también criar ganado. Algunas de estas comidas crudas, así como el maíz y los granos, se convierten en material para la comida procesada y pienso de animales. Se llevan a otras frutas y vegetales directamente al mercado para el consumo. Esta etapa también incluye la pesquería.";
+  }), 
+            "service": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "El sector de servicio es el segmento más grande del sistema alimentario. Los trabajadores en este segmento preparan, cocinan y sirven la comida, tienden barra, y lavan platos. Este sector incluye restaurantes de servicio completo, y establecimientos de cena casual y servicio rápido, negocios de catering, camiones de comida, vendedores ambulantes, y establecimientos de servicios de comida así como las cafeterias y los salones de cena.";
+  }), 
+            "retail": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Los trabajadores en este sector venden comida directamente a los consumidores en tiendas incluyendo supermercados, bodegas y clubs de compradores. Los trabajadores de tienda también incluyen aquellos que cocinan y preparan la comida en los delicatesen y panaderías en tiendas, reciben envíos, reponen los estantes, y limpian estos lugares.";
   })
-    },
-
-    contact: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "organization_types": {
+            "union": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Contact";
-  }),
-        fields: {
-            email: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Los sindicatos son legalmente reconocidos para reconocer a grupos de trabajadores en negociaciones colectivas con la gerencia, con respecto a sueldos, beneficios y condiciones de trabajo así como también violaciones de contrato.";
+  }), 
+            "service": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "your email address";
-  }),
-            subject: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Organizaciones de servicio ofrecen servicios así como apoyo legal (por ejemplo, reclamos de robo de sueldos o asuntos de inmigración), programas educativos, o la vivienda asequible.";
+  }), 
+            "advocacy": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "subject";
-  }),
-            text: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Grupos defensores amplifican las voces del público para influir el cambio de políticas a nivel local, estatal y nacional. Ejemplos pueden incluir grupos que abogan por la reforma migratoria o para aumentar el salario mínimo.";
+  }), 
+            "workers_center": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "text";
-  })
-        },
-        errors: {
-            email: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please enter your email address.";
-  }),
-            text: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please enter some text.";
-  }),
-            error: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Something went wrong while sending, try again?";
-  })
-        },
-        success: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Sent! You should hear back from us soon.";
-  })
-    },
-
-    help: {
-        industries: {
-            agriculture: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "As the first stage of all food items, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.";
-  }),
-            processing: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.";
-  }),
-            distribution: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "At this stage, workers transport food from one destination to another and load and unload food at warehouses and distribution centers. These may be final points of sale or intermediate locations for storage or further processing. Essentially, distribution connects the material at each stage of the food system. While a large component of this involves transportation, this stage also includes warehousing, refrigeration, logistics, and coordination.";
-  }),
-            retail: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Workers in this sector sell food directly to consumers in retail outlets including supermarkets, convenience, grocery stores, and buyers’ clubs. Workers in retail also include those who cook and prepare foods for delis and bakeries within the retail outlets, receive shipments, stock shelves, and clean the facilities.";
-  }),
-            service: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "The service sector is the largest segment of the food system. Workers in this segment prepare, cook and serve food, bartend, and wash dishes. This sector includes full-service restaurants, casual dining and quick service establishments, catering businesses, food trucks, street vendors, and food service establishments such as cafeterias and dining halls.";
-  })
-        },
-        organization_types: {
-            advocacy: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Advocacy groups amplify the voices of the public to influence policy change at the local, state and national level. Examples could include groups advocating for immigration reform or raising the minimum wage.";
-  }),
-            service: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.";
-  }),
-            workers_center: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.";
-  }),
-            union: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations.";
+  return "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociación colectiva así como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campañas para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos.";
   })
         }
-    },
-
-    organizations_list: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "share": {
+        "tabs": {
+            "embed": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Organization List";
-  }),
-        headers: {
-            name: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Integrar";
+  }), 
+            "share": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "name";
-  }),
-            city: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "city";
-  }),
-            state: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "state";
-  }),
-            types: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "types";
-  }),
-            sectors: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "sectors";
+  return "Compartir";
   })
-        },
-        add: {
-            message: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "actions": {
+            "twitter": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Don't see your organization in this list? Add it here.";
-  }),
-            button: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Compartir en Twitter";
+  }), 
+            "facebook": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "add my organization";
+  return "Compartir en Facebook";
   })
-        }
-    },
-
-    news: {
-        categories: {
-            clear: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "clear";
-  }),
-            header: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "categories";
-  }),
-            featured: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "featured";
+  return "Compartir";
   })
-        },
-        empty: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "organization_add_media": {
+        "photo": {
+            "label": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "No news to show for this category";
-  }),
-        header: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "news";
-  }),
-        read_more: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "read more";
+  return "Añada una foto";
   })
-    },
-
-    organization: {
-        actions: {
-            add_media: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "error": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "add media";
-  }),
-            share: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Algo sucedió. Intente de nuevo.";
+  }), 
+        "video": {
+            "label": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "share";
-  }),
-            visit: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "visit";
+  return "Enlace de Vimeo o YouTube";
   })
-        },
-        mission: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "success": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Our mission";
+  return "Éxito con añadir un medio de comunicación.";
+  }), 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Añada medios de comunicación";
   })
-    },
-
-    organization_add: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "page": {
+        "sections": {
+            "header": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Add My Organization";
-  }),
-        errors: {
-            centroid: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please enter a valid address that shows up on the map.";
-  }),
-            name: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please enter a name for your organization.";
-  }),
-            sectors: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please choose a sector.";
-  }),
-            types: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Please choose a type.";
-  }),
-            general: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Something went wrong. Please try again.";
-  })
-        },
-        success: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Successfully added organization.";
-  }),
-        location: {
-            message: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Your organization will be placed here. Make sure it's in the right spot on the map.";
-  }),
-            accept: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Use this address";
-  }),
-            error: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Sorry, we couldn't find the address you added. Could you be more specific?";
-  })
-        },
-        fields: {
-            name: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "organization name";
-  }),
-            address: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "address";
-  }),
-            address2: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "address line 2";
-  }),
-            city: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "city";
-  }),
-            state: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "state";
-  }),
-            zip: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "zip";
-  }),
-            email: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "email";
-  }),
-            siteUrl: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "website";
-  }),
-            mission: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "mission";
-  }),
-            phone: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "phone";
-  }),
-            types: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "organization types";
-  }),
-            sectors: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "sectors";
+  return "Secciones";
   })
         }
-    },
-
-    organization_add_media: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "buttons": {
+        "cancel": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Add Media";
-  }),
-        error: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Cancelar";
+  }), 
+        "submit": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Something went wrong. Please try again.";
-  }),
-        success: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Successfully added media.";
-  }),
-        photo: {
-            label: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Add a photo";
+  return "Enviar";
   })
-        },
-        video: {
-            label: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "application": {
+        "search": {
+            "error": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Vimeo or YouTube link";
+  return "Perdone pero no pudimos encontrar el lugar que busca. ¿Intenta de nuevo?";
+  })
+        }, 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Cambiar la cadena alimentaria";
+  }), 
+        "tagline": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Mapa de acciones para trabajadores en la cadena alimentaria y las organizaciones";
+  }), 
+        "project_of": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Un proyecto de";
+  }), 
+        "header": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Cambiar la <br /> cadena alimentaria";
+  }), 
+        "nav": {
+            "news": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Noticias";
+  }), 
+            "about": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "¿Quiénes somos?";
+  }), 
+            "contact": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Comuníquese";
+  })
+        }, 
+        "filters": {
+            "header": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Filtros";
+  }), 
+            "clear": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Borrar";
+  }), 
+            "industry_type": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipo de industria";
+  }), 
+            "organization_type": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipo de organización";
   })
         }
-    },
-
-    page: {
-        sections: {
-            header: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "contact": {
+        "fields": {
+            "text": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "sections";
+  return "Texto";
+  }), 
+            "email": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Su email";
+  }), 
+            "subject": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tema";
+  })
+        }, 
+        "errors": {
+            "text": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Introduzca texto.";
+  }), 
+            "email": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Introduzca su email.";
+  }), 
+            "error": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Sucedió un problema cuando intento enviar, ¿intenta de nuevo?";
+  })
+        }, 
+        "success": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "¡Enviado! Nos comunicaremos pronto.";
+  }), 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Contacto";
+  })
+    }, 
+    "organization": {
+        "mission": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Nuestra misión";
+  }), 
+        "actions": {
+            "add_media": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Añada medios de comunicación";
+  }), 
+            "share": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Compartir";
+  }), 
+            "visit": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Visite";
   })
         }
-    },
-
-    share: {
-        title: t(function (Handlebars,depth0,helpers,partials,data) {
+    }, 
+    "news": {
+        "header": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Share";
-  }),
-        actions: {
-            facebook: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "Noticias";
+  }), 
+        "empty": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "share on facebook";
-  }),
-            twitter: t(function (Handlebars,depth0,helpers,partials,data) {
+  return "No hay noticias para esta categoría";
+  }), 
+        "categories": {
+            "header": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "share on twitter";
+  return "Categorías";
+  }), 
+            "clear": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Borrar";
+  }), 
+            "featured": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Selección";
   })
-        },
-        tabs: {
-            embed: t(function (Handlebars,depth0,helpers,partials,data) {
+        }, 
+        "read_more": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Embed";
-  }),
-            share: t(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "Share";
+  return "Lea más";
   })
-        }
+    }, 
+    "organizations_list": {
+        "headers": {
+            "sectors": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Sectores";
+  }), 
+            "city": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Ciudad";
+  }), 
+            "state": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Estado";
+  }), 
+            "name": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Nombre";
+  }), 
+            "types": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipos";
+  })
+        }, 
+        "add": {
+            "message": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "¿No ve su organización en esta lista? Añádala aquí.";
+  }), 
+            "button": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Añada mi organización";
+  })
+        }, 
+        "title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Lista de organizaciones";
+  })
     }
-};
+}
 })();

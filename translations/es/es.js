@@ -1,154 +1,144 @@
 Ember.I18n.translations = {
-    buttons: {
-        cancel: 'cancel',
-        submit: 'submit'
-    },
-
-    application: {
-        title: 'Changing the Food Chain',
-        header: 'Changing the<br />Food Chain',
-        nav: {
-            about: 'about',
-            contact: 'contact',
-            news: 'news'
-        },
-        tagline: 'An action map for food chain workers & organizations.',
-        filters: {
-            header: 'filters',
-            clear: 'clear',
-            organization_type: 'organization type',
-            industry_type: 'industry type'
-        },
-        search: {
-            error: "Sorry we couldn't find the location you searched for. Try again?"
-        },
-        project_of: 'A project of'
-    },
-
-    contact: {
-        title: "Contact",
-        fields: {
-            email: "your email address",
-            subject: "subject",
-            text: "text"
-        },
-        errors: {
-            email: "Please enter your email address.",
-            text: "Please enter some text.",
-            error: "Something went wrong while sending, try again?"
-        },
-        success: "Sent! You should hear back from us soon."
-    },
-
-    help: {
-        industries: {
-            agriculture: "As the first stage of all food items, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.",
-            processing: "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.",
-            distribution: "At this stage, workers transport food from one destination to another and load and unload food at warehouses and distribution centers. These may be final points of sale or intermediate locations for storage or further processing. Essentially, distribution connects the material at each stage of the food system. While a large component of this involves transportation, this stage also includes warehousing, refrigeration, logistics, and coordination.",
-            retail: "Workers in this sector sell food directly to consumers in retail outlets including supermarkets, convenience, grocery stores, and buyers’ clubs. Workers in retail also include those who cook and prepare foods for delis and bakeries within the retail outlets, receive shipments, stock shelves, and clean the facilities.",
-            service: "The service sector is the largest segment of the food system. Workers in this segment prepare, cook and serve food, bartend, and wash dishes. This sector includes full-service restaurants, casual dining and quick service establishments, catering businesses, food trucks, street vendors, and food service establishments such as cafeterias and dining halls."
-        },
-        organization_types: {
-            advocacy: "Advocacy groups amplify the voices of the public to influence policy change at the local, state and national level. Examples could include groups advocating for immigration reform or raising the minimum wage.",
-            service: "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.",
-            workers_center: "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.",
-            union: "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations."
+    "organization_add": {
+        "fields": {
+            "city": "Ciudad", 
+            "siteUrl": "P\u00e1gina de Internet", 
+            "name": "Nombre de la organizaci\u00f3n", 
+            "zip": "C\u00f3digo postal", 
+            "sectors": "Sectores", 
+            "address2": "Direcci\u00f3n l\u00ednea 2", 
+            "mission": "Misi\u00f3n", 
+            "phone": "Tel\u00e9fono", 
+            "state": "Estado", 
+            "address": "Direcci\u00f3n", 
+            "email": "Email", 
+            "types": "Tipos de organizaci\u00f3n"
+        }, 
+        "errors": {
+            "types": "Elija un tipo.", 
+            "centroid": "Introduzca un email valido que aparezca en el mapa.", 
+            "name": "Introduzca un nombre para su organizaci\u00f3n.", 
+            "sectors": "Elija un sector.", 
+            "general": "Algo sucedi\u00f3. Intente de nuevo."
+        }, 
+        "location": {
+            "message": "Se colocar\u00e1 a su organizaci\u00f3n aqu\u00ed. Aseg\u00farese de que este en el lugar correcto en el mapa.", 
+            "accept": "Utilice esta direcci\u00f3n", 
+            "error": "Perd\u00f3n, no ubicamos la direcci\u00f3n que a\u00f1adi\u00f3. \u00bfPuede ser m\u00e1s espec\u00edfico?"
+        }, 
+        "success": "\u00c9xito con a\u00f1adir su organizaci\u00f3n.", 
+        "title": "A\u00f1ada mi organizaci\u00f3n"
+    }, 
+    "help": {
+        "industries": {
+            "distribution": "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribuci\u00f3n. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para m\u00e1s procesamiento. En s\u00ed, la distribuci\u00f3n conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa tambi\u00e9n incluye almacenamiento, refrigeraci\u00f3n, log\u00edstica y coordinaci\u00f3n.", 
+            "processing": "Los trabajadores en el proceso alimentaria convierten la comida cruda en productos terminados, ya sea por mano o en l\u00edneas de ensamble en plantas o f\u00e1bricas. Esto incluye refrigerios muy procesados y m\u00e1s simples como panes, queso y tortillas. Tambi\u00e9n incluidos en esta categor\u00eda son los trabajadores de mataderos y procesadores de animales.", 
+            "agriculture": "En la primera etapa de la comida, los trabajadores siembran, cuidan y cultivan comida cruda as\u00ed como tambi\u00e9n criar ganado. Algunas de estas comidas crudas, as\u00ed como el ma\u00edz y los granos, se convierten en material para la comida procesada y pienso de animales. Se llevan a otras frutas y vegetales directamente al mercado para el consumo. Esta etapa tambi\u00e9n incluye la pesquer\u00eda.", 
+            "service": "El sector de servicio es el segmento m\u00e1s grande del sistema alimentario. Los trabajadores en este segmento preparan, cocinan y sirven la comida, tienden barra, y lavan platos. Este sector incluye restaurantes de servicio completo, y establecimientos de cena casual y servicio r\u00e1pido, negocios de catering, camiones de comida, vendedores ambulantes, y establecimientos de servicios de comida as\u00ed como las cafeterias y los salones de cena.", 
+            "retail": "Los trabajadores en este sector venden comida directamente a los consumidores en tiendas incluyendo supermercados, bodegas y clubs de compradores. Los trabajadores de tienda tambi\u00e9n incluyen aquellos que cocinan y preparan la comida en los delicatesen y panader\u00edas en tiendas, reciben env\u00edos, reponen los estantes, y limpian estos lugares."
+        }, 
+        "organization_types": {
+            "union": "Los sindicatos son legalmente reconocidos para reconocer a grupos de trabajadores en negociaciones colectivas con la gerencia, con respecto a sueldos, beneficios y condiciones de trabajo as\u00ed como tambi\u00e9n violaciones de contrato.", 
+            "service": "Organizaciones de servicio ofrecen servicios as\u00ed como apoyo legal (por ejemplo, reclamos de robo de sueldos o asuntos de inmigraci\u00f3n), programas educativos, o la vivienda asequible.", 
+            "advocacy": "Grupos defensores amplifican las voces del p\u00fablico para influir el cambio de pol\u00edticas a nivel local, estatal y nacional. Ejemplos pueden incluir grupos que abogan por la reforma migratoria o para aumentar el salario m\u00ednimo.", 
+            "workers_center": "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociaci\u00f3n colectiva as\u00ed como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campa\u00f1as para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos."
         }
-    },
-
-    organizations_list: {
-        title: 'Organization List',
-        headers: {
-            name: 'name',
-            city: 'city',
-            state: 'state',
-            types: 'types',
-            sectors: 'sectors'
-        },
-        add: {
-            message: "Don't see your organization in this list? Add it here.",
-            button: 'add my organization'
+    }, 
+    "share": {
+        "tabs": {
+            "embed": "Integrar", 
+            "share": "Compartir"
+        }, 
+        "actions": {
+            "twitter": "Compartir en Twitter", 
+            "facebook": "Compartir en Facebook"
+        }, 
+        "title": "Compartir"
+    }, 
+    "organization_add_media": {
+        "photo": {
+            "label": "A\u00f1ada una foto"
+        }, 
+        "error": "Algo sucedi\u00f3. Intente de nuevo.", 
+        "video": {
+            "label": "Enlace de Vimeo o YouTube"
+        }, 
+        "success": "\u00c9xito con a\u00f1adir un medio de comunicaci\u00f3n.", 
+        "title": "A\u00f1ada medios de comunicaci\u00f3n"
+    }, 
+    "page": {
+        "sections": {
+            "header": "Secciones"
         }
-    },
-
-    news: {
-        categories: {
-            clear: 'clear',
-            header: 'categories',
-            featured: 'featured'
-        },
-        empty: 'No news to show for this category',
-        header: 'news',
-        read_more: 'read more'
-    },
-
-    organization: {
-        actions: {
-            add_media: 'add media',
-            share: 'share',
-            visit: 'visit'
-        },
-        mission: 'Our mission'
-    },
-
-    organization_add: {
-        title: 'Add My Organization',
-        errors: {
-            centroid: 'Please enter a valid address that shows up on the map.',
-            name: 'Please enter a name for your organization.',
-            sectors: 'Please choose a sector.',
-            types: 'Please choose a type.',
-            general: 'Something went wrong. Please try again.'
-        },
-        success: 'Successfully added organization.',
-        location: {
-            message: "Your organization will be placed here. Make sure it's in the right spot on the map.",
-            accept: 'Use this address',
-            error: "Sorry, we couldn't find the address you added. Could you be more specific?"
-        },
-        fields: {
-            name: 'organization name',
-            address: 'address',
-            address2: 'address line 2',
-            city: 'city',
-            state: 'state',
-            zip: 'zip',
-            email: 'email',
-            siteUrl: 'website',
-            mission: 'mission',
-            phone: 'phone',
-            types: 'organization types',
-            sectors: 'sectors'
+    }, 
+    "buttons": {
+        "cancel": "Cancelar", 
+        "submit": "Enviar"
+    }, 
+    "application": {
+        "search": {
+            "error": "Perdone pero no pudimos encontrar el lugar que busca. \u00bfIntenta de nuevo?"
+        }, 
+        "title": "Cambiar la cadena alimentaria", 
+        "tagline": "Mapa de acciones para trabajadores en la cadena alimentaria y las organizaciones", 
+        "project_of": "Un proyecto de", 
+        "header": "Cambiar la <br /> cadena alimentaria", 
+        "nav": {
+            "news": "Noticias", 
+            "about": "\u00bfQui\u00e9nes somos?", 
+            "contact": "Comun\u00edquese"
+        }, 
+        "filters": {
+            "header": "Filtros", 
+            "clear": "Borrar", 
+            "industry_type": "Tipo de industria", 
+            "organization_type": "Tipo de organizaci\u00f3n"
         }
-    },
-
-    organization_add_media: {
-        title: 'Add Media',
-        error: 'Something went wrong. Please try again.',
-        success: 'Successfully added media.',
-        photo: {
-            label: 'Add a photo'
-        },
-        video: {
-            label: 'Vimeo or YouTube link'
+    }, 
+    "contact": {
+        "fields": {
+            "text": "Texto", 
+            "email": "Su email", 
+            "subject": "Tema"
+        }, 
+        "errors": {
+            "text": "Introduzca texto.", 
+            "email": "Introduzca su email.", 
+            "error": "Sucedi\u00f3 un problema cuando intento enviar, \u00bfintenta de nuevo?"
+        }, 
+        "success": "\u00a1Enviado! Nos comunicaremos pronto.", 
+        "title": "Contacto"
+    }, 
+    "organization": {
+        "mission": "Nuestra misi\u00f3n", 
+        "actions": {
+            "add_media": "A\u00f1ada medios de comunicaci\u00f3n", 
+            "share": "Compartir", 
+            "visit": "Visite"
         }
-    },
-
-    page: {
-        sections: {
-            header: 'sections'
-        }
-    },
-
-    share: {
-        title: 'Share',
-        actions: {
-            facebook: 'share on facebook',
-            twitter: 'share on twitter'
-        },
-        tabs: {
-            embed: 'Embed',
-            share: 'Share'
-        }
+    }, 
+    "news": {
+        "header": "Noticias", 
+        "empty": "No hay noticias para esta categor\u00eda", 
+        "categories": {
+            "header": "Categor\u00edas", 
+            "clear": "Borrar", 
+            "featured": "Selecci\u00f3n"
+        }, 
+        "read_more": "Lea m\u00e1s"
+    }, 
+    "organizations_list": {
+        "headers": {
+            "sectors": "Sectores", 
+            "city": "Ciudad", 
+            "state": "Estado", 
+            "name": "Nombre", 
+            "types": "Tipos"
+        }, 
+        "add": {
+            "message": "\u00bfNo ve su organizaci\u00f3n en esta lista? A\u00f1\u00e1dala aqu\u00ed.", 
+            "button": "A\u00f1ada mi organizaci\u00f3n"
+        }, 
+        "title": "Lista de organizaciones"
     }
-};
+}
