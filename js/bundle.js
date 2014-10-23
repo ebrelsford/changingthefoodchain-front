@@ -67014,7 +67014,7 @@ App.NewsController = Ember.ArrayController.extend({
             var controller = this,
                 nextPage = controller.get('nextPage'),
                 params = {
-                    language: CONFIG.language,
+                    language: CONFIG.DEFAULT_LOCALE,
                     page: nextPage 
                 },
                 category = controller.get('category'),
