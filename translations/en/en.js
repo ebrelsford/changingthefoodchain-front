@@ -5,6 +5,10 @@ Ember.I18n.translations = {
     },
 
     application: {
+        buttons: {
+            add_org: "add org",
+            share: "share"
+        },
         title: 'Changing the Food Chain',
         header: 'Changing the<br />Food Chain',
         nav: {
@@ -41,6 +45,10 @@ Ember.I18n.translations = {
     },
 
     help: {
+        headers: {
+            organization_types: "Organization Types",
+            industries: "Industry Types"
+        },
         industries: {
             agriculture: "At the first stage of all food, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. Other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.",
             processing: "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.",

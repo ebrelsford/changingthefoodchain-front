@@ -186,6 +186,24 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
     }, 
     "help": {
+        headers: {
+            industries: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipos de industria";
+  }), 
+            organization_types: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Tipos de organización";
+  })
+        },
         "industries": {
             "distribution": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -386,6 +404,24 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
     }, 
     "application": {
+        buttons: {
+            add_org: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "add org";
+  }),
+            share: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "share";
+  })
+        },
         "search": {
             "error": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

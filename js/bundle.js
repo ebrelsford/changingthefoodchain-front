@@ -73641,8 +73641,11 @@ function program11(depth0,data) {
 
 function program13(depth0,data) {
   
-  
-  data.buffer.push("\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    add org\n");
+  var buffer = '', helper, options;
+  data.buffer.push("\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.buttons.add_org", options) : helperMissing.call(depth0, "t", "application.buttons.add_org", options))));
+  data.buffer.push("\n");
+  return buffer;
   }
 
   data.buffer.push("<header>\n    <div id=\"logo\">\n        <a href=\"#\" ");
@@ -73714,7 +73717,9 @@ function program13(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n<a id=\"share-button\" class=\"map-ui-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openShare", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    share\n</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
+  data.buffer.push(">\n    <div class=\"map-ui-button-icon add-organization-button-icon\"></div>\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.buttons.share", options) : helperMissing.call(depth0, "t", "application.buttons.share", options))));
+  data.buffer.push("\n</a>\n\n<div id=\"popup\" class=\"full-height\">\n    ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n\n<div id=\"page\" class=\"full-height full-width\">\n    ");
@@ -73924,7 +73929,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n\n<h1 class=\"help-header\">Industry Types</h1>\n<div class=\"help-types help-industry-types\">\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/agriculture.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
+  data.buffer.push(">&times;</div>\n\n<h1 class=\"help-header\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.headers.industries", options) : helperMissing.call(depth0, "t", "help.headers.industries", options))));
+  data.buffer.push("</h1>\n<div class=\"help-types help-industry-types\">\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/agriculture.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.industries.agriculture", options) : helperMissing.call(depth0, "t", "help.industries.agriculture", options))));
   data.buffer.push("\n        </div>\n    </div>\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/foodprocessing.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.industries.agriculture", options) : helperMissing.call(depth0, "t", "help.industries.agriculture", options))));
@@ -73947,7 +73954,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">&times;</div>\n\n<h1 class=\"help-header\">Organization Types</h1>\n<div class=\"help-types\">\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/advocacy.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
+  data.buffer.push(">&times;</div>\n\n<h1 class=\"help-header\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.headers.organization_types", options) : helperMissing.call(depth0, "t", "help.headers.organization_types", options))));
+  data.buffer.push("</h1>\n<div class=\"help-types\">\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/advocacy.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.organization_types.advocacy", options) : helperMissing.call(depth0, "t", "help.organization_types.advocacy", options))));
   data.buffer.push("\n        </div>\n    </div>\n    <div class=\"help-types-item\">\n        <div class=\"help-types-item-name\">\n            <img src=\"img/service.png\" />\n        </div>\n        <div class=\"help-types-item-text\">\n            ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "help.organization_types.service", options) : helperMissing.call(depth0, "t", "help.organization_types.service", options))));
