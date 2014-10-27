@@ -67245,6 +67245,7 @@ App.OrganizationController = Ember.Controller.extend({
                         newItem.set(key, value);
                     });
                     newItem.set('isActive', false);
+                    newItem.set('name_translated', item.get('name_translated'));
                     return newItem;
                 }));
             });
@@ -67258,6 +67259,7 @@ App.OrganizationController = Ember.Controller.extend({
                         newItem.set(key, value);
                     });
                     newItem.set('isActive', false);
+                    newItem.set('name_translated', item.get('name_translated'));
                     return newItem;
                 }));
             });
