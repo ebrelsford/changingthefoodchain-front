@@ -93,7 +93,7 @@ Ember.I18n.translations = {
         "header": "Cambiar la <br /> cadena alimentaria", 
         "nav": {
             "news": "Noticias", 
-            "about": "\u00bfQui\u00e9nes somos?", 
+            "about": "Acerca de", 
             "contact": "Comun\u00edquese"
         }, 
         "filters": {

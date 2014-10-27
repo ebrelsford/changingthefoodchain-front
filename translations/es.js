@@ -479,7 +479,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "¿Quiénes somos?";
+  return "Acerca de";
   }), 
             "contact": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
