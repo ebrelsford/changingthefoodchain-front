@@ -81,8 +81,8 @@ Ember.I18n.translations = {
     }, 
     "application": {
         buttons: {
-            add_org: "add org",
-            share: "share"
+            add_org: "añada org",
+            share: "comparta"
         },
         "search": {
             "error": "Perdone pero no pudimos encontrar el lugar que busca. \u00bfIntenta de nuevo?"
