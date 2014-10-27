@@ -76,13 +76,33 @@ DS.CentroidTransform = DS.Transform.extend({
 App.register("transform:centroid", DS.CentroidTransform);
 
 App.Sector = DS.Model.extend({
-    name: DS.attr('string')
+    name: DS.attr('string'),
+    name_es: DS.attr('string'),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Type = DS.Model.extend({
     name: DS.attr('string'),
+    name_es: DS.attr('string'),
     description: DS.attr(),
-    image: DS.attr()
+    image: DS.attr(),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Photo = DS.Model.extend({

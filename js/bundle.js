@@ -66924,13 +66924,33 @@ DS.CentroidTransform = DS.Transform.extend({
 App.register("transform:centroid", DS.CentroidTransform);
 
 App.Sector = DS.Model.extend({
-    name: DS.attr('string')
+    name: DS.attr('string'),
+    name_es: DS.attr('string'),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Type = DS.Model.extend({
     name: DS.attr('string'),
+    name_es: DS.attr('string'),
     description: DS.attr(),
-    image: DS.attr()
+    image: DS.attr(),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Photo = DS.Model.extend({
@@ -74191,7 +74211,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 
   data.buffer.push("<div class=\"section-indicator\"></div>\n<div class=\"section-label\">\n    ");
-  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name_translated", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n<div class=\"clearfix\"></div>\n");
   return buffer;
@@ -75005,7 +75025,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 
   data.buffer.push("<div class=\"section-indicator\"></div>\n<div class=\"section-label\">\n    ");
-  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name_translated", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n<div class=\"clearfix\"></div>\n");
   return buffer;
