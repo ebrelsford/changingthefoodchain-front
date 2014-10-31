@@ -13674,6 +13674,57 @@ global.DS = requireModule('ember-data/lib/main')['default'];
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],6:[function(require,module,exports){
+Ember.GoogleAnalyticsTrackingMixin = Ember.Mixin.create({
+  pageHasGa: function() {
+    return window.ga && typeof window.ga === "function";
+  },
+
+  logTrackingEnabled: function() {
+    return !!window.ENV && !!window.ENV.LOG_EVENT_TRACKING;
+  },
+
+  logTracking: function() {
+    Ember.Logger.info('Tracking Google Analytics event: ', arguments);
+  },
+
+  trackPageView: function(page) {
+    if (this.pageHasGa()) {
+      if (!page) {
+        var loc = window.location;
+        page = loc.hash ? loc.hash.substring(1) : loc.pathname + loc.search;
+      }
+
+      ga('send', 'pageview', page);
+    }
+
+    if (this.logTrackingEnabled()) {
+      this.logTracking('pageview', page);
+    }
+  },
+
+  trackEvent: function(category, action, label, value) {
+    if (this.pageHasGa()) {
+      ga('send', 'event', category, action, label, value);
+    }
+
+    if (this.logTrackingEnabled()) {
+      this.logTracking('event', category, action, label, value);
+    }
+  }
+});
+Ember.Application.initializer({
+  name: "googleAnalytics",
+
+  initialize: function(container, application) {
+    var router = container.lookup('router:main');
+    router.on('didTransition', function() {
+      this.trackPageView(this.get('url'));
+    });
+  }
+});
+Ember.Router.reopen(Ember.GoogleAnalyticsTrackingMixin);
+
+},{}],7:[function(require,module,exports){
 (function (process,global,__dirname){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -61900,7 +61951,7 @@ requireModule("ember");
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},"/../bower_components/ember")
-},{"W5lFOV":31}],7:[function(require,module,exports){
+},{"W5lFOV":32}],8:[function(require,module,exports){
 (function(previousMethods){
 if (typeof previousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
@@ -62054,7 +62105,7 @@ L.Map.include({
 });
 })(window.leafletActiveAreaPreviousMethods);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 
 
@@ -63583,7 +63634,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 })();
 
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /**
@@ -63941,7 +63992,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*!
  * typeahead.js 0.10.5
  * https://github.com/twitter/typeahead.js
@@ -65724,7 +65775,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
         };
     })();
 })(window.jQuery);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -65879,13 +65930,14 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":6,"underscore":35}],12:[function(require,module,exports){
+},{"ember":7,"underscore":36}],13:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
 var i18n = require('./i18n');
 var qs = require('qs');
 var _ = require('underscore');
+require('ember-google-analytics');
 require('ember-i18n');
 require('bootstrap_carousel');
 require('bootstrap_modal');
@@ -66269,7 +66321,7 @@ App.SectorView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":36,"./geocode":15,"./i18n":17,"./map":19,"./typeahead":28,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":6,"ember-i18n":30,"qs":33,"underscore":35}],13:[function(require,module,exports){
+},{"../templates/templates":37,"./geocode":16,"./i18n":18,"./map":20,"./typeahead":29,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-google-analytics":6,"ember-i18n":31,"qs":34,"underscore":36}],14:[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -66327,7 +66379,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -66452,7 +66504,7 @@ App.ContactView = Ember.View.extend({
     }
 });
 
-},{"ember":6,"underscore":35}],15:[function(require,module,exports){
+},{"ember":7,"underscore":36}],16:[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -66527,7 +66579,7 @@ module.exports = {
 
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 App.HelpRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -66577,7 +66629,7 @@ App.HelpIndustryTypesRoute = App.HelpRoute.extend({
 
 App.HelpIndustryTypesView = App.HelpView.extend({});
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var qs = require('qs');
 
 
@@ -66617,7 +66669,7 @@ module.exports = {
     }
 };
 
-},{"qs":33}],18:[function(require,module,exports){
+},{"qs":34}],19:[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./carousel');
@@ -66635,7 +66687,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":11,"./app":12,"./carousel":13,"./contact":14,"./help":16,"./i18n":17,"./models":20,"./news":21,"./organization":22,"./organizations_add":23,"./organizations_list":24,"./page":25,"./share":27}],19:[function(require,module,exports){
+},{"./add_media":12,"./app":13,"./carousel":14,"./contact":15,"./help":17,"./i18n":18,"./models":21,"./news":22,"./organization":23,"./organizations_add":24,"./organizations_list":25,"./page":26,"./share":28}],20:[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -66845,7 +66897,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":7,"underscore":35}],20:[function(require,module,exports){
+},{"leaflet-active-area":8,"underscore":36}],21:[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');
@@ -66995,7 +67047,7 @@ App.Entry = DS.Model.extend({
     }.property('published_on')
 });
 
-},{"./videos":29,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":32}],21:[function(require,module,exports){
+},{"./videos":30,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":33}],22:[function(require,module,exports){
 var _ = require('underscore');
 require('./pagemixins');
 
@@ -67143,7 +67195,7 @@ App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
-},{"./pagemixins":26,"underscore":35}],22:[function(require,module,exports){
+},{"./pagemixins":27,"underscore":36}],23:[function(require,module,exports){
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');
@@ -67306,7 +67358,7 @@ App.OrganizationIndexController = Ember.Controller.extend({
     needs: ['organization']
 });
 
-},{"./map":19,"ember":6,"spinjs":9,"underscore":35}],23:[function(require,module,exports){
+},{"./map":20,"ember":7,"spinjs":10,"underscore":36}],24:[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var _ = require('underscore');
@@ -67613,7 +67665,7 @@ App.OrganizationsAddView = Ember.View.extend({
     }
 });
 
-},{"./geocode":15,"ember":6,"underscore":35}],24:[function(require,module,exports){
+},{"./geocode":16,"ember":7,"underscore":36}],25:[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 require('./pagemixins');
@@ -67815,7 +67867,7 @@ App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
     }
 });
 
-},{"./pagemixins":26,"ember":6,"ember-list-view":8}],25:[function(require,module,exports){
+},{"./pagemixins":27,"ember":7,"ember-list-view":9}],26:[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
 require('./pagemixins');
@@ -67887,7 +67939,7 @@ App.AboutRoute = Ember.Route.extend(App.PageRouteMixin, App.SectionsRouteMixin, 
     viewName: 'about'
 });
 
-},{"./i18n":17,"./pagemixins":26,"underscore.string":34}],26:[function(require,module,exports){
+},{"./i18n":18,"./pagemixins":27,"underscore.string":35}],27:[function(require,module,exports){
 App.PageRouteMixin = Ember.Mixin.create({
     actions: {
         close: function () {
@@ -67953,7 +68005,7 @@ App.PaginatedViewMixin = Ember.Mixin.create({
     }
 });
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -68070,7 +68122,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":19,"ember":6}],28:[function(require,module,exports){
+},{"./map":20,"ember":7}],29:[function(require,module,exports){
 /*
  * Typeahead component for Ember, strongly based on 
  *
@@ -68149,7 +68201,7 @@ require('typeahead');
     Ember.Handlebars.helper('type-ahead', Ember.TypeAheadComponent);
 }(this));
 
-},{"typeahead":10}],29:[function(require,module,exports){
+},{"typeahead":11}],30:[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -68186,7 +68238,7 @@ module.exports = {
     }
 };
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -68341,7 +68393,7 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -68406,7 +68458,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.1
@@ -71218,7 +71270,7 @@ process.chdir = function (dir) {
 }).call(this);
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -71586,7 +71638,7 @@ function decode(str) {
   }
 }
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -72261,7 +72313,7 @@ function decode(str) {
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -73606,7 +73658,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -75068,4 +75120,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[18])
+},{}]},{},[19])

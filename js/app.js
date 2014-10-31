@@ -4,6 +4,7 @@ var mapmodule = require('./map');
 var i18n = require('./i18n');
 var qs = require('qs');
 var _ = require('underscore');
+require('ember-google-analytics');
 require('ember-i18n');
 require('bootstrap_carousel');
 require('bootstrap_modal');
