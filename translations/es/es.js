@@ -50,6 +50,7 @@ Ember.I18n.translations = {
     }, 
     "share": {
         "tabs": {
+            "badge": "Embed Badge",
             "embed": "Integrar", 
             "share": "Compartir"
         }, 
@@ -57,6 +58,9 @@ Ember.I18n.translations = {
             "twitter": "Compartir en Twitter", 
             "facebook": "Compartir en Facebook"
         }, 
+        "badge": {
+            "description": "Share the word about Changing the Food Chain! Add this badge to your site by copying and pasting this code"
+        },
         "title": "Compartir"
     }, 
     "organization_add_media": {

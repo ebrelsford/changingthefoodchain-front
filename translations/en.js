@@ -752,14 +752,32 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "share on twitter";
   })
         },
+        badge: {
+            description: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Share the word about Changing the Food Chain! Add this badge to your site by copying and pasting this code";
+  })
+        },
         tabs: {
+            badge: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Embed Badge";
+  }),
             embed: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Embed";
+  return "Embed Map";
   }),
             share: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

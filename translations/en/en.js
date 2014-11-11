@@ -155,8 +155,12 @@ Ember.I18n.translations = {
             facebook: 'share on facebook',
             twitter: 'share on twitter'
         },
+        badge: {
+            description: "Share the word about Changing the Food Chain! Add this badge to your site by copying and pasting this code"
+        },
         tabs: {
-            embed: 'Embed',
+            badge: 'Embed Badge',
+            embed: 'Embed Map',
             share: 'Share'
         }
     }

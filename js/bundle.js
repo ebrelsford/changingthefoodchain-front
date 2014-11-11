@@ -68051,6 +68051,19 @@ App.ShareRoute = Ember.Route.extend({
     }
 });
 
+App.BadgeController = Ember.Controller.extend({
+    code: function () {
+        var url = window.location.protocol + '//' + window.location.host,
+            src = url + '/img/badge.png';
+        return '<a href="' + url + '"><img style="height: auto; max-width: 300px;" src="' + src + '" /></a>';
+    }
+});
+
+App.BadgeView = Ember.View.extend({
+    controller: App.BadgeController.create(),
+    templateName: 'badge'
+});
+
 App.EmbedController = Ember.Controller.extend({
     center: [39.09, -97.47],
     zoom: 3,
@@ -68119,6 +68132,7 @@ App.ShareView = Ember.View.extend({
         this._super();
     },
 
+    badgeView: App.BadgeView,
     embedView: App.EmbedView
 });
 
@@ -73807,6 +73821,24 @@ function program13(depth0,data) {
   
 });
 
+Ember.TEMPLATES["badge"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<img class=\"share-badge-example\" src=\"img/badge.png\" />\n<div class=\"share-badge-description\">\n    ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.badge.description", options) : helperMissing.call(depth0, "t", "share.badge.description", options))));
+  data.buffer.push(":\n</div>\n");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'value': ("code"),
+    'class': ("share-badge-code")
+  },hashTypes:{'value': "ID",'class': "STRING"},hashContexts:{'value': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\n");
+  return buffer;
+  
+});
+
 Ember.TEMPLATES["carousel-item"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -75094,6 +75126,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<div class=\"modal fade\" id=\"shareModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"shareModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n            </div>\n            <div class=\"modal-body\">\n                <ul class=\"nav nav-tabs\" role=\"tablist\">\n                    <li class=\"active\"><a href=\"#share\" role=\"tab\" data-toggle=\"tab\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.tabs.share", options) : helperMissing.call(depth0, "t", "share.tabs.share", options))));
+  data.buffer.push("</a></li>\n                    <li><a href=\"#badge\" role=\"tab\" data-toggle=\"tab\" id=\"badge-tab\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.tabs.badge", options) : helperMissing.call(depth0, "t", "share.tabs.badge", options))));
   data.buffer.push("</a></li>\n                    <li><a href=\"#embed\" role=\"tab\" data-toggle=\"tab\" id=\"embed-tab\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "share.tabs.embed", options) : helperMissing.call(depth0, "t", "share.tabs.embed", options))));
   data.buffer.push("</a></li>\n                </ul>\n\n                <div class=\"tab-content\">\n                    <div class=\"tab-pane active\" id=\"share\">\n                        <div class=\"form-group\">\n                            <div class=\"share-actions\">\n                                <a ");
@@ -75114,7 +75148,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'type': ("url"),
     'value': ("previousUrl")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID"},hashContexts:{'class': depth0,'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        ");
+  data.buffer.push("\n                        </div>\n                    </div>\n                    <div class=\"tab-pane\" id=\"badge\">\n                        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.badgeView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                    </div>\n                    <div class=\"tab-pane\" id=\"embed\">\n                        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.embedView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n");
   return buffer;

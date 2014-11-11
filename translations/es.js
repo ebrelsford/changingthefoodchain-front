@@ -283,6 +283,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
     }, 
     "share": {
         "tabs": {
+            "badge": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Embed Badge";
+  }),
             "embed": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -318,6 +326,16 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "Compartir en Facebook";
   })
         }, 
+        "badge": {
+            "description": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Share the word about Changing the Food Chain! Add this badge to your site by copying and pasting this code";
+  })
+        },
         "title": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

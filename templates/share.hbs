@@ -7,6 +7,7 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#share" role="tab" data-toggle="tab">{{t "share.tabs.share"}}</a></li>
+                    <li><a href="#badge" role="tab" data-toggle="tab" id="badge-tab">{{t "share.tabs.badge"}}</a></li>
                     <li><a href="#embed" role="tab" data-toggle="tab" id="embed-tab">{{t "share.tabs.embed"}}</a></li>
                 </ul>
 
@@ -19,6 +20,9 @@
                             </div>
                             {{input class="form-control" type="url" value=previousUrl}}
                         </div>
+                    </div>
+                    <div class="tab-pane" id="badge">
+                        {{view view.badgeView}}
                     </div>
                     <div class="tab-pane" id="embed">
                         {{view view.embedView}}

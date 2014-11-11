@@ -43,6 +43,19 @@ App.ShareRoute = Ember.Route.extend({
     }
 });
 
+App.BadgeController = Ember.Controller.extend({
+    code: function () {
+        var url = window.location.protocol + '//' + window.location.host,
+            src = url + '/img/badge.png';
+        return '<a href="' + url + '"><img style="height: auto; max-width: 300px;" src="' + src + '" /></a>';
+    }
+});
+
+App.BadgeView = Ember.View.extend({
+    controller: App.BadgeController.create(),
+    templateName: 'badge'
+});
+
 App.EmbedController = Ember.Controller.extend({
     center: [39.09, -97.47],
     zoom: 3,
@@ -111,5 +124,6 @@ App.ShareView = Ember.View.extend({
         this._super();
     },
 
+    badgeView: App.BadgeView,
     embedView: App.EmbedView
 });
