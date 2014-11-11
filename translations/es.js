@@ -289,7 +289,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Embed Badge";
+  return "Integrar emblema";
   }),
             "embed": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -297,7 +297,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Integrar";
+  return "Integrar mapa";
   }), 
             "share": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -333,7 +333,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Share the word about Changing the Food Chain! Add this badge to your site by copying and pasting this code";
+  return "¡Corra la voz sobre Cambiar la cadena alimentaria! Copie y pegue este codigo para agregar este emblema a su sitio";
   })
         },
         "title": t(function (Handlebars,depth0,helpers,partials,data) {
