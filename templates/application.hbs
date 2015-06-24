@@ -52,6 +52,10 @@
         <h3>{{t "application.filters.industry_type"}}</h3>
         {{view App.SectorView content=sectors}}
     </section>
+    <section class="filters-news-category">
+        <h3>{{t "application.filters.news_category"}}</h3>
+        {{view App.NewsCategoryView content=newsCategories}}
+    </section>
 </div>
 
 {{#link-to 'organizations.add' class="map-ui-button add-organization-button"}}

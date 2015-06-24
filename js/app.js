@@ -265,6 +265,11 @@ App.ApplicationController = Ember.Controller.extend({
             .then(function (types) {
                 controller.set('types', types);
             });
+
+        this.store.findAll('category')
+            .then(function (types) {
+                controller.set('newsCategories', types);
+            });
     },
 
     setSelectedSectors: function () {
@@ -391,5 +396,19 @@ App.SectorView = Ember.CollectionView.extend({
             this.container.lookup('controller:application').send('filtersChanged');
         },
         templateName: 'sector-item'
+    })
+});
+
+App.NewsCategoryView = Ember.CollectionView.extend({
+    tagName: 'ul',
+    classNames: ['filters-news-category-list'],
+    itemViewClass: Ember.View.extend({
+        classNames: ['filters-news-category-list-item'],
+        classNameBindings: ['content.isActive:active'],
+        click: function () {
+            Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
+            this.container.lookup('controller:application').send('filtersChanged');
+        },
+        templateName: 'news-category-item'
     })
 });
