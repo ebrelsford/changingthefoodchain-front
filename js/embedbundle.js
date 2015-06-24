@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js":[function(require,module,exports){
 (function(previousMethods){
 if (typeof previousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
@@ -152,7 +152,7 @@ L.Map.include({
 });
 })(window.leafletActiveAreaPreviousMethods);
 
-},{}],2:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/embed.js":[function(require,module,exports){
 var map = require('./map');
 var qs = require('qs');
 
@@ -174,7 +174,7 @@ if (s && s.length > 0) {
 
 map.init('map', center, zoom);
 
-},{"./map":3,"qs":4}],3:[function(require,module,exports){
+},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/map.js":[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -443,7 +443,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":1,"underscore":5}],4:[function(require,module,exports){
+},{"leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js":[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -811,7 +811,7 @@ function decode(str) {
   }
 }
 
-},{}],5:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js":[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -2156,4 +2156,4 @@ function decode(str) {
   }
 }).call(this);
 
-},{}]},{},[2])
+},{}]},{},["/home/eric/Documents/code/changingthefoodchain-front/js/embed.js"]);
