@@ -38,7 +38,13 @@ function initializeMap() {
         controller.send('organizationsReady');
     })
         .on('featureclick', function (feature) {
-            controller.transitionToRoute('organization', feature.id);
+            console.log(feature);
+            if (feature.properties.type === 'news') {
+                controller.transitionToRoute('news-entry', feature.id);
+            }
+            else {
+                controller.transitionToRoute('organization', feature.id);
+            }
         })
         .on('moveend zoomend', function () {
             var bboxString = map.getBounds().toBBoxString(),

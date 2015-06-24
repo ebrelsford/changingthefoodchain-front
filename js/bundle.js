@@ -65971,7 +65971,13 @@ function initializeMap() {
         controller.send('organizationsReady');
     })
         .on('featureclick', function (feature) {
-            controller.transitionToRoute('organization', feature.id);
+            console.log(feature);
+            if (feature.properties.type === 'news') {
+                controller.transitionToRoute('news-entry', feature.id);
+            }
+            else {
+                controller.transitionToRoute('organization', feature.id);
+            }
         })
         .on('moveend zoomend', function () {
             var bboxString = map.getBounds().toBBoxString(),
@@ -66695,28 +66701,56 @@ var map,
     organizationLayer,
     organizationLayerListeners = [],
     selectedOrganization,
+    newsLayer,
+    selectedNews,
     initialized = false,
     defaultCenter = [39.095963, -97.470703],
     defaultZoom = 5,
     defaultRadius = 5;
 
-var organizationStyle = {
-    fillColor: '#E3BE26',
+var markerStyle = {
     fillOpacity: 0.7,
     radius: defaultRadius,
     stroke: false
 };
 
-var organizationHoverStyle = {
-    color: '#F1E7CD',
-    fillColor: '#493F90',
+var markerHoverStyle = {
     fillOpacity: 0.5,
     opacity: 1,
     stroke: true,
     radius: 20
 };
 
+var organizationStyle = _.extend({}, markerStyle, { fillColor: '#E3BE26' });
+var organizationHoverStyle = _.extend({}, markerHoverStyle, {
+    color: '#F1E7CD',
+    fillColor: '#493F90'
+});
 var organizationSelectStyle = organizationHoverStyle;
+
+var newsStyle = _.extend({}, markerStyle, { fillColor: 'blue' });
+var newsHoverStyle = _.extend({}, markerHoverStyle, {
+    color: '#F1E7CD',
+    fillColor: 'blue'
+});
+var newsSelectStyle = newsStyle;
+
+function getMarkerRadius(map) {
+    var zoom = map.getZoom(),
+        radius = defaultRadius;
+    if (zoom > 8) {
+        radius = radius + 1 + Math.floor(zoom - 8 / 3);
+    }
+    return radius;
+}
+
+function getOrganizationStyle(map) {
+    return _.extend({}, organizationStyle, { radius: getMarkerRadius(map) });
+}
+
+function getNewsStyle(map) {
+    return _.extend({}, newsStyle, { radius: getMarkerRadius(map) });
+}
 
 function createMap(id, center, zoom) {
     return L.map(id, {
@@ -66745,15 +66779,6 @@ function addStreets(map) {
             maxZoom: 18
         }).addTo(map);
     }
-}
-
-function getOrganizationStyle(map) {
-    var zoom = map.getZoom(),
-        radius = defaultRadius;
-    if (zoom > 8) {
-        radius = radius + 1 + Math.floor(zoom - 8 / 3);
-    }
-    return _.extend({}, organizationStyle, { radius: radius });
 }
 
 function addOrganizations(map, callback) {
@@ -66792,6 +66817,39 @@ function addOrganizations(map, callback) {
     });
 }
 
+function addNews(map, callback) {
+    $.getJSON(CONFIG.API_BASE + '/entries/geojson/', function (data) {
+        var newsLayer = L.geoJson(data, {
+            onEachFeature: function (feature, layer) {
+                feature.properties.type = 'news';
+                layer.on('click', function () {
+                    map.fire('featureclick', feature);
+                });
+                layer.on('mouseover', function () {
+                    layer.bindPopup(feature.properties.title, {
+                        closeButton: false,
+                        offset: [0, -1]              
+                    }).openPopup();
+                    layer.setStyle(newsHoverStyle);
+                });
+                layer.on('mouseout', function () {
+                    layer.closePopup();
+                    if (selectedNews && layer === selectedNews) return;
+                    layer.setStyle(getNewsStyle(map));
+                });
+            },
+
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, getNewsStyle(map));
+            }
+        });
+        newsLayer.addTo(map);
+        if (callback !== undefined) {
+            callback(newsLayer);
+        }
+    });
+}
+
 function initializeMap(id, center, zoom, organizationsCallback) {
     map = createMap(id, center, zoom);
     map.setActiveArea('map-active-area');
@@ -66823,6 +66881,13 @@ function initializeMap(id, center, zoom, organizationsCallback) {
         if (organizationsCallback) {
             organizationsCallback();
         }
+    });
+
+    addNews(map, function (layer) {
+        newsLayer = layer;
+        newsLayer.on('filterschange', function (filters) {
+            // TODO filter news
+        });
     });
 
     map.on('zoomend', function () {
