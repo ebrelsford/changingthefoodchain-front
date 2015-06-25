@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/carousel.js":[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: carousel.js v3.1.1
  * http://getbootstrap.com/javascript/#carousel
@@ -205,7 +205,7 @@
 
 }(jQuery);
 
-},{}],2:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/modal.js":[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: modal.js v3.1.1
  * http://getbootstrap.com/javascript/#modals
@@ -450,7 +450,7 @@
 
 }(jQuery);
 
-},{}],3:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/tab.js":[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: tab.js v3.1.1
  * http://getbootstrap.com/javascript/#tabs
@@ -577,7 +577,7 @@
 
 }(jQuery);
 
-},{}],4:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data-extensions/dist/embedded-adapter.js":[function(require,module,exports){
 /* packages/mixins/lib/underscored_adapter_mixin.js */
 (function(Ember, DS) {
 
@@ -1612,9 +1612,9 @@ Ember.onLoad('Ember.Application', function(Application) {
 
 
 ;
-},{}],5:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data/ember-data.js":[function(require,module,exports){
 (function (global){
-;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
+; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * @overview  Ember Data
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors.
@@ -13672,8 +13672,8 @@ global.DS = requireModule('ember-data/lib/main')['default'];
 
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-google-analytics/ember-google-analytics.js":[function(require,module,exports){
 Ember.GoogleAnalyticsTrackingMixin = Ember.Mixin.create({
   pageHasGa: function() {
     return window.ga && typeof window.ga === "function";
@@ -13724,9 +13724,9 @@ Ember.Application.initializer({
 });
 Ember.Router.reopen(Ember.GoogleAnalyticsTrackingMixin);
 
-},{}],7:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js":[function(require,module,exports){
 (function (process,global,__dirname){
-;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
+; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * @overview  Ember - JavaScript Application Framework
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors
@@ -61950,8 +61950,8 @@ requireModule("ember");
 
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-}).call(this,require("W5lFOV"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},"/../bower_components/ember")
-},{"W5lFOV":32}],8:[function(require,module,exports){
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},"/bower_components/ember")
+},{"_process":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/grunt-browserify/node_modules/browserify/node_modules/process/browser.js"}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js":[function(require,module,exports){
 (function(previousMethods){
 if (typeof previousMethods === 'undefined') {
     // Defining previously that object allows you to use that plugin even if you have overridden L.map
@@ -62105,7 +62105,7 @@ L.Map.include({
 });
 })(window.leafletActiveAreaPreviousMethods);
 
-},{}],9:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/list-view/dist/list-view.js":[function(require,module,exports){
 // Last commit: e6ef388 (2014-07-22 01:13:49 -0400)
 
 
@@ -63634,9 +63634,9 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 })();
 
 
-},{}],10:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/spin.js/spin.js":[function(require,module,exports){
 (function (global){
-;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
+; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
@@ -63991,8 +63991,8 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
 
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],11:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/bower_components/typeahead.js/dist/typeahead.bundle.js":[function(require,module,exports){
 /*!
  * typeahead.js 0.10.5
  * https://github.com/twitter/typeahead.js
@@ -65775,7 +65775,7 @@ Ember.Handlebars.registerHelper('ember-list', function emberList(options) {
         };
     })();
 })(window.jQuery);
-},{}],12:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/add_media.js":[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -65930,7 +65930,7 @@ App.OrganizationAddMediaView = Ember.View.extend({
     })
 });
 
-},{"ember":7,"underscore":36}],13:[function(require,module,exports){
+},{"ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/app.js":[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var mapmodule = require('./map');
@@ -66346,7 +66346,7 @@ App.NewsCategoryView = Ember.CollectionView.extend({
     })
 });
 
-},{"../templates/templates":37,"./geocode":16,"./i18n":18,"./map":20,"./typeahead":29,"bootstrap_carousel":1,"bootstrap_modal":2,"bootstrap_tab":3,"ember":7,"ember-google-analytics":6,"ember-i18n":31,"qs":34,"underscore":36}],14:[function(require,module,exports){
+},{"../templates/templates":"/home/eric/Documents/code/changingthefoodchain-front/templates/templates.js","./geocode":"/home/eric/Documents/code/changingthefoodchain-front/js/geocode.js","./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","./typeahead":"/home/eric/Documents/code/changingthefoodchain-front/js/typeahead.js","bootstrap_carousel":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/carousel.js","bootstrap_modal":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/modal.js","bootstrap_tab":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/bootstrap/js/tab.js","ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","ember-google-analytics":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-google-analytics/ember-google-analytics.js","ember-i18n":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/ember-i18n/lib/i18n.js","qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/carousel.js":[function(require,module,exports){
 //
 // CarouselView: Based on http://jsfiddle.net/marciojunior/U6V2x/
 //
@@ -66404,7 +66404,7 @@ App.CarouselView = Ember.View.extend({
     })
 });
 
-},{}],15:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/contact.js":[function(require,module,exports){
 var Ember = require('ember');
 var _ = require('underscore');
 
@@ -66529,7 +66529,7 @@ App.ContactView = Ember.View.extend({
     }
 });
 
-},{"ember":7,"underscore":36}],16:[function(require,module,exports){
+},{"ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/geocode.js":[function(require,module,exports){
 var geocoder = new google.maps.Geocoder();
 
 function to_google_bounds(bounds) {
@@ -66604,7 +66604,7 @@ module.exports = {
 
 };
 
-},{}],17:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/help.js":[function(require,module,exports){
 App.HelpRoute = Ember.Route.extend({
     actions: {
         close: function () {
@@ -66654,7 +66654,7 @@ App.HelpIndustryTypesRoute = App.HelpRoute.extend({
 
 App.HelpIndustryTypesView = App.HelpView.extend({});
 
-},{}],18:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js":[function(require,module,exports){
 var qs = require('qs');
 
 
@@ -66694,7 +66694,7 @@ module.exports = {
     }
 };
 
-},{"qs":34}],19:[function(require,module,exports){
+},{"qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/main.js":[function(require,module,exports){
 require('./app');
 require('./add_media');
 require('./carousel');
@@ -66712,7 +66712,7 @@ require('./i18n').init().then(function () {
     window.App.advanceReadiness();
 });
 
-},{"./add_media":12,"./app":13,"./carousel":14,"./contact":15,"./help":17,"./i18n":18,"./models":21,"./news":22,"./organization":23,"./organizations_add":24,"./organizations_list":25,"./page":26,"./share":28}],20:[function(require,module,exports){
+},{"./add_media":"/home/eric/Documents/code/changingthefoodchain-front/js/add_media.js","./app":"/home/eric/Documents/code/changingthefoodchain-front/js/app.js","./carousel":"/home/eric/Documents/code/changingthefoodchain-front/js/carousel.js","./contact":"/home/eric/Documents/code/changingthefoodchain-front/js/contact.js","./help":"/home/eric/Documents/code/changingthefoodchain-front/js/help.js","./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","./models":"/home/eric/Documents/code/changingthefoodchain-front/js/models.js","./news":"/home/eric/Documents/code/changingthefoodchain-front/js/news.js","./organization":"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js","./organizations_add":"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_add.js","./organizations_list":"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_list.js","./page":"/home/eric/Documents/code/changingthefoodchain-front/js/page.js","./share":"/home/eric/Documents/code/changingthefoodchain-front/js/share.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/map.js":[function(require,module,exports){
 var _ = require('underscore');
 require('leaflet-active-area');
 
@@ -66981,7 +66981,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":8,"underscore":36}],21:[function(require,module,exports){
+},{"leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/models.js":[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');
@@ -67131,7 +67131,7 @@ App.Entry = DS.Model.extend({
     }.property('published_on')
 });
 
-},{"./videos":30,"ember-data":5,"ember-data-extensions-embedded-adapter":4,"moment":33}],22:[function(require,module,exports){
+},{"./videos":"/home/eric/Documents/code/changingthefoodchain-front/js/videos.js","ember-data":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data/ember-data.js","ember-data-extensions-embedded-adapter":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data-extensions/dist/embedded-adapter.js","moment":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/moment/moment.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/news.js":[function(require,module,exports){
 var _ = require('underscore');
 require('./pagemixins');
 
@@ -67279,7 +67279,7 @@ App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
-},{"./pagemixins":27,"underscore":36}],23:[function(require,module,exports){
+},{"./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js":[function(require,module,exports){
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');
@@ -67442,7 +67442,7 @@ App.OrganizationIndexController = Ember.Controller.extend({
     needs: ['organization']
 });
 
-},{"./map":20,"ember":7,"spinjs":10,"underscore":36}],24:[function(require,module,exports){
+},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","spinjs":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/spin.js/spin.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_add.js":[function(require,module,exports){
 var Ember = require('ember');
 var geocode = require('./geocode').geocode;
 var _ = require('underscore');
@@ -67749,7 +67749,7 @@ App.OrganizationsAddView = Ember.View.extend({
     }
 });
 
-},{"./geocode":16,"ember":7,"underscore":36}],25:[function(require,module,exports){
+},{"./geocode":"/home/eric/Documents/code/changingthefoodchain-front/js/geocode.js","ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_list.js":[function(require,module,exports){
 var Ember = require('ember');
 require('ember-list-view');
 require('./pagemixins');
@@ -67951,7 +67951,7 @@ App.OrganizationsListView = Ember.View.extend(App.PaginatedViewMixin, {
     }
 });
 
-},{"./pagemixins":27,"ember":7,"ember-list-view":9}],26:[function(require,module,exports){
+},{"./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js","ember-list-view":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/list-view/dist/list-view.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/page.js":[function(require,module,exports){
 var i18n = require('./i18n');
 var _s = require('underscore.string');
 require('./pagemixins');
@@ -68023,7 +68023,7 @@ App.AboutRoute = Ember.Route.extend(App.PageRouteMixin, App.SectionsRouteMixin, 
     viewName: 'about'
 });
 
-},{"./i18n":18,"./pagemixins":27,"underscore.string":35}],27:[function(require,module,exports){
+},{"./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore.string":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore.string/lib/underscore.string.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js":[function(require,module,exports){
 App.PageRouteMixin = Ember.Mixin.create({
     actions: {
         close: function () {
@@ -68089,7 +68089,7 @@ App.PaginatedViewMixin = Ember.Mixin.create({
     }
 });
 
-},{}],28:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/js/share.js":[function(require,module,exports){
 var Ember = require('ember');
 var map = require('./map');
 
@@ -68220,7 +68220,7 @@ App.ShareView = Ember.View.extend({
     embedView: App.EmbedView
 });
 
-},{"./map":20,"ember":7}],29:[function(require,module,exports){
+},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","ember":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember/ember.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/typeahead.js":[function(require,module,exports){
 /*
  * Typeahead component for Ember, strongly based on 
  *
@@ -68299,7 +68299,7 @@ require('typeahead');
     Ember.Handlebars.helper('type-ahead', Ember.TypeAheadComponent);
 }(this));
 
-},{"typeahead":11}],30:[function(require,module,exports){
+},{"typeahead":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/typeahead.js/dist/typeahead.bundle.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/videos.js":[function(require,module,exports){
 var embed = {},
     id = {};
 
@@ -68336,7 +68336,7 @@ module.exports = {
     }
 };
 
-},{}],31:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/ember-i18n/lib/i18n.js":[function(require,module,exports){
 (function(window) {
   var I18n, assert, findTemplate, get, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
 
@@ -68491,50 +68491,76 @@ module.exports = {
 
 }).call(undefined, this);
 
-},{}],32:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/grunt-browserify/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
 
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
+function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
     }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
+    if (queue.length) {
+        drainQueue();
     }
+}
 
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = setTimeout(cleanUpNextTick);
+    draining = true;
 
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            currentQueue[queueIndex].run();
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    clearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
 process.title = 'browser';
 process.browser = true;
 process.env = {};
 process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
 
 function noop() {}
 
@@ -68548,15 +68574,16 @@ process.emit = noop;
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
-}
+};
 
 // TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
+process.umask = function() { return 0; };
 
-},{}],33:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/moment/moment.js":[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.1
@@ -71367,8 +71394,8 @@ process.chdir = function (dir) {
     }
 }).call(this);
 
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],34:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js":[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -71736,7 +71763,7 @@ function decode(str) {
   }
 }
 
-},{}],35:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore.string/lib/underscore.string.js":[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -72411,7 +72438,7 @@ function decode(str) {
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],36:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js":[function(require,module,exports){
 //     Underscore.js 1.6.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -73756,7 +73783,7 @@ function decode(str) {
   }
 }).call(this);
 
-},{}],37:[function(require,module,exports){
+},{}],"/home/eric/Documents/code/changingthefoodchain-front/templates/templates.js":[function(require,module,exports){
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
@@ -75274,4 +75301,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   return buffer;
   
 });
-},{}]},{},[19])
+},{}]},{},["/home/eric/Documents/code/changingthefoodchain-front/js/main.js"]);
