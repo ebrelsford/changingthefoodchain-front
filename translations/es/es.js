@@ -105,7 +105,7 @@ Ember.I18n.translations = {
             "clear": "Borrar", 
             "industry_type": "Tipo de industria", 
             "organization_type": "Tipo de organizaci\u00f3n",
-            "news_category": "news category"
+            "news": "news"
         }
     }, 
     "contact": {

@@ -122,13 +122,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "industry type";
   }),
-            news_category: t(function (Handlebars,depth0,helpers,partials,data) {
+            news: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "news category";
+  return "news";
   })
         },
         search: {

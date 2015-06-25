@@ -22,7 +22,7 @@ Ember.I18n.translations = {
             clear: 'clear',
             organization_type: 'organization type',
             industry_type: 'industry type',
-            news_category: 'news category'
+            news: 'news'
         },
         search: {
             error: "Sorry we couldn't find the location you searched for. Try again?"
