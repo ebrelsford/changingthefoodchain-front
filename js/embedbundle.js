@@ -367,12 +367,14 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addNews(map, function (layer) {
         newsLayer = layer;
         newsLayer.on('filterschange', function (filters) {
-            var categories = filters.categories;
+            var categories = filters.categories,
+                featured = filters.featured;
 
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
-                if (categoriesMatch) {
+                if (categoriesMatch ||
+                        featured && properties.is_featured) {
                     map.addLayer(l);
                 }
                 else {
