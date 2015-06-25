@@ -74433,11 +74433,11 @@ function program13(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.clear", options) : helperMissing.call(depth0, "t", "news.categories.clear", options))));
   data.buffer.push("</a>\n        <h2 class=\"news-category-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.header", options) : helperMissing.call(depth0, "t", "news.categories.header", options))));
-  data.buffer.push("</h2>\n        <ul class=\"news-category-list\">\n            <li class=\"news-category-list-item\" ");
+  data.buffer.push("</h2>\n        <ul class=\"news-category-list\">\n            <li ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("featured:active")
+    'class': (":news-category-list-item featured:active")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                <div class=\"section-label\">\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
