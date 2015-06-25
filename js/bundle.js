@@ -65971,7 +65971,6 @@ function initializeMap() {
         controller.send('organizationsReady');
     })
         .on('featureclick', function (feature) {
-            console.log(feature);
             if (feature.properties.type === 'news') {
                 controller.transitionToRoute('news-entry', feature.id);
             }
@@ -66239,6 +66238,13 @@ App.ApplicationController = Ember.Controller.extend({
             .value();
     },
 
+    findActiveNewsCategories: function (checkedModels) {
+        return _.chain(checkedModels)
+            .filter(function (model) { return model.get('isActive'); })
+            .map(function (model) { return parseInt(model.get('id')); })
+            .value();
+    },
+
     clearSearchError: function () {
         this.set('searchError', false);
     }.observes('searchText'),
@@ -66298,6 +66304,14 @@ App.ApplicationController = Ember.Controller.extend({
             });
         },
 
+        newsFiltersChanged: function () {
+            var activeCategories = this.findActiveNewsCategories(this.get('newsCategories.content'));
+            this.set('selectedNewsCategories', activeCategories);
+            mapmodule.updateNewsFilters({
+                categories: this.get('selectedNewsCategories')
+            });
+        },
+
         setLocale: function (locale) {
             i18n.setLocale(locale);
         }
@@ -66329,20 +66343,6 @@ App.SectorView = Ember.CollectionView.extend({
             this.container.lookup('controller:application').send('filtersChanged');
         },
         templateName: 'sector-item'
-    })
-});
-
-App.NewsCategoryView = Ember.CollectionView.extend({
-    tagName: 'ul',
-    classNames: ['filters-news-category-list'],
-    itemViewClass: Ember.View.extend({
-        classNames: ['filters-news-category-list-item'],
-        classNameBindings: ['content.isActive:active'],
-        click: function () {
-            Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
-            this.container.lookup('controller:application').send('filtersChanged');
-        },
-        templateName: 'news-category-item'
     })
 });
 
@@ -66905,7 +66905,18 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addNews(map, function (layer) {
         newsLayer = layer;
         newsLayer.on('filterschange', function (filters) {
-            // TODO filter news
+            var categories = filters.categories;
+
+            this.eachLayer(function (l) {
+                var properties = l.feature.properties,
+                    categoriesMatch = _.intersection(properties.categories, categories).length > 0;
+                if (categoriesMatch) {
+                    map.addLayer(l);
+                }
+                else {
+                    map.removeLayer(l);
+                }
+            });
         });
     });
 
@@ -66978,6 +66989,10 @@ module.exports = {
 
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
+    },
+
+    updateNewsFilters: function (filters) {
+        newsLayer.fire('filterschange', filters);
     }
 };
 
@@ -67243,6 +67258,7 @@ App.NewsCategoryView = Ember.CollectionView.extend({
         click: function () {
             var id = Ember.get(this.content, 'id');
             this.container.lookup('controller:news').send('pickCategory', id);
+            this.container.lookup('controller:application').send('newsFiltersChanged');
         },
         templateName: 'news-category-item'
     })
@@ -73911,7 +73927,7 @@ function program13(depth0,data) {
     'content': ("sectors")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n    </section>\n    <section class=\"filters-news-category\">\n        <h3>");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.news_category", options) : helperMissing.call(depth0, "t", "application.filters.news_category", options))));
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.news", options) : helperMissing.call(depth0, "t", "application.filters.news", options))));
   data.buffer.push("</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("newsCategories")

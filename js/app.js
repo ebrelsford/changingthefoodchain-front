@@ -38,7 +38,6 @@ function initializeMap() {
         controller.send('organizationsReady');
     })
         .on('featureclick', function (feature) {
-            console.log(feature);
             if (feature.properties.type === 'news') {
                 controller.transitionToRoute('news-entry', feature.id);
             }
@@ -306,6 +305,13 @@ App.ApplicationController = Ember.Controller.extend({
             .value();
     },
 
+    findActiveNewsCategories: function (checkedModels) {
+        return _.chain(checkedModels)
+            .filter(function (model) { return model.get('isActive'); })
+            .map(function (model) { return parseInt(model.get('id')); })
+            .value();
+    },
+
     clearSearchError: function () {
         this.set('searchError', false);
     }.observes('searchText'),
@@ -365,6 +371,14 @@ App.ApplicationController = Ember.Controller.extend({
             });
         },
 
+        newsFiltersChanged: function () {
+            var activeCategories = this.findActiveNewsCategories(this.get('newsCategories.content'));
+            this.set('selectedNewsCategories', activeCategories);
+            mapmodule.updateNewsFilters({
+                categories: this.get('selectedNewsCategories')
+            });
+        },
+
         setLocale: function (locale) {
             i18n.setLocale(locale);
         }
@@ -396,19 +410,5 @@ App.SectorView = Ember.CollectionView.extend({
             this.container.lookup('controller:application').send('filtersChanged');
         },
         templateName: 'sector-item'
-    })
-});
-
-App.NewsCategoryView = Ember.CollectionView.extend({
-    tagName: 'ul',
-    classNames: ['filters-news-category-list'],
-    itemViewClass: Ember.View.extend({
-        classNames: ['filters-news-category-list-item'],
-        classNameBindings: ['content.isActive:active'],
-        click: function () {
-            Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
-            this.container.lookup('controller:application').send('filtersChanged');
-        },
-        templateName: 'news-category-item'
     })
 });

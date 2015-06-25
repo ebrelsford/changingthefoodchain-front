@@ -109,6 +109,7 @@ App.NewsCategoryView = Ember.CollectionView.extend({
         click: function () {
             var id = Ember.get(this.content, 'id');
             this.container.lookup('controller:news').send('pickCategory', id);
+            this.container.lookup('controller:application').send('newsFiltersChanged');
         },
         templateName: 'news-category-item'
     })

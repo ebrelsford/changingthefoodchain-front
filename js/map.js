@@ -190,7 +190,18 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addNews(map, function (layer) {
         newsLayer = layer;
         newsLayer.on('filterschange', function (filters) {
-            // TODO filter news
+            var categories = filters.categories;
+
+            this.eachLayer(function (l) {
+                var properties = l.feature.properties,
+                    categoriesMatch = _.intersection(properties.categories, categories).length > 0;
+                if (categoriesMatch) {
+                    map.addLayer(l);
+                }
+                else {
+                    map.removeLayer(l);
+                }
+            });
         });
     });
 
@@ -263,5 +274,9 @@ module.exports = {
 
     updateFilters: function (filters) {
         organizationLayer.fire('filterschange', filters);
+    },
+
+    updateNewsFilters: function (filters) {
+        newsLayer.fire('filterschange', filters);
     }
 };
