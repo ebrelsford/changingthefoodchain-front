@@ -66759,10 +66759,10 @@ var organizationHoverStyle = _.extend({}, markerHoverStyle, {
 });
 var organizationSelectStyle = organizationHoverStyle;
 
-var newsStyle = _.extend({}, markerStyle, { fillColor: 'blue' });
+var newsStyle = _.extend({}, markerStyle, { fillColor: '#BC461B' });
 var newsHoverStyle = _.extend({}, markerHoverStyle, {
-    color: '#F1E7CD',
-    fillColor: 'blue'
+    color: '#BC461B',
+    fillColor: '#493F90'
 });
 var newsSelectStyle = newsStyle;
 
