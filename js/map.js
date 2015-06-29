@@ -197,6 +197,7 @@ function initializeMap(id, center, zoom, organizationsCallback) {
                 var properties = l.feature.properties,
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
                 if (categoriesMatch ||
+                        (categories.length === 0 && !featured) ||
                         featured && properties.is_featured) {
                     map.addLayer(l);
                 }

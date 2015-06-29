@@ -312,6 +312,12 @@ App.ApplicationController = Ember.Controller.extend({
             .value();
     },
 
+    unsetActive: function (checkedModels) {
+        _.each(checkedModels, function (model) {
+            model.set('isActive', false);
+        });
+    },
+
     clearSearchError: function () {
         this.set('searchError', false);
     }.observes('searchText'),
@@ -343,15 +349,11 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         clearFilters: function () {
-            var sectors = this.get('sectors.content'),
-                types = this.get('types.content');
-            _.each(sectors, function (sector) {
-                sector.set('isActive', false);
-            });
-            _.each(types, function (type) {
-                type.set('isActive', false);
-            });
+            this.unsetActive(this.get('newsCategories.content'));
+            this.unsetActive(this.get('sectors.content'));
+            this.unsetActive(this.get('types.content'));
             this.send('filtersChanged');
+            this.send('newsFiltersChanged');
         },
 
         organizationsReady: function () {
@@ -383,10 +385,10 @@ App.ApplicationController = Ember.Controller.extend({
 
         pickFeatured: function () {
             this.container.lookup('controller:news').send('pickFeatured');
-            this.set('selectedNewsCategories', null);
+            this.set('selectedNewsCategories', []);
             this.set('featured', true);
             mapmodule.updateNewsFilters({
-                categories: null,
+                categories: [],
                 featured: true
             });
         },
