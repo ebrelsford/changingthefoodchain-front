@@ -78,7 +78,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "news";
+  return "stories";
   })
         },
         tagline: t(function (Handlebars,depth0,helpers,partials,data) {
@@ -128,7 +128,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "news";
+  return "stories";
   })
         },
         search: {
@@ -423,7 +423,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "No news to show for this category";
+  return "No stories to show for this category";
   }),
         header: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -431,7 +431,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "news";
+  return "stories";
   }),
         read_more: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
