@@ -453,10 +453,10 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n            <h2 class=\"news-entry-title\">");
-  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push("\n            <h2 class=\"news-entry-title\">\n                ");
+  stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
+  data.buffer.push("\n            </h2>\n            <div class=\"news-entry-meta\">\n                <div class=\"news-entry-meta-publication-date\">");
   stack1 = helpers._triageMustache.call(depth0, "published_on_long", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</div>\n            </div>\n            <div class=\"news-entry-cover\">\n                ");
@@ -467,7 +467,67 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "main", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                </div>\n            </div>\n            ");
+  data.buffer.push("\n                    <div class=\"clearfix\"></div>\n                </div>\n                ");
+  stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n            ");
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                <a ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'href': ("link")
+  },hashTypes:{'href': "ID"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" target=\"_blank\">");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>\n                ");
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                ");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                ");
+  return buffer;
+  }
+
+function program8(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                <div class=\"news-entry-link\">\n                    <a ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'href': ("link")
+  },hashTypes:{'href': "ID"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" target=\"_blank\">\n                        ");
+  stack1 = helpers['if'].call(depth0, "read_more_at", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    </a>\n                </div>\n                ");
+  return buffer;
+  }
+function program9(depth0,data) {
+  
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.read_more_at", options) : helperMissing.call(depth0, "t", "news.read_more_at", options))));
+  data.buffer.push(" ");
+  stack1 = helpers._triageMustache.call(depth0, "read_more_at", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                        ");
+  return buffer;
+  }
+
+function program11(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                        ");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.read_more", options) : helperMissing.call(depth0, "t", "news.read_more", options))));
+  data.buffer.push("\n                        ");
   return buffer;
   }
 

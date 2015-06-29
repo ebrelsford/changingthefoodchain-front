@@ -20,7 +20,13 @@
         </h1>
         <div class="news-entry news-entry-detail fixed-header-spacer">
             {{#with content}}
-            <h2 class="news-entry-title">{{title}}</h2>
+            <h2 class="news-entry-title">
+                {{#if link}}
+                <a {{bind-attr href=link}} target="_blank">{{title}}</a>
+                {{else}}
+                {{title}}
+                {{/if}}
+            </h2>
             <div class="news-entry-meta">
                 <div class="news-entry-meta-publication-date">{{published_on_long}}</div>
             </div>
@@ -30,7 +36,19 @@
             <div class="news-entry-content">
                 <div class="news-entry-preview">
                     {{{main}}}
+                    <div class="clearfix"></div>
                 </div>
+                {{#if link}}
+                <div class="news-entry-link">
+                    <a {{bind-attr href=link}} target="_blank">
+                        {{#if read_more_at}}
+                        {{t "news.read_more_at"}} {{read_more_at}}
+                        {{else}}
+                        {{t "news.read_more"}}
+                        {{/if}}
+                    </a>
+                </div>
+                {{/if}}
             </div>
             {{/with}}
         </div>
