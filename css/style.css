@@ -3068,6 +3068,10 @@ body > .ember-view {
   color: #443d7e;
   text-decoration: none;
 }
+#filters-sector,
+#filters-news-category {
+  margin-top: 30px;
+}
 @media (max-width: 767px) {
   #filters {
     display: none !important;
@@ -3107,7 +3111,8 @@ body.page-view #filters * {
   background-color: #443d7e;
   text-decoration: none;
 }
-.filters-sector {
+.filters-sector,
+.filters-news-category {
   margin-top: 30px;
 }
 header {
