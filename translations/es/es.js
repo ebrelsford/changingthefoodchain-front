@@ -96,7 +96,7 @@ Ember.I18n.translations = {
         "project_of": "Un proyecto de", 
         "header": "Cambiar la <br /> cadena alimentaria", 
         "nav": {
-            "news": "Noticias", 
+            "news": "Historias", 
             "about": "Acerca de", 
             "contact": "Comun\u00edquese"
         }, 
@@ -105,7 +105,7 @@ Ember.I18n.translations = {
             "clear": "Borrar", 
             "industry_type": "Tipo de industria", 
             "organization_type": "Tipo de organizaci\u00f3n",
-            "news": "news"
+            "news": "historias"
         }
     }, 
     "contact": {
@@ -131,7 +131,7 @@ Ember.I18n.translations = {
         }
     }, 
     "news": {
-        "header": "Noticias", 
+        "header": "Historias", 
         "empty": "No hay noticias para esta categor\u00eda", 
         "categories": {
             "header": "Categor\u00edas", 
