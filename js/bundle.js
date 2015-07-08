@@ -67182,6 +67182,13 @@ App.NewsController = Ember.ArrayController.extend({
         });
     },
 
+    findActive: function (checkedModels) {
+        return _.chain(checkedModels)
+            .filter(function (model) { return model.get('isActive'); })
+            .map(function (model) { return model.get('id'); })
+            .value();
+    },
+
     actions: {
         loadNextPage: function () {
             var controller = this,
@@ -67190,12 +67197,13 @@ App.NewsController = Ember.ArrayController.extend({
                     language: CONFIG.DEFAULT_LOCALE,
                     page: nextPage 
                 },
-                category = controller.get('category');
+                category = controller.get('category'),
+                selectedCategories = controller.get('selectedCategories');
             if (controller.get('isLoading') || !nextPage) return;
             controller.set('isLoading', true);
 
-            if (category) {
-                params.category = category;
+            if (selectedCategories) {
+                params.category = selectedCategories.join(',');
             }
 
             (function () {
@@ -67224,12 +67232,8 @@ App.NewsController = Ember.ArrayController.extend({
             this.refresh();
         },
 
-        pickCategory: function (id) {
-            var categories = this.get('categories');
-            _.each(categories, function (category) {
-                category.set('isActive', category.get('id') === id);
-            });
-            this.set('category', id);
+        filtersChanged: function () {
+            this.set('selectedCategories', this.findActive(this.get('categories')));
             this.refresh();
         }
     }
@@ -67242,9 +67246,9 @@ App.NewsCategoryView = Ember.CollectionView.extend({
         classNames: ['news-category-list-item'],
         classNameBindings: ['content.isActive:active'],
         click: function () {
-            var id = Ember.get(this.content, 'id');
-            this.container.lookup('controller:news').send('pickCategory', id);
+            Ember.set(this.content, 'isActive', !Ember.get(this.content, 'isActive'));
             this.container.lookup('controller:application').send('newsFiltersChanged');
+            this.container.lookup('controller:news').send('filtersChanged');
         },
         templateName: 'news-category-item'
     })
