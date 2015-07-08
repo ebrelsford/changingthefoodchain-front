@@ -89,7 +89,7 @@ Ember.I18n.translations = {
         empty: 'No stories to show for this category',
         header: 'stories',
         read_more: 'read more',
-        read_more_at: 'read more at'
+        read_more_at: 'more at'
     },
 
     organization: {

@@ -714,7 +714,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Lea más a";
+  return "más a";
   })
     }, 
     "organizations_list": {

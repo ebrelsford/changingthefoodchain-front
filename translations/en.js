@@ -447,7 +447,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "read more at";
+  return "more at";
   })
     },
 
