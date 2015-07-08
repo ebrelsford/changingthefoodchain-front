@@ -94,6 +94,7 @@ Ember.I18n.translations = {
         "title": "Cambiar la cadena alimentaria", 
         "tagline": "Mapa de acciones para trabajadores en la cadena alimentaria y las organizaciones", 
         "project_of": "Un proyecto de", 
+        "with_support": "with support provided by the", 
         "header": "Cambiar la <br /> cadena alimentaria", 
         "nav": {
             "news": "Historias", 

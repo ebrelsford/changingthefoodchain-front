@@ -474,6 +474,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Un proyecto de";
   }), 
+        "with_support": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "with support provided by the";
+  }), 
         "header": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

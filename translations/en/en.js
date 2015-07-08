@@ -27,7 +27,8 @@ Ember.I18n.translations = {
         search: {
             error: "Sorry we couldn't find the location you searched for. Try again?"
         },
-        project_of: 'A project of'
+        project_of: 'A project of',
+        with_support: "with support provided by the"
     },
 
     contact: {
