@@ -83,8 +83,7 @@ Ember.I18n.translations = {
     news: {
         categories: {
             clear: 'clear',
-            header: 'categories',
-            featured: 'featured'
+            header: 'categories'
         },
         empty: 'No stories to show for this category',
         header: 'stories',

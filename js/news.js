@@ -39,16 +39,12 @@ App.NewsController = Ember.ArrayController.extend({
                     language: CONFIG.DEFAULT_LOCALE,
                     page: nextPage 
                 },
-                category = controller.get('category'),
-                featured = controller.get('featured');
+                category = controller.get('category');
             if (controller.get('isLoading') || !nextPage) return;
             controller.set('isLoading', true);
 
             if (category) {
                 params.category = category;
-            }
-            if (featured) {
-                params.featured = true;
             }
 
             (function () {
@@ -74,17 +70,6 @@ App.NewsController = Ember.ArrayController.extend({
                 category.set('isActive', false);
             });
             this.set('category', null);
-            this.set('featured', null);
-            this.refresh();
-        },
-
-        pickFeatured: function () {
-            var categories = this.get('categories');
-            _.each(categories, function (category) {
-                category.set('isActive', false);
-            });
-            this.set('category', null);
-            this.set('featured', true);
             this.refresh();
         },
 
@@ -94,7 +79,6 @@ App.NewsController = Ember.ArrayController.extend({
                 category.set('isActive', category.get('id') === id);
             });
             this.set('category', id);
-            this.set('featured', false);
             this.refresh();
         }
     }

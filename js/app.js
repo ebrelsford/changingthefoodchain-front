@@ -376,20 +376,8 @@ App.ApplicationController = Ember.Controller.extend({
         newsFiltersChanged: function () {
             var activeCategories = this.findActiveNewsCategories(this.get('newsCategories.content'));
             this.set('selectedNewsCategories', activeCategories);
-            this.set('featured', false);
             mapmodule.updateNewsFilters({
-                categories: this.get('selectedNewsCategories'),
-                featured: false
-            });
-        },
-
-        pickFeatured: function () {
-            this.container.lookup('controller:news').send('pickFeatured');
-            this.set('selectedNewsCategories', []);
-            this.set('featured', true);
-            mapmodule.updateNewsFilters({
-                categories: [],
-                featured: true
+                categories: this.get('selectedNewsCategories')
             });
         },
 

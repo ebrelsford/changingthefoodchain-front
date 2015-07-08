@@ -66309,20 +66309,8 @@ App.ApplicationController = Ember.Controller.extend({
         newsFiltersChanged: function () {
             var activeCategories = this.findActiveNewsCategories(this.get('newsCategories.content'));
             this.set('selectedNewsCategories', activeCategories);
-            this.set('featured', false);
             mapmodule.updateNewsFilters({
-                categories: this.get('selectedNewsCategories'),
-                featured: false
-            });
-        },
-
-        pickFeatured: function () {
-            this.container.lookup('controller:news').send('pickFeatured');
-            this.set('selectedNewsCategories', []);
-            this.set('featured', true);
-            mapmodule.updateNewsFilters({
-                categories: [],
-                featured: true
+                categories: this.get('selectedNewsCategories')
             });
         },
 
@@ -66919,15 +66907,12 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addNews(map, function (layer) {
         newsLayer = layer;
         newsLayer.on('filterschange', function (filters) {
-            var categories = filters.categories,
-                featured = filters.featured;
+            var categories = filters.categories;
 
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
-                if (categoriesMatch ||
-                        (categories.length === 0 && !featured) ||
-                        featured && properties.is_featured) {
+                if (categoriesMatch || categories.length === 0) {
                     map.addLayer(l);
                 }
                 else {
@@ -67205,16 +67190,12 @@ App.NewsController = Ember.ArrayController.extend({
                     language: CONFIG.DEFAULT_LOCALE,
                     page: nextPage 
                 },
-                category = controller.get('category'),
-                featured = controller.get('featured');
+                category = controller.get('category');
             if (controller.get('isLoading') || !nextPage) return;
             controller.set('isLoading', true);
 
             if (category) {
                 params.category = category;
-            }
-            if (featured) {
-                params.featured = true;
             }
 
             (function () {
@@ -67240,17 +67221,6 @@ App.NewsController = Ember.ArrayController.extend({
                 category.set('isActive', false);
             });
             this.set('category', null);
-            this.set('featured', null);
-            this.refresh();
-        },
-
-        pickFeatured: function () {
-            var categories = this.get('categories');
-            _.each(categories, function (category) {
-                category.set('isActive', false);
-            });
-            this.set('category', null);
-            this.set('featured', true);
             this.refresh();
         },
 
@@ -67260,7 +67230,6 @@ App.NewsController = Ember.ArrayController.extend({
                 category.set('isActive', category.get('id') === id);
             });
             this.set('category', id);
-            this.set('featured', false);
             this.refresh();
         }
     }
@@ -73945,15 +73914,7 @@ function program13(depth0,data) {
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n    </section>\n    <section class=\"filters-news-category\">\n        <h3>");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application.filters.news", options) : helperMissing.call(depth0, "t", "application.filters.news", options))));
-  data.buffer.push("</h3>\n        <ul class=\"news-category-list\">\n            <li class=\"news-category-list-item\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("featured:active")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                <div class=\"section-label\">\n                    ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
-  data.buffer.push("\n                </div>\n                <div class=\"clearfix\"></div>\n            </li>\n        </ul>\n        ");
+  data.buffer.push("</h3>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("newsCategories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -74356,15 +74317,7 @@ function program11(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.clear", options) : helperMissing.call(depth0, "t", "news.categories.clear", options))));
   data.buffer.push("</a>\n        <h2 class=\"news-category-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.header", options) : helperMissing.call(depth0, "t", "news.categories.header", options))));
-  data.buffer.push("</h2>\n        <ul class=\"news-category-list\">\n            <li class=\"news-category-list-item\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("featured:active")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                <div class=\"section-label\">\n                    ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
-  data.buffer.push("\n                </div>\n                <div class=\"clearfix\"></div>\n            </li>\n        </ul>\n        ");
+  data.buffer.push("</h2>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("controllers.news.categories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -74496,15 +74449,7 @@ function program13(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.clear", options) : helperMissing.call(depth0, "t", "news.categories.clear", options))));
   data.buffer.push("</a>\n        <h2 class=\"news-category-header\">");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.header", options) : helperMissing.call(depth0, "t", "news.categories.header", options))));
-  data.buffer.push("</h2>\n        <ul class=\"news-category-list\">\n            <li ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "pickFeatured", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': (":news-category-list-item featured:active")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n                <div class=\"section-indicator\"></div>\n                <div class=\"section-label\">\n                    ");
-  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.categories.featured", options) : helperMissing.call(depth0, "t", "news.categories.featured", options))));
-  data.buffer.push("\n                </div>\n                <div class=\"clearfix\"></div>\n            </li>\n        </ul>\n        ");
+  data.buffer.push("</h2>\n        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.NewsCategoryView", {hash:{
     'content': ("categories")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));

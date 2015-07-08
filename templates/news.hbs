@@ -2,15 +2,6 @@
     <div class="page-sections">
         <a href="#" {{action 'clear'}} class="news-category-clear">{{t "news.categories.clear"}}</a>
         <h2 class="news-category-header">{{t "news.categories.header"}}</h2>
-        <ul class="news-category-list">
-            <li {{action 'pickFeatured'}} {{bind-attr class=":news-category-list-item featured:active"}}>
-                <div class="section-indicator"></div>
-                <div class="section-label">
-                    {{t "news.categories.featured"}}
-                </div>
-                <div class="clearfix"></div>
-            </li>
-        </ul>
         {{view App.NewsCategoryView content=categories}}
     </div>
     <div class="page-content news-entry-list">

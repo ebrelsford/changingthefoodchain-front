@@ -54,15 +54,6 @@
     </section>
     <section class="filters-news-category">
         <h3>{{t "application.filters.news"}}</h3>
-        <ul class="news-category-list">
-            <li class="news-category-list-item" {{action 'pickFeatured'}} {{bind-attr class="featured:active"}}>
-                <div class="section-indicator"></div>
-                <div class="section-label">
-                    {{t "news.categories.featured"}}
-                </div>
-                <div class="clearfix"></div>
-            </li>
-        </ul>
         {{view App.NewsCategoryView content=newsCategories}}
     </section>
 </div>

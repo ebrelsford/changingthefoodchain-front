@@ -135,8 +135,7 @@ Ember.I18n.translations = {
         "empty": "No hay noticias para esta categor\u00eda", 
         "categories": {
             "header": "Categor\u00edas", 
-            "clear": "Borrar", 
-            "featured": "Selecci\u00f3n"
+            "clear": "Borrar"
         }, 
         "read_more": "Lea m\u00e1s",
         "read_more_at": "Lea m\u00e1s a"
