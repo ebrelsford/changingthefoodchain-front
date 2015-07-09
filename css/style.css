@@ -3472,6 +3472,9 @@ body.organization-view .map-active-area {
 .leaflet-bar a:hover.leaflet-disabled {
   background-color: rgba(68, 61, 126, 0.6);
 }
+.leaflet-touch .leaflet-bar {
+  border: none;
+}
 .leaflet-popup-content-wrapper {
   background-color: rgba(68, 61, 126, 0.9);
   border-radius: 0;
