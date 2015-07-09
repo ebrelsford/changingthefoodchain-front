@@ -135,6 +135,7 @@ App.Entry = DS.Model.extend({
     preview: DS.attr(),
     published_on: DS.attr('date'),
     title: DS.attr(),
+    location: DS.attr(),
     link: DS.attr(),
     read_more_at: DS.attr(),
 

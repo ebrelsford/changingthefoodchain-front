@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var map = require('./map');
 require('./pagemixins');
 
 
@@ -104,6 +105,13 @@ App.NewsCategoryView = Ember.CollectionView.extend({
 });
 
 App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
+    actions: {
+        viewNewsOnMap: function (id) {
+            this.send('close');
+            map.zoomToNewsEntry(id);
+        }
+    },
+
     templateName: 'news'
 });
 
@@ -120,6 +128,13 @@ App.NewsEntryController = Ember.Controller.extend({
 });
 
 App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
+    actions: {
+        viewNewsOnMap: function (id) {
+            this.send('close');
+            map.zoomToNewsEntry(id);
+        }
+    },
+
     model: function (params) {
         return this.store.find('entry', params.entry_id);
     },

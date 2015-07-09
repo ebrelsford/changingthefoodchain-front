@@ -40,6 +40,11 @@
                     </a>
                 </div>
                 {{/if}}
+                {{#if location}}
+                <div class="news-entry-link">
+                    <a {{action 'viewNewsOnMap' id}} class="view-news-on-map">{{t "news.view_on_map"}}</a>
+                </div>
+                {{/if}}
             </div>
             {{/with}}
         </div>

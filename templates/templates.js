@@ -464,6 +464,9 @@ function program3(depth0,data) {
   data.buffer.push("\n                    <div class=\"clearfix\"></div>\n                </div>\n                ");
   stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                ");
+  stack1 = helpers['if'].call(depth0, "location", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            ");
   return buffer;
   }
@@ -525,6 +528,17 @@ function program11(depth0,data) {
   return buffer;
   }
 
+function program13(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                <div class=\"news-entry-link\">\n                    <a ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewNewsOnMap", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" class=\"view-news-on-map\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.view_on_map", options) : helperMissing.call(depth0, "t", "news.view_on_map", options))));
+  data.buffer.push("</a>\n                </div>\n                ");
+  return buffer;
+  }
+
   data.buffer.push("<div class=\"news-row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"news-category-clear\">");
@@ -574,7 +588,10 @@ function program1(depth0,data) {
   data.buffer.push("\n                </div>\n                <div class=\"news-entry-link\">\n                    ");
   stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(11, program11, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n            </div>\n        </div>\n        ");
+  data.buffer.push("\n                </div>\n                ");
+  stack1 = helpers['if'].call(depth0, "location", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n        </div>\n        ");
   return buffer;
   }
 function program2(depth0,data) {
@@ -651,6 +668,17 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', helper, options;
+  data.buffer.push("\n                <div class=\"news-entry-link\">\n                    <a ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewNewsOnMap", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" class=\"view-news-on-map\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.view_on_map", options) : helperMissing.call(depth0, "t", "news.view_on_map", options))));
+  data.buffer.push("</a>\n                </div>\n                ");
+  return buffer;
+  }
+
+function program15(depth0,data) {
+  
+  var buffer = '', helper, options;
   data.buffer.push("\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.empty", options) : helperMissing.call(depth0, "t", "news.empty", options))));
   data.buffer.push("\n        ");
@@ -672,7 +700,7 @@ function program13(depth0,data) {
   data.buffer.push("\n            <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n        </h1>\n        ");
-  stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(13, program13, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(15, program15, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n</div>\n");
   return buffer;

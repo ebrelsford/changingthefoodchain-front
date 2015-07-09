@@ -41,6 +41,11 @@
                     <a href="#" {{action 'openEntry' id}}>{{t "news.read_more"}}</a>
                     {{/if}}
                 </div>
+                {{#if location}}
+                <div class="news-entry-link">
+                    <a {{action 'viewNewsOnMap' id}} class="view-news-on-map">{{t "news.view_on_map"}}</a>
+                </div>
+                {{/if}}
             </div>
         </div>
         {{else}}

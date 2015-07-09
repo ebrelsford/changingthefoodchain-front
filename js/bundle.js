@@ -66316,6 +66316,10 @@ App.ApplicationController = Ember.Controller.extend({
 
         setLocale: function (locale) {
             i18n.setLocale(locale);
+        },
+
+        viewNewsOnMap: function () {
+            console.log('viewNewsOnMap');
         }
     }
 });
@@ -66950,14 +66954,22 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     return map;
 }
 
-function getOrganization(id) {
+function getLayer(layer, id) {
     var matchedLayer = null;
-    organizationLayer.eachLayer(function (layer) {
-        if (layer.feature.id === id) {
-            matchedLayer = layer;
+    layer.eachLayer(function (l) {
+        if (l.feature.id === id) {
+            matchedLayer = l;
         }
     });
     return matchedLayer;
+}
+
+function getOrganization(id) {
+    return getLayer(organizationLayer, id);
+}
+
+function getNewsEntry(id) {
+    return getLayer(newsLayer, id);
 }
 
 function deselectOrganization () {
@@ -67000,6 +67012,12 @@ module.exports = {
 
     updateNewsFilters: function (filters) {
         newsLayer.fire('filterschange', filters);
+    },
+
+    zoomToNewsEntry: function (id) {
+        var newsPoint = getNewsEntry(parseInt(id));
+        if (!newsPoint) return;
+        map.setView(newsPoint.getLatLng(), 12);
     }
 };
 
@@ -67141,6 +67159,7 @@ App.Entry = DS.Model.extend({
     preview: DS.attr(),
     published_on: DS.attr('date'),
     title: DS.attr(),
+    location: DS.attr(),
     link: DS.attr(),
     read_more_at: DS.attr(),
 
@@ -67155,6 +67174,7 @@ App.Entry = DS.Model.extend({
 
 },{"./videos":"/home/eric/Documents/code/changingthefoodchain-front/js/videos.js","ember-data":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data/ember-data.js","ember-data-extensions-embedded-adapter":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data-extensions/dist/embedded-adapter.js","moment":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/moment/moment.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/news.js":[function(require,module,exports){
 var _ = require('underscore');
+var map = require('./map');
 require('./pagemixins');
 
 
@@ -67260,6 +67280,13 @@ App.NewsCategoryView = Ember.CollectionView.extend({
 });
 
 App.NewsRoute = Ember.Route.extend(App.PageRouteMixin, {
+    actions: {
+        viewNewsOnMap: function (id) {
+            this.send('close');
+            map.zoomToNewsEntry(id);
+        }
+    },
+
     templateName: 'news'
 });
 
@@ -67276,6 +67303,13 @@ App.NewsEntryController = Ember.Controller.extend({
 });
 
 App.NewsEntryRoute = Ember.Route.extend(App.PageRouteMixin, {
+    actions: {
+        viewNewsOnMap: function (id) {
+            this.send('close');
+            map.zoomToNewsEntry(id);
+        }
+    },
+
     model: function (params) {
         return this.store.find('entry', params.entry_id);
     },
@@ -67290,7 +67324,7 @@ App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
-},{"./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js":[function(require,module,exports){
+},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js":[function(require,module,exports){
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');
@@ -74261,6 +74295,9 @@ function program3(depth0,data) {
   data.buffer.push("\n                    <div class=\"clearfix\"></div>\n                </div>\n                ");
   stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                ");
+  stack1 = helpers['if'].call(depth0, "location", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n            ");
   return buffer;
   }
@@ -74322,6 +74359,17 @@ function program11(depth0,data) {
   return buffer;
   }
 
+function program13(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                <div class=\"news-entry-link\">\n                    <a ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewNewsOnMap", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" class=\"view-news-on-map\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.view_on_map", options) : helperMissing.call(depth0, "t", "news.view_on_map", options))));
+  data.buffer.push("</a>\n                </div>\n                ");
+  return buffer;
+  }
+
   data.buffer.push("<div class=\"news-row\">\n    <div class=\"page-sections\">\n        <a href=\"#\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "clear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"news-category-clear\">");
@@ -74371,7 +74419,10 @@ function program1(depth0,data) {
   data.buffer.push("\n                </div>\n                <div class=\"news-entry-link\">\n                    ");
   stack1 = helpers['if'].call(depth0, "link", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(11, program11, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n            </div>\n        </div>\n        ");
+  data.buffer.push("\n                </div>\n                ");
+  stack1 = helpers['if'].call(depth0, "location", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n        </div>\n        ");
   return buffer;
   }
 function program2(depth0,data) {
@@ -74448,6 +74499,17 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', helper, options;
+  data.buffer.push("\n                <div class=\"news-entry-link\">\n                    <a ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewNewsOnMap", "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" class=\"view-news-on-map\">");
+  data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.view_on_map", options) : helperMissing.call(depth0, "t", "news.view_on_map", options))));
+  data.buffer.push("</a>\n                </div>\n                ");
+  return buffer;
+  }
+
+function program15(depth0,data) {
+  
+  var buffer = '', helper, options;
   data.buffer.push("\n        ");
   data.buffer.push(escapeExpression((helper = helpers.t || (depth0 && depth0.t),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "news.empty", options) : helperMissing.call(depth0, "t", "news.empty", options))));
   data.buffer.push("\n        ");
@@ -74469,7 +74531,7 @@ function program13(depth0,data) {
   data.buffer.push("\n            <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "close", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">&times;</div>\n        </h1>\n        ");
-  stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(13, program13, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(15, program15, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n</div>\n");
   return buffer;

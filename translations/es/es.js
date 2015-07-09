@@ -139,7 +139,8 @@ Ember.I18n.translations = {
             "clear": "Borrar"
         }, 
         "read_more": "Lea m\u00e1s",
-        "read_more_at": "m\u00e1s a"
+        "read_more_at": "m\u00e1s a",
+        "view_on_map": "view on map"
     }, 
     "organizations_list": {
         "headers": {

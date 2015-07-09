@@ -233,14 +233,22 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     return map;
 }
 
-function getOrganization(id) {
+function getLayer(layer, id) {
     var matchedLayer = null;
-    organizationLayer.eachLayer(function (layer) {
-        if (layer.feature.id === id) {
-            matchedLayer = layer;
+    layer.eachLayer(function (l) {
+        if (l.feature.id === id) {
+            matchedLayer = l;
         }
     });
     return matchedLayer;
+}
+
+function getOrganization(id) {
+    return getLayer(organizationLayer, id);
+}
+
+function getNewsEntry(id) {
+    return getLayer(newsLayer, id);
 }
 
 function deselectOrganization () {
@@ -283,5 +291,11 @@ module.exports = {
 
     updateNewsFilters: function (filters) {
         newsLayer.fire('filterschange', filters);
+    },
+
+    zoomToNewsEntry: function (id) {
+        var newsPoint = getNewsEntry(parseInt(id));
+        if (!newsPoint) return;
+        map.setView(newsPoint.getLatLng(), 12);
     }
 };
