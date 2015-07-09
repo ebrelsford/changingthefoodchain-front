@@ -110,7 +110,7 @@ function addOrganizations(map, callback) {
                 return L.circleMarker(latlng, getOrganizationStyle(map));
             }
         });
-        organizationLayer.addTo(map);
+        organizationLayer.addTo(map).bringToBack();
         if (callback !== undefined) {
             callback(organizationLayer);
         }
@@ -152,7 +152,7 @@ function addNews(map, callback) {
                 return L.circleMarker(latlng, getNewsStyle(map));
             }
         });
-        newsLayer.addTo(map);
+        newsLayer.addTo(map).bringToFront();
         if (callback !== undefined) {
             callback(newsLayer);
         }

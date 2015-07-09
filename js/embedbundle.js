@@ -287,7 +287,7 @@ function addOrganizations(map, callback) {
                 return L.circleMarker(latlng, getOrganizationStyle(map));
             }
         });
-        organizationLayer.addTo(map);
+        organizationLayer.addTo(map).bringToBack();
         if (callback !== undefined) {
             callback(organizationLayer);
         }
@@ -330,6 +330,7 @@ function addNews(map, callback) {
             }
         });
         newsLayer.addTo(map);
+        newsLayer.bringToFront();
         if (callback !== undefined) {
             callback(newsLayer);
         }
