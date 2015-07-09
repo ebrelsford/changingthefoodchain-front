@@ -3484,6 +3484,9 @@ body.organization-view .map-active-area {
 .leaflet-popup-tip {
   background-color: rgba(68, 61, 126, 0.9);
 }
+.leaflet-popup img {
+  width: 100%;
+}
 .leaflet-bottom {
   bottom: 15px;
 }

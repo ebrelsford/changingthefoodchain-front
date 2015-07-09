@@ -307,10 +307,15 @@ function addNews(map, callback) {
                     map.fire('featureclick', feature);
                 });
                 layer.on('mouseover', function () {
-                    layer.bindPopup(feature.properties.title, {
+                    var popupOptions = {
                         closeButton: false,
-                        offset: [0, -1]              
-                    }).openPopup();
+                        offset: [0, -1]
+                    };
+                    if (feature.properties.cover) {
+                        popupOptions.minWidth = 300;
+                    }
+                    var content = feature.properties.title + feature.properties.cover;
+                    layer.bindPopup(content, popupOptions).openPopup();
                     layer.setStyle(newsHoverStyle);
                 });
                 layer.on('mouseout', function () {
