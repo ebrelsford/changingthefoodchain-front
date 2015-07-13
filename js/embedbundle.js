@@ -272,7 +272,7 @@ function addOrganizations(map, callback) {
                 layer.on('mouseover', function () {
                     layer.bindPopup(feature.properties.name, {
                         closeButton: false,
-                        offset: [0, -1]              
+                        offset: [0, -6]              
                     }).openPopup();
                     layer.setStyle(organizationHoverStyle);
                 });
@@ -309,7 +309,7 @@ function addNews(map, callback) {
                 layer.on('mouseover', function () {
                     var popupOptions = {
                         closeButton: false,
-                        offset: [0, -1]
+                        offset: [0, -6]
                     };
                     if (feature.properties.cover) {
                         popupOptions.minWidth = 300;
@@ -329,8 +329,7 @@ function addNews(map, callback) {
                 return L.circleMarker(latlng, getNewsStyle(map));
             }
         });
-        newsLayer.addTo(map);
-        newsLayer.bringToFront();
+        newsLayer.addTo(map).bringToFront();
         if (callback !== undefined) {
             callback(newsLayer);
         }
