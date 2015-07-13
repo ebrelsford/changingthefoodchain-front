@@ -3002,11 +3002,6 @@ body > .ember-view {
 #filters .filters-sector-list-item:hover {
   color: #bc461b;
 }
-#filters .filters-sector-list-item:hover .section-indicator {
-  background: url(../img/x_hover.png) no-repeat center, center;
-  background-size: 60% 60%;
-  border-color: #bc461b;
-}
 #filters .filters-sector-list-item.active {
   color: #bc461b;
 }
@@ -3043,11 +3038,6 @@ body > .ember-view {
 }
 #filters .filters-type-list-item:hover {
   color: #bc461b;
-}
-#filters .filters-type-list-item:hover .section-indicator {
-  background: url(../img/x_hover.png) no-repeat center, center;
-  background-size: 60% 60%;
-  border-color: #bc461b;
 }
 #filters .filters-type-list-item.active {
   color: #bc461b;
@@ -3578,11 +3568,6 @@ body.organization-view .map-active-area {
 }
 .news-category-list-item:hover {
   color: #bc461b;
-}
-.news-category-list-item:hover .section-indicator {
-  background: url(../img/x_hover.png) no-repeat center, center;
-  background-size: 60% 60%;
-  border-color: #bc461b;
 }
 .news-category-list-item.active {
   color: #bc461b;
