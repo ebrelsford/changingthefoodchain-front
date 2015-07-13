@@ -171,7 +171,7 @@ function initializeMap(id, center, zoom, organizationsCallback) {
         organizationLayer.on('filterschange', function (filters) {
             var sectors = filters.sectors,
                 types = filters.types;
-                
+
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     typesMatch = _.intersection(properties.types, types).length > 0,
