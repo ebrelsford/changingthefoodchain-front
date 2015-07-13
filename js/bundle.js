@@ -66886,16 +66886,29 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addOrganizations(map, function (layer) {
         organizationLayer = layer;
         organizationLayer.on('filterschange', function (filters) {
-            var sectors = filters.sectors,
-                types = filters.types;
+            var categories = filters.categories,
+                categoriesPicked = categories && categories.length !== 0,
+                sectors = filters.sectors,
+                sectorsPicked = sectors && sectors.length !== 0,
+                types = filters.types,
+                typesPicked = types && types.length !== 0;
+
+            // If news filters and no organization filters, hide the whole layer
+            if (categoriesPicked && !(sectorsPicked || typesPicked)) {
+                map.removeLayer(organizationLayer);
+                return;
+            }
+            else {
+                map.addLayer(organizationLayer);
+            }
 
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     typesMatch = _.intersection(properties.types, types).length > 0,
                     sectorsMatch = _.intersection(properties.sectors, sectors).length > 0;
-                if ((sectors.length === 0 && types.length === 0) ||
-                    ((types.length === 0 || typesMatch) && 
-                     (sectors.length === 0 || sectorsMatch))) {
+                if (!(sectorsPicked || typesPicked) ||
+                    ((!typesPicked || typesMatch) && 
+                     (!sectorsPicked || sectorsMatch))) {
                     map.addLayer(l);
                 }
                 else {
@@ -66912,12 +66925,26 @@ function initializeMap(id, center, zoom, organizationsCallback) {
     addNews(map, function (layer) {
         newsLayer = layer;
         newsLayer.on('filterschange', function (filters) {
-            var categories = filters.categories;
+            var categories = filters.categories,
+                categoriesPicked = categories && categories.length !== 0,
+                sectors = filters.sectors,
+                sectorsPicked = sectors && sectors.length !== 0,
+                types = filters.types,
+                typesPicked = types && types.length !== 0;
+
+            // If organization filters and no news filters, hide the whole layer
+            if ((sectorsPicked || typesPicked) && !categoriesPicked) {
+                map.removeLayer(newsLayer);
+                return;
+            }
+            else {
+                map.addLayer(newsLayer);
+            }
 
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
-                if (categoriesMatch || !categories || categories.length === 0) {
+                if (categoriesMatch || !categoriesPicked) {
                     map.addLayer(l);
                 }
                 else {
