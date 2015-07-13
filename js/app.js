@@ -322,6 +322,14 @@ App.ApplicationController = Ember.Controller.extend({
         this.set('searchError', false);
     }.observes('searchText'),
 
+    getFilters: function () {
+        return {
+            categories: this.get('selectedNewsCategories'),
+            sectors: this.get('selectedSectors'),
+            types: this.get('selectedTypes')
+        };
+    },
+
     actions: {
         reset: function () {
             mapmodule.reset(map);
@@ -358,27 +366,19 @@ App.ApplicationController = Ember.Controller.extend({
 
         organizationsReady: function () {
             // Once organizations layer is ready, update filters
-            mapmodule.updateFilters({
-                sectors: this.get('selectedSectors'),
-                types: this.get('selectedTypes')
-            });
+            mapmodule.updateFilters(this.getFilters());
         },
 
         filtersChanged: function () {
             this.set('selectedSectors', this.findActive(this.get('sectors.content')));
             this.set('selectedTypes', this.findActive(this.get('types.content')));
-            mapmodule.updateFilters({
-                sectors: this.get('selectedSectors'),
-                types: this.get('selectedTypes')
-            });
+            mapmodule.updateFilters(this.getFilters());
         },
 
         newsFiltersChanged: function () {
             var activeCategories = this.findActiveNewsCategories(this.get('newsCategories.content'));
             this.set('selectedNewsCategories', activeCategories);
-            mapmodule.updateNewsFilters({
-                categories: this.get('selectedNewsCategories')
-            });
+            mapmodule.updateFilters(this.getFilters());
         },
 
         setLocale: function (locale) {

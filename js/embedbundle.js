@@ -377,7 +377,7 @@ function initializeMap(id, center, zoom, organizationsCallback) {
             this.eachLayer(function (l) {
                 var properties = l.feature.properties,
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
-                if (categoriesMatch || categories.length === 0) {
+                if (categoriesMatch || !categories || categories.length === 0) {
                     map.addLayer(l);
                 }
                 else {
@@ -463,11 +463,12 @@ module.exports = {
     },
 
     updateFilters: function (filters) {
-        organizationLayer.fire('filterschange', filters);
-    },
-
-    updateNewsFilters: function (filters) {
-        newsLayer.fire('filterschange', filters);
+        if (newsLayer) {
+            newsLayer.fire('filterschange', filters);
+        }
+        if (organizationLayer) {
+            organizationLayer.fire('filterschange', filters);
+        }
     },
 
     zoomToNewsEntry: function (id) {
