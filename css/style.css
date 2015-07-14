@@ -3605,6 +3605,7 @@ body.organization-view .map-active-area {
     width: 50%;
   }
 }
+.news-entry-list .news-entry-cover iframe,
 .news-entry-list .news-entry-cover img {
   height: auto;
   max-width: 100%;
