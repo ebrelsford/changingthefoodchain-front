@@ -49,7 +49,8 @@ Ember.I18n.translations = {
     help: {
         headers: {
             organization_types: "Organization Types",
-            industries: "Industry Types"
+            industries: "Industry Types",
+            voices: "Voices of the Food Chain"
         },
         industries: {
             agriculture: "At the first stage of all food, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. Other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.",
@@ -63,6 +64,9 @@ Ember.I18n.translations = {
             service: "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.",
             workers_center: "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.",
             union: "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations."
+        },
+        voices: {
+            text: "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='info@changingthefoodchain.org'>send it to us</a>."
         }
     },
 

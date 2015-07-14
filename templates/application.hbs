@@ -55,6 +55,7 @@
         {{view App.SectorView content=sectors}}
     </section>
     <section class="filters-news-category">
+        {{#link-to 'help-voices' class="pull-right help-button"}}?{{/link-to}}
         <h3>{{t "application.filters.news"}}</h3>
         {{view App.NewsCategoryView content=newsCategories}}
     </section>

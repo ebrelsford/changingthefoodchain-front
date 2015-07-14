@@ -202,6 +202,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "Tipos de organización";
+  }),
+            voices: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Voces de la cadena alimentaria";
   })
         },
         "industries": {
@@ -278,6 +286,16 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociación colectiva así como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campañas para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos.";
+  })
+        },
+        "voices": {
+            "text": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "Voces de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. ";
   })
         }
     }, 

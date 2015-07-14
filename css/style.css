@@ -3326,6 +3326,13 @@ body.page-view header {
     width: 16.66666667%;
   }
 }
+#help .help-voices-text {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+#help .help-voices-text a {
+  color: #bc461b;
+}
 .loading {
   height: 200px;
 }

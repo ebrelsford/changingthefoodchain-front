@@ -32,7 +32,8 @@ Ember.I18n.translations = {
     "help": {
         headers: {
             industries: "Tipos de industria", 
-            organization_types: "Tipos de organizaci\u00f3n"
+            organization_types: "Tipos de organizaci\u00f3n",
+            voices: "Voces de la cadena alimentaria"
         },
         "industries": {
             "distribution": "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribuci\u00f3n. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para m\u00e1s procesamiento. En s\u00ed, la distribuci\u00f3n conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa tambi\u00e9n incluye almacenamiento, refrigeraci\u00f3n, log\u00edstica y coordinaci\u00f3n.", 
@@ -46,6 +47,9 @@ Ember.I18n.translations = {
             "service": "Organizaciones de servicio ofrecen servicios as\u00ed como apoyo legal (por ejemplo, reclamos de robo de sueldos o asuntos de inmigraci\u00f3n), programas educativos, o la vivienda asequible.", 
             "advocacy": "Grupos defensores amplifican las voces del p\u00fablico para influir el cambio de pol\u00edticas a nivel local, estatal y nacional. Ejemplos pueden incluir grupos que abogan por la reforma migratoria o para aumentar el salario m\u00ednimo.", 
             "workers_center": "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociaci\u00f3n colectiva as\u00ed como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campa\u00f1as para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos."
+        },
+        "voices": {
+            "text": "Voces de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. "
         }
     }, 
     "share": {

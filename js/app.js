@@ -183,6 +183,7 @@ App.Router.map(function() {
     this.route('about');
     this.route('help-industry-types', { path: '/help/industry-types' });
     this.route('help-organization-types', { path: '/help/organization-types' });
+    this.route('help-voices', { path: '/help/voices' });
     this.route('contact');
     this.route('news');
     this.resource('news-entry', { path: '/news/:entry_id' });

@@ -46,3 +46,12 @@ App.HelpIndustryTypesRoute = App.HelpRoute.extend({
 });
 
 App.HelpIndustryTypesView = App.HelpView.extend({});
+
+
+App.HelpVoicesRoute = App.HelpRoute.extend({
+    renderTemplate: function () {
+        this.render('help-voices', { outlet: 'help' });
+    }
+});
+
+App.HelpVoicesView = App.HelpView.extend({});
