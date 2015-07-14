@@ -66910,6 +66910,7 @@ function initializeMap(id, center, zoom, organizationsCallback) {
                     ((!typesPicked || typesMatch) && 
                      (!sectorsPicked || sectorsMatch))) {
                     map.addLayer(l);
+                    l.bringToBack();
                 }
                 else {
                     map.removeLayer(l);
@@ -66946,6 +66947,7 @@ function initializeMap(id, center, zoom, organizationsCallback) {
                     categoriesMatch = _.intersection(properties.categories, categories).length > 0;
                 if (categoriesMatch || !categoriesPicked) {
                     map.addLayer(l);
+                    l.bringToFront();
                 }
                 else {
                     map.removeLayer(l);
