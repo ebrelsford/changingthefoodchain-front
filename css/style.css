@@ -3585,6 +3585,9 @@ body.organization-view .map-active-area {
   margin-bottom: 25px;
   padding-bottom: 50px;
 }
+.news-entry-list .news-entry a {
+  color: #bc461b;
+}
 .news-entry-list .news-entry:first-of-type {
   margin-top: 100px;
 }
