@@ -124,7 +124,17 @@ App.Video = DS.Model.extend({
 });
 
 App.Category = DS.Model.extend({
-    name: DS.attr()
+    name: DS.attr(),
+    name_es: DS.attr('string'),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Entry = DS.Model.extend({

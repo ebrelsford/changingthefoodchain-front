@@ -67174,7 +67174,17 @@ App.Video = DS.Model.extend({
 });
 
 App.Category = DS.Model.extend({
-    name: DS.attr()
+    name: DS.attr(),
+    name_es: DS.attr('string'),
+
+    name_translated: function () {
+        var en = this.get('name'),
+            es = this.get('name_es');
+        if (CONFIG.language === 'es' && es) {
+            return es;
+        }
+        return en;
+    }.property('name', 'name_es')
 });
 
 App.Entry = DS.Model.extend({
@@ -74282,7 +74292,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 
   data.buffer.push("<div class=\"section-indicator\"></div>\n<div class=\"section-label\">\n    ");
-  stack1 = helpers._triageMustache.call(depth0, "view.content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "view.content.name_translated", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n<div class=\"clearfix\"></div>\n");
   return buffer;
