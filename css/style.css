@@ -3639,6 +3639,9 @@ body.organization-view .map-active-area {
 .news-entry-list .news-entry-title:hover {
   text-decoration: underline;
 }
+.news-entry-detail a {
+  color: #bc461b;
+}
 .news-entry-detail .news-entry-cover {
   float: left;
   padding-right: 15px;
