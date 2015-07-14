@@ -78,7 +78,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "stories";
+  return "voices";
   })
         },
         tagline: t(function (Handlebars,depth0,helpers,partials,data) {
@@ -128,7 +128,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "stories";
+  return "voices of the food chain";
   })
         },
         search: {
@@ -431,7 +431,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "stories";
+  return "voices of the food chain";
   }),
         read_more: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

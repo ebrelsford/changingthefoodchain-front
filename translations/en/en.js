@@ -14,7 +14,7 @@ Ember.I18n.translations = {
         nav: {
             about: 'about',
             contact: 'contact',
-            news: 'stories'
+            news: 'voices'
         },
         tagline: 'An action map for food chain workers & organizations.',
         filters: {
@@ -22,7 +22,7 @@ Ember.I18n.translations = {
             clear: 'clear',
             organization_type: 'organization type',
             industry_type: 'industry type',
-            news: 'stories'
+            news: 'voices of the food chain'
         },
         search: {
             error: "Sorry we couldn't find the location you searched for. Try again?"
@@ -87,7 +87,7 @@ Ember.I18n.translations = {
             header: 'categories'
         },
         empty: 'No stories to show for this category',
-        header: 'stories',
+        header: 'voices of the food chain',
         read_more: 'read more',
         read_more_at: 'more at',
         view_on_map: 'view on map'
