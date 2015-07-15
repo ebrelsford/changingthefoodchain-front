@@ -3661,6 +3661,9 @@ body.organization-view .map-active-area {
   padding-right: 15px;
   width: 80%;
 }
+.news-entry-detail .news-entry-cover img {
+  width: 100%;
+}
 .news-entry-detail .news-entry-content {
   clear: both;
 }
