@@ -3660,6 +3660,9 @@ body.organization-view .map-active-area {
   padding-right: 15px;
   width: 70%;
 }
+.news-entry-detail .news-entry-content {
+  clear: both;
+}
 .news-entry-detail .news-entry-meta {
   margin-bottom: 10px;
 }

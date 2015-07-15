@@ -480,7 +480,7 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "cover", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content clearfix\">\n                <div class=\"news-entry-preview\">\n                    ");
+  data.buffer.push("\n            </div>\n            <div class=\"news-entry-content\">\n                <div class=\"news-entry-preview\">\n                    ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "preview", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
