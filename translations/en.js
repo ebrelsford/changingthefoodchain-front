@@ -340,7 +340,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='info@changingthefoodchain.org'>send it to us</a>.";
+  return "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>.";
   })
         }
     },

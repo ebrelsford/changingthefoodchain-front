@@ -66,7 +66,7 @@ Ember.I18n.translations = {
             union: "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations."
         },
         voices: {
-            text: "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='info@changingthefoodchain.org'>send it to us</a>."
+            text: "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>."
         }
     },
 
