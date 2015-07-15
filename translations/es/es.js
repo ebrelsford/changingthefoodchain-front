@@ -110,7 +110,7 @@ Ember.I18n.translations = {
             "clear": "Borrar", 
             "industry_type": "Tipo de industria", 
             "organization_type": "Tipo de organizaci\u00f3n",
-            "news": "voces"
+            "news": "Voces de la cadena alimentaria"
         }
     }, 
     "contact": {

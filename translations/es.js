@@ -573,7 +573,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "voces";
+  return "Voces de la cadena alimentaria";
   })
         }
     }, 
