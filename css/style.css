@@ -3657,8 +3657,9 @@ body.organization-view .map-active-area {
 }
 .news-entry-detail .news-entry-cover {
   float: left;
+  margin-bottom: 20px;
   padding-right: 15px;
-  width: 70%;
+  width: 80%;
 }
 .news-entry-detail .news-entry-content {
   clear: both;
