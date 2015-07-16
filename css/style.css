@@ -3491,6 +3491,9 @@ body.organization-view .map-active-area {
 .leaflet-popup-tip {
   background-color: rgba(68, 61, 126, 0.9);
 }
+.leaflet-popup .caption {
+  font-size: 10px;
+}
 .leaflet-popup iframe,
 .leaflet-popup img {
   width: 100%;
