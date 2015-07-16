@@ -3627,7 +3627,7 @@ body.organization-view .map-active-area {
   }
 }
 .news-entry-list .news-entry-cover iframe {
-  width: 100%;
+  max-width: 100%;
 }
 .news-entry-list .news-entry-cover img {
   height: auto;
