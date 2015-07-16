@@ -424,6 +424,13 @@ function initializeMap(id, center, zoom, organizationsCallback) {
             if (selectedOrganization && l === selectedOrganization) return;
             l.setStyle(style);
         });
+
+        style = getNewsStyle(map);
+        newsLayer.eachLayer(function (l) {
+            // Except for selected news entry, if any?
+            if (selectedNews && l === selectedNews) return;
+            l.setStyle(style);
+        });
     });
 
     map.on('locationfound', function (e) {
