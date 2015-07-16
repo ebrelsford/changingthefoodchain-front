@@ -482,7 +482,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Mapa de acciones para trabajadores en la cadena alimentaria y las organizaciones";
+  return "Mapa de acción para trabajadores de la cadena alimentaria y las organizaciones que los sirven";
   }), 
         "project_of": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -732,7 +732,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "más a";
+  return "más en";
   }),
         "view_on_map": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -740,7 +740,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "view on map";
+  return "véase en el mapa";
   })
     }, 
     "organizations_list": {

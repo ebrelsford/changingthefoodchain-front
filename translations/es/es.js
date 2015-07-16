@@ -96,7 +96,7 @@ Ember.I18n.translations = {
             "error": "Perdone pero no pudimos encontrar el lugar que busca. \u00bfIntenta de nuevo?"
         }, 
         "title": "Cambiar la cadena alimentaria", 
-        "tagline": "Mapa de acciones para trabajadores en la cadena alimentaria y las organizaciones", 
+        "tagline": "Mapa de acción para trabajadores de la cadena alimentaria y las organizaciones que los sirven", 
         "project_of": "Un proyecto de", 
         "with_support": "with support provided by the", 
         "header": "Cambiar la <br /> cadena alimentaria", 
@@ -143,8 +143,8 @@ Ember.I18n.translations = {
             "clear": "Borrar"
         }, 
         "read_more": "Lea m\u00e1s",
-        "read_more_at": "m\u00e1s a",
-        "view_on_map": "view on map"
+        "read_more_at": "m\u00e1s en",
+        "view_on_map": "véase en el mapa"
     }, 
     "organizations_list": {
         "headers": {
