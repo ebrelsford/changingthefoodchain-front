@@ -269,7 +269,7 @@ App.ApplicationController = Ember.Controller.extend({
         var controller = this;
         this.store.findAll('sector')
             .then(function (sectors) {
-                var desiredOrder = ['agriculture', 'food processing', 'transportation and distribution', 'retail', 'food service'];
+                var desiredOrder = ['agriculture', 'food processing', 'distribution', 'retail', 'food service'];
                 var sortedSectors = _.sortBy(sectors.get('content'), function (sector) {
                     return _.indexOf(desiredOrder, sector.get('name'));
                 });
