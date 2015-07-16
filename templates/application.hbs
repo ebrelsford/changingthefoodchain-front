@@ -18,7 +18,12 @@
         </div>
     </div>
     <div id="search">
-        {{type-ahead remote=searchRemote name="displayName" action="search" selection=selectedOrganization value=searchText placeholder="Search by name, city, state"}}
+        {{#if english}}
+            {{type-ahead remote=searchRemote name="displayName" action="search" selection=selectedOrganization value=searchText placeholder="Search by name, city, state"}}
+        {{/if}}
+        {{#if spanish}}
+            {{type-ahead remote=searchRemote name="displayName" action="search" selection=selectedOrganization value=searchText placeholder="Buscar por nombre, ciudad, estado"}}
+        {{/if}}
         {{#if searchError}}
         <div class="search-error">
             {{t "application.search.error"}}

@@ -248,6 +248,15 @@ App.ApplicationController = Ember.Controller.extend({
         l.active = true;
         this.propertyDidChange('languages');
 
+        // XXX this is silly but seems to be the quickest way to get the
+        // placeholder we want in the search box
+        if (selectedLanguage === 'en') {
+            this.set('english', true);
+        }
+        else if (selectedLanguage === 'es') {
+            this.set('spanish', true);
+        }
+
         var params = this.getQueryParams();
         if (params.selectedSectors) {
             this.set('selectedSectors', JSON.parse(params.selectedSectors));
