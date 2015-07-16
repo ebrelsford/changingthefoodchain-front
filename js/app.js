@@ -244,6 +244,7 @@ App.ApplicationController = Ember.Controller.extend({
             l = _.find(this.get('languages'), function (language) {
                 return language.code === selectedLanguage; 
             });
+        $('body').addClass('locale-' + selectedLanguage);
         l.active = true;
         this.propertyDidChange('languages');
 

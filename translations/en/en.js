@@ -53,16 +53,25 @@ Ember.I18n.translations = {
             voices: "Voices of the Food Chain"
         },
         industries: {
+            agriculture_title: "agriculture",
             agriculture: "At the first stage of all food, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. Other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.",
+            processing_title: "food processing",
             processing: "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.",
+            distribution_title: "distribution",
             distribution: "At this stage, workers transport food from one destination to another and load and unload food at warehouses and distribution centers. These may be final points of sale or intermediate locations for storage or further processing. Essentially, distribution connects the material at each stage of the food system. While a large component of this involves transportation, this stage also includes warehousing, refrigeration, logistics, and coordination.",
+            retail_title: "retail",
             retail: "Workers in this sector sell food directly to consumers in retail outlets including supermarkets, convenience, grocery stores, and buyers’ clubs. Workers in retail also include those who cook and prepare foods for delis and bakeries within the retail outlets, receive shipments, stock shelves, and clean the facilities.",
+            service_title: "food service",
             service: "The service sector is the largest segment of the food system. Workers in this segment prepare, cook and serve food, bartend, and wash dishes. This sector includes full-service restaurants, casual dining and quick service establishments, catering businesses, food trucks, street vendors, and food service establishments such as cafeterias and dining halls."
         },
         organization_types: {
+            advocacy_title: "advocacy groups",
             advocacy: "Advocacy groups amplify the voices of the public to influence policy change at the local, state and national level. Examples could include groups advocating for immigration reform or raising the minimum wage.",
+            service_title: "service organizations",
             service: "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.",
+            workers_center_title: "workers centers",
             workers_center: "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.",
+            union_title: "unions",
             union: "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations."
         },
         voices: {

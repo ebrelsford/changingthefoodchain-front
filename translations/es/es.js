@@ -36,16 +36,25 @@ Ember.I18n.translations = {
             voices: "Voces de la cadena alimentaria"
         },
         "industries": {
+            "distribution_title": "transporte y distribución",
             "distribution": "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribuci\u00f3n. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para m\u00e1s procesamiento. En s\u00ed, la distribuci\u00f3n conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa tambi\u00e9n incluye almacenamiento, refrigeraci\u00f3n, log\u00edstica y coordinaci\u00f3n.", 
+            "processing_title": "procesamiento de alimentos",
             "processing": "Los trabajadores en el proceso alimentaria convierten la comida cruda en productos terminados, ya sea por mano o en l\u00edneas de ensamble en plantas o f\u00e1bricas. Esto incluye refrigerios muy procesados y m\u00e1s simples como panes, queso y tortillas. Tambi\u00e9n incluidos en esta categor\u00eda son los trabajadores de mataderos y procesadores de animales.", 
+            "agriculture_title": "agricultura",
             "agriculture": "En la primera etapa de la comida, los trabajadores siembran, cuidan y cultivan comida cruda as\u00ed como tambi\u00e9n criar ganado. Algunas de estas comidas crudas, as\u00ed como el ma\u00edz y los granos, se convierten en material para la comida procesada y pienso de animales. Se llevan a otras frutas y vegetales directamente al mercado para el consumo. Esta etapa tambi\u00e9n incluye la pesquer\u00eda.", 
+            "service_title": "servicio de alimentación",
             "service": "El sector de servicio es el segmento m\u00e1s grande del sistema alimentario. Los trabajadores en este segmento preparan, cocinan y sirven la comida, tienden barra, y lavan platos. Este sector incluye restaurantes de servicio completo, y establecimientos de cena casual y servicio r\u00e1pido, negocios de catering, camiones de comida, vendedores ambulantes, y establecimientos de servicios de comida as\u00ed como las cafeterias y los salones de cena.", 
+            "retail_title": "ventas",
             "retail": "Los trabajadores en este sector venden comida directamente a los consumidores en tiendas incluyendo supermercados, bodegas y clubs de compradores. Los trabajadores de tienda tambi\u00e9n incluyen aquellos que cocinan y preparan la comida en los delicatesen y panader\u00edas en tiendas, reciben env\u00edos, reponen los estantes, y limpian estos lugares."
         }, 
         "organization_types": {
+            "union_title": "sindicatos",
             "union": "Los sindicatos son legalmente reconocidos para reconocer a grupos de trabajadores en negociaciones colectivas con la gerencia, con respecto a sueldos, beneficios y condiciones de trabajo as\u00ed como tambi\u00e9n violaciones de contrato.", 
+            "service_title": "organizaciones de servicio",
             "service": "Organizaciones de servicio ofrecen servicios as\u00ed como apoyo legal (por ejemplo, reclamos de robo de sueldos o asuntos de inmigraci\u00f3n), programas educativos, o la vivienda asequible.", 
+            "advocacy_title": "grupos defensores",
             "advocacy": "Grupos defensores amplifican las voces del p\u00fablico para influir el cambio de pol\u00edticas a nivel local, estatal y nacional. Ejemplos pueden incluir grupos que abogan por la reforma migratoria o para aumentar el salario m\u00ednimo.", 
+            "workers_center_title": "centros de trabajadores",
             "workers_center": "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociaci\u00f3n colectiva as\u00ed como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campa\u00f1as para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos."
         },
         "voices": {

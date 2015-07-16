@@ -213,6 +213,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
         },
         "industries": {
+            "distribution_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "transporte y distribución";
+  }),
             "distribution": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -221,6 +229,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribución. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para más procesamiento. En sí, la distribución conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa también incluye almacenamiento, refrigeración, logística y coordinación.";
   }), 
+            "processing_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "procesamiento de alimentos";
+  }),
             "processing": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -229,6 +245,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Los trabajadores en el proceso alimentaria convierten la comida cruda en productos terminados, ya sea por mano o en líneas de ensamble en plantas o fábricas. Esto incluye refrigerios muy procesados y más simples como panes, queso y tortillas. También incluidos en esta categoría son los trabajadores de mataderos y procesadores de animales.";
   }), 
+            "agriculture_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "agricultura";
+  }),
             "agriculture": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -237,6 +261,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "En la primera etapa de la comida, los trabajadores siembran, cuidan y cultivan comida cruda así como también criar ganado. Algunas de estas comidas crudas, así como el maíz y los granos, se convierten en material para la comida procesada y pienso de animales. Se llevan a otras frutas y vegetales directamente al mercado para el consumo. Esta etapa también incluye la pesquería.";
   }), 
+            "service_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "servicio de alimentación";
+  }),
             "service": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -245,6 +277,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "El sector de servicio es el segmento más grande del sistema alimentario. Los trabajadores en este segmento preparan, cocinan y sirven la comida, tienden barra, y lavan platos. Este sector incluye restaurantes de servicio completo, y establecimientos de cena casual y servicio rápido, negocios de catering, camiones de comida, vendedores ambulantes, y establecimientos de servicios de comida así como las cafeterias y los salones de cena.";
   }), 
+            "retail_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "ventas";
+  }),
             "retail": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -255,6 +295,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
         }, 
         "organization_types": {
+            "union_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "sindicatos";
+  }),
             "union": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -263,6 +311,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Los sindicatos son legalmente reconocidos para reconocer a grupos de trabajadores en negociaciones colectivas con la gerencia, con respecto a sueldos, beneficios y condiciones de trabajo así como también violaciones de contrato.";
   }), 
+            "service_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "organizaciones de servicio";
+  }),
             "service": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -271,6 +327,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Organizaciones de servicio ofrecen servicios así como apoyo legal (por ejemplo, reclamos de robo de sueldos o asuntos de inmigración), programas educativos, o la vivienda asequible.";
   }), 
+            "advocacy_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "grupos defensores";
+  }),
             "advocacy": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -279,6 +343,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Grupos defensores amplifican las voces del público para influir el cambio de políticas a nivel local, estatal y nacional. Ejemplos pueden incluir grupos que abogan por la reforma migratoria o para aumentar el salario mínimo.";
   }), 
+            "workers_center_title": t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "centros de trabajadores";
+  }),
             "workers_center": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

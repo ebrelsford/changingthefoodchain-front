@@ -258,6 +258,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
         },
         industries: {
+            agriculture_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "agriculture";
+  }),
             agriculture: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -265,6 +273,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "At the first stage of all food, workers plant, care for, and harvest raw food items as well as raise livestock. Some of these raw foods, such as corn and grains, become material for processed food items and animal feed. Other fruits and vegetables are brought directly to market for consumption. This stage also includes fisheries.";
+  }),
+            processing_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "food processing";
   }),
             processing: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -274,6 +290,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Workers in food processing turn raw food items into finished products, either by hand or on assembly lines in plants or factories. This includes both highly processed snack foods as well simpler items such as breads, cheese, and tortillas. Also included in this category are slaughterhouse workers and animal processors.";
   }),
+            distribution_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "distribution";
+  }),
             distribution: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -282,6 +306,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "At this stage, workers transport food from one destination to another and load and unload food at warehouses and distribution centers. These may be final points of sale or intermediate locations for storage or further processing. Essentially, distribution connects the material at each stage of the food system. While a large component of this involves transportation, this stage also includes warehousing, refrigeration, logistics, and coordination.";
   }),
+            retail_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "retail";
+  }),
             retail: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -289,6 +321,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "Workers in this sector sell food directly to consumers in retail outlets including supermarkets, convenience, grocery stores, and buyers’ clubs. Workers in retail also include those who cook and prepare foods for delis and bakeries within the retail outlets, receive shipments, stock shelves, and clean the facilities.";
+  }),
+            service_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "food service";
   }),
             service: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -300,6 +340,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   })
         },
         organization_types: {
+            advocacy_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "advocacy groups";
+  }),
             advocacy: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -307,6 +355,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "Advocacy groups amplify the voices of the public to influence policy change at the local, state and national level. Examples could include groups advocating for immigration reform or raising the minimum wage.";
+  }),
+            service_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "service organizations";
   }),
             service: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -316,6 +372,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   return "Service organizations offer services such as legal support (for example, for wage theft claims or immigration issues), education programs, and/or affordable housing.";
   }),
+            workers_center_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "workers centers";
+  }),
             workers_center: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -323,6 +387,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "Workers centers are non-profit, community-based organizations that offer support to low-wage, often immigrant workers who are not part of a collective bargaining entity such as a union, or who are excluded from federal labor laws. Workers centers offer assistance with campaigns for improving wages and working conditions, legal support for wage and hour claims, community advocacy, leadership development, and educational programs.";
+  }),
+            union_title: t(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "unions";
   }),
             union: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

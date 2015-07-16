@@ -3302,6 +3302,10 @@ body.page-view header {
 #help .help-types-item-name img {
   max-height: 100px;
 }
+#help .help-types-item-title {
+  margin-top: 5px;
+  text-transform: uppercase;
+}
 #help .help-types-item-text {
   border-right: 1px solid #443d7e;
   padding-bottom: 15px;
@@ -3332,6 +3336,9 @@ body.page-view header {
 }
 #help .help-voices-text a {
   color: #bc461b;
+}
+.locale-en .help-types-item-title {
+  display: none;
 }
 .loading {
   height: 200px;
