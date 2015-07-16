@@ -66212,6 +66212,11 @@ App.ApplicationController = Ember.Controller.extend({
 
         this.store.findAll('type')
             .then(function (types) {
+                var desiredOrder = ['advocacy group', 'service organization', 'workers center', 'union'];
+                var sortedTypes = _.sortBy(types.get('content'), function (type) {
+                    return _.indexOf(desiredOrder, type.get('name'));
+                });
+                types.set('content', sortedTypes);
                 controller.set('types', types);
             });
 
