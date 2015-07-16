@@ -3,3 +3,4 @@ css/style.css
 js/bundle.js
 js/embedbundle.js
 node_modules
+templates/templates.js
