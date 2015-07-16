@@ -3495,7 +3495,10 @@ body.organization-view .map-active-area {
 .leaflet-popup .caption {
   font-size: 10px;
 }
-.leaflet-popup iframe,
+.leaflet-popup iframe {
+  height: auto;
+  width: 100%;
+}
 .leaflet-popup img {
   width: 100%;
 }
