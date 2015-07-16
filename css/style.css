@@ -3171,6 +3171,7 @@ header #nav a {
   padding: 5px;
   text-decoration: underline;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 header #nav a.active,
 header #nav a:hover {
