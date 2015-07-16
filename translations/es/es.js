@@ -36,7 +36,7 @@ Ember.I18n.translations = {
             voices: "Voces de la cadena alimentaria"
         },
         "industries": {
-            "distribution_title": "transporte y distribución",
+            "distribution_title": "distribución",
             "distribution": "En esta etapa, los trabajadores transportan la comida de un destino a otro y descargan la comida en almacenes y centros de distribuci\u00f3n. Estos pueden ser puntos finales de venta o lugares intermediarios para almacenar o para m\u00e1s procesamiento. En s\u00ed, la distribuci\u00f3n conecta el material en cada etapa del sistema alimentario. Mientras que un gran componente de esto involucra el transporte, esta etapa tambi\u00e9n incluye almacenamiento, refrigeraci\u00f3n, log\u00edstica y coordinaci\u00f3n.", 
             "processing_title": "procesamiento de alimentos",
             "processing": "Los trabajadores en el proceso alimentaria convierten la comida cruda en productos terminados, ya sea por mano o en l\u00edneas de ensamble en plantas o f\u00e1bricas. Esto incluye refrigerios muy procesados y m\u00e1s simples como panes, queso y tortillas. Tambi\u00e9n incluidos en esta categor\u00eda son los trabajadores de mataderos y procesadores de animales.", 
