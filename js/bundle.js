@@ -67241,6 +67241,7 @@ App.Entry = DS.Model.extend({
 
 },{"./videos":"/home/eric/Documents/code/changingthefoodchain-front/js/videos.js","ember-data":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data/ember-data.js","ember-data-extensions-embedded-adapter":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/ember-data-extensions/dist/embedded-adapter.js","moment":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/moment/moment.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/news.js":[function(require,module,exports){
 var _ = require('underscore');
+var i18n = require('./i18n');
 var map = require('./map');
 require('./pagemixins');
 
@@ -67266,7 +67267,7 @@ App.NewsController = Ember.ArrayController.extend({
     },
 
     loadCategories: function () {
-        var params = { language: CONFIG.language },
+        var params = { language: i18n.getLocale() },
             controller = this;
         controller.set('category', null);
         controller.store.find('category', params).then(function (data) {
@@ -67286,7 +67287,7 @@ App.NewsController = Ember.ArrayController.extend({
             var controller = this,
                 nextPage = controller.get('nextPage'),
                 params = {
-                    language: CONFIG.DEFAULT_LOCALE,
+                    language: i18n.getLocale(),
                     page: nextPage 
                 },
                 category = controller.get('category'),
@@ -67391,7 +67392,7 @@ App.NewsEntryView = Ember.View.extend(App.PageViewMixin, {
     }
 });
 
-},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js":[function(require,module,exports){
+},{"./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","./pagemixins":"/home/eric/Documents/code/changingthefoodchain-front/js/pagemixins.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js":[function(require,module,exports){
 var Ember = require('ember');
 var Spinner = require('spinjs');
 var map = require('./map');

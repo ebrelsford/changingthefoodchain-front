@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var i18n = require('./i18n');
 var map = require('./map');
 require('./pagemixins');
 
@@ -24,7 +25,7 @@ App.NewsController = Ember.ArrayController.extend({
     },
 
     loadCategories: function () {
-        var params = { language: CONFIG.language },
+        var params = { language: i18n.getLocale() },
             controller = this;
         controller.set('category', null);
         controller.store.find('category', params).then(function (data) {
@@ -44,7 +45,7 @@ App.NewsController = Ember.ArrayController.extend({
             var controller = this,
                 nextPage = controller.get('nextPage'),
                 params = {
-                    language: CONFIG.DEFAULT_LOCALE,
+                    language: i18n.getLocale(),
                     page: nextPage 
                 },
                 category = controller.get('category'),
