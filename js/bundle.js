@@ -66179,8 +66179,11 @@ App.ApplicationController = Ember.Controller.extend({
             });
         $('body').addClass('locale-' + selectedLanguage);
         l.active = true;
+        this.set('lang', selectedLanguage);
         this.propertyDidChange('languages');
-        console.log(selectedLanguage);
+
+        // XXX this is silly but seems to be the quickest way to get the
+        // placeholder we want in the search box
         if (selectedLanguage === 'en') {
             this.set('english', true);
         }
@@ -66238,7 +66241,7 @@ App.ApplicationController = Ember.Controller.extend({
         this.set('organizationAutocompleted', true);
     }.observes('selectedOrganization'),
 
-    queryParams: ['lat', 'lng', 'z', 'selectedSectors', 'selectedTypes'],
+    queryParams: ['lang', 'lat', 'lng', 'z', 'selectedSectors', 'selectedTypes'],
 
     findActive: function (checkedModels) {
         return _.chain(checkedModels)
