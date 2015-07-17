@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var i18n = require('./i18n');
 require('leaflet-active-area');
 
 var map,
@@ -122,7 +123,10 @@ function addOrganizations(map, callback) {
 }
 
 function addNews(map, callback) {
-    $.getJSON(CONFIG.API_BASE + '/entries/geojson/', function (data) {
+    var params = {
+        language: i18n.getLocale()
+    };
+    $.getJSON(CONFIG.API_BASE + '/entries/geojson/?' + $.param(params), function (data) {
         var newsLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 feature.properties.type = 'news';

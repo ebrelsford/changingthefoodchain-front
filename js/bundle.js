@@ -66747,6 +66747,7 @@ require('./i18n').init().then(function () {
 
 },{"./add_media":"/home/eric/Documents/code/changingthefoodchain-front/js/add_media.js","./app":"/home/eric/Documents/code/changingthefoodchain-front/js/app.js","./carousel":"/home/eric/Documents/code/changingthefoodchain-front/js/carousel.js","./contact":"/home/eric/Documents/code/changingthefoodchain-front/js/contact.js","./help":"/home/eric/Documents/code/changingthefoodchain-front/js/help.js","./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","./models":"/home/eric/Documents/code/changingthefoodchain-front/js/models.js","./news":"/home/eric/Documents/code/changingthefoodchain-front/js/news.js","./organization":"/home/eric/Documents/code/changingthefoodchain-front/js/organization.js","./organizations_add":"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_add.js","./organizations_list":"/home/eric/Documents/code/changingthefoodchain-front/js/organizations_list.js","./page":"/home/eric/Documents/code/changingthefoodchain-front/js/page.js","./share":"/home/eric/Documents/code/changingthefoodchain-front/js/share.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/map.js":[function(require,module,exports){
 var _ = require('underscore');
+var i18n = require('./i18n');
 require('leaflet-active-area');
 
 var map,
@@ -66870,7 +66871,10 @@ function addOrganizations(map, callback) {
 }
 
 function addNews(map, callback) {
-    $.getJSON(CONFIG.API_BASE + '/entries/geojson/', function (data) {
+    var params = {
+        language: i18n.getLocale()
+    };
+    $.getJSON(CONFIG.API_BASE + '/entries/geojson/?' + $.param(params), function (data) {
         var newsLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 feature.properties.type = 'news';
@@ -67085,7 +67089,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/models.js":[function(require,module,exports){
+},{"./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/models.js":[function(require,module,exports){
 var DS = require('ember-data');
 var moment = require('moment');
 var videos = require('./videos');

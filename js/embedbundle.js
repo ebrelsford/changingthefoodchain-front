@@ -174,8 +174,49 @@ if (s && s.length > 0) {
 
 map.init('map', center, zoom);
 
-},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/map.js":[function(require,module,exports){
+},{"./map":"/home/eric/Documents/code/changingthefoodchain-front/js/map.js","qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js":[function(require,module,exports){
+var qs = require('qs');
+
+
+function getHashPath() {
+    return window.location.hash.split('?')[0];
+}
+
+function parseHashQueryParams() {
+    return qs.parse(window.location.hash.split('?')[1]);
+}
+
+function getLocale() {
+    var lang;
+    try {
+        // Parse lang query param from hash
+
+        // This is necessary because we need to have the lang before Ember is
+        // loaded
+        lang = parseHashQueryParams().lang;
+    }
+    catch (e) {}
+    return lang ? lang : CONFIG.DEFAULT_LOCALE;
+}
+
+module.exports = {
+    getLocale: getLocale,
+    init: function () {
+        CONFIG.language = getLocale();
+        return $.getScript('translations/' + CONFIG.language + '.js');
+    },
+    setLocale: function (locale) {
+        // Add lang query param to hash, reload
+        var hashQueryParams = parseHashQueryParams();
+        hashQueryParams.lang = locale;
+        window.location.hash = getHashPath() + '?' + qs.stringify(hashQueryParams);
+        window.location.reload();
+    }
+};
+
+},{"qs":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js"}],"/home/eric/Documents/code/changingthefoodchain-front/js/map.js":[function(require,module,exports){
 var _ = require('underscore');
+var i18n = require('./i18n');
 require('leaflet-active-area');
 
 var map,
@@ -299,7 +340,10 @@ function addOrganizations(map, callback) {
 }
 
 function addNews(map, callback) {
-    $.getJSON(CONFIG.API_BASE + '/entries/geojson/', function (data) {
+    var params = {
+        language: i18n.getLocale()
+    };
+    $.getJSON(CONFIG.API_BASE + '/entries/geojson/?' + $.param(params), function (data) {
         var newsLayer = L.geoJson(data, {
             onEachFeature: function (feature, layer) {
                 feature.properties.type = 'news';
@@ -514,7 +558,7 @@ module.exports = {
     }
 };
 
-},{"leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js":[function(require,module,exports){
+},{"./i18n":"/home/eric/Documents/code/changingthefoodchain-front/js/i18n.js","leaflet-active-area":"/home/eric/Documents/code/changingthefoodchain-front/bower_components/leaflet-active-area/src/leaflet.activearea.js","underscore":"/home/eric/Documents/code/changingthefoodchain-front/node_modules/underscore/underscore.js"}],"/home/eric/Documents/code/changingthefoodchain-front/node_modules/qs/index.js":[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
