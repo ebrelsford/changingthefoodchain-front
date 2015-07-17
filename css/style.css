@@ -3631,7 +3631,11 @@ body.organization-view .map-active-area {
 }
 .news-entry-list .news-entry-cover img {
   height: auto;
+  width: 500px;
   max-width: 100%;
+}
+.news-entry-list .news-entry-cover .caption {
+  display: block;
 }
 .news-entry-list .news-entry-content {
   position: relative;
