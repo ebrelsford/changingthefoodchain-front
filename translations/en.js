@@ -78,7 +78,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "voices";
+  return "stories";
   })
         },
         tagline: t(function (Handlebars,depth0,helpers,partials,data) {
@@ -128,7 +128,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "voices of the food chain";
+  return "stories of the food chain";
   })
         },
         search: {
@@ -254,7 +254,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voices of the Food Chain";
+  return "Stories of the Food Chain";
   })
         },
         industries: {
@@ -412,7 +412,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>.";
+  return "Stories of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>.";
   })
         }
     },
@@ -521,7 +521,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "voices of the food chain";
+  return "stories of the food chain";
   }),
         read_more: t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

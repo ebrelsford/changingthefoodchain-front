@@ -33,7 +33,7 @@ Ember.I18n.translations = {
         headers: {
             industries: "Tipos de industria", 
             organization_types: "Tipos de organizaci\u00f3n",
-            voices: "Voces de la cadena alimentaria"
+            voices: "Historias de la cadena alimentaria"
         },
         "industries": {
             "distribution_title": "distribución",
@@ -58,7 +58,7 @@ Ember.I18n.translations = {
             "workers_center": "Centros de trabajadores son organizaciones comunitarias sin fines de lucro que ofrecen apoyo a trabajadores de bajos sueldos, principalmente inmigrantes, que no son parte de entidades de negociaci\u00f3n colectiva as\u00ed como sindicatos o que son excluidos de leyes laborales federales. Los centros de trabajadores ofrecen asistencia con campa\u00f1as para mejorar sueldos y condiciones de trabajo, apoyo legal para reclamos de salarios y horas, defensa comunitaria, desarrollo de liderazgo, y programas educativos."
         },
         "voices": {
-            "text": "Voces de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. "
+            "text": "Historias de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. "
         }
     }, 
     "share": {
@@ -110,7 +110,7 @@ Ember.I18n.translations = {
         "with_support": "with support provided by the", 
         "header": "Cambiar la <br /> cadena alimentaria", 
         "nav": {
-            "news": "Voces", 
+            "news": "Historias", 
             "about": "Acerca de", 
             "contact": "Comun\u00edquese"
         }, 
@@ -119,7 +119,7 @@ Ember.I18n.translations = {
             "clear": "Borrar", 
             "industry_type": "Tipo de industria", 
             "organization_type": "Tipo de organizaci\u00f3n",
-            "news": "Voces de la cadena alimentaria"
+            "news": "Historias de la cadena alimentaria"
         }
     }, 
     "contact": {
@@ -145,7 +145,7 @@ Ember.I18n.translations = {
         }
     }, 
     "news": {
-        "header": "Voces de la cadena alimentaria", 
+        "header": "Historias de la cadena alimentaria", 
         "empty": "No hay noticias para esta categor\u00eda", 
         "categories": {
             "header": "Categor\u00edas", 

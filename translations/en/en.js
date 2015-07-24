@@ -14,7 +14,7 @@ Ember.I18n.translations = {
         nav: {
             about: 'about',
             contact: 'contact',
-            news: 'voices'
+            news: 'stories'
         },
         tagline: 'An action map for food chain workers & organizations.',
         filters: {
@@ -22,7 +22,7 @@ Ember.I18n.translations = {
             clear: 'clear',
             organization_type: 'organization type',
             industry_type: 'industry type',
-            news: 'voices of the food chain'
+            news: 'stories of the food chain'
         },
         search: {
             error: "Sorry we couldn't find the location you searched for. Try again?"
@@ -50,7 +50,7 @@ Ember.I18n.translations = {
         headers: {
             organization_types: "Organization Types",
             industries: "Industry Types",
-            voices: "Voices of the Food Chain"
+            voices: "Stories of the Food Chain"
         },
         industries: {
             agriculture_title: "agriculture",
@@ -75,7 +75,7 @@ Ember.I18n.translations = {
             union: "Unions are legally recognized to represent groups of workers in collective bargaining with management on issues such as wages, benefits and working conditions, as well as disputes over contract violations."
         },
         voices: {
-            text: "Voices of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>."
+            text: "Stories of the Food Chain is a curated collection of videos, articles, and audio pieces featuring in-depth stories about food chain workers who share their personal experiences of work and struggle. If you’d like to suggest a piece to include, please <a href='mailto:info@changingthefoodchain.org'>send it to us</a>."
         }
     },
 
@@ -100,7 +100,7 @@ Ember.I18n.translations = {
             header: 'categories'
         },
         empty: 'No stories to show for this category',
-        header: 'voices of the food chain',
+        header: 'stories of the food chain',
         read_more: 'read more',
         read_more_at: 'more at',
         view_on_map: 'view on map'

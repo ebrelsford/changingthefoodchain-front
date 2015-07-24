@@ -209,7 +209,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voces de la cadena alimentaria";
+  return "Historias de la cadena alimentaria";
   })
         },
         "industries": {
@@ -367,7 +367,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voces de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. ";
+  return "Historias de la cadena alimentaria es una colección curada de videos, artículos, y crónicas en audio que presentan historias detalladas sobre trabajadores de la cadena alimentaria, quienes comparten sus experiencias personales del trabajo y de la lucha. Si a Ud. le gustaría sugerir una crónica para incluir, por favor <a href='mailto:info@changingthefoodchain.org'>mándenosla</a>. ";
   })
         }
     }, 
@@ -587,7 +587,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voces";
+  return "Historias";
   }), 
             "about": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
@@ -645,7 +645,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voces de la cadena alimentaria";
+  return "Historias de la cadena alimentaria";
   })
         }
     }, 
@@ -762,7 +762,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Voces de la cadena alimentaria";
+  return "Historias de la cadena alimentaria";
   }), 
         "empty": t(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
